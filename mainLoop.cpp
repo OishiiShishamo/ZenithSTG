@@ -10,7 +10,7 @@ mainLoop::Loop() {
 	//TESTDANMAKUKUKUKUKUKUKUKUKUKUKU
 	if (frame % 1 == 0) {
 		coltmp = GetColorHSV(std::fmod(frame, 360), 1, 1);
-		CreateBulletGroup(CENTER_X, CENTER_Y, GetColorHSV(std::fmod(frame, 360), 1, 1), B_NORMAL, BLEND_DEFAULT, 255, 10.0f, 10.0f, EASEINQUAD, 120, 0.05f, 5.0f, EASEINQUAD, 120, 16, TAU, 1, Rad(0), Rad(50), EASEOUTQUAD, 240, 5.0f, 10.0f, EASEINQUAD, 120);
+		CreateBulletGroup(CENTER_X, CENTER_Y, GetColorHSV(std::fmod(frame, 360), 1, 1), B_LIGHT, BLEND_ADD, 255, 10.0f, 10.0f, EASEINQUAD, 120, 2.0f, 1.0f, EASEINQUAD, 120, 8, TAU, 0, Rad(frame), Rad(frame + 80), EASEOUTQUAD, 240, -10.0f, 10.0f, EASEINQUAD, 120);
 	}
 	DrawBox(0, 0, 1920, 1080, GetColor(C_GRAY), 1);
 	SetDrawScreen(bulletCanvas);
@@ -21,6 +21,7 @@ mainLoop::Loop() {
 	Plyr.RoutinePlayer();
 	SetDrawScreen(screenCanvas);
 	ClearDrawScreen();
+	SmartSetDrawBlendMode(BLEND_PMA_ALPHA, 255);
 	DrawRotaGraph4(CENTER_X, CENTER_Y, 1.0f, 0, 0, 0, backgroundCanvas, 1, 0, 0);
 	DrawRotaGraph4(CENTER_X, CENTER_Y, 1.0f, 0, 0, 0, playerCanvas, 1, 0, 0);
 	DrawRotaGraph4(CENTER_X, CENTER_Y, 1.0f, 0, 0, 0, bulletCanvas, 1, 0, 0);
@@ -41,6 +42,7 @@ mainLoop::Loop() {
 	else {
 		DrawRotaGraph4(BORDER_RIGHT / 2, BORDER_DOWN / 2, unko, 0, 0, 0, screenCanvas, 1, 0, 0);
 	}
+	SmartSetDrawBlendMode(BLEND_NOBLEND, 255);
 	if (frame == timeMng.framedayo) {
 		ScreenFlip();
 	}

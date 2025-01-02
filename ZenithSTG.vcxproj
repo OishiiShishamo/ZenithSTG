@@ -139,13 +139,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="3rdParties\imgui\backends\imgui_impl_dx11.cpp" />
-    <ClCompile Include="3rdParties\imgui\backends\imgui_impl_win32.cpp" />
-    <ClCompile Include="3rdParties\imgui\imgui.cpp" />
-    <ClCompile Include="3rdParties\imgui\imgui_demo.cpp" />
-    <ClCompile Include="3rdParties\imgui\imgui_draw.cpp" />
-    <ClCompile Include="3rdParties\imgui\imgui_tables.cpp" />
-    <ClCompile Include="3rdParties\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Easing.cpp" />
     <ClCompile Include="Init.cpp" />
@@ -157,14 +150,6 @@
     <ClCompile Include="Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="3rdParties\imgui\backends\imgui_impl_dx11.h" />
-    <ClInclude Include="3rdParties\imgui\backends\imgui_impl_win32.h" />
-    <ClInclude Include="3rdParties\imgui\imconfig.h" />
-    <ClInclude Include="3rdParties\imgui\imgui.h" />
-    <ClInclude Include="3rdParties\imgui\imgui_internal.h" />
-    <ClInclude Include="3rdParties\imgui\imstb_rectpack.h" />
-    <ClInclude Include="3rdParties\imgui\imstb_textedit.h" />
-    <ClInclude Include="3rdParties\imgui\imstb_truetype.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Easing.h" />

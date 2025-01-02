@@ -172,8 +172,7 @@ Bullet::MoveBullet() {
 		if (isColShow == 1) {
 			SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 			DrawCircle(posX, posY, colSize, GetColor(255, 255, 255), 1);
-			SmartSetDrawBlendMode(DX_BLENDMODE_INVSRC, 255);
-			DrawFormatString(posX, posY, GetColor(255, 255, 255), "%f", colSize);
+			DrawFormatString(posX, posY, GetColor(GetColorHSV(std::fmod(frame, 360), 1, 1).r, GetColorHSV(std::fmod(frame, 360), 1, 1).g, GetColorHSV(std::fmod(frame, 360), 1, 1).b), "%f", colSize);
 		}
 	}
 }

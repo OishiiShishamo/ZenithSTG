@@ -12,6 +12,8 @@ Init() {
 	SetDoubleStartValidFlag(TRUE);
 	//SetAlwaysRunFlag(0);
 	SetUseDirect3DVersion(DX_DIRECT3D_11);
+	SetUsePremulAlphaConvertLoad(TRUE);
+	SetFontSize(20);
 	
 	//SetCreateDrawValidGraphMultiSample(16, 8);
 
@@ -31,6 +33,7 @@ Init() {
 	for (int i = 0; i < 128; i++) {
 		defaultBulletBlend[i] = BLEND_NOBLEND;
 	}
+	defaultBulletBlend[B_LIGHT] = BLEND_ADD;
 	defaultBulletBlend[B_BIG] = BLEND_ADD;
 }
 
