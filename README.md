@@ -19,6 +19,8 @@ DxLib_VC3_24d
 4.Download Boost 1.84 from [here](https://www.boost.org/users/history/version_1_84_0.html), 
 build it with [here](https://www.boost.org/doc/libs/1_87_0/more/getting_started/windows.html) as a reference, and place it directly under the repository.
 5.If the folder structure looks like the following, you can open and build the solution to start it.
+```
+ZenithSTG
 ├─3rdParties
 ├─boost
 │  ├─include
@@ -27,3 +29,4 @@ build it with [here](https://www.boost.org/doc/libs/1_87_0/more/getting_started/
 ├─DxLib
 ├─res
 └─Other files
+```
