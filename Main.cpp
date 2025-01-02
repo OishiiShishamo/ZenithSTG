@@ -55,6 +55,7 @@ WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, in
 			frame++;
 			Loop.Loop();
 		}
+
 		if (ProcessMessage() < 0) break;
 		if (CheckHitKey(KEY_INPUT_ESCAPE)) break;
 	}

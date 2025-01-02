@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="3rdParties">
+      <UniqueIdentifier>{0f67fbc5-7fa8-4a34-bf09-c438c87d2ea1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdParties\imgui">
+      <UniqueIdentifier>{beed38fa-55b5-49d4-8015-d67b69e7977e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bullet.cpp">
@@ -41,6 +47,27 @@
     </ClCompile>
     <ClCompile Include="Utility.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdParties\imgui\imgui.cpp">
+      <Filter>3rdParties\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdParties\imgui\imgui_demo.cpp">
+      <Filter>3rdParties\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdParties\imgui\imgui_draw.cpp">
+      <Filter>3rdParties\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdParties\imgui\imgui_tables.cpp">
+      <Filter>3rdParties\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdParties\imgui\imgui_widgets.cpp">
+      <Filter>3rdParties\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdParties\imgui\backends\imgui_impl_dx11.cpp">
+      <Filter>3rdParties\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdParties\imgui\backends\imgui_impl_win32.cpp">
+      <Filter>3rdParties\imgui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +103,30 @@
     </ClInclude>
     <ClInclude Include="Utility.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdParties\imgui\imconfig.h">
+      <Filter>3rdParties\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdParties\imgui\imgui.h">
+      <Filter>3rdParties\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdParties\imgui\imgui_internal.h">
+      <Filter>3rdParties\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdParties\imgui\imstb_rectpack.h">
+      <Filter>3rdParties\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdParties\imgui\imstb_textedit.h">
+      <Filter>3rdParties\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdParties\imgui\imstb_truetype.h">
+      <Filter>3rdParties\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdParties\imgui\backends\imgui_impl_dx11.h">
+      <Filter>3rdParties\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdParties\imgui\backends\imgui_impl_win32.h">
+      <Filter>3rdParties\imgui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
