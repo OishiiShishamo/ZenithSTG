@@ -11,116 +11,20 @@ Bullet::MoveBullet() {
 	if (alive == 1) {
 		angleT = (frame * 1.0f - shotFrame * 1.0f) * 1.0f / angleEaseTime * 1.0f;
 		if (angleT > 1)angleT = 1;
-		switch (angleEaseType) {
-		case 0:
-			angle = Linear(angleT, startAngle, endAngle) * 1.0f;
-			break;
-		case 1:
-			angle = EaseInQuad(angleT, startAngle, endAngle) * 1.0f;
-			break;
-		case 2:
-			angle = EaseOutQuad(angleT, startAngle, endAngle) * 1.0f;
-			break;
-		case 3:
-			angle = EaseInOutQuad(angleT, startAngle, endAngle) * 1.0f;
-			break;
-		case 4:
-			angle = EaseInCubic(angleT, startAngle, endAngle) * 1.0f;
-			break;
-		case 5:
-			angle = EaseOutCubic(angleT, startAngle, endAngle) * 1.0f;
-			break;
-		case 6:
-			angle = EaseInOutCubic(angleT, startAngle, endAngle) * 1.0f;
-			break;
-		default:
-			angle = Linear(angleT, startAngle, endAngle) * 1.0f;
-			break;
-		}
+		angle = Easing(angleEaseType, angleT, startAngle, endAngle) * 1.0f;
+
 		speedT = (frame * 1.0f - shotFrame * 1.0f) * 1.0f / speedEaseTime * 1.0f;
 		if (speedT > 1) speedT = 1;
-		switch (speedEaseType) {
-		case 0:
-			speed = Linear(speedT, startSpeed, endSpeed) * 1.0f;
-			break;
-		case 1:
-			speed = EaseInQuad(speedT, startSpeed, endSpeed) * 1.0f;
-			break;
-		case 2:
-			speed = EaseOutQuad(speedT, startSpeed, endSpeed) * 1.0f;
-			break;
-		case 3:
-			speed = EaseInOutQuad(speedT, startSpeed, endSpeed) * 1.0f;
-			break;
-		case 4:
-			speed = EaseInCubic(speedT, startSpeed, endSpeed) * 1.0f;
-			break;
-		case 5:
-			speed = EaseOutCubic(speedT, startSpeed, endSpeed) * 1.0f;
-			break;
-		case 6:
-			speed = EaseInOutCubic(speedT, startSpeed, endSpeed) * 1.0f;
-			break;
-		default:
-			speed = Linear(speedT, startSpeed, endSpeed) * 1.0f;
-			break;
-		}
+		speed = Easing(speedEaseType, speedT, startSpeed, endSpeed);
+
 		colSizeT = (frame * 1.0f - shotFrame * 1.0f) * 1.0f / colSizeEaseTime * 1.0f;
 		if (colSizeT > 1)colSizeT = 1;
-		switch (colSizeEaseType) {
-		case 0:
-			colSize = Linear(colSizeT, startColSize, endColSize) * 1.0f;
-			break;
-		case 1:
-			colSize = EaseInQuad(colSizeT, startColSize, endColSize) * 1.0f;
-			break;
-		case 2:
-			colSize = EaseOutQuad(colSizeT, startColSize, endColSize) * 1.0f;
-			break;
-		case 3:
-			colSize = EaseInOutQuad(colSizeT, startColSize, endColSize) * 1.0f;
-			break;
-		case 4:
-			colSize = EaseInCubic(colSizeT, startColSize, endColSize) * 1.0f;
-			break;
-		case 5:
-			colSize = EaseOutCubic(colSizeT, startColSize, endColSize) * 1.0f;
-			break;
-		case 6:
-			colSize = EaseInOutCubic(colSizeT, startColSize, endColSize) * 1.0f;
-			break;
-		default:
-			colSize = Linear(colSizeT, startColSize, endColSize) * 1.0f;
-			break;
-		}
+		colSize = Easing(colSizeEaseType, colSizeT, startColSize, endColSize) * 1.0f;
+
 		sizeT = (frame * 1.0f - shotFrame * 1.0f) * 1.0f / sizeEaseTime * 1.0f;
 		if (sizeT > 1) sizeT = 1;
-		switch (sizeEaseType) {
-		case 0:
-			size = Linear(sizeT, startSize, endSize) * 1.0f;
-			break;
-		case 1:
-			size = EaseInQuad(sizeT, startSize, endSize) * 1.0f;
-			break;
-		case 2:
-			size = EaseOutQuad(sizeT, startSize, endSize) * 1.0f;
-			break;
-		case 3:
-			size = EaseInOutQuad(sizeT, startSize, endSize) * 1.0f;
-			break;
-		case 4:
-			size = EaseInCubic(sizeT, startSize, endSize) * 1.0f;
-			break;
-		case 5:
-			size = EaseOutCubic(sizeT, startSize, endSize) * 1.0f;
-			break;
-		case 6:
-			size = EaseInOutCubic(sizeT, startSize, endSize) * 1.0f;
-			break;
-		default:
-			size = Linear(sizeT, startSize, endSize) * 1.0f;
-			break;
-		}
+		size = Easing(sizeEaseType, sizeT, startSize, endSize) * 1.0f;
+
 		vecX = cos(angle);
 		vecY = -sin(angle);
 		if (speed >= Plyr.colSize + Plyr.colSize) {

@@ -1,7 +1,7 @@
 #include "main.h"
 
 //TODO: プロパティとかを別で行けるようにする
-//TODO: 軽くする(これ重要)
+//TODO: リファクタリングする
 //TODO: フォルダ構成を真面目にやる
 
 imageRes imgRes;

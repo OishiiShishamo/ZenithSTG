@@ -1,5 +1,36 @@
 #include "Easing.h"
 
+//ƒ‰ƒbƒpŠÖ”
+double
+Easing(int easeType, double t, double start, double end) {
+	switch (easeType) {
+	case 0:
+		return Linear(t, start, end) * 1.0f;
+		break;
+	case 1:
+		return EaseInQuad(t, start, end) * 1.0f;
+		break;
+	case 2:
+		return EaseOutQuad(t, start, end) * 1.0f;
+		break;
+	case 3:
+		return EaseInOutQuad(t, start, end) * 1.0f;
+		break;
+	case 4:
+		return EaseInCubic(t, start, end) * 1.0f;
+		break;
+	case 5:
+		return EaseOutCubic(t, start, end) * 1.0f;
+		break;
+	case 6:
+		return EaseInOutCubic(t, start, end) * 1.0f;
+		break;
+	default:
+		return Linear(t, start, end) * 1.0f;
+		break;
+	}
+}
+
 // üŒ`•âŠÔ
 double
 Linear(double t, double start, double end) {

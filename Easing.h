@@ -12,25 +12,21 @@
 
 #include "main.h"
 
-// 線形補間
+//ラッパ関数
+double Easing(int easeType, double t, double start, double end);
+
 double Linear(double t, double start, double end);
 
-// イージイン (加速) - 二次曲線
 double EaseInQuad(double t, double start, double end);
 
-// イージアウト (減速) - 二次曲線
 double EaseOutQuad(double t, double start, double end);
 
-// イージインアウト (加速と減速) - 二次曲線
 double EaseInOutQuad(double t, double start, double end);
 
-// イージイン (加速) - 三次曲線
 double EaseInCubic(double t, double start, double end);
 
-// イージアウト (減速) - 三次曲線
 double EaseOutCubic(double t, double start, double end);
 
-// イージインアウト (加速と減速) - 三次曲線
 double EaseInOutCubic(double t, double start, double end);
 
 #endif
