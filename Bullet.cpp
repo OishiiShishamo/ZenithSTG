@@ -1,79 +1,39 @@
+#include "Main.h"
+
 #include "Bullet.h"
+#include "Object.h"
+#include "Color.h"
+#include "Player.h"
+#include "Easing.h"
 
 //TODO: ˆø”Œ¸‚ç‚µ‚½ƒ‰ƒbƒp[ŠÖ”ì‚é
-
-double angleT, speedT, colSizeT, sizeT;
 
 int defaultBulletBlend[128];
 
 void
-Bullet::MoveBullet() {
-	if (alive == 1) {
-		angleT = (frame * 1.0f - shotFrame * 1.0f) * 1.0f / angleEaseTime * 1.0f;
-		if (angleT > 1)angleT = 1;
-		angle = Easing(angleEaseType, angleT, startAngle, endAngle) * 1.0f;
-
-		speedT = (frame * 1.0f - shotFrame * 1.0f) * 1.0f / speedEaseTime * 1.0f;
-		if (speedT > 1) speedT = 1;
-		speed = Easing(speedEaseType, speedT, startSpeed, endSpeed);
-
-		colSizeT = (frame * 1.0f - shotFrame * 1.0f) * 1.0f / colSizeEaseTime * 1.0f;
-		if (colSizeT > 1)colSizeT = 1;
-		colSize = Easing(colSizeEaseType, colSizeT, startColSize, endColSize) * 1.0f;
-
-		sizeT = (frame * 1.0f - shotFrame * 1.0f) * 1.0f / sizeEaseTime * 1.0f;
-		if (sizeT > 1) sizeT = 1;
-		size = Easing(sizeEaseType, sizeT, startSize, endSize) * 1.0f;
-
-		vecX = cos(angle);
-		vecY = -sin(angle);
-		if (speed >= Plyr.colSize + Plyr.colSize) {
-			for (int i = 0; i < std::ceil(Plyr.colSize * 1.0f / speed * 1.0f); i++) {
-				posX += vecX * speed / std::ceil(Plyr.colSize / speed) * 1.0f;
-				posY += vecY * speed / std::ceil(Plyr.colSize / speed) * 1.0f;
-				if (Plyr.RangePlayer(posX, posY) < colSize + Plyr.colSize) {
-					Plyr.HitPlayer();
-					alive = 0;
-				}
-				if (posX < BORDER_LEFT - 64.0f * size) alive = 0;
-				if (posX > BORDER_RIGHT + 64.0f * size) alive = 0;
-				if (posY < BORDER_UP - 64.0f * size) alive = 0;
-				if (posY > BORDER_DOWN + 64.0f * size) alive = 0;
-			}
-		}
-		else {
-			posX += vecX * speed * 1.0f;
-			posY += vecY * speed * 1.0f;
-			if (Plyr.RangePlayer(posX, posY) < colSize + Plyr.colSize) {
-				Plyr.HitPlayer();
-				alive = 0;
-			}
-			if (posX < BORDER_LEFT - 64.0f * size) alive = 0;
-			if (posX > BORDER_RIGHT + 64.0f * size) alive = 0;
-			if (posY < BORDER_UP - 64.0f * size) alive = 0;
-			if (posY > BORDER_DOWN + 64.0f * size) alive = 0;
-		}
-		if (blend == -1) {
-			SmartSetDrawBlendMode(defaultBulletBlend[style], pal);
-			SetDrawBright(color.r, color.g, color.b);
-			SetDrawMode(DX_DRAWMODE_BILINEAR);
-			DrawRotaGraph(posX, posY, size, -angle, imgRes.BulletBackGH[style], TRUE);
-			SetDrawBright(255, 255, 255);
-			DrawRotaGraph(posX, posY, size, -angle, imgRes.BulletFrontGH[style], TRUE);
-			SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-			SetDrawMode(DX_DRAWMODE_NEAREST);
-		}
-		else {
-			SmartSetDrawBlendMode(blend, pal);
-			SetDrawBright(color.r, color.g, color.b);
-			SetDrawMode(DX_DRAWMODE_BILINEAR);
-			DrawRotaGraph(posX, posY, size, -angle, imgRes.BulletBackGH[style], TRUE);
-			SetDrawBright(255, 255, 255);
-			DrawRotaGraph(posX, posY, size, -angle, imgRes.BulletFrontGH[style], TRUE);
-			SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-			SetDrawMode(DX_DRAWMODE_NEAREST);
-		}
-		if (isColShow == 1) {
+Bullet::ShowBullet() {
+	if (blend == -1) {
+		SmartSetDrawBlendMode(defaultBulletBlend[style], pal);
+		SetDrawBright(color.r, color.g, color.b);
+		SetDrawMode(DX_DRAWMODE_BILINEAR);
+		DrawRotaGraph(posX, posY, size, -angle, imgRes.BulletBackGH[style], TRUE);
+		SetDrawBright(255, 255, 255);
+		DrawRotaGraph(posX, posY, size, -angle, imgRes.BulletFrontGH[style], TRUE);
+		SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+		SetDrawMode(DX_DRAWMODE_NEAREST);
+	}
+	else {
+		SmartSetDrawBlendMode(blend, pal);
+		SetDrawBright(color.r, color.g, color.b);
+		SetDrawMode(DX_DRAWMODE_BILINEAR);
+		DrawRotaGraph(posX, posY, size, -angle, imgRes.BulletBackGH[style], TRUE);
+		SetDrawBright(255, 255, 255);
+		DrawRotaGraph(posX, posY, size, -angle, imgRes.BulletFrontGH[style], TRUE);
+		SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+		SetDrawMode(DX_DRAWMODE_NEAREST);
+	}
+	if (isColShow == 1) {
+		if (isCol == 1) {
 			SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 			DrawCircle(posX, posY, colSize, GetColor(255, 255, 255), 1);
 			DrawFormatString(posX, posY, GetColor(GetColorHSV(std::fmod(frame, 360), 1, 1).r, GetColorHSV(std::fmod(frame, 360), 1, 1).g, GetColorHSV(std::fmod(frame, 360), 1, 1).b), "%f", colSize);
@@ -86,6 +46,7 @@ CreateBullet(double x, double y, Color color, int style, int blend, int pal, dou
 	for (int i = 0; i < Bullets.size(); i++) {
 		if (Bullets[i].alive == 0) {
 			Bullets[i].alive = 1;
+			Bullets[i].isCol = 1;
 			Bullets[i].posX = x;
 			Bullets[i].posY = y;
 			Bullets[i].color = color;
@@ -114,15 +75,15 @@ CreateBullet(double x, double y, Color color, int style, int blend, int pal, dou
 			Bullets[i].endSpeed = endSpeed;
 			Bullets[i].speedEaseType = speedEaseType;
 			Bullets[i].speedEaseTime = speedEaseTime;
-			Bullets[i].shotFrame = frame;
+			Bullets[i].popFrame = frame;
 			return;
 		}
 	}
 	if (aim == 1) {
-		Bullets.emplace_back(1, x, y, Plyr.AimPlayer(x, y) + startAngle, Plyr.AimPlayer(x, y) + endAngle, angleEaseType, angleEaseTime, color, style, blend, pal, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime, frame);
+		Bullets.emplace_back(1, 1, x, y, Plyr.AimPlayer(x, y) + startAngle, Plyr.AimPlayer(x, y) + endAngle, angleEaseType, angleEaseTime, color, style, blend, pal, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime, frame);
 	}
 	else {
-		Bullets.emplace_back(1, x, y, startAngle, endAngle, angleEaseType, angleEaseTime, color, style, blend, pal, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime, frame);
+		Bullets.emplace_back(1, 1, x, y, startAngle, endAngle, angleEaseType, angleEaseTime, color, style, blend, pal, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime, frame);
 	}
 }
 
@@ -179,11 +140,12 @@ CreateSimpleBulletGroup(double x, double y, Color color, int style, int blend, i
 void
 MoveBullets() {
 	for (int i = 0; i < Bullets.size(); i++) {
-		Bullets[i].MoveBullet();
+		Bullets[i].MoveObject();
+		Bullets[i].ShowBullet();
 	}
 	if (frame % 10 == 0) {
 		std::sort(Bullets.begin(), Bullets.end(), [](const Bullet& a, const Bullet& b) {
-			return a.shotFrame < b.shotFrame;
+			return a.popFrame < b.popFrame;
 		});
 		for (int i = 0; i < Bullets.size(); i++) {
 			if (Bullets[i].alive == 0) {

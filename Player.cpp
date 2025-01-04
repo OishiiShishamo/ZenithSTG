@@ -1,4 +1,7 @@
+#include "Main.h"
+
 #include "Player.h"
+#include "Color.h"
 
 //TODO: Ç‡Ç¡Ç∆ê^ñ ñ⁄Ç…çÏÇÈ
 //TODO: íeë≈ÇƒÇÈÇÊÇ§Ç…Ç∑ÇÈ
@@ -45,9 +48,6 @@ void
 Player::ShowPlayer() {
 	SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 	DrawRotaGraph(posX, posY, 1.0f, 0, imgRes.PlayerGH[0], 1);
-	if (GetAsyncKeyState(VK_SHIFT)) {
-		DrawRotaGraph(posX, posY, 1.0f, 0, imgRes.UIGH[1], TRUE);
-	}
 	if (isColShow == 1) {
 		SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 		DrawCircle(posX, posY, colSize, GetColor(255, 255, 255), 1);

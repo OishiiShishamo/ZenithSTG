@@ -2,8 +2,6 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "Main.h"
-
 #define DEFAULT_X CENTER_X
 #define DEFAULT_Y 900
 #define DEFAULT_LIFE 2

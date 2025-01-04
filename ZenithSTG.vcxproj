@@ -141,9 +141,11 @@
   <ItemGroup>
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Easing.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Init.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="mainLoop.cpp" />
+    <ClCompile Include="Object.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="resLoad.cpp" />
     <ClCompile Include="Time.cpp" />
@@ -153,10 +155,12 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Easing.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="headertemplate.h" />
     <ClInclude Include="Init.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="mainLoop.h" />
+    <ClInclude Include="Object.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="resLoad.h" />
     <ClInclude Include="Time.h" />

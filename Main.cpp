@@ -1,4 +1,13 @@
-#include "main.h"
+#include "Main.h"
+
+#include "Color.h"
+#include "Bullet.h"
+#include "Easing.h"
+#include "Init.h"
+#include "mainLoop.h"
+#include "Player.h"
+#include "resLoad.h"
+#include "Time.h"
 
 //TODO: プロパティとかを別で行けるようにする
 //TODO: リファクタリングする

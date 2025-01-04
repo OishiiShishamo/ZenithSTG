@@ -2,7 +2,7 @@
 #ifndef COLOR_H
 #define COLOR_H
 
-#include "main.h"
+#include "Main.h"
 
 //SIMPLE
 

@@ -1,4 +1,12 @@
+#include "Main.h"
+
 #include "mainLoop.h"
+#include "Init.h"
+#include "Time.h"
+#include "Color.h"
+#include "Easing.h"
+#include "Bullet.h"
+#include "Player.h"
 
 Color coltmp(0, 0, 0);
 double unko = 1.0f;
@@ -10,7 +18,7 @@ mainLoop::Loop() {
 	//TESTDANMAKUKUKUKUKUKUKUKUKUKUKU
 	if (frame % 1 == 0) {
 		coltmp = GetColorHSV(std::fmod(frame, 360), 1, 1);
-		CreateBulletGroup(CENTER_X, CENTER_Y, GetColorHSV(std::fmod(frame, 360), 1, 1), B_LIGHT, BLEND_ADD, 255, 10.0f, 10.0f, EASEINQUAD, 120, 2.0f, 1.0f, EASEINQUAD, 120, 16, TAU, 0, Rad(frame), Rad(frame + 80), EASEOUTQUAD, 240, -10.0f, 10.0f, EASEINQUAD, 120);
+		CreateBulletGroup(CENTER_X, CENTER_Y, GetColorHSV(std::fmod(frame, 360), 1, 1), B_LIGHT, BLEND_ADD, 255, 10.0f, 10.0f, EASEINQUAD, 120, 2.0f, 1.75f, EASEINQUAD, 120, 16, TAU, 0, Rad(frame), Rad(frame + 80), EASEOUTQUAD, 240, -10.0f, 10.0f, EASEINQUAD, 120);
 	}
 	DrawBox(0, 0, 1920, 1080, GetColor(C_GRAY), 1);
 	SetDrawScreen(bulletCanvas);
@@ -25,6 +33,9 @@ mainLoop::Loop() {
 	DrawRotaGraph4(CENTER_X, CENTER_Y, 1.0f, 0, 0, 0, backgroundCanvas, 1, 0, 0);
 	DrawRotaGraph4(CENTER_X, CENTER_Y, 1.0f, 0, 0, 0, playerCanvas, 1, 0, 0);
 	DrawRotaGraph4(CENTER_X, CENTER_Y, 1.0f, 0, 0, 0, bulletCanvas, 1, 0, 0);
+	if (GetAsyncKeyState(VK_SHIFT)) {
+		DrawRotaGraph(Plyr.posX, Plyr.posY, 1.0f, 0, imgRes.UIGH[1], TRUE);
+	}
 	SetDrawScreen(DX_SCREEN_BACK);
 	ClearDrawScreen();
 	//DrawRotaGraph(CENTER_X, CENTER_Y, 1.0f, 0, screenCanvas, TRUE);

@@ -10,7 +10,7 @@
 #define EASEOUTCUBIC 5
 #define EASEINOUTCUBIC 6
 
-#include "main.h"
+#include "Main.h"
 
 //ƒ‰ƒbƒpŠÖ”
 double Easing(int easeType, double t, double start, double end);

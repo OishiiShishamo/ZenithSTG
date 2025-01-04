@@ -1,4 +1,8 @@
+#include "Main.h"
+
 #include "resLoad.h"
+#include "Player.h"
+#include "Color.h"
 
 void
 resLoad::UIGHLoad() {

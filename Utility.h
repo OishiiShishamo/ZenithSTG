@@ -2,8 +2,6 @@
 #ifndef SSMLIB_H
 #define SSMLIB_H
 
-#include "main.h"
-
 //‚ ‚Á‚½‚ç•Ö—˜‚»‚¤‚È‚â‚Â‚Ü‚Æ‚ß
 
 void VecNorm(double& x, double& y);

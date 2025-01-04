@@ -2,6 +2,6 @@
 #ifndef _H
 #define _H
 
-#include "main.h"
+#include "Main.h"
 
 #endif

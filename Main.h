@@ -5,6 +5,7 @@
 struct imageRes;
 
 class Color;
+class Object;
 class Bullet;
 class Player;
 class mainLoop;
@@ -19,15 +20,6 @@ class mainLoop;
 #include "boost/multiprecision/cpp_int.hpp"
 #include "DxLib.h"
 #include "Utility.h"
-
-#include "Color.h"
-#include "Bullet.h"
-#include "Easing.h"
-#include "Init.h"
-#include "mainLoop.h"
-#include "Player.h"
-#include "resLoad.h"
-#include "Time.h"
 
 #define PI DX_PI
 #define TAU PI * 2

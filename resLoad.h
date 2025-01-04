@@ -2,8 +2,6 @@
 #ifndef RESLOAD_H
 #define RESLOAD_H
 
-#include "main.h"
-
 class resLoad {
 public:
 	void UIGHLoad();

@@ -1,4 +1,7 @@
+#include "Main.h"
+
 #include "Utility.h"
+#include "Color.h"
 
 void
 VecNorm(double& x, double& y) {

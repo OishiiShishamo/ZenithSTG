@@ -2,8 +2,6 @@
 #ifndef TIME_H
 #define TIME_H
 
-#include "main.h"
-
 class Time {
 public:
 	long long framedayo = 0;

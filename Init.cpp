@@ -1,4 +1,10 @@
+#include "Main.h"
+
 #include "init.h"
+#include "resLoad.h"
+#include "Player.h"
+#include "Bullet.h"
+#include "Color.h"
 
 resLoad res;
 

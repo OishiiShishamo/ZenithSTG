@@ -2,7 +2,7 @@
 #ifndef MAINLOOP_H
 #define MAINLOOP_H
 
-#include "main.h"
+#include "Main.h"
 
 class mainLoop {
 public:
