@@ -22,7 +22,7 @@ mainLoop Loop;
 std::vector<Bullet> Bullets;
 
 long long frame = 0;
-long long fps = 59;
+long long fps = 60;
 int elapsedFrame = 0;
 int currentBlendMode = DX_BLENDGRAPHTYPE_NORMAL;
 int currentBlendPal = 255;

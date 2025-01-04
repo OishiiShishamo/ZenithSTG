@@ -18,7 +18,7 @@ mainLoop::Loop() {
 	//TESTDANMAKUKUKUKUKUKUKUKUKUKUKU
 	if (frame % 1 == 0) {
 		coltmp = GetColorHSV(std::fmod(frame, 360), 1, 1);
-		CreateBulletGroup(CENTER_X, CENTER_Y, GetColorHSV(std::fmod(frame, 360), 1, 1), B_LIGHT, BLEND_ADD, 255, 10.0f, 10.0f, EASEINQUAD, 120, 2.0f, 2.0f, EASEINQUAD, 120, 16, TAU, 0, Rad(frame), Rad(frame + 80), EASEOUTQUAD, 240, -10.0f, 10.0f, EASEINQUAD, 120);
+		CreateBulletGroup(CENTER_X, CENTER_Y, GetColorHSV(std::fmod(frame, 360), 1, 1), B_LIGHT, BLEND_ADD, 255, 10.0f, 10.0f, EASEINQUAD, 120, 2.0f, 2.0f, EASEINQUAD, 120, 8, TAU, 0, Rad(frame), Rad(frame + 80), EASEOUTQUAD, 240, -10.0f, 10.0f, EASEINQUAD, 120);
 	}
 	DrawBox(0, 0, 1920, 1080, GetColor(C_GRAY), 1);
 	SetDrawScreen(bulletCanvas);
