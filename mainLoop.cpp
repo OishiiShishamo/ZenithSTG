@@ -18,7 +18,7 @@ mainLoop::Loop() {
 	//TESTDANMAKUKUKUKUKUKUKUKUKUKUKU
 	if (frame % 1 == 0) {
 		coltmp = GetColorHSV(std::fmod(frame, 360), 1, 1);
-		CreateBulletGroup(CENTER_X, CENTER_Y, GetColorHSV(std::fmod(frame, 360), 1, 1), B_LIGHT, BLEND_ADD, 255, 10.0f, 10.0f, EASEINQUAD, 120, 2.0f, 1.75f, EASEINQUAD, 120, 16, TAU, 0, Rad(frame), Rad(frame + 80), EASEOUTQUAD, 240, -10.0f, 10.0f, EASEINQUAD, 120);
+		CreateBulletGroup(CENTER_X, CENTER_Y, GetColorHSV(std::fmod(frame, 360), 1, 1), B_LIGHT, BLEND_ADD, 255, 10.0f, 10.0f, EASEINQUAD, 120, 2.0f, 2.0f, EASEINQUAD, 120, 16, TAU, 0, Rad(frame), Rad(frame + 80), EASEOUTQUAD, 240, -10.0f, 10.0f, EASEINQUAD, 120);
 	}
 	DrawBox(0, 0, 1920, 1080, GetColor(C_GRAY), 1);
 	SetDrawScreen(bulletCanvas);
@@ -54,9 +54,6 @@ mainLoop::Loop() {
 		DrawRotaGraph4(BORDER_RIGHT / 2, BORDER_DOWN / 2, unko, 0, 0, 0, screenCanvas, 1, 0, 0);
 	}
 	SmartSetDrawBlendMode(BLEND_NOBLEND, 255);
-	if (frame == timeMng.framedayo) {
-		ScreenFlip();
-	}
 	if (CheckHitKey(KEY_INPUT_P) == 1) {
 		SaveDrawScreen(0, 0, 1920, 1080, "ScreenShot.bmp");
 	}

@@ -1,6 +1,7 @@
 #include "Main.h"
 
 #include "Color.h"
+#include "Object.h"
 #include "Bullet.h"
 #include "Easing.h"
 #include "Init.h"
@@ -8,6 +9,7 @@
 #include "Player.h"
 #include "resLoad.h"
 #include "Time.h"
+#include "FPS.h"
 
 //TODO: プロパティとかを別で行けるようにする
 //TODO: リファクタリングする
@@ -20,7 +22,8 @@ mainLoop Loop;
 std::vector<Bullet> Bullets;
 
 long long frame = 0;
-long long fps = 60;
+long long fps = 59;
+int elapsedFrame = 0;
 int currentBlendMode = DX_BLENDGRAPHTYPE_NORMAL;
 int currentBlendPal = 255;
 
@@ -60,10 +63,17 @@ WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, in
 	timeMng.StartTimer();
 	while (1) {
 		timeMng.ElapsedTime();
+		elapsedFrame = timeMng.framedayo - frame;
 		while (frame < timeMng.framedayo) {
 			frame++;
 			Loop.Loop();
 		}
+		if (elapsedFrame == 0) {
+			elapsedFrame = 1;
+		}
+		ShowFPS(0, 0, 20, elapsedFrame, Color(C_WHITE));
+
+		ScreenFlip();
 
 		if (ProcessMessage() < 0) break;
 		if (CheckHitKey(KEY_INPUT_ESCAPE)) break;
