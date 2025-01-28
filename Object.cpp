@@ -10,6 +10,9 @@ Object::MoveObject() {
 		angleT = (frame * 1.0f - popFrame * 1.0f) * 1.0f / angleEaseTime * 1.0f;
 		if (angleT > 1)angleT = 1;
 		angle = Easing(angleEaseType, angleT, startAngle, endAngle) * 1.0f;
+		if (isAlignedAngle == 1) {
+			showAngle = angle;
+		}
 
 		speedT = (frame * 1.0f - popFrame * 1.0f) * 1.0f / speedEaseTime * 1.0f;
 		if (speedT > 1) speedT = 1;

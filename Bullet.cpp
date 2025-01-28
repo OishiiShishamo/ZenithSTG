@@ -8,7 +8,7 @@
 
 //TODO: à¯êîå∏ÇÁÇµÇΩÉâÉbÉpÅ[ä÷êîçÏÇÈ
 
-int defaultBulletBlend[128];
+std::vector<int> defaultBulletBlend;
 
 void
 Bullet::ShowBullet() {
@@ -16,9 +16,9 @@ Bullet::ShowBullet() {
 		SmartSetDrawBlendMode(defaultBulletBlend[style], pal);
 		SetDrawBright(color.r, color.g, color.b);
 		SetDrawMode(DX_DRAWMODE_BILINEAR);
-		DrawRotaGraph(posX, posY, size, -angle, imgRes.BulletBackGH[style], TRUE);
+		DrawRotaGraph(posX, posY, size, -showAngle, imgRes.BulletBackGH[style], TRUE);
 		SetDrawBright(255, 255, 255);
-		DrawRotaGraph(posX, posY, size, -angle, imgRes.BulletFrontGH[style], TRUE);
+		DrawRotaGraph(posX, posY, size, -showAngle, imgRes.BulletFrontGH[style], TRUE);
 		SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 		SetDrawMode(DX_DRAWMODE_NEAREST);
 	}
@@ -26,9 +26,9 @@ Bullet::ShowBullet() {
 		SmartSetDrawBlendMode(blend, pal);
 		SetDrawBright(color.r, color.g, color.b);
 		SetDrawMode(DX_DRAWMODE_BILINEAR);
-		DrawRotaGraph(posX, posY, size, -angle, imgRes.BulletBackGH[style], TRUE);
+		DrawRotaGraph(posX, posY, size, -showAngle, imgRes.BulletBackGH[style], TRUE);
 		SetDrawBright(255, 255, 255);
-		DrawRotaGraph(posX, posY, size, -angle, imgRes.BulletFrontGH[style], TRUE);
+		DrawRotaGraph(posX, posY, size, -showAngle, imgRes.BulletFrontGH[style], TRUE);
 		SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 		SetDrawMode(DX_DRAWMODE_NEAREST);
 	}
@@ -80,10 +80,10 @@ CreateBullet(double x, double y, Color color, int style, int blend, int pal, dou
 		}
 	}
 	if (aim == 1) {
-		Bullets.emplace_back(1, 1, x, y, Plyr.AimPlayer(x, y) + startAngle, Plyr.AimPlayer(x, y) + endAngle, angleEaseType, angleEaseTime, color, style, blend, pal, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime, frame);
+		Bullets.emplace_back(1, 1, x, y, Plyr.AimPlayer(x, y) + startAngle, Plyr.AimPlayer(x, y) + endAngle, angleEaseType, angleEaseTime, 0, 0, 0, 0, color, style, blend, pal, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime, frame);
 	}
 	else {
-		Bullets.emplace_back(1, 1, x, y, startAngle, endAngle, angleEaseType, angleEaseTime, color, style, blend, pal, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime, frame);
+		Bullets.emplace_back(1, 1, x, y, startAngle, endAngle, angleEaseType, angleEaseTime, 0, 0, 0, 0, color, style, blend, pal, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime, frame);
 	}
 }
 

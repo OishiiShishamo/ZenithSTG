@@ -5,6 +5,7 @@
 
 //TODO: もっと真面目に作る
 //TODO: 弾打てるようにする
+//TODO: コントローラーに対応させる
 
 double
 Player::AimPlayer(double x, double y) {

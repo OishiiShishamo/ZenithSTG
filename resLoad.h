@@ -7,6 +7,7 @@ public:
 	void UIGHLoad();
 	void BulletGHLoad();
 	void EnemyGHLoad();
+	void FaceGHLoad();
 	void PlayerGHLoad();
 };
 

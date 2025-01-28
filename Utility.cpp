@@ -114,10 +114,9 @@ GetColorHSV(float H, float S, float V) {
 
 void
 SmartSetDrawBlendMode(int BlendMode, int Pal) {
+	GetDrawBlendMode(&currentBlendMode, &currentBlendPal);
 	if (!(currentBlendMode == BlendMode && currentBlendPal == Pal)) {
 		SetDrawBlendMode(BlendMode, Pal);
-		currentBlendMode = BlendMode;
-		currentBlendPal = Pal;
 	}
 }
 

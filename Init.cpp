@@ -16,7 +16,7 @@ Init() {
 	SetChangeScreenModeGraphicsSystemResetFlag(FALSE);
 	SetGraphMode(1920, 1080, 32);
 	SetDoubleStartValidFlag(TRUE);
-	//SetAlwaysRunFlag(0);
+	SetAlwaysRunFlag(1);
 	SetUseDirect3DVersion(DX_DIRECT3D_11);
 	SetUsePremulAlphaConvertLoad(TRUE);
 	SetFontSize(20);
@@ -37,7 +37,7 @@ Init() {
 	Plyr.isMouse = 0;
 
 	for (int i = 0; i < 128; i++) {
-		defaultBulletBlend[i] = BLEND_NOBLEND;
+		defaultBulletBlend.emplace_back(BLEND_NOBLEND);
 	}
 	defaultBulletBlend[B_LIGHT] = BLEND_ADD;
 	defaultBulletBlend[B_BIG] = BLEND_ADD;
@@ -47,6 +47,8 @@ void
 ResInit() {
 	res.UIGHLoad();
 	res.BulletGHLoad();
+	res.EnemyGHLoad();
+	res.FaceGHLoad();
 	res.PlayerGHLoad();
 
 	backgroundCanvas = MakeScreen(1920, 1080, 1);

@@ -46,13 +46,13 @@ class mainLoop;
 #define BLEND_PMA_INVSRC DX_BLENDMODE_PMA_INVSRC
 
 struct imageRes {
-	int UIGH[64];
-	int BulletBackGH[256];
-	int BulletFrontGH[256];
-	int EnemyGH[256];
-	int FaceGH[256];
-	int PlayerGH[256];
-	int EtcGH[256];
+	std::vector<int> UIGH;
+	std::vector<int> BulletBackGH;
+	std::vector<int> BulletFrontGH;
+	std::vector<int> EnemyGH;
+	std::vector<int> FaceGH;
+	std::vector<int> PlayerGH;
+	std::vector<int> EtcGH;
 };
 
 extern imageRes imgRes;
@@ -65,7 +65,7 @@ extern long long frame;
 extern long long fps;
 extern int currentBlendMode;
 extern int currentBlendPal;
-extern int defaultBulletBlend[128];
+extern std::vector<int> defaultBulletBlend;
 extern int isColShow;
 
 extern int backgroundCanvas;

@@ -7,6 +7,7 @@
 #include "Init.h"
 #include "mainLoop.h"
 #include "Player.h"
+#include "playerShot.h"
 #include "resLoad.h"
 #include "Time.h"
 #include "FPS.h"
@@ -20,6 +21,7 @@ imageRes imgRes;
 mainLoop Loop;
 
 std::vector<Bullet> Bullets;
+std::vector<playerShot> plyrShots;
 
 long long frame = 0;
 long long fps = 60;
