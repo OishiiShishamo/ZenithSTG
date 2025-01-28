@@ -4,10 +4,12 @@
 
 #include "Main.h"
 
+//TODO: ïœêîñºÇ¢Ç¢ä¥Ç∂Ç…Ç∑ÇÈ
+
 class mainLoop {
 public:
-	int windowSize = 2;
 	long long frontChangeWindowSizeFrame = 0;
+	long long frontChangeWindowFrame = 0;
 	int isWindowSplit = 0;
 	void Loop();
 };

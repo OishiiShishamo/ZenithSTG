@@ -4,6 +4,7 @@
 
 struct imageRes;
 
+class Property;
 class Color;
 class Object;
 class Bullet;
@@ -20,6 +21,7 @@ class mainLoop;
 #include "boost/multiprecision/cpp_int.hpp"
 #include "DxLib.h"
 #include "Utility.h"
+#include "Property.h"
 
 #define PI DX_PI
 #define TAU PI * 2
@@ -56,6 +58,8 @@ struct imageRes {
 };
 
 extern imageRes imgRes;
+
+extern Property Properties;
 
 extern mainLoop Loop;
 

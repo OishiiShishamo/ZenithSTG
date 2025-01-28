@@ -12,11 +12,12 @@
 #include "Time.h"
 #include "FPS.h"
 
-//TODO: プロパティとかを別で行けるようにする
 //TODO: リファクタリングする
 //TODO: フォルダ構成を真面目にやる
 
 imageRes imgRes;
+
+Property Properties;
 
 mainLoop Loop;
 
@@ -43,16 +44,16 @@ int
 WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 	Init();
 	if (DxLib_Init() == -1)	return -1;
-	switch (Loop.windowSize) {
-	case 1:
+	switch (Properties.windowSize) {
+	case 0:
 		SetWindowSize(1280, 720);
 		ResInit();
 		break;
-	case 2:
+	case 1:
 		SetWindowSize(1600, 900);
 		ResInit();
 		break;
-	case 3:
+	case 2:
 		SetWindowSize(1920, 1080);
 		ResInit();
 		break;

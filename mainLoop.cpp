@@ -64,18 +64,18 @@ mainLoop::Loop() {
 	if (GetAsyncKeyState(VK_F4) & 1) {
 		if (frame > frontChangeWindowSizeFrame + 15) {
 			frontChangeWindowSizeFrame = frame;
-			windowSize++;
-			if (windowSize > 3)windowSize = 1;
-			switch (windowSize) {
-			case 1:
+			Properties.windowSize++;
+			if (Properties.windowSize > 2) Properties.windowSize = 0;
+			switch (Properties.windowSize) {
+			case 0:
 				SetWindowSize(1280, 720);
 				ResInit();
 				break;
-			case 2:
+			case 1:
 				SetWindowSize(1600, 900);
 				ResInit();
 				break;
-			case 3:
+			case 2:
 				SetWindowSize(1920, 1080);
 				ResInit();
 				break;
@@ -84,6 +84,22 @@ mainLoop::Loop() {
 				ResInit();
 				break;
 			}
+		}
+	}
+	if (GetAsyncKeyState(VK_F11) & 1) {
+		if (frame > frontChangeWindowFrame + 15) {
+			frontChangeWindowFrame = frame;
+			Properties.isWindow++;
+			if (Properties.isWindow > 1) Properties.isWindow = 0;
+			ChangeWindowMode(Properties.isWindow);
+		}
+	}
+	if (GetAsyncKeyState(VK_RETURN) && GetAsyncKeyState(VK_MENU)) {
+		if (frame > frontChangeWindowFrame + 15) {
+			frontChangeWindowFrame = frame;
+			Properties.isWindow++;
+			if (Properties.isWindow > 1) Properties.isWindow = 0;
+			ChangeWindowMode(Properties.isWindow);
 		}
 	}
 }
