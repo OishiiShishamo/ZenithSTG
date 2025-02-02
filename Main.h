@@ -30,10 +30,13 @@ class mainLoop;
 #define CENTER_X 960
 #define CENTER_Y 540
 
-#define BORDER_LEFT 0
-#define BORDER_RIGHT 1920
-#define BORDER_UP 0
-#define BORDER_DOWN 1080
+#define BORDER_LEFT 528
+#define BORDER_RIGHT 1392
+#define BORDER_UP 35
+#define BORDER_DOWN 1045
+
+#define SCREEN_WIDTH 1920
+#define SCREEN_HEIGHT 1080
 
 #define BLEND_DEFAULT -1
 #define BLEND_NOBLEND DX_BLENDMODE_NOBLEND

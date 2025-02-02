@@ -45,9 +45,9 @@ mainLoop::Loop() {
 	//DrawRotaGraph(CENTER_X, CENTER_Y, 1.0f, 0, screenCanvas, TRUE);
 	if (isWindowSplit) {
 		int slice_tmp = 0;
-		for (int x = 0; x < BORDER_RIGHT; x += unko * BORDER_RIGHT) {
-			for (int y = 0; y < BORDER_DOWN; y += unko * BORDER_DOWN) {
-				DrawRotaGraph4(x + unko * BORDER_RIGHT / 2, y + unko * BORDER_DOWN / 2, unko, 0, 0, 0, screenCanvas, 1, 0, 0);
+		for (int x = 0; x < SCREEN_WIDTH; x += unko * SCREEN_WIDTH) {
+			for (int y = 0; y < SCREEN_HEIGHT; y += unko * SCREEN_HEIGHT) {
+				DrawRotaGraph4(x + unko * SCREEN_WIDTH / 2, y + unko * SCREEN_HEIGHT / 2, unko, 0, 0, 0, screenCanvas, 1, 0, 0);
 				slice_tmp++;
 				if (slice_tmp > 2048) break;
 			}
@@ -55,7 +55,7 @@ mainLoop::Loop() {
 		}
 	}
 	else {
-		DrawRotaGraph4(BORDER_RIGHT / 2, BORDER_DOWN / 2, unko, 0, 0, 0, screenCanvas, 1, 0, 0);
+		DrawRotaGraph4(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, unko, 0, 0, 0, screenCanvas, 1, 0, 0);
 	}
 	SmartSetDrawBlendMode(BLEND_NOBLEND, 255);
 	if (CheckHitKey(KEY_INPUT_P) == 1) {

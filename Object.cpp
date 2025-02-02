@@ -36,10 +36,10 @@ Object::MoveObject() {
 					Plyr.HitPlayer();
 					alive = 0;
 				}
-				if (posX < BORDER_LEFT - 64.0f * size) alive = 0;
-				if (posX > BORDER_RIGHT + 64.0f * size) alive = 0;
-				if (posY < BORDER_UP - 64.0f * size) alive = 0;
-				if (posY > BORDER_DOWN + 64.0f * size) alive = 0;
+				if (posX < BORDER_LEFT - 64.0f * size * 4) alive = 0;
+				if (posX > BORDER_RIGHT + 64.0f * size * 4) alive = 0;
+				if (posY < BORDER_UP - 64.0f * size * 4) alive = 0;
+				if (posY > BORDER_DOWN + 64.0f * size * 4) alive = 0;
 			}
 		}
 		else {
@@ -49,10 +49,10 @@ Object::MoveObject() {
 				Plyr.HitPlayer();
 				alive = 0;
 			}
-			if (posX < BORDER_LEFT - 64.0f * size) alive = 0;
-			if (posX > BORDER_RIGHT + 64.0f * size) alive = 0;
-			if (posY < BORDER_UP - 64.0f * size) alive = 0;
-			if (posY > BORDER_DOWN + 64.0f * size) alive = 0;
+			if (posX < BORDER_LEFT - 64.0f * size * 4) alive = 0;
+			if (posX > BORDER_RIGHT + 64.0f * size * 4) alive = 0;
+			if (posY < BORDER_UP - 64.0f * size * 4) alive = 0;
+			if (posY > BORDER_DOWN + 64.0f * size * 4) alive = 0;
 		}
 	}
 }
