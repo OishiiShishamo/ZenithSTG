@@ -4,11 +4,13 @@
 
 struct imageRes;
 
+class Time;
 class Property;
 class Color;
 class Object;
 class Bullet;
 class Player;
+class playerShot;
 class mainLoop;
 
 #include <chrono>
@@ -57,6 +59,7 @@ struct imageRes {
 	std::vector<int> EnemyGH;
 	std::vector<int> FaceGH;
 	std::vector<int> PlayerGH;
+	std::vector<int> ShotGH;
 	std::vector<int> EtcGH;
 };
 
@@ -66,13 +69,17 @@ extern Property Properties;
 
 extern mainLoop Loop;
 
+extern Player Plyr;
+
 extern std::vector<Bullet> Bullets;
+extern std::vector<playerShot> plyrShots;
 
 extern long long frame;
 extern long long fps;
 extern int currentBlendMode;
 extern int currentBlendPal;
 extern std::vector<int> defaultBulletBlend;
+extern std::vector<int> defaultPlayerShotBlend;
 extern int isColShow;
 
 extern int backgroundCanvas;

@@ -35,3 +35,8 @@ resLoad::PlayerGHLoad() {
 		imgRes.PlayerGH.emplace_back(LoadGraph(tmp.c_str()));
 	}
 }
+
+void
+resLoad::ShotGHLoad() {
+	imgRes.ShotGH.emplace_back(LoadGraph("res/img/shot/0.png"));
+}

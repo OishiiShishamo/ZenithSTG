@@ -9,6 +9,7 @@ public:
 	void EnemyGHLoad();
 	void FaceGHLoad();
 	void PlayerGHLoad();
+	void ShotGHLoad();
 };
 
 #endif

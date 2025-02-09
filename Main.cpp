@@ -21,6 +21,8 @@ Property Properties;
 
 mainLoop Loop;
 
+Player Plyr;
+
 std::vector<Bullet> Bullets;
 std::vector<playerShot> plyrShots;
 

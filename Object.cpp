@@ -32,9 +32,11 @@ Object::MoveObject() {
 			for (int i = 0; i < std::ceil(Plyr.colSize * 1.0f / speed * 1.0f); i++) {
 				posX += vecX * speed / std::ceil(Plyr.colSize / speed) * 1.0f;
 				posY += vecY * speed / std::ceil(Plyr.colSize / speed) * 1.0f;
-				if (Plyr.RangePlayer(posX, posY) < colSize + Plyr.colSize && isCol == 1) {
-					Plyr.HitPlayer();
-					alive = 0;
+				if (isCol == 1) {
+					if (Plyr.RangePlayer(posX, posY) < colSize + Plyr.colSize && isPlayerShot == 0) {
+						Plyr.HitPlayer();
+						alive = 0;
+					}
 				}
 				if (posX < BORDER_LEFT - 64.0f * size * 4) alive = 0;
 				if (posX > BORDER_RIGHT + 64.0f * size * 4) alive = 0;
@@ -45,9 +47,11 @@ Object::MoveObject() {
 		else {
 			posX += vecX * speed * 1.0f;
 			posY += vecY * speed * 1.0f;
-			if (Plyr.RangePlayer(posX, posY) < colSize + Plyr.colSize && isCol == 1) {
-				Plyr.HitPlayer();
-				alive = 0;
+			if (isCol == 1) {
+				if (Plyr.RangePlayer(posX, posY) < colSize + Plyr.colSize && isPlayerShot == 0) {
+					Plyr.HitPlayer();
+					alive = 0;
+				}
 			}
 			if (posX < BORDER_LEFT - 64.0f * size * 4) alive = 0;
 			if (posX > BORDER_RIGHT + 64.0f * size * 4) alive = 0;

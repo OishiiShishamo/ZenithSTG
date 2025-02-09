@@ -2,6 +2,7 @@
 
 #include "Player.h"
 #include "Color.h"
+#include "playerShot.h"
 
 //TODO: Ç‡Ç¡Ç∆ê^ñ ñ⁄Ç…çÏÇÈ
 //TODO: íeë≈ÇƒÇÈÇÊÇ§Ç…Ç∑ÇÈ
@@ -57,6 +58,13 @@ Player::ShowPlayer() {
 }
 
 void
+Player::Shot() {
+	if (GetAsyncKeyState(0x5A)) {
+		CreatePlayerShot(posX, posY, Color(255, 255, 255), 0, BLEND_ADD, 255, 24, 24, 0, 0, 1.0f, 1.0f, 0, 0, Rad(90), Rad(90), 0, 0, 5, 5, 0, 0);
+	}
+}
+
+void
 Player::HitPlayer() {
 	if (protectTime < 0) {
 		protectTime = Protect;
@@ -71,7 +79,6 @@ void
 Player::RoutinePlayer() {
 	MovePlayer();
 	ShowPlayer();
+	Shot();
 	protectTime--;
 }
-
-Player Plyr;

@@ -32,11 +32,10 @@ public:
 	double AimPlayer(double x, double y);
 	double RangePlayer(double x, double y);
 	void MovePlayer();
-	void ShowPlayer(); 
+	void ShowPlayer();
+	void Shot();
 	void HitPlayer();
 	void RoutinePlayer();
 };
-
-extern Player Plyr;
 
 #endif

@@ -68,6 +68,9 @@ Init() {
 	}
 	defaultBulletBlend[B_LIGHT] = BLEND_ADD;
 	defaultBulletBlend[B_BIG] = BLEND_ADD;
+	for (int i = 0; i < 128; i++) {
+		defaultPlayerShotBlend.emplace_back(BLEND_NOBLEND);
+	}
 }
 
 void
@@ -77,6 +80,7 @@ ResInit() {
 	res.EnemyGHLoad();
 	res.FaceGHLoad();
 	res.PlayerGHLoad();
+	res.ShotGHLoad();
 
 	backgroundCanvas = MakeScreen(1920, 1080, 1);
 	bulletCanvas = MakeScreen(1920, 1080, 1);

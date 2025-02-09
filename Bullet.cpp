@@ -47,6 +47,7 @@ CreateBullet(double x, double y, Color color, int style, int blend, int pal, dou
 		if (Bullets[i].alive == 0) {
 			Bullets[i].alive = 1;
 			Bullets[i].isCol = 1;
+			Bullets[i].isPlayerShot = 0;
 			Bullets[i].posX = x;
 			Bullets[i].posY = y;
 			Bullets[i].color = color;
