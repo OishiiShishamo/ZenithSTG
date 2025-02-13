@@ -9,9 +9,11 @@ class Property;
 class Color;
 class Object;
 class Bullet;
+class Laser;
 class Player;
 class playerShot;
 class mainLoop;
+class Vector;
 
 #include <chrono>
 #include <cmath>
@@ -23,6 +25,8 @@ class mainLoop;
 #include "boost/multiprecision/cpp_int.hpp"
 #include "DxLib.h"
 #include "Utility.h"
+#include "Vector.h"
+#include "Collision.h"
 #include "Property.h"
 
 #define PI DX_PI
@@ -31,6 +35,7 @@ class mainLoop;
 
 #define CENTER_X 960
 #define CENTER_Y 540
+#define CENTER Vector(CENTER_X, CENTER_Y)
 
 #define BORDER_LEFT 528
 #define BORDER_RIGHT 1392
@@ -52,6 +57,19 @@ class mainLoop;
 #define BLEND_PMA_SUB DX_BLENDMODE_PMA_SUB
 #define BLEND_PMA_INVSRC DX_BLENDMODE_PMA_INVSRC
 
+#define OBJECT_BULLET 0
+#define OBJECT_LASER 1
+#define OBJECT_BENT_LASER 2
+#define OBJECT_ENEMY 3
+#define OBJECT_PLAYER_SHOT 4
+
+#define B_NORMAL 0
+#define B_MIDIAM 1
+#define B_UROKO 2
+#define B_LASER 3
+#define B_LIGHT 4
+#define B_BIG 5
+
 struct imageRes {
 	std::vector<int> UIGH;
 	std::vector<int> BulletBackGH;
@@ -72,6 +90,7 @@ extern mainLoop Loop;
 extern Player Plyr;
 
 extern std::vector<Bullet> Bullets;
+extern std::vector<Laser> Lasers;
 extern std::vector<playerShot> plyrShots;
 
 extern long long frame;
@@ -80,6 +99,7 @@ extern int currentBlendMode;
 extern int currentBlendPal;
 extern std::vector<int> defaultBulletBlend;
 extern std::vector<int> defaultPlayerShotBlend;
+extern std::vector<float> drawRatioBulletGraphs;
 extern int isColShow;
 
 extern int backgroundCanvas;

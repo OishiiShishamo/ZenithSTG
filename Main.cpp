@@ -3,6 +3,7 @@
 #include "Color.h"
 #include "Object.h"
 #include "Bullet.h"
+#include "Laser.h"
 #include "Easing.h"
 #include "Init.h"
 #include "mainLoop.h"
@@ -24,7 +25,10 @@ mainLoop Loop;
 Player Plyr;
 
 std::vector<Bullet> Bullets;
+std::vector<Laser> Lasers;
 std::vector<playerShot> plyrShots;
+
+std::vector<float> drawRatioBulletGraphs;
 
 long long frame = 0;
 long long fps = 60;

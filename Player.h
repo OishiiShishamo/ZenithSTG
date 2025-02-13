@@ -2,8 +2,9 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#define DEFAULT_X CENTER_X
-#define DEFAULT_Y 900
+#define P_DEFAULT_X CENTER_X
+#define P_DEFAULT_Y 900
+#define P_DEFAULT_POS Vector(P_DEFAULT_X, P_DEFAULT_Y)
 #define DEFAULT_LIFE 2
 #define DEFAULT_BOMB 3
 #define PLAYER_COL 5.0f
@@ -11,12 +12,12 @@
 
 #define PLAYER_NUM 1
 
+#include "Main.h"
+
 class Player {
 public:
-	int posX;
-	int posY;
-	double vecX;
-	double vecY;
+	Vector pos = Vector(0, 0);
+	Vector vec = Vector(0, 0);
 	int defaultLife;
 	int Life;
 	int defaultBomb;
@@ -29,8 +30,8 @@ public:
 	int Protect;
 	int protectTime;
 	int isMouse;
-	double AimPlayer(double x, double y);
-	double RangePlayer(double x, double y);
+	double AimPlayer(Vector v);
+	double RangePlayer(Vector v);
 	void MovePlayer();
 	void ShowPlayer();
 	void Shot();
