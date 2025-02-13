@@ -1,7 +1,7 @@
 #include "Collision.h"
 
 int
-colCircleAndCircle(Vector v1, Vector v2, double r) {
+colCircleAndCircle(Vec2D v1, Vec2D v2, double r) {
 	if (Range(v1, v2) <= r) {
 		return 1;
 	}
@@ -10,7 +10,7 @@ colCircleAndCircle(Vector v1, Vector v2, double r) {
 	}
 }
 int
-colPointAndRect(Vector v, Vector r1, Vector r2, Vector r3, Vector r4) {
+colPointAndRect(Vec2D v, Vec2D r1, Vec2D r2, Vec2D r3, Vec2D r4) {
 	double cross1 = crossProduct(r1, r2, v);
 	double cross2 = crossProduct(r2, r3, v);
 	double cross3 = crossProduct(r3, r4, v);

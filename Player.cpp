@@ -6,12 +6,12 @@
 //TODO: コントローラーに対応させる
 
 double
-Player::AimPlayer(Vector v) {
+Player::AimPlayer(Vec2D v) {
 	return atan2(-double(pos.y - v.y), double(pos.x - v.x));
 }
 
 double
-Player::RangePlayer(Vector v) {
+Player::RangePlayer(Vec2D v) {
 	return Range(v, pos);
 }
 

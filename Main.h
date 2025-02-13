@@ -13,7 +13,7 @@ class Laser;
 class Player;
 class playerShot;
 class mainLoop;
-class Vector;
+class Vec2D;
 
 #include <chrono>
 #include <cmath>
@@ -25,7 +25,7 @@ class Vector;
 #include "boost/multiprecision/cpp_int.hpp"
 #include "DxLib.h"
 #include "Utility.h"
-#include "Vector.h"
+#include "Vec2D.h"
 #include "Collision.h"
 #include "Property.h"
 
@@ -35,7 +35,7 @@ class Vector;
 
 #define CENTER_X 960
 #define CENTER_Y 540
-#define CENTER Vector(CENTER_X, CENTER_Y)
+#define CENTER Vec2D(CENTER_X, CENTER_Y)
 
 #define BORDER_LEFT 528
 #define BORDER_RIGHT 1392

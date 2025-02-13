@@ -55,10 +55,10 @@ Object::MoveObject() {
 						break;
 					case OBJECT_LASER:
 						if (colPointAndRect(Plyr.pos,
-							Vector(pos.x + cos(angle + PI / 2) * width / 2, pos.y - sin(angle + PI / 2) * width / 2),
-							Vector(pos.x + cos(angle + PI / 2) * width / 2 + cos(angle) * length, pos.y - sin(angle + PI / 2) * width / 2 - sin(angle) * length),
-							Vector(pos.x - cos(angle + PI / 2) * width / 2 + cos(angle) * length, pos.y + sin(angle + PI / 2) * width / 2 - sin(angle) * length),
-							Vector(pos.x - cos(angle + PI / 2) * width / 2, pos.y + sin(angle + PI / 2) * width / 2))) {
+							Vec2D(pos.x + cos(angle + PI / 2) * width / 2, pos.y - sin(angle + PI / 2) * width / 2),
+							Vec2D(pos.x + cos(angle + PI / 2) * width / 2 + cos(angle) * length, pos.y - sin(angle + PI / 2) * width / 2 - sin(angle) * length),
+							Vec2D(pos.x - cos(angle + PI / 2) * width / 2 + cos(angle) * length, pos.y + sin(angle + PI / 2) * width / 2 - sin(angle) * length),
+							Vec2D(pos.x - cos(angle + PI / 2) * width / 2, pos.y + sin(angle + PI / 2) * width / 2))) {
 							Plyr.HitPlayer();
 							alive = 0;
 						}
@@ -87,10 +87,10 @@ Object::MoveObject() {
 					break;
 				case OBJECT_LASER:
 					if (colPointAndRect(Plyr.pos,
-						Vector(pos.x + cos(angle + PI / 2) * width / 2, pos.y - sin(angle + PI / 2) * width / 2),
-						Vector(pos.x + cos(angle + PI / 2) * width / 2 + cos(angle) * length, pos.y - sin(angle + PI / 2) * width / 2 - sin(angle) * length),
-						Vector(pos.x - cos(angle + PI / 2) * width / 2 + cos(angle) * length, pos.y + sin(angle + PI / 2) * width / 2 - sin(angle) * length),
-						Vector(pos.x - cos(angle + PI / 2) * width / 2, pos.y + sin(angle + PI / 2) * width / 2))) {
+						Vec2D(pos.x + cos(angle + PI / 2) * width / 2, pos.y - sin(angle + PI / 2) * width / 2),
+						Vec2D(pos.x + cos(angle + PI / 2) * width / 2 + cos(angle) * length, pos.y - sin(angle + PI / 2) * width / 2 - sin(angle) * length),
+						Vec2D(pos.x - cos(angle + PI / 2) * width / 2 + cos(angle) * length, pos.y + sin(angle + PI / 2) * width / 2 - sin(angle) * length),
+						Vec2D(pos.x - cos(angle + PI / 2) * width / 2, pos.y + sin(angle + PI / 2) * width / 2))) {
 						Plyr.HitPlayer();
 						alive = 0;
 					}

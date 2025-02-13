@@ -34,7 +34,7 @@ playerShot::ShowPlayerShot() {
 }
 
 void
-CreatePlayerShot(Vector pos, Color color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime) {
+CreatePlayerShot(Vec2D pos, Color color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime) {
 	for (int i = 0; i < plyrShots.size(); i++) {
 		if (plyrShots[i].alive == 0) {
 			plyrShots[i].alive = 1;

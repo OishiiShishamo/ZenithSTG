@@ -42,7 +42,7 @@ Bullet::ShowBullet() {
 }
 
 void
-CreateBullet(Vector pos, Color color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime) {
+CreateBullet(Vec2D pos, Color color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime) {
 	for (int i = 0; i < Bullets.size(); i++) {
 		if (Bullets[i].alive == 0) {
 			Bullets[i].alive = 1;
@@ -90,7 +90,7 @@ CreateBullet(Vector pos, Color color, int style, int blend, int pal, int isCol, 
 }
 
 void
-CreateBulletGroup(Vector pos, Color color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int way, double spread, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime) {
+CreateBulletGroup(Vec2D pos, Color color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int way, double spread, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime) {
 	switch (aim) {
 	case 0:
 		for (int i = 0; i < way; i++) {
@@ -115,7 +115,7 @@ CreateBulletGroup(Vector pos, Color color, int style, int blend, int pal, int is
 }
 
 void
-CreateSimpleBulletGroup(Vector pos, Color color, int style, int blend, int pal, double colSize, double size, int way, double spread, int aim, double angle, double speed) {
+CreateSimpleBulletGroup(Vec2D pos, Color color, int style, int blend, int pal, double colSize, double size, int way, double spread, int aim, double angle, double speed) {
 	switch (aim) {
 	case 0:
 		for (int i = 0; i < way; i++) {
