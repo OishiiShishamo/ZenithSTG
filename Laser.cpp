@@ -13,16 +13,16 @@ Laser::ShowLaser() {
 	if (blend == -1) {
 		SmartSetDrawBlendMode(defaultBulletBlend[style], pal);
 		SetDrawBright(color.r, color.g, color.b);
-		SetDrawMode(DX_DRAWMODE_BILINEAR);
+		SetDrawMode(DX_DRAWMODE_NEAREST);
 		DrawRectModiGraph(
 			pos.x + cos(angle + PI / 2) * width / 2,
-			pos.y + sin(angle + PI / 2) * width / 2,
-			pos.x - cos(angle + PI / 2) * width / 2,
 			pos.y - sin(angle + PI / 2) * width / 2,
-			pos.x - cos(angle + PI / 2) * width / 2 + cos(angle) * length,
-			pos.y - sin(angle + PI / 2) * width / 2 + sin(angle) * length,
 			pos.x + cos(angle + PI / 2) * width / 2 + cos(angle) * length,
-			pos.y + sin(angle + PI / 2) * width / 2 + sin(angle) * length,
+			pos.y - sin(angle + PI / 2) * width / 2 - sin(angle) * length,
+			pos.x - cos(angle + PI / 2) * width / 2 + cos(angle) * length,
+			pos.y + sin(angle + PI / 2) * width / 2 - sin(angle) * length,
+			pos.x - cos(angle + PI / 2) * width / 2,
+			pos.y + sin(angle + PI / 2) * width / 2,
 			64 - 128 * drawRatioBulletGraphs[style] / 2,
 			64 - 128 * drawRatioBulletGraphs[style] / 2,
 			128 * drawRatioBulletGraphs[style],
@@ -32,13 +32,13 @@ Laser::ShowLaser() {
 		SetDrawBright(255, 255, 255);
 		DrawRectModiGraph(
 			pos.x + cos(angle + PI / 2) * width / 2,
-			pos.y + sin(angle + PI / 2) * width / 2,
-			pos.x - cos(angle + PI / 2) * width / 2,
 			pos.y - sin(angle + PI / 2) * width / 2,
-			pos.x - cos(angle + PI / 2) * width / 2 + cos(angle) * length,
-			pos.y - sin(angle + PI / 2) * width / 2 + sin(angle) * length,
 			pos.x + cos(angle + PI / 2) * width / 2 + cos(angle) * length,
-			pos.y + sin(angle + PI / 2) * width / 2 + sin(angle) * length,
+			pos.y - sin(angle + PI / 2) * width / 2 - sin(angle) * length,
+			pos.x - cos(angle + PI / 2) * width / 2 + cos(angle) * length,
+			pos.y + sin(angle + PI / 2) * width / 2 - sin(angle) * length,
+			pos.x - cos(angle + PI / 2) * width / 2,
+			pos.y + sin(angle + PI / 2) * width / 2,
 			64 - 128 * drawRatioBulletGraphs[style] / 2,
 			64 - 128 * drawRatioBulletGraphs[style] / 2,
 			128 * drawRatioBulletGraphs[style],
@@ -51,7 +51,7 @@ Laser::ShowLaser() {
 	else {
 		SmartSetDrawBlendMode(blend, pal);
 		SetDrawBright(color.r, color.g, color.b);
-		SetDrawMode(DX_DRAWMODE_BILINEAR);
+		SetDrawMode(DX_DRAWMODE_NEAREST);
 		DrawRectModiGraph(
 			pos.x + cos(angle + PI / 2) * width / 2,
 			pos.y - sin(angle + PI / 2) * width / 2,

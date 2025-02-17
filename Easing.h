@@ -2,14 +2,6 @@
 #ifndef EASING_H
 #define EASING_H
 
-#define LINEAR 0
-#define EASEINQUAD 1
-#define EASEOUTQUAD 2
-#define EASEINOUTQUAD 3
-#define EASEINCUBIC 4
-#define EASEOUTCUBIC 5
-#define EASEINOUTCUBIC 6
-
 #include "Main.h"
 
 //ÉâÉbÉpä÷êî

@@ -39,7 +39,7 @@ CreatePlayerShot(Vec2D pos, Color color, int style, int blend, int pal, int isCo
 		if (plyrShots[i].alive == 0) {
 			plyrShots[i].alive = 1;
 			plyrShots[i].isCol = isCol;
-			plyrShots[i].objType = 1;
+			plyrShots[i].objType = OBJECT_PLAYER_SHOT;
 			plyrShots[i].pos = pos;
 			plyrShots[i].color = color;
 			plyrShots[i].style = style;

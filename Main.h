@@ -70,6 +70,14 @@ class Vec2D;
 #define B_LIGHT 4
 #define B_BIG 5
 
+#define LINEAR 0
+#define EASEINQUAD 1
+#define EASEOUTQUAD 2
+#define EASEINOUTQUAD 3
+#define EASEINCUBIC 4
+#define EASEOUTCUBIC 5
+#define EASEINOUTCUBIC 6
+
 struct imageRes {
 	std::vector<int> UIGH;
 	std::vector<int> BulletBackGH;
