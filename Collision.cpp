@@ -1,4 +1,4 @@
-#include "Collision.h"
+﻿#include "Collision.h"
 
 int
 colCircleAndCircle(Vec2D v1, Vec2D v2, double r) {

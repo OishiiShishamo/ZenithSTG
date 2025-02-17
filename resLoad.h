@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #ifndef RESLOAD_H
 #define RESLOAD_H
 

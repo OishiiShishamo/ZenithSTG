@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #ifndef LASER_H
 #define LASER_H
 

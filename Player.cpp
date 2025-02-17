@@ -1,9 +1,9 @@
-#include "Player.h"
+ï»¿#include "Player.h"
 #include "Color.h"
 #include "playerShot.h"
 
-//TODO: ‚à‚Á‚Æ^–Ê–Ú‚Éì‚é
-//TODO: ƒRƒ“ƒgƒ[ƒ‰[‚É‘Î‰‚³‚¹‚é
+//TODO: ã‚‚ã£ã¨çœŸé¢ç›®ã«ä½œã‚‹
+//TODO: ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ã«å¯¾å¿œã•ã›ã‚‹
 
 double
 Player::AimPlayer(Vec2D v) {

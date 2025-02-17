@@ -1,4 +1,4 @@
-#include "Main.h"
+ï»¿#include "Main.h"
 
 #include "Bullet.h"
 #include "Object.h"
@@ -6,7 +6,7 @@
 #include "Player.h"
 #include "Easing.h"
 
-//TODO: ˆø”Œ¸‚ç‚µ‚½ƒ‰ƒbƒp[ŠÖ”ì‚é
+//TODO: å¼•æ•°æ¸›ã‚‰ã—ãŸãƒ©ãƒƒãƒ‘ãƒ¼é–¢æ•°ä½œã‚‹
 
 std::vector<int> defaultBulletBlend;
 

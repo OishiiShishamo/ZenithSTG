@@ -1,16 +1,7 @@
-#include "Main.h"
+﻿#include "Main.h"
 
 #include "Utility.h"
 #include "Color.h"
-
-void
-VecNorm(double& x, double& y) {
-	double x_tmp = x;
-	double y_tmp = y;
-	if (x + y == 0) return;
-	x *= 1 / std::sqrt(x_tmp * x_tmp + y_tmp * y_tmp);
-	y *= 1 / std::sqrt(x_tmp * x_tmp + y_tmp * y_tmp);
-}
 
 void
 DrawRotaGraph4(int x, int y, double rate, double anglex, double angley, double anglez, int handle, int tranflag, int x_turn_flag, int y_turn_flag) {

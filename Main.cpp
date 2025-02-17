@@ -1,4 +1,4 @@
-#include "Main.h"
+ï»¿#include "Main.h"
 
 #include "Color.h"
 #include "Object.h"
@@ -13,8 +13,8 @@
 #include "Time.h"
 #include "FPS.h"
 
-//TODO: ƒŠƒtƒ@ƒNƒ^ƒŠƒ“ƒO‚·‚é
-//TODO: ƒtƒHƒ‹ƒ_\¬‚ğ^–Ê–Ú‚É‚â‚é
+//TODO: ãƒªãƒ•ã‚¡ã‚¯ã‚¿ãƒªãƒ³ã‚°ã™ã‚‹
+//TODO: ãƒ•ã‚©ãƒ«ãƒ€æ§‹æˆã‚’çœŸé¢ç›®ã«ã‚„ã‚‹
 
 imageRes imgRes;
 

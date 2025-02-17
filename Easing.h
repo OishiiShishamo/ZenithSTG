@@ -1,10 +1,10 @@
-#pragma once
+ï»¿#pragma once
 #ifndef EASING_H
 #define EASING_H
 
 #include "Main.h"
 
-//ƒ‰ƒbƒpŠÖ”
+//ãƒ©ãƒƒãƒ‘é–¢æ•°
 double Easing(int easeType, double t, double start, double end);
 
 double Linear(double t, double start, double end);

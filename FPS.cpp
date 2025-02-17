@@ -1,7 +1,7 @@
-#include "Main.h"
+ï»¿#include "Main.h"
 #include "FPS.h"
 
-//TODO: FPS‚ÌƒJƒEƒ“ƒg‚à‚Á‚Æ‚¢‚¢Š´‚¶‚É’N‚©‚µ‚Æ‚¢‚Ä
+//TODO: FPSã®ã‚«ã‚¦ãƒ³ãƒˆã‚‚ã£ã¨ã„ã„æ„Ÿã˜ã«èª°ã‹ã—ã¨ã„ã¦
 
 void
 ShowFPS(int x, int y, int fontSize, int elapsedFrame, Color color) {

@@ -1,6 +1,6 @@
-#include "Easing.h"
+ï»¿#include "Easing.h"
 
-//ƒ‰ƒbƒpŠÖ”
+//ãƒ©ãƒƒãƒ‘é–¢æ•°
 double
 Easing(int easeType, double t, double start, double end) {
 	switch (easeType) {
@@ -31,45 +31,45 @@ Easing(int easeType, double t, double start, double end) {
 	}
 }
 
-// üŒ`•âŠÔ
+// ç·šå½¢è£œé–“
 double
 Linear(double t, double start, double end) {
 	return start + (end - start) * t;
 }
 
-// ƒC[ƒWƒCƒ“ (‰Á‘¬) - “ñŸ‹Èü
+// ã‚¤ãƒ¼ã‚¸ã‚¤ãƒ³ (åŠ é€Ÿ) - äºŒæ¬¡æ›²ç·š
 double
 EaseInQuad(double t, double start, double end) {
 	return start + (end - start) * (t * t);
 }
 
-// ƒC[ƒWƒAƒEƒg (Œ¸‘¬) - “ñŸ‹Èü
+// ã‚¤ãƒ¼ã‚¸ã‚¢ã‚¦ãƒˆ (æ¸›é€Ÿ) - äºŒæ¬¡æ›²ç·š
 double
 EaseOutQuad(double t, double start, double end) {
 	return start + (end - start) * (t * (2 - t));
 }
 
-// ƒC[ƒWƒCƒ“ƒAƒEƒg (‰Á‘¬‚ÆŒ¸‘¬) - “ñŸ‹Èü
+// ã‚¤ãƒ¼ã‚¸ã‚¤ãƒ³ã‚¢ã‚¦ãƒˆ (åŠ é€Ÿã¨æ¸›é€Ÿ) - äºŒæ¬¡æ›²ç·š
 double
 EaseInOutQuad(double t, double start, double end) {
 	if (t < 0.5f) return start + (end - start) * (2 * t * t);
 	return start + (end - start) * (-1 + (4 - 2 * t) * t);
 }
 
-// ƒC[ƒWƒCƒ“ (‰Á‘¬) - OŸ‹Èü
+// ã‚¤ãƒ¼ã‚¸ã‚¤ãƒ³ (åŠ é€Ÿ) - ä¸‰æ¬¡æ›²ç·š
 double
 EaseInCubic(double t, double start, double end) {
 	return start + (end - start) * (t * t * t);
 }
 
-// ƒC[ƒWƒAƒEƒg (Œ¸‘¬) - OŸ‹Èü
+// ã‚¤ãƒ¼ã‚¸ã‚¢ã‚¦ãƒˆ (æ¸›é€Ÿ) - ä¸‰æ¬¡æ›²ç·š
 double
 EaseOutCubic(double t, double start, double end) {
 	t -= 1;
 	return start + (end - start) * (t * t * t + 1);
 }
 
-// ƒC[ƒWƒCƒ“ƒAƒEƒg (‰Á‘¬‚ÆŒ¸‘¬) - OŸ‹Èü
+// ã‚¤ãƒ¼ã‚¸ã‚¤ãƒ³ã‚¢ã‚¦ãƒˆ (åŠ é€Ÿã¨æ¸›é€Ÿ) - ä¸‰æ¬¡æ›²ç·š
 double
 EaseInOutCubic(double t, double start, double end) {
 	if (t < 0.5f) return start + (end - start) * (4 * t * t * t);

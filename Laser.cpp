@@ -1,4 +1,4 @@
-#include "Main.h"
+ï»¿#include "Main.h"
 
 #include "Laser.h"
 #include "Bullet.h"
@@ -6,7 +6,7 @@
 #include "Player.h"
 #include "Easing.h"
 
-//TODO: ƒŒ[ƒU[Šæ’£‚é
+//TODO: ãƒ¬ãƒ¼ã‚¶ãƒ¼é ‘å¼µã‚‹
 
 void
 Laser::ShowLaser() {

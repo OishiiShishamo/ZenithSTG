@@ -1,10 +1,10 @@
-#pragma once
+ï»¿#pragma once
 #ifndef MAINLOOP_H
 #define MAINLOOP_H
 
 #include "Main.h"
 
-//TODO: •Ï”–¼‚¢‚¢Š´‚¶‚É‚·‚é
+//TODO: å¤‰æ•°åã„ã„æ„Ÿã˜ã«ã™ã‚‹
 
 class mainLoop {
 public:
