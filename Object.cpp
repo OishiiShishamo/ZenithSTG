@@ -5,7 +5,7 @@
 #include "Easing.h"
 
 void
-Object::MoveObject() {
+Object::MoveObject(long long Index) {
 	if (alive == 1) {
 		angleT = (frame * 1.0f - popFrame * 1.0f) * 1.0f / angleEaseTime * 1.0f;
 		if (angleT > 1)angleT = 1;
@@ -42,8 +42,10 @@ Object::MoveObject() {
 		vec.y = -sin(angle);
 		if (speed >= Plyr.colSize + Plyr.colSize && isCol == 1) {
 			for (int i = 0; i < std::ceil(Plyr.colSize * 1.0f / speed * 1.0f); i++) {
-				pos.x += vec.x * speed / std::ceil(Plyr.colSize / speed) * 1.0f;
-				pos.y += vec.y * speed / std::ceil(Plyr.colSize / speed) * 1.0f;
+				if (objType != OBJECT_BENT_LASER || isHead == 1) {
+					pos.x += vec.x * speed / std::ceil(Plyr.colSize / speed) * 1.0f;
+					pos.y += vec.y * speed / std::ceil(Plyr.colSize / speed) * 1.0f;
+				}
 				if (isCol == 1) {
 					switch (objType) {
 					case OBJECT_BULLET:
@@ -55,10 +57,10 @@ Object::MoveObject() {
 						break;
 					case OBJECT_LASER:
 						if (colPointAndRect(Plyr.pos,
-							Vec2D(pos.x + cos(angle + PI / 2) * width / 2, pos.y - sin(angle + PI / 2) * width / 2),
-							Vec2D(pos.x + cos(angle + PI / 2) * width / 2 + cos(angle) * length, pos.y - sin(angle + PI / 2) * width / 2 - sin(angle) * length),
-							Vec2D(pos.x - cos(angle + PI / 2) * width / 2 + cos(angle) * length, pos.y + sin(angle + PI / 2) * width / 2 - sin(angle) * length),
-							Vec2D(pos.x - cos(angle + PI / 2) * width / 2, pos.y + sin(angle + PI / 2) * width / 2))) {
+							Vec2D(pos.x + cos(angle + PI / 2) * colSize / 2, pos.y - sin(angle + PI / 2) * colSize / 2),
+							Vec2D(pos.x + cos(angle + PI / 2) * colSize / 2 + cos(angle) * length, pos.y - sin(angle + PI / 2) * colSize / 2 - sin(angle) * length),
+							Vec2D(pos.x - cos(angle + PI / 2) * colSize / 2 + cos(angle) * length, pos.y + sin(angle + PI / 2) * colSize / 2 - sin(angle) * length),
+							Vec2D(pos.x - cos(angle + PI / 2) * colSize / 2, pos.y + sin(angle + PI / 2) * colSize / 2))) {
 							Plyr.HitPlayer();
 							alive = 0;
 						}
@@ -74,8 +76,10 @@ Object::MoveObject() {
 			}
 		}
 		else {
-			pos.x += vec.x * speed * 1.0f;
-			pos.y += vec.y * speed * 1.0f;
+			if (objType != OBJECT_BENT_LASER || isHead == 1) {
+				pos.x += vec.x * speed * 1.0f;
+				pos.y += vec.y * speed * 1.0f;
+			}
 			if (isCol == 1) {
 				switch (objType) {
 				case OBJECT_BULLET:

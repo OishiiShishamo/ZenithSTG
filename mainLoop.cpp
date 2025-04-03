@@ -18,11 +18,12 @@ mainLoop::Loop() {
 	SetDrawScreen(backgroundCanvas);
 	ClearDrawScreen();
 	//TESTDANMAKUKUKUKUKUKUKUKUKUKUKU
-	if (frame % 1 == 0) {
+	if (frame % 30 == 0) {
 		gamingColor = GetColorHSV(std::fmod(frame, 360), 1, 1);
 		//CreateBulletGroup(CENTER, GetColorHSV(std::fmod(frame, 360), 1, 1), B_BIG, BLEND_ADD, 255, 10.0f, 10.0f, EASEINQUAD, 120, 0.5f, 0.5f, EASEINQUAD, 120, 8, TAU, 0, Rad(frame), Rad(frame + 80), EASEOUTQUAD, 240, -10.0f, 10.0f, EASEINQUAD, 120);
-		CreateBulletGroup(Vec2D(CENTER_X + sin(Rad(frame * 2)) * 50, CENTER_Y + sin(Rad(frame * 1.5) * 1.3) * 50), GetColorHSV(std::fmod(frame, 360), 1, 1), B_LIGHT, BLEND_ADD, 255, 1, 10.0f, 10.0f, EASEINQUAD, 120, 2.0f, 2.0f, EASEINQUAD, 120, 8, TAU, 0, Rad(frame + sin(Rad(frame * 2 + sin(Rad(frame * 2)) * 20)) * 20), Rad(frame + 80 + sin(Rad(frame * 1.25)) * 20), EASEOUTQUAD, 240, -10.0f + sin(Rad(frame * 1.25)) * 2, 10.0f + sin(Rad(frame * 1.5)) * 1.5, EASEINQUAD, 120);
-		CreateLaser(Vec2D(CENTER_X + sin(Rad(frame * 2)) * 50, CENTER_Y + sin(Rad(frame * 1.5) * 1.3) * 50), 64, 16, gamingColor, B_LASER, BLEND_ADD, 255, 1, 16, 16, 0, 0, 1.0f, 1.0f, 0, 0, 1, 0, 0, 0, 0, 5, 5, 0, 0);
+		//CreateBulletGroup(Vec2D(CENTER_X + sin(Rad(frame * 2)) * 50, CENTER_Y + sin(Rad(frame * 1.5) * 1.3) * 50), GetColorHSV(std::fmod(frame, 360), 1, 1), B_LIGHT, BLEND_ADD, 255, 1, 10.0f, 10.0f, EASEINQUAD, 120, 2.0f, 2.0f, EASEINQUAD, 120, 8, TAU, 0, Rad(frame + sin(Rad(frame * 2 + sin(Rad(frame * 2)) * 20)) * 20), Rad(frame + 80 + sin(Rad(frame * 1.25)) * 20), EASEOUTQUAD, 240, -10.0f + sin(Rad(frame * 1.25)) * 2, 10.0f + sin(Rad(frame * 1.5)) * 1.5, EASEINQUAD, 120);
+		//CreateLaser(Vec2D(CENTER_X + sin(Rad(frame * 2)) * 50, CENTER_Y + sin(Rad(frame * 1.5) * 1.3) * 50), 128, 32, gamingColor, B_LASER, BLEND_ADD, 255, 1, 16, 16, 0, 0, 1.0f, 1.0f, 0, 0, 1, 0, 0, 0, 0, 5, 5, 0, 0);CreateBulletGroup(Vec2D(CENTER_X + sin(Rad(frame * 2)) * 50, CENTER_Y + sin(Rad(frame * 1.5) * 1.3) * 50), GetColorHSV(std::fmod(frame, 360), 1, 1), B_LIGHT, BLEND_ADD, 255, 1, 10.0f, 10.0f, EASEINQUAD, 120, 2.0f, 2.0f, EASEINQUAD, 120, 8, TAU, 0, Rad(frame + sin(Rad(frame * 2 + sin(Rad(frame * 2)) * 20)) * 20), Rad(frame + 80 + sin(Rad(frame * 1.25)) * 20), EASEOUTQUAD, 240, -10.0f + sin(Rad(frame * 1.25)) * 2, 10.0f + sin(Rad(frame * 1.5)) * 1.5, EASEINQUAD, 120);
+		CreateBulletGroup(Vec2D(CENTER_X + sin(Rad(frame * 2)) * 50, CENTER_Y + sin(Rad(frame * 1.5) * 1.3) * 50), GetColorHSV(std::fmod(frame, 360), 1, 1), B_LIGHT, BLEND_ADD, 255, 1, 8, 8, 0, 0, 1.0f, 1.0f, 0, 0, 16, TAU, 2, 0, 0, 0, 0, 10, 10, 0, 0);
 	}
 	DrawBox(0, 0, 1920, 1080, GetColor(C_GRAY), 1);
 	SetDrawScreen(playerShotCanvas);

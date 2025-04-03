@@ -30,7 +30,7 @@ Player::MovePlayer() {
 		if (GetAsyncKeyState(VK_LEFT)) vec.x -= 1;
 		if (GetAsyncKeyState(VK_UP)) vec.y -= 1;
 		if (GetAsyncKeyState(VK_DOWN)) vec.y += 1;
-		VecNorm(vec.x, vec.y);
+		VecNorm(vec);
 		if (GetAsyncKeyState(VK_SHIFT)) {
 			pos.x += vec.x * Slow;
 			pos.y += vec.y * Slow;

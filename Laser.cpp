@@ -6,8 +6,6 @@
 #include "Player.h"
 #include "Easing.h"
 
-//TODO: レーザー頑張る
-
 void
 Laser::ShowLaser() {
 	if (blend == -1) {
@@ -132,6 +130,9 @@ CreateLaser(Vec2D pos, double length, double width, Color color, int style, int 
 			Lasers[i].popFrame = frame;
 			Lasers[i].length = length;
 			Lasers[i].width = width;
+			Lasers[i].frontNode = 0;
+			Lasers[i].currentNodeNum = 0;
+			Lasers[i].isHead = 0;
 			return;
 		}
 	}
@@ -146,7 +147,7 @@ CreateLaser(Vec2D pos, double length, double width, Color color, int style, int 
 void
 MoveLasers() {
 	for (int i = 0; i < Lasers.size(); i++) {
-		Lasers[i].MoveObject();
+		Lasers[i].MoveObject(i);
 		Lasers[i].ShowLaser();
 	}
 	if (frame % 10 == 0) {

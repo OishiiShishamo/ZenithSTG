@@ -78,6 +78,9 @@ CreateBullet(Vec2D pos, Color color, int style, int blend, int pal, int isCol, d
 			Bullets[i].popFrame = frame;
 			Bullets[i].length = 0;
 			Bullets[i].width = 0;
+			Bullets[i].frontNode = 0;
+			Bullets[i].currentNodeNum = 0;
+			Bullets[i].isHead = 0;
 			return;
 		}
 	}
@@ -94,21 +97,22 @@ CreateBulletGroup(Vec2D pos, Color color, int style, int blend, int pal, int isC
 	switch (aim) {
 	case 0:
 		for (int i = 0; i < way; i++) {
-			CreateBullet(pos, color, style, blend, pal, isCol, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, 0, spread / way * i + startAngle, spread / way * i + endAngle, angleEaseType, angleEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime);
+			CreateBullet(pos, color, style, blend, pal, isCol, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, 0, spread / way * i + startAngle - spread / 2, spread / way * i + endAngle - spread / 2, angleEaseType, angleEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime);
 		}
 		break;
 	case 1:
 		for (int i = 0; i < way; i++) {
-			CreateBullet(pos, color, style, blend, pal, isCol, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, 1, spread / way * i + startAngle, spread / way * i + endAngle, angleEaseType, angleEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime);
+			CreateBullet(pos, color, style, blend, pal, isCol, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, 1, spread / way * i + startAngle - spread / 2, spread / way * i + endAngle - spread / 2, angleEaseType, angleEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime);
 		}
 		break;
 	case 2:
 		for (int i = 0; i < way; i++) {
-			CreateBullet(pos, color, style, blend, pal, isCol, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, 1, spread / way * i + startAngle + spread / way / 2, spread / way * i + endAngle + spread / way / 2, angleEaseType, angleEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime);
+			CreateBullet(pos, color, style, blend, pal, isCol, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, 1, spread / way * i + startAngle + spread / (way * 2) - spread / 2, spread / way * i + endAngle + spread / (way * 2) - spread / 2, angleEaseType, angleEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime);
 		}
+		break;
 	default:
 		for (int i = 0; i < way; i++) {
-			CreateBullet(pos, color, style, blend, pal, isCol, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, 0, spread / way * i + startAngle, spread / way * i + endAngle, angleEaseType, angleEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime);
+			CreateBullet(pos, color, style, blend, pal, isCol, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, 0, spread / way * i + startAngle - spread / 2, spread / way * i + endAngle - spread / 2, angleEaseType, angleEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime);
 		}
 		break;
 	}
@@ -119,21 +123,22 @@ CreateSimpleBulletGroup(Vec2D pos, Color color, int style, int blend, int pal, d
 	switch (aim) {
 	case 0:
 		for (int i = 0; i < way; i++) {
-			CreateBullet(pos, color, style, blend, pal, 1, colSize, colSize, 0, 0, size, size, 0, 0, 0, spread / way * i + angle, spread / way * i + angle, 0, 0, speed, speed, 0, 0);
+			CreateBullet(pos, color, style, blend, pal, 1, colSize, colSize, 0, 0, size, size, 0, 0, 0, spread / way * i + angle - spread / 2, spread / way * i + angle - spread / 2, 0, 0, speed, speed, 0, 0);
 		}
 		break;
 	case 1:
 		for (int i = 0; i < way; i++) {
-			CreateBullet(pos, color, style, blend, pal, 1, colSize, colSize, 0, 0, size, size, 0, 0, 1, spread / way * i + angle, spread / way * i + angle, 0, 0, speed, speed, 0, 0);
+			CreateBullet(pos, color, style, blend, pal, 0, colSize, colSize, 0, 0, size, size, 0, 0, 1, spread / way * i + angle - spread / 2, spread / way * i + angle - spread / 2, 0, 0, speed, speed, 0, 0);
 		}
 		break;
 	case 2:
 		for (int i = 0; i < way; i++) {
-			CreateBullet(pos, color, style, blend, pal, 1, colSize, colSize, 0, 0, size, size, 0, 0, 1, spread / way * i + angle + spread / way / 2, spread / way * i + angle + spread / way / 2, 0, 0, speed, speed, 0, 0);
+			CreateBullet(pos, color, style, blend, pal, 1, colSize, colSize, 0, 0, size, size, 0, 0, 1, spread / way * i + angle + spread / (way * 2) - spread / 2, spread / way * i + angle + spread / (way * 2) - spread / 2, 0, 0, speed, speed, 0, 0);
 		}
+		break;
 	default:
 		for (int i = 0; i < way; i++) {
-			CreateBullet(pos, color, style, blend, pal, 1, colSize, colSize, 0, 0, size, size, 0, 0, 0, spread / way * i + angle, spread / way * i + angle, 0, 0, speed, speed, 0, 0);
+			CreateBullet(pos, color, style, blend, pal, 1, colSize, colSize, 0, 0, size, size, 0, 0, 0, spread / way * i + angle - spread / 2, spread / way * i + angle - spread / 2, 0, 0, speed, speed, 0, 0);
 		}
 		break;
 	}
@@ -142,13 +147,13 @@ CreateSimpleBulletGroup(Vec2D pos, Color color, int style, int blend, int pal, d
 void
 MoveBullets() {
 	for (int i = 0; i < Bullets.size(); i++) {
-		Bullets[i].MoveObject();
+		Bullets[i].MoveObject(i);
 		Bullets[i].ShowBullet();
 	}
 	if (frame % 10 == 0) {
 		std::sort(Bullets.begin(), Bullets.end(), [](const Bullet& a, const Bullet& b) {
 			return a.popFrame < b.popFrame;
-		});
+			});
 		for (int i = 0; i < Bullets.size(); i++) {
 			if (Bullets[i].alive == 0) {
 				Bullets.erase(Bullets.begin() + i);

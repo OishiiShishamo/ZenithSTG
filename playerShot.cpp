@@ -64,6 +64,9 @@ CreatePlayerShot(Vec2D pos, Color color, int style, int blend, int pal, int isCo
 			plyrShots[i].popFrame = frame;
 			plyrShots[i].length = 0;
 			plyrShots[i].width = 0;
+			plyrShots[i].frontNode = 0;
+			plyrShots[i].currentNodeNum = 0;
+			plyrShots[i].isHead = 0;
 			return;
 		}
 	}
@@ -73,7 +76,7 @@ CreatePlayerShot(Vec2D pos, Color color, int style, int blend, int pal, int isCo
 void
 MovePlayerShots() {
 	for (int i = 0; i < plyrShots.size(); i++) {
-		plyrShots[i].MoveObject();
+		plyrShots[i].MoveObject(i);
 		plyrShots[i].ShowPlayerShot();
 	}
 	if (frame % 10 == 0) {
