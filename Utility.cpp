@@ -10,7 +10,7 @@ DrawRotaGraph4(int x, int y, double rate, double anglex, double angley, double a
 	VECTOR v;
 
 	GetGraphSize(handle, &sx, &sy);
-	m = MMult(MGetRotZ(anglez), MGetRotX(anglex));
+	m = MMult(MMult(MGetRotZ(anglez), MGetRotY(angley)), MGetRotX(anglex));
 	m.m[0][0] *= rate; m.m[0][1] *= rate; m.m[0][2] *= rate;
 	m.m[1][0] *= rate; m.m[1][1] *= rate; m.m[1][2] *= rate;
 	int lux, luy, rux, ruy, rdx, rdy, ldx, ldy;
@@ -101,6 +101,11 @@ GetColorHSV(float H, float S, float V) {
 	else if (ib < 0) ib = 0;
 
 	return Color(ir, ig, ib);
+}
+
+Color
+GamingColor(double mul) {
+	return GetColorHSV(std::fmod(frame * mul, 360), 1, 1);
 }
 
 void

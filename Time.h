@@ -4,7 +4,7 @@
 
 class Time {
 public:
-	long long framedayo = 0;
+	long long targetFrame = 0;
 	std::chrono::nanoseconds frontFrameTime;
 	std::chrono::nanoseconds elapsedus = std::chrono::nanoseconds(0);
 	void StartTimer();

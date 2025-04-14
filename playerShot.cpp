@@ -34,7 +34,7 @@ playerShot::ShowPlayerShot() {
 }
 
 void
-CreatePlayerShot(Vec2D pos, Color color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime) {
+CreatePlayerShot(Vec2D pos, Color color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID, const std::vector<std::any>& params) {
 	for (int i = 0; i < plyrShots.size(); i++) {
 		if (plyrShots[i].alive == 0) {
 			plyrShots[i].alive = 1;
@@ -67,17 +67,19 @@ CreatePlayerShot(Vec2D pos, Color color, int style, int blend, int pal, int isCo
 			plyrShots[i].frontNode = 0;
 			plyrShots[i].currentNodeNum = 0;
 			plyrShots[i].isHead = 0;
+			plyrShots[i].ID = 0;
+			plyrShots[i].params = params;
 			return;
 		}
 	}
-	plyrShots.emplace_back(1, isCol, pos, startAngle, endAngle, angleEaseType, angleEaseTime, 0, 0, 0, 0, color, style, blend, pal, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime, frame);
+	plyrShots.emplace_back(1, isCol, pos, startAngle, endAngle, angleEaseType, angleEaseTime, 0, 0, 0, 0, color, style, blend, pal, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime, frame, ID, params);
 }
 
 void
 MovePlayerShots() {
-	for (int i = 0; i < plyrShots.size(); i++) {
-		plyrShots[i].MoveObject(i);
-		plyrShots[i].ShowPlayerShot();
+	for (playerShot& PS : plyrShots) {
+		PS.UpdateObject();
+		PS.ShowPlayerShot();
 	}
 	if (frame % 10 == 0) {
 		std::sort(plyrShots.begin(), plyrShots.end(), [](const playerShot& a, const playerShot& b) {

@@ -7,23 +7,23 @@
 #include "Easing.h"
 #include "Bullet.h"
 #include "Laser.h"
+#include "Enemy.h"
 #include "Player.h"
 #include "playerShot.h"
 
 Color gamingColor(0, 0, 0);
-double unko = 1.0f;
+double screenSizeRate = 1.0f;
+double screenRotaX = 0;
+double screenRotaY = 0;
+double screenRotaZ = 0;
 
 void
 mainLoop::Loop() {
 	SetDrawScreen(backgroundCanvas);
 	ClearDrawScreen();
 	//TESTDANMAKUKUKUKUKUKUKUKUKUKUKU
-	if (frame % 30 == 0) {
-		gamingColor = GetColorHSV(std::fmod(frame, 360), 1, 1);
-		//CreateBulletGroup(CENTER, GetColorHSV(std::fmod(frame, 360), 1, 1), B_BIG, BLEND_ADD, 255, 10.0f, 10.0f, EASEINQUAD, 120, 0.5f, 0.5f, EASEINQUAD, 120, 8, TAU, 0, Rad(frame), Rad(frame + 80), EASEOUTQUAD, 240, -10.0f, 10.0f, EASEINQUAD, 120);
-		//CreateBulletGroup(Vec2D(CENTER_X + sin(Rad(frame * 2)) * 50, CENTER_Y + sin(Rad(frame * 1.5) * 1.3) * 50), GetColorHSV(std::fmod(frame, 360), 1, 1), B_LIGHT, BLEND_ADD, 255, 1, 10.0f, 10.0f, EASEINQUAD, 120, 2.0f, 2.0f, EASEINQUAD, 120, 8, TAU, 0, Rad(frame + sin(Rad(frame * 2 + sin(Rad(frame * 2)) * 20)) * 20), Rad(frame + 80 + sin(Rad(frame * 1.25)) * 20), EASEOUTQUAD, 240, -10.0f + sin(Rad(frame * 1.25)) * 2, 10.0f + sin(Rad(frame * 1.5)) * 1.5, EASEINQUAD, 120);
-		//CreateLaser(Vec2D(CENTER_X + sin(Rad(frame * 2)) * 50, CENTER_Y + sin(Rad(frame * 1.5) * 1.3) * 50), 128, 32, gamingColor, B_LASER, BLEND_ADD, 255, 1, 16, 16, 0, 0, 1.0f, 1.0f, 0, 0, 1, 0, 0, 0, 0, 5, 5, 0, 0);CreateBulletGroup(Vec2D(CENTER_X + sin(Rad(frame * 2)) * 50, CENTER_Y + sin(Rad(frame * 1.5) * 1.3) * 50), GetColorHSV(std::fmod(frame, 360), 1, 1), B_LIGHT, BLEND_ADD, 255, 1, 10.0f, 10.0f, EASEINQUAD, 120, 2.0f, 2.0f, EASEINQUAD, 120, 8, TAU, 0, Rad(frame + sin(Rad(frame * 2 + sin(Rad(frame * 2)) * 20)) * 20), Rad(frame + 80 + sin(Rad(frame * 1.25)) * 20), EASEOUTQUAD, 240, -10.0f + sin(Rad(frame * 1.25)) * 2, 10.0f + sin(Rad(frame * 1.5)) * 1.5, EASEINQUAD, 120);
-		CreateBulletGroup(Vec2D(CENTER_X + sin(Rad(frame * 2)) * 50, CENTER_Y + sin(Rad(frame * 1.5) * 1.3) * 50), GetColorHSV(std::fmod(frame, 360), 1, 1), B_LIGHT, BLEND_ADD, 255, 1, 8, 8, 0, 0, 1.0f, 1.0f, 0, 0, 16, TAU, 2, 0, 0, 0, 0, 10, 10, 0, 0);
+	if (frame % 1 == 0) {
+		CreateLaserGroup(CENTER, 256, 32, GamingColor(), B_LIGHT, BLEND_ADD, 255, 1, 16, 16, 0, 0, 1.0f, 1.0f, 0, 0, 48, TAU, 0, Rad(sin(Rad(frame)) * 360), 0, EASEINCUBIC, 60, -8, 15, EASEINOUTCUBIC, 60, 0);
 	}
 	DrawBox(0, 0, 1920, 1080, GetColor(C_GRAY), 1);
 	SetDrawScreen(playerShotCanvas);
@@ -53,9 +53,9 @@ mainLoop::Loop() {
 	//DrawRotaGraph(CENTER_X, CENTER_Y, 1.0f, 0, screenCanvas, TRUE);
 	if (isWindowSplit) {
 		int slice_tmp = 0;
-		for (int x = 0; x < SCREEN_WIDTH; x += unko * SCREEN_WIDTH) {
-			for (int y = 0; y < SCREEN_HEIGHT; y += unko * SCREEN_HEIGHT) {
-				DrawRotaGraph4(x + unko * SCREEN_WIDTH / 2, y + unko * SCREEN_HEIGHT / 2, unko, 0, 0, 0, screenCanvas, 1, 0, 0);
+		for (int x = 0; x < SCREEN_WIDTH; x += screenSizeRate * SCREEN_WIDTH) {
+			for (int y = 0; y < SCREEN_HEIGHT; y += screenSizeRate * SCREEN_HEIGHT) {
+				DrawRotaGraph4(x + screenSizeRate * SCREEN_WIDTH / 2, y + screenSizeRate * SCREEN_HEIGHT / 2, screenSizeRate, 0, 0, 0, screenCanvas, 1, 0, 0);
 				slice_tmp++;
 				if (slice_tmp > 2048) break;
 			}
@@ -63,7 +63,7 @@ mainLoop::Loop() {
 		}
 	}
 	else {
-		DrawRotaGraph4(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, unko, 0, 0, 0, screenCanvas, 1, 0, 0);
+		DrawRotaGraph4(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, screenSizeRate, screenRotaX, screenRotaY, screenRotaZ, screenCanvas, 1, 0, 0);
 	}
 	SmartSetDrawBlendMode(BLEND_NOBLEND, 255);
 	if (CheckHitKey(KEY_INPUT_P) == 1) {

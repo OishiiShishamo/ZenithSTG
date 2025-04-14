@@ -5,28 +5,28 @@ double
 Easing(int easeType, double t, double start, double end) {
 	switch (easeType) {
 	case 0:
-		return Linear(t, start, end) * 1.0f;
+		return Linear(t, start, end);
 		break;
 	case 1:
-		return EaseInQuad(t, start, end) * 1.0f;
+		return EaseInQuad(t, start, end);
 		break;
 	case 2:
-		return EaseOutQuad(t, start, end) * 1.0f;
+		return EaseOutQuad(t, start, end);
 		break;
 	case 3:
-		return EaseInOutQuad(t, start, end) * 1.0f;
+		return EaseInOutQuad(t, start, end);
 		break;
 	case 4:
-		return EaseInCubic(t, start, end) * 1.0f;
+		return EaseInCubic(t, start, end);
 		break;
 	case 5:
-		return EaseOutCubic(t, start, end) * 1.0f;
+		return EaseOutCubic(t, start, end);
 		break;
 	case 6:
-		return EaseInOutCubic(t, start, end) * 1.0f;
+		return EaseInOutCubic(t, start, end);
 		break;
 	default:
-		return Linear(t, start, end) * 1.0f;
+		return Linear(t, start, end);
 		break;
 	}
 }

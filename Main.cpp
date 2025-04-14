@@ -4,6 +4,7 @@
 #include "Object.h"
 #include "Bullet.h"
 #include "Laser.h"
+#include "Enemy.h"
 #include "Easing.h"
 #include "Init.h"
 #include "mainLoop.h"
@@ -26,6 +27,7 @@ Player Plyr;
 
 std::vector<Bullet> Bullets;
 std::vector<Laser> Lasers;
+std::vector<Enemy> Enemies;
 std::vector<playerShot> plyrShots;
 
 std::vector<float> drawRatioBulletGraphs;
@@ -72,8 +74,8 @@ WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, in
 	timeMng.StartTimer();
 	while (1) {
 		timeMng.ElapsedTime();
-		elapsedFrame = timeMng.framedayo - frame;
-		while (frame < timeMng.framedayo) {
+		elapsedFrame = timeMng.targetFrame - frame;
+		while (frame < timeMng.targetFrame) {
 			frame++;
 			Loop.Loop();
 		}
@@ -81,6 +83,7 @@ WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, in
 			elapsedFrame = 1;
 		}
 		ShowFPS(0, 0, 20, elapsedFrame, Color(C_WHITE));
+		DrawFormatString(0, 20, GetColor(C_WHITE), "Objects:%d", Bullets.size() + Lasers.size() + plyrShots.size());
 
 		ScreenFlip();
 

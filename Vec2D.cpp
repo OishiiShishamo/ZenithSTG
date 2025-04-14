@@ -34,3 +34,8 @@ VecNorm(Vec2D v) {
 	v.y *= 1 / std::sqrt(v.x * v.x + v.y * v.y);
 	return v;
 }
+
+Vec2D
+AngleToVec2D(double angle) {
+	return Vec2D(cos(angle), -sin(angle));
+}

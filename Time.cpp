@@ -33,7 +33,7 @@ std::chrono::nanoseconds
 Time::ElapsedTime() {
 	std::chrono::nanoseconds tmp = frontFrameTime;
 	frontFrameTime = Timer();
-	framedayo = static_cast<double>(Timer().count()) / std::chrono::nanoseconds(1000000000 / fps).count();
+	targetFrame = static_cast<double>(Timer().count()) / std::chrono::nanoseconds(1000000000 / fps).count();
 	return Timer() - tmp;
 }
 

@@ -10,11 +10,13 @@ class Color;
 class Object;
 class Bullet;
 class Laser;
+class Enemy;
 class Player;
 class playerShot;
 class mainLoop;
 class Vec2D;
 
+#include <any>
 #include <chrono>
 #include <cmath>
 #include <iostream>
@@ -45,38 +47,46 @@ class Vec2D;
 #define SCREEN_WIDTH 1920
 #define SCREEN_HEIGHT 1080
 
-#define BLEND_DEFAULT -1
-#define BLEND_NOBLEND DX_BLENDMODE_NOBLEND
-#define BLEND_ALPHA DX_BLENDMODE_ALPHA
-#define BLEND_ADD DX_BLENDMODE_ADD
-#define BLEND_SUB DX_BLENDMODE_SUB
-#define BLEND_MULA DX_BLENDMODE_MULA
-#define BLEND_INVSRC DX_BLENDMODE_INVSRC
-#define BLEND_PMA_ALPHA DX_BLENDMODE_PMA_ALPHA
-#define BLEND_PMA_ADD DX_BLENDMODE_PMA_ADD
-#define BLEND_PMA_SUB DX_BLENDMODE_PMA_SUB
-#define BLEND_PMA_INVSRC DX_BLENDMODE_PMA_INVSRC
+enum blendType {
+	BLEND_DEFAULT = -1,
+	BLEND_NOBLEND = DX_BLENDMODE_NOBLEND,
+	BLEND_ALPHA = DX_BLENDMODE_ALPHA,
+	BLEND_ADD = DX_BLENDMODE_ADD,
+	BLEND_SUB = DX_BLENDMODE_SUB,
+	BLEND_MULA = DX_BLENDMODE_MULA,
+	BLEND_INVSRC = DX_BLENDMODE_INVSRC,
+	BLEND_PMA_ALPHA = DX_BLENDMODE_PMA_ALPHA,
+	BLEND_PMA_ADD = DX_BLENDMODE_PMA_ADD,
+	BLEND_PMA_SUB = DX_BLENDMODE_PMA_SUB,
+	BLEND_PMA_INVSRC = DX_BLENDMODE_PMA_INVSRC,
+};
 
-#define OBJECT_BULLET 0
-#define OBJECT_LASER 1
-#define OBJECT_BENT_LASER 2
-#define OBJECT_ENEMY 3
-#define OBJECT_PLAYER_SHOT 4
+enum objectType {
+	OBJECT_BULLET = 0,
+	OBJECT_LASER = 1,
+	OBJECT_BENT_LASER = 2,
+	OBJECT_ENEMY = 3,
+	OBJECT_PLAYER_SHOT = 4,
+};
 
-#define B_NORMAL 0
-#define B_MIDIAM 1
-#define B_UROKO 2
-#define B_LASER 3
-#define B_LIGHT 4
-#define B_BIG 5
+enum bulletType {
+	B_NORMAL = 0,
+	B_MIDIAM = 1,
+	B_UROKO = 2,
+	B_LASER = 3,
+	B_LIGHT = 4,
+	B_BIG = 5,
+};
 
-#define LINEAR 0
-#define EASEINQUAD 1
-#define EASEOUTQUAD 2
-#define EASEINOUTQUAD 3
-#define EASEINCUBIC 4
-#define EASEOUTCUBIC 5
-#define EASEINOUTCUBIC 6
+enum easeType {
+	LINEAR = 0,
+	EASEINQUAD = 1,
+	EASEOUTQUAD = 2,
+	EASEINOUTQUAD = 3,
+	EASEINCUBIC = 4,
+	EASEOUTCUBIC = 5,
+	EASEINOUTCUBIC = 6,
+};
 
 struct imageRes {
 	std::vector<int> UIGH;
@@ -99,6 +109,7 @@ extern Player Plyr;
 
 extern std::vector<Bullet> Bullets;
 extern std::vector<Laser> Lasers;
+extern std::vector<Enemy> Enemies;
 extern std::vector<playerShot> plyrShots;
 
 extern long long frame;
@@ -109,6 +120,11 @@ extern std::vector<int> defaultBulletBlend;
 extern std::vector<int> defaultPlayerShotBlend;
 extern std::vector<float> drawRatioBulletGraphs;
 extern int isColShow;
+
+extern double screenSizeRate;
+extern double screenRotaX;
+extern double screenRotaY;
+extern double screenRotaZ;
 
 extern int backgroundCanvas;
 extern int bulletCanvas;
