@@ -2,6 +2,9 @@
 #ifndef UTILITY_H
 #define UTILITY_H
 
+using namespace std;
+#include <string>
+
 //あったら便利そうなやつまとめ
 
 /**
@@ -27,5 +30,7 @@ void SmartSetDrawBlendMode(int BlendMode, int Pal);
 double Rad(double angle);
 void apply_window_size();
 int rnd();
+void add_debugging(string debug);
+void debuging2log();
 
 #endif

@@ -32,15 +32,19 @@ class Vec2D;
 #include <type_traits>
 #include <vector>
 #include <thread>
-
+#include <iostream>
+#include <string>
 #include <DirectXMath.h>
 #include <immintrin.h>
+#include <fstream> 
 
 #include "Collision.h"
 #include "DxLib.h"
 #include "Property.h"
 #include "Utility.h"
 #include "Vec2D.h"
+
+using namespace std;
 
 #define PRINT(...) printf(__VA_ARGS__)	
 

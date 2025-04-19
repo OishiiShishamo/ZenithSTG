@@ -64,6 +64,7 @@ WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, in
 	apply_window_size();
 	if (Properties.onerror == 1) {
 		PRINT("ERROR: 画面のサイズに非対応");
+		add_debugging("[ERROR] 画面のサイズに非対応");
 	}
 	switch (Properties.windowSize) {
 	case 0:
@@ -96,7 +97,9 @@ WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, in
 			elapsedFrame = 1;
 		}
 		ShowFPS(0, 0, 20, elapsedFrame, Color(C_WHITE));
-		
+		if (frame % 256 == 0) {
+			add_debugging("[INFO] FRAME " + to_string(elapsedFrame) + "sec");
+		}
 		//DrawFormatString(0, 20, GetColor(C_WHITE), "Objects:%d", Bullets.size() + Lasers.size() + plyrShots.size());
 
 		ScreenFlip();

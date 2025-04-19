@@ -4,22 +4,24 @@
 #include "Utility.h"
 
 bool debuging = true;
+string debugging;
 
 void apply_window_size() {
 	int width = GetSystemMetrics(SM_CXSCREEN);
 	int height = GetSystemMetrics(SM_CYSCREEN);
-	if (width - height == 560) {
+	if (width - height < 560-1) {
 		Properties.windowSize = 0;
 	}
-	else if (width - height == 700) {
+	else if (width - height < 700-1) {
 		Properties.windowSize = 1;
 	}
-	else if (width - height == 840) {
+	else if (width - height < 840-1) {
 		Properties.windowSize = 2;
 	}
 	else {
-		Properties.onerror = 1;
+		Properties.windowSize = 1;
 	}
+
 	if (debuging) Properties.windowSize = 1;
 
 	return;
@@ -146,4 +148,16 @@ SmartSetDrawBlendMode(int BlendMode, int Pal) {
 double
 Rad(double angle) {
 	return (PI / 180) * angle;
+}
+
+void add_debugging(string debug) {
+	string debugging = debug + "\n";
+	debuging2log();
+}
+
+void debuging2log() {
+	std::ofstream logfile;
+	logfile.open("log.txt");
+	logfile << debugging;
+	logfile.close();
 }
