@@ -17,12 +17,18 @@ class mainLoop;
 class Vec2D;
 
 #include <any>
+#include <algorithm>
+#include <array>
 #include <chrono>
 #include <cmath>
 #include <iostream>
 #include <string>
 #include <tuple>
 #include <vector>
+#include <thread>
+
+#include <DirectXMath.h>
+#include <immintrin.h>
 
 #include "boost/multiprecision/cpp_int.hpp"
 #include "DxLib.h"
@@ -46,6 +52,13 @@ class Vec2D;
 
 #define SCREEN_WIDTH 1920
 #define SCREEN_HEIGHT 1080
+
+#define MAX_BULLET 8192
+#define MAX_LASER 8192
+#define MAX_ENEMY 8192
+#define MAX_PLAYER_SHOT 8192
+
+#define FPS_HISTORY_LENGTH 120
 
 enum blendType {
 	BLEND_DEFAULT = -1,
@@ -78,6 +91,14 @@ enum bulletType {
 	B_BIG = 5,
 };
 
+enum enemyType {
+	E_NORMAL = 0,
+};
+
+enum playerShotType {
+	PS_NORMAL = 0,
+};
+
 enum easeType {
 	LINEAR = 0,
 	EASEINQUAD = 1,
@@ -107,18 +128,24 @@ extern mainLoop Loop;
 
 extern Player Plyr;
 
-extern std::vector<Bullet> Bullets;
-extern std::vector<Laser> Lasers;
-extern std::vector<Enemy> Enemies;
-extern std::vector<playerShot> plyrShots;
+extern std::array<Bullet, MAX_BULLET> Bullets;
+extern std::array<Laser, MAX_LASER> Lasers;
+extern std::array<Enemy, MAX_ENEMY> Enemies;
+extern std::array<playerShot, MAX_PLAYER_SHOT> plyrShots;
+
+extern int numThreads;
 
 extern long long frame;
 extern long long fps;
 extern int currentBlendMode;
 extern int currentBlendPal;
-extern std::vector<int> defaultBulletBlend;
-extern std::vector<int> defaultPlayerShotBlend;
-extern std::vector<float> drawRatioBulletGraphs;
+extern std::array<double, FPS_HISTORY_LENGTH> fpsHistory;
+extern std::array<int, 128> defaultBulletBlend;
+extern std::array<int, 128> defaultPlayerShotBlend;
+extern std::array<double, 128> drawRatioBulletGraphs;
+extern std::array<double, 128> drawRatioEnemyGraphs;
+extern std::array<double, 128> drawRatioPlayerShotGraphs;
+extern int fpsHistoryIndex;
 extern int isColShow;
 
 extern double screenSizeRate;

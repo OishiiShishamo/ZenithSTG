@@ -8,17 +8,61 @@
 
 //TODO: 引数減らしたラッパー関数作る
 
-std::vector<int> defaultBulletBlend;
+std::array<int, 128> defaultBulletBlend;
+long long bIndex = 0;
 
 void
 Bullet::ShowBullet() {
+	if (!(flags & ALIVE)) return;
+	Vec2D world[4];
+	const bool isScaled = size > 1.0f;
+	if (isScaled) {
+		double half = size / 2 * 128 * drawRatioBulletGraphs[style];
+		Vec2D local[4] = {
+			{-half, -half},
+			{-half, half},
+			{ half, half},
+			{ half, -half}
+		};
+		for (int i = 0; i < 4; ++i) {
+			Vec2D rot = RotatePoint(local[i], showAngle + PI / 2);
+			world[i].x = pos.x + rot.x;
+			world[i].y = pos.y + rot.y;
+		}
+	}
 	if (blend == -1) {
 		SmartSetDrawBlendMode(defaultBulletBlend[style], pal);
 		SetDrawBright(color.r, color.g, color.b);
 		SetDrawMode(DX_DRAWMODE_BILINEAR);
-		DrawRotaGraph(pos.x, pos.y, size, -showAngle, imgRes.BulletBackGH[style], TRUE);
+		if (isScaled) {
+			DrawRectModiGraph(
+				world[0].x, world[0].y,
+				world[1].x, world[1].y,
+				world[2].x, world[2].y,
+				world[3].x, world[3].y,
+				64 - 128 * drawRatioBulletGraphs[style] / 2,
+				64 - 128 * drawRatioBulletGraphs[style] / 2,
+				128 * drawRatioBulletGraphs[style],
+				128 * drawRatioBulletGraphs[style],
+				imgRes.BulletBackGH[style],
+				TRUE);
+		}
+		else DrawRotaGraph(pos.x, pos.y, size, -showAngle, imgRes.BulletBackGH[style], TRUE);
 		SetDrawBright(255, 255, 255);
-		DrawRotaGraph(pos.x, pos.y, size, -showAngle, imgRes.BulletFrontGH[style], TRUE);
+		if (isScaled) {
+			DrawRectModiGraph(
+				world[0].x, world[0].y,
+				world[1].x, world[1].y,
+				world[2].x, world[2].y,
+				world[3].x, world[3].y,
+				64 - 128 * drawRatioBulletGraphs[style] / 2,
+				64 - 128 * drawRatioBulletGraphs[style] / 2,
+				128 * drawRatioBulletGraphs[style],
+				128 * drawRatioBulletGraphs[style],
+				imgRes.BulletFrontGH[style],
+				TRUE);
+		}
+		else DrawRotaGraph(pos.x, pos.y, size, -showAngle, imgRes.BulletFrontGH[style], TRUE);
 		SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 		SetDrawMode(DX_DRAWMODE_NEAREST);
 	}
@@ -26,14 +70,40 @@ Bullet::ShowBullet() {
 		SmartSetDrawBlendMode(blend, pal);
 		SetDrawBright(color.r, color.g, color.b);
 		SetDrawMode(DX_DRAWMODE_BILINEAR);
-		DrawRotaGraph(pos.x, pos.y, size, -showAngle, imgRes.BulletBackGH[style], TRUE);
+		if (isScaled) {
+			DrawRectModiGraph(
+				world[0].x, world[0].y,
+				world[1].x, world[1].y,
+				world[2].x, world[2].y,
+				world[3].x, world[3].y,
+				64 - 128 * drawRatioBulletGraphs[style] / 2,
+				64 - 128 * drawRatioBulletGraphs[style] / 2,
+				128 * drawRatioBulletGraphs[style],
+				128 * drawRatioBulletGraphs[style],
+				imgRes.BulletBackGH[style],
+				TRUE);
+		}
+		else DrawRotaGraph(pos.x, pos.y, size, -showAngle, imgRes.BulletBackGH[style], TRUE);
 		SetDrawBright(255, 255, 255);
-		DrawRotaGraph(pos.x, pos.y, size, -showAngle, imgRes.BulletFrontGH[style], TRUE);
+		if (isScaled) {
+			DrawRectModiGraph(
+				world[0].x, world[0].y,
+				world[1].x, world[1].y,
+				world[2].x, world[2].y,
+				world[3].x, world[3].y,
+				64 - 128 * drawRatioBulletGraphs[style] / 2,
+				64 - 128 * drawRatioBulletGraphs[style] / 2,
+				128 * drawRatioBulletGraphs[style],
+				128 * drawRatioBulletGraphs[style],
+				imgRes.BulletFrontGH[style],
+				TRUE);
+		}
+		else DrawRotaGraph(pos.x, pos.y, size, -showAngle, imgRes.BulletFrontGH[style], TRUE);
 		SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 		SetDrawMode(DX_DRAWMODE_NEAREST);
 	}
 	if (isColShow == 1) {
-		if (isCol == 1) {
+		if (flags & IS_COL) {
 			SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 			DrawCircle(pos.x, pos.y, colSize, GetColor(255, 255, 255), 1);
 			DrawFormatString(pos.x, pos.y, GetColor(GetColorHSV(std::fmod(frame, 360), 1, 1).r, GetColorHSV(std::fmod(frame, 360), 1, 1).g, GetColorHSV(std::fmod(frame, 360), 1, 1).b), "%f", colSize);
@@ -42,11 +112,50 @@ Bullet::ShowBullet() {
 }
 
 void
-CreateBullet(Vec2D pos, Color color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID, const std::vector<std::any>& params) {
+Bullet::ColliCheckObject() {
+	if (colCircleAndCircle(pos, Plyr.pos, colSize + Plyr.colSize)) {
+		Plyr.HitPlayer();
+		flags ^= ALIVE;
+	}
+}
+
+int
+Bullet::CheckPosBounds() {
+	double limit = size * 128 * 2 * drawRatioBulletGraphs[style];
+	if (pos.x < BORDER_LEFT - limit) return 1;
+	if (pos.x > BORDER_RIGHT + limit) return 1;
+	if (pos.y < BORDER_UP - limit) return 1;
+	if (pos.y > BORDER_DOWN + limit) return 1;
+
+	return 0;
+}
+
+void
+Bullet::MoveFunc() {
+	switch (ID) {
+	case 0:
+	default: {
+		int needsMultiStep = speed >= colSize + Plyr.colSize && flags & IS_COL;
+		if (needsMultiStep) {
+			int step = static_cast<int>(std::ceil(speed / 1.0f));
+			for (int i = 0; i < step; i++) {
+				MoveObject(speed / step);
+				if (CheckCollisionAndBounds()) return;
+			}
+		}
+		else {
+			MoveObject(speed);
+			if (CheckCollisionAndBounds()) return;
+		}
+	}
+	}
+}
+
+void
+CreateBullet(const Vec2D& pos, const Color& color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID, const std::vector<std::any>& params) {
 	for (int i = 0; i < Bullets.size(); i++) {
-		if (Bullets[i].alive == 0) {
-			Bullets[i].alive = 1;
-			Bullets[i].isCol = isCol;
+		if (!(Bullets[i].flags & ALIVE)) {
+			Bullets[i].flags = ALIVE | isCol * IS_COL;
 			Bullets[i].objType = OBJECT_BULLET;
 			Bullets[i].pos = pos;
 			Bullets[i].color = color;
@@ -80,22 +189,24 @@ CreateBullet(Vec2D pos, Color color, int style, int blend, int pal, int isCol, d
 			Bullets[i].width = 0;
 			Bullets[i].frontNode = 0;
 			Bullets[i].currentNodeNum = 0;
-			Bullets[i].isHead = 0;
+			Bullets[i].index = bIndex;
 			Bullets[i].ID = ID;
 			Bullets[i].params = params;
+
+			bIndex++;
 			return;
 		}
 	}
-	if (aim == 1) {
+	/*if (aim == 1) {
 		Bullets.emplace_back(1, isCol, pos, Plyr.AimPlayer(pos) + startAngle, Plyr.AimPlayer(pos) + endAngle, angleEaseType, angleEaseTime, 0, 0, 0, 0, color, style, blend, pal, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime, frame, ID, params);
 	}
 	else {
 		Bullets.emplace_back(1, isCol, pos, startAngle, endAngle, angleEaseType, angleEaseTime, 0, 0, 0, 0, color, style, blend, pal, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime, frame, ID, params);
-	}
+	}*/
 }
 
 void
-CreateBulletGroup(Vec2D pos, Color color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int way, double spread, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID, const std::vector<std::any>& params) {
+CreateBulletGroup(const Vec2D& pos, const Color& color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int way, double spread, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID, const std::vector<std::any>& params) {
 	switch (aim) {
 	case 0:
 		for (int i = 0; i < way; i++) {
@@ -121,7 +232,7 @@ CreateBulletGroup(Vec2D pos, Color color, int style, int blend, int pal, int isC
 }
 
 void
-CreateSimpleBulletGroup(Vec2D pos, Color color, int style, int blend, int pal, double colSize, double size, int way, double spread, int aim, double angle, double speed, int ID, const std::vector<std::any>& params) {
+CreateSimpleBulletGroup(const Vec2D& pos, const Color& color, int style, int blend, int pal, double colSize, double size, int way, double spread, int aim, double angle, double speed, int ID, const std::vector<std::any>& params) {
 	switch (aim) {
 	case 0:
 		for (int i = 0; i < way; i++) {
@@ -148,18 +259,13 @@ CreateSimpleBulletGroup(Vec2D pos, Color color, int style, int blend, int pal, d
 
 void
 MoveBullets() {
-	for (Bullet& B : Bullets) {
+	for (auto& B : Bullets) {
 		B.UpdateObject();
 		B.ShowBullet();
 	}
-	if (frame % 10 == 0) {
+	if (frame % 1 == 0) {
 		std::sort(Bullets.begin(), Bullets.end(), [](const Bullet& a, const Bullet& b) {
-			return a.popFrame < b.popFrame;
+			return a.index < b.index;
 			});
-		for (int i = 0; i < Bullets.size(); i++) {
-			if (Bullets[i].alive == 0) {
-				Bullets.erase(Bullets.begin() + i);
-			}
-		}
 	}
 }

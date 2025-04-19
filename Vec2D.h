@@ -4,18 +4,49 @@
 
 class Vec2D {
 public:
-	double x;
-	double y;
-	Vec2D(double x, double y) : x(x), y(y) {
+	double x = 0;
+	double y = 0;
+	Vec2D(double x = 0, double y = 0) : x(x), y(y) {
 	}
+
+    Vec2D operator+(const Vec2D& rhs) const {
+        return Vec2D(x + rhs.x, y + rhs.y);
+    }
+
+    Vec2D operator-(const Vec2D& rhs) const {
+        return Vec2D(x - rhs.x, y - rhs.y);
+    }
+
+    Vec2D operator*(double scalar) const {
+        return Vec2D(x * scalar, y * scalar);
+    }
+
+    Vec2D operator/(double scalar) const {
+        return Vec2D(x / scalar, y / scalar);
+    }
+
+    Vec2D& operator+=(const Vec2D& rhs) {
+        x += rhs.x;
+        y += rhs.y;
+        return *this;
+    }
+
+    Vec2D& operator-=(const Vec2D& rhs) {
+        x -= rhs.x;
+        y -= rhs.y;
+        return *this;
+    }
+
+    bool operator==(const Vec2D& rhs) const {
+        return x == rhs.x && y == rhs.y;
+    }
+
+    void VecNorm();
 };
 
-Vec2D sumVec2D(Vec2D v1, Vec2D v2);
-Vec2D subVec2D(Vec2D v1, Vec2D v2);
-Vec2D mulVec2D(Vec2D v1, double num);
-double crossProduct(Vec2D v1, Vec2D v2, Vec2D v3);
-double Range(Vec2D v1, Vec2D v2);
-Vec2D VecNorm(Vec2D v);
+double crossProduct(const Vec2D& v1, const Vec2D& v2, const Vec2D& v3);
+double Range(const Vec2D& v1, const Vec2D& v2);
 Vec2D AngleToVec2D(double angle);
+Vec2D RotatePoint(const Vec2D& pt, double angle);
 
 #endif

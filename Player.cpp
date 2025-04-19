@@ -6,12 +6,12 @@
 //TODO: コントローラーに対応させる
 
 double
-Player::AimPlayer(Vec2D v) {
+Player::AimPlayer(const Vec2D& v) {
 	return atan2(-double(pos.y - v.y), double(pos.x - v.x));
 }
 
 double
-Player::RangePlayer(Vec2D v) {
+Player::RangePlayer(const Vec2D& v) {
 	return Range(v, pos);
 }
 
@@ -30,7 +30,7 @@ Player::MovePlayer() {
 		if (GetAsyncKeyState(VK_LEFT)) vec.x -= 1;
 		if (GetAsyncKeyState(VK_UP)) vec.y -= 1;
 		if (GetAsyncKeyState(VK_DOWN)) vec.y += 1;
-		VecNorm(vec);
+		vec.VecNorm();
 		if (GetAsyncKeyState(VK_SHIFT)) {
 			pos.x += vec.x * Slow;
 			pos.y += vec.y * Slow;

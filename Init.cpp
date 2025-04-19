@@ -46,11 +46,10 @@ Init() {
 	SetAlwaysRunFlag(TRUE);
 	SetUseDirect3DVersion(DX_DIRECT3D_11);
 	SetUsePremulAlphaConvertLoad(TRUE);
+	SetWaitVSyncFlag(FALSE);
 	SetFontSize(20);
 	
 	//SetCreateDrawValidGraphMultiSample(16, 8);
-
-	Bullets.reserve(1000);
 
 	Plyr.pos = P_DEFAULT_POS;
 	Plyr.Slow = 5;
@@ -62,23 +61,23 @@ Init() {
 	Plyr.protectTime = 0;
 	Plyr.isMouse = 0;
 
-	for (int i = 0; i < 128; i++) {
-		defaultBulletBlend.emplace_back(BLEND_NOBLEND);
-	}
+	fpsHistory.fill(fps);
+
+	defaultBulletBlend.fill(BLEND_NOBLEND);
 	defaultBulletBlend[B_LIGHT] = BLEND_ADD;
 	defaultBulletBlend[B_BIG] = BLEND_ADD;
-	for (int i = 0; i < 128; i++) {
-		defaultPlayerShotBlend.emplace_back(BLEND_NOBLEND);
-	}
-	for (int i = 0; i < 128; i++) {
-		drawRatioBulletGraphs.emplace_back(1.0f);
-	}
+
+	defaultPlayerShotBlend.fill(BLEND_NOBLEND);
 	drawRatioBulletGraphs[B_NORMAL] = 0.15625f;
 	drawRatioBulletGraphs[B_MIDIAM] = 0.3125f;
 	drawRatioBulletGraphs[B_UROKO] = 0.15625f;
 	drawRatioBulletGraphs[B_LASER] = 0.0625f;
 	drawRatioBulletGraphs[B_LIGHT] = 0.25f;
 	drawRatioBulletGraphs[B_BIG] = 0.75f;
+
+	drawRatioEnemyGraphs[E_NORMAL] = 0.5f;
+
+	drawRatioPlayerShotGraphs[PS_NORMAL] = 0.5f;
 }
 
 void

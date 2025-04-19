@@ -2,40 +2,39 @@
 
 #include <cmath>
 
-Vec2D
-sumVec2D(Vec2D v1, Vec2D v2) {
-	return Vec2D(v1.x + v2.x, v1.y + v2.y);
-}
-
-Vec2D
-subVec2D(Vec2D v1, Vec2D v2) {
-	return Vec2D(v1.x - v2.x, v1.y - v2.y);
-}
-
-Vec2D
-mulVec2D(Vec2D v1, double num) {
-	return Vec2D(v1.x * num, v1.y * num);
+void
+Vec2D::VecNorm() {
+	if (x + y == 0) return;
+	Vec2D v = Vec2D(x, y);
+	v.x *= 1 / std::sqrt(v.x * v.x + v.y * v.y);
+	v.y *= 1 / std::sqrt(v.x * v.x + v.y * v.y);
+	*this = v;
 }
 
 double
-crossProduct(Vec2D v1, Vec2D v2, Vec2D v3) {
+crossProduct(const Vec2D& v1, const Vec2D& v2, const Vec2D& v3) {
 	return (v2.x - v1.x) * (v3.y - v1.y) - (v2.y - v1.y) * (v3.x - v1.x);
 }
 
 double
-Range(Vec2D v1, Vec2D v2) {
-	return std::sqrt(std::pow((v1.y - v2.y), 2) + std::pow((v1.x - v2.x), 2));
-}
-
-Vec2D
-VecNorm(Vec2D v) {
-	if (v.x + v.y == 0) return v;
-	v.x *= 1 / std::sqrt(v.x * v.x + v.y * v.y);
-	v.y *= 1 / std::sqrt(v.x * v.x + v.y * v.y);
-	return v;
+Range(const Vec2D& v1, const Vec2D& v2) {
+	return std::sqrt((v1.x - v2.x) * (v1.x - v2.x) + (v1.y - v2.y) * (v1.y - v2.y));
 }
 
 Vec2D
 AngleToVec2D(double angle) {
-	return Vec2D(cos(angle), -sin(angle));
+	return { 
+		cos(angle), 
+		-sin(angle) 
+	};
+}
+
+Vec2D
+RotatePoint(const Vec2D& pt, double angle) {
+	double cosA = cos(angle);
+	double sinA = sin(angle);
+	return {
+		pt.x * cosA + pt.y * sinA,
+		pt.y * cosA - pt.x * sinA
+	};
 }

@@ -66,15 +66,15 @@ DrawRotaGraph4(int x, int y, double rate, double anglex, double angley, double a
 }
 
 Color
-GetColorHSV(float H, float S, float V) {
+GetColorHSV(double H, double S, double V) {
 	int hi;
-	float f, p, q, t;
-	float r, g, b;
+	double f, p, q, t;
+	double r, g, b;
 	int ir, ig, ib;
 
 	hi = (int)(H / 60.0f);
 	hi = hi == 6 ? 5 : hi %= 6;
-	f = H / 60.0f - (float)hi;
+	f = H / 60.0f - (double)hi;
 	p = V * (1.0f - S);
 	q = V * (1.0f - f * S);
 	t = V * (1.0f - (1.0f - f) * S);

@@ -12,6 +12,7 @@ std::vector<int> defaultEnemyBlend;
 
 void
 Enemy::ShowEnemy() {
+	if (!(flags & ALIVE)) return;
 	if (blend == -1) {
 		SmartSetDrawBlendMode(defaultEnemyBlend[style], pal);
 		SetDrawBright(color.r, color.g, color.b);
@@ -31,7 +32,7 @@ Enemy::ShowEnemy() {
 		SetDrawMode(DX_DRAWMODE_NEAREST);
 	}
 	if (isColShow == 1) {
-		if (isCol == 1) {
+		if (flags & IS_COL) {
 			SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 			DrawCircle(pos.x, pos.y, colSize, GetColor(255, 255, 255), 1);
 			DrawFormatString(pos.x, pos.y, GetColor(GetColorHSV(std::fmod(frame, 360), 1, 1).r, GetColorHSV(std::fmod(frame, 360), 1, 1).g, GetColorHSV(std::fmod(frame, 360), 1, 1).b), "%f", colSize);
@@ -40,11 +41,50 @@ Enemy::ShowEnemy() {
 }
 
 void
-CreateEnemy(Vec2D pos, Color color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID) {
+Enemy::ColliCheckObject() {
+	if (colCircleAndCircle(pos, Plyr.pos, colSize + Plyr.colSize)) {
+		Plyr.HitPlayer();
+		flags ^= ALIVE;
+	}
+}
+
+int
+Enemy::CheckPosBounds() {
+	double limit = size * 128 * 2 * drawRatioEnemyGraphs[style];
+	if (pos.x < BORDER_LEFT - limit) return 1;
+	if (pos.x > BORDER_RIGHT + limit) return 1;
+	if (pos.y < BORDER_UP - limit) return 1;
+	if (pos.y > BORDER_DOWN + limit) return 1;
+
+	return 0;
+}
+
+void
+Enemy::MoveFunc() {
+	switch (ID) {
+	case 0:
+	default: {
+		int needsMultiStep = speed >= colSize + Plyr.colSize && flags & IS_COL;
+		if (needsMultiStep) {
+			int step = static_cast<int>(std::ceil(speed / 1.0f));
+			for (int i = 0; i < step; i++) {
+				MoveObject(speed / step);
+				if (CheckCollisionAndBounds()) return;
+			}
+		}
+		else {
+			MoveObject(speed);
+			if (CheckCollisionAndBounds()) return;
+		}
+	}
+	}
+}
+
+void
+CreateEnemy(const Vec2D& pos, const Color& color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID, const std::vector<std::any>& params) {
 	for (int i = 0; i < Enemies.size(); i++) {
-		if (Enemies[i].alive == 0) {
-			Enemies[i].alive = 1;
-			Enemies[i].isCol = isCol;
+		if (!(Enemies[i].flags & ALIVE)) {
+			Enemies[i].flags = ALIVE | isCol * IS_COL;
 			Enemies[i].objType = OBJECT_ENEMY;
 			Enemies[i].pos = pos;
 			Enemies[i].color = color;
@@ -78,66 +118,66 @@ CreateEnemy(Vec2D pos, Color color, int style, int blend, int pal, int isCol, do
 			Enemies[i].width = 0;
 			Enemies[i].frontNode = 0;
 			Enemies[i].currentNodeNum = 0;
-			Enemies[i].isHead = 0;
 			Enemies[i].ID = ID;
+			Enemies[i].params = params;
 			return;
 		}
 	}
-	if (aim == 1) {
-		Enemies.emplace_back(1, isCol, pos, Plyr.AimPlayer(pos) + startAngle, Plyr.AimPlayer(pos) + endAngle, angleEaseType, angleEaseTime, 0, 0, 0, 0, color, style, blend, pal, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime, frame, ID);
+	/*if (aim == 1) {
+		Enemies.emplace_back(1, isCol, pos, Plyr.AimPlayer(pos) + startAngle, Plyr.AimPlayer(pos) + endAngle, angleEaseType, angleEaseTime, 0, 0, 0, 0, color, style, blend, pal, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime, frame, ID, params);
 	}
 	else {
-		Enemies.emplace_back(1, isCol, pos, startAngle, endAngle, angleEaseType, angleEaseTime, 0, 0, 0, 0, color, style, blend, pal, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime, frame, ID);
-	}
+		Enemies.emplace_back(1, isCol, pos, startAngle, endAngle, angleEaseType, angleEaseTime, 0, 0, 0, 0, color, style, blend, pal, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime, frame, ID, params);
+	}*/
 }
 
 void
-CreateEnemyGroup(Vec2D pos, Color color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int way, double spread, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID) {
+CreateEnemyGroup(const Vec2D& pos, const Color& color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int way, double spread, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID, const std::vector<std::any>& params) {
 	switch (aim) {
 	case 0:
 		for (int i = 0; i < way; i++) {
-			CreateEnemy(pos, color, style, blend, pal, isCol, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, 0, spread / way * i + startAngle - spread / 2, spread / way * i + endAngle - spread / 2, angleEaseType, angleEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime, ID);
+			CreateEnemy(pos, color, style, blend, pal, isCol, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, 0, spread / way * i + startAngle - spread / 2, spread / way * i + endAngle - spread / 2, angleEaseType, angleEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime, ID, params);
 		}
 		break;
 	case 1:
 		for (int i = 0; i < way; i++) {
-			CreateEnemy(pos, color, style, blend, pal, isCol, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, 1, spread / way * i + startAngle - spread / 2, spread / way * i + endAngle - spread / 2, angleEaseType, angleEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime, ID);
+			CreateEnemy(pos, color, style, blend, pal, isCol, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, 1, spread / way * i + startAngle - spread / 2, spread / way * i + endAngle - spread / 2, angleEaseType, angleEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime, ID, params);
 		}
 		break;
 	case 2:
 		for (int i = 0; i < way; i++) {
-			CreateEnemy(pos, color, style, blend, pal, isCol, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, 1, spread / way * i + startAngle + spread / (way * 2) - spread / 2, spread / way * i + endAngle + spread / (way * 2) - spread / 2, angleEaseType, angleEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime, ID);
+			CreateEnemy(pos, color, style, blend, pal, isCol, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, 1, spread / way * i + startAngle + spread / (way * 2) - spread / 2, spread / way * i + endAngle + spread / (way * 2) - spread / 2, angleEaseType, angleEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime, ID, params);
 		}
 		break;
 	default:
 		for (int i = 0; i < way; i++) {
-			CreateEnemy(pos, color, style, blend, pal, isCol, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, 0, spread / way * i + startAngle - spread / 2, spread / way * i + endAngle - spread / 2, angleEaseType, angleEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime, ID);
+			CreateEnemy(pos, color, style, blend, pal, isCol, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, 0, spread / way * i + startAngle - spread / 2, spread / way * i + endAngle - spread / 2, angleEaseType, angleEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime, ID, params);
 		}
 		break;
 	}
 }
 
 void
-CreateSimpleEnemyGroup(Vec2D pos, Color color, int style, int blend, int pal, double colSize, double size, int way, double spread, int aim, double angle, double speed, int ID) {
+CreateSimpleEnemyGroup(const Vec2D& pos, const Color& color, int style, int blend, int pal, double colSize, double size, int way, double spread, int aim, double angle, double speed, int ID, const std::vector<std::any>& params) {
 	switch (aim) {
 	case 0:
 		for (int i = 0; i < way; i++) {
-			CreateEnemy(pos, color, style, blend, pal, 1, colSize, colSize, 0, 0, size, size, 0, 0, 0, spread / way * i + angle - spread / 2, spread / way * i + angle - spread / 2, 0, 0, speed, speed, 0, 0, ID);
+			CreateEnemy(pos, color, style, blend, pal, 1, colSize, colSize, 0, 0, size, size, 0, 0, 0, spread / way * i + angle - spread / 2, spread / way * i + angle - spread / 2, 0, 0, speed, speed, 0, 0, ID, params);
 		}
 		break;
 	case 1:
 		for (int i = 0; i < way; i++) {
-			CreateEnemy(pos, color, style, blend, pal, 0, colSize, colSize, 0, 0, size, size, 0, 0, 1, spread / way * i + angle - spread / 2, spread / way * i + angle - spread / 2, 0, 0, speed, speed, 0, 0, ID);
+			CreateEnemy(pos, color, style, blend, pal, 0, colSize, colSize, 0, 0, size, size, 0, 0, 1, spread / way * i + angle - spread / 2, spread / way * i + angle - spread / 2, 0, 0, speed, speed, 0, 0, ID, params);
 		}
 		break;
 	case 2:
 		for (int i = 0; i < way; i++) {
-			CreateEnemy(pos, color, style, blend, pal, 1, colSize, colSize, 0, 0, size, size, 0, 0, 1, spread / way * i + angle + spread / (way * 2) - spread / 2, spread / way * i + angle + spread / (way * 2) - spread / 2, 0, 0, speed, speed, 0, 0, ID);
+			CreateEnemy(pos, color, style, blend, pal, 1, colSize, colSize, 0, 0, size, size, 0, 0, 1, spread / way * i + angle + spread / (way * 2) - spread / 2, spread / way * i + angle + spread / (way * 2) - spread / 2, 0, 0, speed, speed, 0, 0, ID, params);
 		}
 		break;
 	default:
 		for (int i = 0; i < way; i++) {
-			CreateEnemy(pos, color, style, blend, pal, 1, colSize, colSize, 0, 0, size, size, 0, 0, 0, spread / way * i + angle - spread / 2, spread / way * i + angle - spread / 2, 0, 0, speed, speed, 0, 0, ID);
+			CreateEnemy(pos, color, style, blend, pal, 1, colSize, colSize, 0, 0, size, size, 0, 0, 0, spread / way * i + angle - spread / 2, spread / way * i + angle - spread / 2, 0, 0, speed, speed, 0, 0, ID, params);
 		}
 		break;
 	}
@@ -153,10 +193,5 @@ MoveEnemies() {
 		std::sort(Enemies.begin(), Enemies.end(), [](const Enemy& a, const Enemy& b) {
 			return a.popFrame < b.popFrame;
 			});
-		for (int i = 0; i < Enemies.size(); i++) {
-			if (Enemies[i].alive == 0) {
-				Enemies.erase(Enemies.begin() + i);
-			}
-		}
 	}
 }

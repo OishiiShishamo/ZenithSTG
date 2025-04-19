@@ -25,18 +25,25 @@ mainLoop Loop;
 
 Player Plyr;
 
-std::vector<Bullet> Bullets;
-std::vector<Laser> Lasers;
-std::vector<Enemy> Enemies;
-std::vector<playerShot> plyrShots;
+std::array<Bullet, MAX_BULLET> Bullets;
+std::array<Laser, MAX_LASER> Lasers;
+std::array<Enemy, MAX_ENEMY> Enemies;
+std::array<playerShot, MAX_PLAYER_SHOT> plyrShots;
 
-std::vector<float> drawRatioBulletGraphs;
+std::array<double, 128> drawRatioBulletGraphs;
+std::array<double, 128> drawRatioEnemyGraphs;
+std::array<double, 128> drawRatioPlayerShotGraphs;
+
+int numThreads = std::thread::hardware_concurrency();
 
 long long frame = 0;
 long long fps = 60;
 int elapsedFrame = 0;
-int currentBlendMode = DX_BLENDGRAPHTYPE_NORMAL;
+int currentBlendMode = BLEND_NOBLEND;
 int currentBlendPal = 255;
+
+std::array<double, FPS_HISTORY_LENGTH> fpsHistory;
+int fpsHistoryIndex = 0;
 
 int isColShow = 0;
 
@@ -83,9 +90,12 @@ WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, in
 			elapsedFrame = 1;
 		}
 		ShowFPS(0, 0, 20, elapsedFrame, Color(C_WHITE));
-		DrawFormatString(0, 20, GetColor(C_WHITE), "Objects:%d", Bullets.size() + Lasers.size() + plyrShots.size());
+		
+		//DrawFormatString(0, 20, GetColor(C_WHITE), "Objects:%d", Bullets.size() + Lasers.size() + plyrShots.size());
 
 		ScreenFlip();
+
+		timeMng.FrameWait();
 
 		if (ProcessMessage() < 0) break;
 		if (CheckHitKey(KEY_INPUT_ESCAPE)) break;

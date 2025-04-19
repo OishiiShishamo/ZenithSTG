@@ -37,4 +37,14 @@ Time::ElapsedTime() {
 	return Timer() - tmp;
 }
 
+void
+Time::FrameWait() {
+	std::chrono::nanoseconds FrameDuration(1000000000 / fps);
+	std::chrono::nanoseconds frameElapsed = Timer() - frontFrameTime;
+
+	if (frameElapsed < FrameDuration - std::chrono::milliseconds(2)) {
+		std::this_thread::sleep_for(FrameDuration - frameElapsed - std::chrono::milliseconds(2));
+	}
+}
+
 Time timeMng;

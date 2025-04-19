@@ -4,10 +4,15 @@
 
 #include "Color.h"
 
+enum objectFlags {
+	ALIVE = 1 << 0,
+	IS_COL = 1 << 1,
+	IS_HEAD = 1 << 2,
+};
+
 class Object {
 public:
-	int alive = 0;
-	int isCol = 1;
+	std::uint8_t flags = 0b00000010;
 	int objType = 0;
 	Vec2D pos = Vec2D(0, 0);
 	Vec2D vec = Vec2D(0, 0);
@@ -35,7 +40,7 @@ public:
 	double endSize = 0;
 	int sizeEaseType = 0;
 	int sizeEaseTime = 0;
-	double size = 1.0;
+	double size = 1.0f;
 	double startSpeed = 0;
 	double endSpeed = 0;
 	int speedEaseType = 0;
@@ -48,17 +53,21 @@ public:
 	long long frontNode = 0;
 	long long nextNode = -1;
 	int currentNodeNum = 0;
-	int isHead = 0;
 	int ID = 0;
+	long long index = 0;
 	std::vector<std::any> params;
-	Object(int alive, int isCol, int objType, Vec2D pos, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startShowAngle, double endShowAngle, int showAngleEaseType, int showAngleEaseTime, Color color, int style, int blend, int pal, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int popFrame = 0, double length = 0, double width = 0, long long frontNode = 0, long long nextNode = 0, int currentNodeNum = 0, int isHead = 0, int ID = 0, const std::vector<std::any>& params = {})
-		: alive(alive), isCol(isCol), objType(objType), pos(pos), startAngle(startAngle), endAngle(endAngle), angleEaseType(angleEaseType), angleEaseTime(angleEaseTime), startShowAngle(startShowAngle), endShowAngle(endShowAngle), showAngleEaseType(showAngleEaseType), showAngleEaseTime(showAngleEaseTime), color(color), style(style), blend(blend), pal(pal), startColSize(startColSize), endColSize(endColSize), colSizeEaseType(colSizeEaseType), colSizeEaseTime(colSizeEaseTime), colSize(startColSize), startSize(startSize), endSize(endSize), sizeEaseType(sizeEaseType), sizeEaseTime(sizeEaseTime), size(size), startSpeed(startSpeed), endSpeed(endSpeed), speedEaseType(speedEaseType), speedEaseTime(speedEaseTime), popFrame(popFrame), length(length), width(width), frontNode(frontNode), nextNode(nextNode), currentNodeNum(currentNodeNum), isHead(isHead), ID(ID), params(params) {
+	Object() = default;
+	Object(std::uint8_t alive, std::uint8_t isCol, int objType, const Vec2D& pos, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startShowAngle, double endShowAngle, int showAngleEaseType, int showAngleEaseTime, const Color& color, int style, int blend, int pal, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int popFrame = 0, double length = 0, double width = 0, long long frontNode = 0, long long nextNode = 0, int currentNodeNum = 0, int isHead = 0, long long index = 0 , int ID = 0, const std::vector<std::any>& params = {})
+		: objType(objType), pos(pos), startAngle(startAngle), endAngle(endAngle), angleEaseType(angleEaseType), angleEaseTime(angleEaseTime), startShowAngle(startShowAngle), endShowAngle(endShowAngle), showAngleEaseType(showAngleEaseType), showAngleEaseTime(showAngleEaseTime), color(color), style(style), blend(blend), pal(pal), startColSize(startColSize), endColSize(endColSize), colSizeEaseType(colSizeEaseType), colSizeEaseTime(colSizeEaseTime), colSize(startColSize), startSize(startSize), endSize(endSize), sizeEaseType(sizeEaseType), sizeEaseTime(sizeEaseTime), size(1.0f), startSpeed(startSpeed), endSpeed(endSpeed), speedEaseType(speedEaseType), speedEaseTime(speedEaseTime), popFrame(popFrame), length(length), width(width), frontNode(frontNode), nextNode(nextNode), currentNodeNum(currentNodeNum), index(index), ID(ID), params(params) {
+		flags |= ALIVE * alive | IS_COL * isCol | IS_HEAD * isHead;
 	}
 	void UpdateObject(long long Index = 0);
 	void UpdateEase();
 	void MoveObject(double speed);
-	void ColliCheckObject();
-	int CheckOutOfScreen();
+	virtual void ColliCheckObject();
+	virtual int CheckPosBounds();
+	virtual int CheckCollisionAndBounds();
+	virtual void MoveFunc();
 };
 
 #endif

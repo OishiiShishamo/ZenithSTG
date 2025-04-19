@@ -30,8 +30,8 @@ public:
 	int Protect;
 	int protectTime;
 	int isMouse;
-	double AimPlayer(Vec2D v);
-	double RangePlayer(Vec2D v);
+	double AimPlayer(const Vec2D& v);
+	double RangePlayer(const Vec2D& v);
 	void MovePlayer();
 	void ShowPlayer();
 	void Shot();

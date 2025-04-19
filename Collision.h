@@ -4,7 +4,7 @@
 
 #include "Main.h"
 
-int colCircleAndCircle(Vec2D v1, Vec2D v2, double r);
-int colPointAndRect(Vec2D v, Vec2D r1, Vec2D r2, Vec2D r3, Vec2D r4);
+int colCircleAndCircle(const Vec2D& v1, const Vec2D& v2, double r);
+int colPointAndRect(const Vec2D& v, const Vec2D& r1, const Vec2D& r2, const Vec2D& r3, const Vec2D& r4);
 
 #endif

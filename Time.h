@@ -14,6 +14,7 @@ public:
 	std::chrono::nanoseconds Timer();
 	std::chrono::high_resolution_clock::time_point startTime;
 	std::chrono::nanoseconds ElapsedTime();
+	void FrameWait();
 };
 
 extern Time timeMng;

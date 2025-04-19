@@ -8,19 +8,29 @@
 
 void
 Laser::ShowLaser() {
+	if (!(flags & ALIVE)) return;
+	double halfW = width / 2;
+	Vec2D local[4] = {
+		{-halfW, 0},
+		{-halfW, length},
+		{ halfW, length},
+		{ halfW, 0}
+	};
+	Vec2D world[4];
+	for (int i = 0; i < 4; ++i) {
+		Vec2D rot = RotatePoint(local[i], showAngle + PI / 2);
+		world[i].x = pos.x + rot.x;
+		world[i].y = pos.y + rot.y;
+	}
 	if (blend == -1) {
 		SmartSetDrawBlendMode(defaultBulletBlend[style], pal);
 		SetDrawBright(color.r, color.g, color.b);
 		SetDrawMode(DX_DRAWMODE_NEAREST);
 		DrawRectModiGraph(
-			pos.x + cos(angle + PI / 2) * width / 2,
-			pos.y - sin(angle + PI / 2) * width / 2,
-			pos.x + cos(angle + PI / 2) * width / 2 + cos(angle) * length,
-			pos.y - sin(angle + PI / 2) * width / 2 - sin(angle) * length,
-			pos.x - cos(angle + PI / 2) * width / 2 + cos(angle) * length,
-			pos.y + sin(angle + PI / 2) * width / 2 - sin(angle) * length,
-			pos.x - cos(angle + PI / 2) * width / 2,
-			pos.y + sin(angle + PI / 2) * width / 2,
+			world[0].x, world[0].y,
+			world[1].x, world[1].y,
+			world[2].x, world[2].y,
+			world[3].x, world[3].y,
 			64 - 128 * drawRatioBulletGraphs[style] / 2,
 			64 - 128 * drawRatioBulletGraphs[style] / 2,
 			128 * drawRatioBulletGraphs[style],
@@ -29,14 +39,10 @@ Laser::ShowLaser() {
 			TRUE);
 		SetDrawBright(255, 255, 255);
 		DrawRectModiGraph(
-			pos.x + cos(angle + PI / 2) * width / 2,
-			pos.y - sin(angle + PI / 2) * width / 2,
-			pos.x + cos(angle + PI / 2) * width / 2 + cos(angle) * length,
-			pos.y - sin(angle + PI / 2) * width / 2 - sin(angle) * length,
-			pos.x - cos(angle + PI / 2) * width / 2 + cos(angle) * length,
-			pos.y + sin(angle + PI / 2) * width / 2 - sin(angle) * length,
-			pos.x - cos(angle + PI / 2) * width / 2,
-			pos.y + sin(angle + PI / 2) * width / 2,
+			world[0].x, world[0].y,
+			world[1].x, world[1].y,
+			world[2].x, world[2].y,
+			world[3].x, world[3].y,
 			64 - 128 * drawRatioBulletGraphs[style] / 2,
 			64 - 128 * drawRatioBulletGraphs[style] / 2,
 			128 * drawRatioBulletGraphs[style],
@@ -51,14 +57,10 @@ Laser::ShowLaser() {
 		SetDrawBright(color.r, color.g, color.b);
 		SetDrawMode(DX_DRAWMODE_NEAREST);
 		DrawRectModiGraph(
-			pos.x + cos(angle + PI / 2) * width / 2,
-			pos.y - sin(angle + PI / 2) * width / 2,
-			pos.x + cos(angle + PI / 2) * width / 2 + cos(angle) * length,
-			pos.y - sin(angle + PI / 2) * width / 2 - sin(angle) * length,
-			pos.x - cos(angle + PI / 2) * width / 2 + cos(angle) * length,
-			pos.y + sin(angle + PI / 2) * width / 2 - sin(angle) * length,
-			pos.x - cos(angle + PI / 2) * width / 2,
-			pos.y + sin(angle + PI / 2) * width / 2,
+			world[0].x, world[0].y,
+			world[1].x, world[1].y,
+			world[2].x, world[2].y,
+			world[3].x, world[3].y,
 			64 - 128 * drawRatioBulletGraphs[style] / 2,
 			64 - 128 * drawRatioBulletGraphs[style] / 2,
 			128 * drawRatioBulletGraphs[style],
@@ -67,14 +69,10 @@ Laser::ShowLaser() {
 			TRUE);
 		SetDrawBright(255, 255, 255);
 		DrawRectModiGraph(
-			pos.x + cos(angle + PI / 2) * width / 2,
-			pos.y - sin(angle + PI / 2) * width / 2,
-			pos.x + cos(angle + PI / 2) * width / 2 + cos(angle) * length,
-			pos.y - sin(angle + PI / 2) * width / 2 - sin(angle) * length,
-			pos.x - cos(angle + PI / 2) * width / 2 + cos(angle) * length,
-			pos.y + sin(angle + PI / 2) * width / 2 - sin(angle) * length,
-			pos.x - cos(angle + PI / 2) * width / 2,
-			pos.y + sin(angle + PI / 2) * width / 2,
+			world[0].x, world[0].y,
+			world[1].x, world[1].y,
+			world[2].x, world[2].y,
+			world[3].x, world[3].y,
 			64 - 128 * drawRatioBulletGraphs[style] / 2,
 			64 - 128 * drawRatioBulletGraphs[style] / 2,
 			128 * drawRatioBulletGraphs[style],
@@ -85,7 +83,7 @@ Laser::ShowLaser() {
 		SetDrawMode(DX_DRAWMODE_NEAREST);
 	}
 	if (isColShow == 1) {
-		if (isCol == 1) {
+		if ((flags & IS_COL) == 1) {
 			SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 			DrawCircle(pos.x, pos.y, colSize, GetColor(255, 255, 255), 1);
 			DrawFormatString(pos.x, pos.y, GetColor(GetColorHSV(std::fmod(frame, 360), 1, 1).r, GetColorHSV(std::fmod(frame, 360), 1, 1).g, GetColorHSV(std::fmod(frame, 360), 1, 1).b), "%f", colSize);
@@ -94,11 +92,74 @@ Laser::ShowLaser() {
 }
 
 void
-CreateLaser(Vec2D pos, double length, double width, Color color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID, const std::vector<std::any>& params) {
+Laser::ColliCheckObject() {
+	double r = (length * length + colSize * colSize) / 4;
+	double dx = pos.x - Plyr.pos.x;
+	double dy = pos.y - Plyr.pos.y;
+	if (dx * dx + dy * dy <= r) {
+		return;
+	}
+	double halfW = colSize / 2;
+	Vec2D local[4] = {
+		{-halfW, 0},
+		{-halfW, length},
+		{ halfW, length},
+		{ halfW, 0}
+	};
+	Vec2D world[4];
+	for (int i = 0; i < 4; ++i) {
+		Vec2D rot = RotatePoint(local[i], angle + PI / 2);
+		world[i].x = pos.x + rot.x;
+		world[i].y = pos.y + rot.y;
+	}
+	if (
+		colPointAndRect(Plyr.pos,
+			world[0],
+			world[1],
+			world[2],
+			world[3])) {
+		Plyr.HitPlayer();
+		flags ^= ALIVE;
+	}
+}
+
+int
+Laser::CheckPosBounds() {
+	double limit = size * 128 * 2 * drawRatioBulletGraphs[style];
+	if (pos.x < BORDER_LEFT - limit) return 1;
+	if (pos.x > BORDER_RIGHT + limit) return 1;
+	if (pos.y < BORDER_UP - limit) return 1;
+	if (pos.y > BORDER_DOWN + limit) return 1;
+
+	return 0;
+}
+
+void
+Laser::MoveFunc() {
+	switch (ID) {
+	case 0:
+	default: {
+		int needsMultiStep = speed >= colSize + Plyr.colSize && flags & IS_COL;
+		if (needsMultiStep) {
+			int step = static_cast<int>(std::ceil(speed / 1.0f));
+			for (int i = 0; i < step; i++) {
+				MoveObject(speed / step);
+				if (CheckCollisionAndBounds()) return;
+			}
+		}
+		else {
+			MoveObject(speed);
+			if (CheckCollisionAndBounds()) return;
+		}
+	}
+	}
+}
+
+void
+CreateLaser(const Vec2D& pos, double length, double width, const Color& color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID, const std::vector<std::any>& params) {
 	for (int i = 0; i < Lasers.size(); i++) {
-		if (Lasers[i].alive == 0) {
-			Lasers[i].alive = 1;
-			Lasers[i].isCol = isCol;
+		if (!(Lasers[i].flags & ALIVE)) {
+			Lasers[i].flags = ALIVE | isCol * IS_COL;
 			Lasers[i].objType = OBJECT_LASER;
 			Lasers[i].pos = pos;
 			Lasers[i].color = color;
@@ -132,22 +193,21 @@ CreateLaser(Vec2D pos, double length, double width, Color color, int style, int 
 			Lasers[i].width = width;
 			Lasers[i].frontNode = 0;
 			Lasers[i].currentNodeNum = 0;
-			Lasers[i].isHead = 0;
 			Lasers[i].ID = 0;
 			Lasers[i].params = params;
 			return;
 		}
 	}
-	if (aim == 1) {
+	/*if (aim == 1) {
 		Lasers.emplace_back(1, isCol, pos, Plyr.AimPlayer(pos) + startAngle, Plyr.AimPlayer(pos) + endAngle, angleEaseType, angleEaseTime, 0, 0, 0, 0, color, style, blend, pal, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime, frame, length, width, ID, params);
 	}
 	else {
 		Lasers.emplace_back(1, isCol, pos, startAngle, endAngle, angleEaseType, angleEaseTime, 0, 0, 0, 0, color, style, blend, pal, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime, frame, length, width, ID, params);
-	}
+	}*/
 }
 
 void
-CreateLaserGroup(Vec2D pos, double length, double width, Color color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int way, double spread, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID, const std::vector<std::any>& params) {
+CreateLaserGroup(const Vec2D& pos, double length, double width, const Color& color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int way, double spread, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID, const std::vector<std::any>& params) {
 	switch (aim) {
 	case 0:
 		for (int i = 0; i < way; i++) {
@@ -173,7 +233,7 @@ CreateLaserGroup(Vec2D pos, double length, double width, Color color, int style,
 }
 
 void
-CreateSimpleLaserGroup(Vec2D pos, double length, double width, Color color, int style, int blend, int pal, double colSize, double size, int way, double spread, int aim, double angle, double speed, int ID, const std::vector<std::any>& params) {
+CreateSimpleLaserGroup(const Vec2D& pos, double length, double width, const Color& color, int style, int blend, int pal, double colSize, double size, int way, double spread, int aim, double angle, double speed, int ID, const std::vector<std::any>& params) {
 	switch (aim) {
 	case 0:
 		for (int i = 0; i < way; i++) {
@@ -200,7 +260,7 @@ CreateSimpleLaserGroup(Vec2D pos, double length, double width, Color color, int 
 
 void
 MoveLasers() {
-	for (Laser& L : Lasers) {
+	for (auto& L : Lasers) {
 		L.UpdateObject();
 		L.ShowLaser();
 	}
@@ -208,10 +268,5 @@ MoveLasers() {
 		std::sort(Lasers.begin(), Lasers.end(), [](const Laser& a, const Laser& b) {
 			return a.popFrame < b.popFrame;
 			});
-		for (int i = 0; i < Lasers.size(); i++) {
-			if (Lasers[i].alive == 0) {
-				Lasers.erase(Lasers.begin() + i);
-			}
-		}
 	}
 }
