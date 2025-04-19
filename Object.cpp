@@ -1,8 +1,8 @@
 ﻿#include "Main.h"
 
+#include "Easing.h"
 #include "Object.h"
 #include "Player.h"
-#include "Easing.h"
 
 void
 Object::UpdateObject(long long Index) {

@@ -1,7 +1,6 @@
 ﻿#include "Main.h"
-#include "FPS.h"
 
-//TODO: FPSのカウントもっといい感じに誰かしといて
+#include "FPS.h"
 
 void
 ShowFPS(int x, int y, int fontSize, int elapsedFrame, Color color) {

@@ -1,7 +1,7 @@
 ﻿#include "Main.h"
 
-#include "Utility.h"
 #include "Color.h"
+#include "Utility.h"
 
 
 
@@ -71,7 +71,7 @@ Color
 GetColorHSV(double H, double S, double V) {
 	int hi;
 	double f, p, q, t;
-	double r, g, b;
+	double r = 0, g = 0, b = 0;
 	int ir, ig, ib;
 
 	hi = (int)(H / 60.0f);

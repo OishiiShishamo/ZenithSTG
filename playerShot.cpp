@@ -1,9 +1,9 @@
 ﻿#include "Main.h"
 
-#include "playerShot.h"
 #include "Color.h"
-#include "Player.h"
 #include "Easing.h"
+#include "Player.h"
+#include "playerShot.h"
 
 std::array<int, 128> defaultPlayerShotBlend;
 
