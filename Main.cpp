@@ -1,18 +1,18 @@
 ﻿#include "Main.h"
 
-#include "Color.h"
-#include "Object.h"
 #include "Bullet.h"
-#include "Laser.h"
-#include "Enemy.h"
+#include "Color.h"
 #include "Easing.h"
+#include "Enemy.h"
+#include "FPS.h"
 #include "Init.h"
+#include "Laser.h"
 #include "mainLoop.h"
+#include "Object.h"
 #include "Player.h"
 #include "playerShot.h"
 #include "resLoad.h"
 #include "Time.h"
-#include "FPS.h"
 
 //TODO: リファクタリングする
 //TODO: フォルダ構成を真面目にやる

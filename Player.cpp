@@ -1,5 +1,5 @@
-﻿#include "Player.h"
-#include "Color.h"
+﻿#include "Color.h"
+#include "Player.h"
 #include "playerShot.h"
 
 //TODO: もっと真面目に作る

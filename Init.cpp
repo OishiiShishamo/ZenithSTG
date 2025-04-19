@@ -1,14 +1,14 @@
 ﻿#include "Main.h"
 
+#include <boost/lexical_cast.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
-#include <boost/lexical_cast.hpp>
 
-#include "init.h"
-#include "resLoad.h"
-#include "Player.h"
 #include "Bullet.h"
 #include "Color.h"
+#include "init.h"
+#include "Player.h"
+#include "resLoad.h"
 
 resLoad res;
 

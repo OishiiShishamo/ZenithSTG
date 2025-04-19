@@ -1,10 +1,10 @@
 ﻿#include "Main.h"
 
-#include "Laser.h"
 #include "Bullet.h"
 #include "Color.h"
-#include "Player.h"
 #include "Easing.h"
+#include "Laser.h"
+#include "Player.h"
 
 void
 Laser::ShowLaser() {

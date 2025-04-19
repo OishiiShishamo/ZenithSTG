@@ -1,10 +1,10 @@
 ﻿#include "Main.h"
 
+#include "Color.h"
+#include "Easing.h"
 #include "Enemy.h"
 #include "Object.h"
-#include "Color.h"
 #include "Player.h"
-#include "Easing.h"
 
 //TODO: 引数減らしたラッパー関数作る
 

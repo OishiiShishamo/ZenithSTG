@@ -1,15 +1,15 @@
 ﻿#include "Main.h"
 
-#include "mainLoop.h"
-#include "Init.h"
-#include "Time.h"
+#include "Bullet.h"
 #include "Color.h"
 #include "Easing.h"
-#include "Bullet.h"
-#include "Laser.h"
 #include "Enemy.h"
+#include "Init.h"
+#include "Laser.h"
+#include "mainLoop.h"
 #include "Player.h"
 #include "playerShot.h"
+#include "Time.h"
 
 Color gamingColor(0, 0, 0);
 double screenSizeRate = 1.0f;

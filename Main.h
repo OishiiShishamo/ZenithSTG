@@ -16,30 +16,30 @@ class playerShot;
 class mainLoop;
 class Vec2D;
 
-#include <any>
 #include <algorithm>
+#include <any>
 #include <array>
 #include <chrono>
 #include <cmath>
 #include <cstdint>
 #include <cstring>
-#include <iostream>
 #include <iomanip>
+#include <iostream>
 #include <numeric>
 #include <string>
+#include <thread>
 #include <tuple>
 #include <type_traits>
 #include <vector>
-#include <thread>
 
 #include <DirectXMath.h>
 #include <immintrin.h>
 
+#include "Collision.h"
 #include "DxLib.h"
+#include "Property.h"
 #include "Utility.h"
 #include "Vec2D.h"
-#include "Collision.h"
-#include "Property.h"
 
 #define PI DX_PI
 #define TAU PI * 2
