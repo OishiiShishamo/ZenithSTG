@@ -41,6 +41,8 @@ class Vec2D;
 #include "Collision.h"
 #include "Property.h"
 
+#define PRINT(...) printf(__VA_ARGS__)	
+
 #define PI DX_PI
 #define TAU PI * 2
 #define ICHIDO (PI / 180)
@@ -53,9 +55,6 @@ class Vec2D;
 #define BORDER_RIGHT 1392
 #define BORDER_UP 35
 #define BORDER_DOWN 1045
-
-#define SCREEN_WIDTH 1920
-#define SCREEN_HEIGHT 1080
 
 #define MAX_BULLET 8192
 #define MAX_LASER 8192

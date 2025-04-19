@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Color.h"
 
+
 void
 resLoad::UIGHLoad() {
 	imgRes.UIGH.emplace_back(LoadGraph("res/img/ui/UI_Frame.png"));

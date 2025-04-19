@@ -55,9 +55,9 @@ mainLoop::Loop() {
 	//DrawRotaGraph(CENTER_X, CENTER_Y, 1.0f, 0, screenCanvas, TRUE);
 	if (isWindowSplit) {
 		int slice_tmp = 0;
-		for (int x = 0; x < SCREEN_WIDTH; x += screenSizeRate * SCREEN_WIDTH) {
-			for (int y = 0; y < SCREEN_HEIGHT; y += screenSizeRate * SCREEN_HEIGHT) {
-				DrawRotaGraph4(x + screenSizeRate * SCREEN_WIDTH / 2, y + screenSizeRate * SCREEN_HEIGHT / 2, screenSizeRate, 0, 0, 0, screenCanvas, 1, 0, 0);
+		for (int x = 0; x < GetSystemMetrics(SM_CXSCREEN); x += screenSizeRate * GetSystemMetrics(SM_CXSCREEN)) {
+			for (int y = 0; y < GetSystemMetrics(SM_CYSCREEN); y += screenSizeRate * GetSystemMetrics(SM_CYSCREEN)) {
+				DrawRotaGraph4(x + screenSizeRate * GetSystemMetrics(SM_CXSCREEN) / 2, y + screenSizeRate * GetSystemMetrics(SM_CYSCREEN) / 2, screenSizeRate, 0, 0, 0, screenCanvas, 1, 0, 0);
 				slice_tmp++;
 				if (slice_tmp > 2048) break;
 			}
@@ -65,7 +65,7 @@ mainLoop::Loop() {
 		}
 	}
 	else {
-		DrawRotaGraph4(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, screenSizeRate, screenRotaX, screenRotaY, screenRotaZ, screenCanvas, 1, 0, 0);
+		DrawRotaGraph4(GetSystemMetrics(SM_CXSCREEN) / 2, GetSystemMetrics(SM_CYSCREEN) / 2, screenSizeRate, screenRotaX, screenRotaY, screenRotaZ, screenCanvas, 1, 0, 0);
 	}
 	SmartSetDrawBlendMode(BLEND_NOBLEND, 255);
 	if (CheckHitKey(KEY_INPUT_P) == 1) {

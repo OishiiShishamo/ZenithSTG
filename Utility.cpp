@@ -3,6 +3,8 @@
 #include "Utility.h"
 #include "Color.h"
 
+
+
 void
 DrawRotaGraph4(int x, int y, double rate, double anglex, double angley, double anglez, int handle, int tranflag, int x_turn_flag, int y_turn_flag) {
 	int sx = 0, sy = 0;

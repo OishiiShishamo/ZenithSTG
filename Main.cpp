@@ -55,10 +55,32 @@ int bombCanvas;
 int effectCanvas;
 int screenCanvas;
 
+void apply_window_size(void) {
+	int width = GetSystemMetrics(SM_CXSCREEN);
+	int height = GetSystemMetrics(SM_CYSCREEN);
+	if (width - height == 560) {
+		Properties.windowSize = 0;
+	}
+	else if (width - height == 700) {
+		Properties.windowSize = 1;
+	}
+	else if (width - height == 840) {
+		Properties.windowSize = 2;
+	}
+	else {
+		Properties.onerror = 1;
+	}
+	return;
+}
+
 int
 WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 	Init();
 	if (DxLib_Init() == -1)	return -1;
+	apply_window_size();
+	if (Properties.onerror == 1) {
+		PRINT("ERROR: 画面のサイズに非対応");
+	}
 	switch (Properties.windowSize) {
 	case 0:
 		SetWindowSize(1280, 720);

@@ -41,7 +41,7 @@ Init() {
 	ChangeWindowMode(Properties.isWindow);
 	SetWindowText(Properties.title.c_str());
 	SetChangeScreenModeGraphicsSystemResetFlag(FALSE);
-	SetGraphMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32);
+	SetGraphMode(GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN), 32);
 	SetDoubleStartValidFlag(TRUE);
 	SetAlwaysRunFlag(TRUE);
 	SetUseDirect3DVersion(DX_DIRECT3D_11);
