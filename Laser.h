@@ -11,9 +11,10 @@ public:
 		: Object(alive, isCol, OBJECT_LASER, pos, startAngle, endAngle, angleEaseType, angleEaseTime, startShowAngle, endShowAngle, showAngleEaseType, showAngleEaseTime, color, style, blend, pal, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime, popFrame, length, width, 0, 0, 0, 0, 0, ID, params) {
 	}
 	void ShowLaser();
+	void MoveFunc() override;
+private:
 	void ColliCheckObject() override;
 	int CheckPosBounds() override;
-	void MoveFunc() override;
 	
 };
 

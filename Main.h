@@ -30,7 +30,6 @@ class Vec2D;
 #include <DirectXMath.h>
 #include <immintrin.h>
 
-#include "boost/multiprecision/cpp_int.hpp"
 #include "DxLib.h"
 #include "Utility.h"
 #include "Vec2D.h"
