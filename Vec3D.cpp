@@ -33,6 +33,7 @@ VecNorm(Vec3D v) {
 
 Vec3D
 AngleToVec3D(double angleX, double angleY, double angleZ) {
+	return Vec3D(0, 0, 0);
 }
 
 Vec3D

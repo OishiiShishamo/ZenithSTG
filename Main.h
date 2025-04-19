@@ -21,17 +21,20 @@ class Vec2D;
 #include <array>
 #include <chrono>
 #include <cmath>
+#include <cstdint>
+#include <cstring>
 #include <iostream>
+#include <iomanip>
 #include <numeric>
 #include <string>
 #include <tuple>
+#include <type_traits>
 #include <vector>
 #include <thread>
 
 #include <DirectXMath.h>
 #include <immintrin.h>
 
-#include "boost/multiprecision/cpp_int.hpp"
 #include "DxLib.h"
 #include "Utility.h"
 #include "Vec2D.h"

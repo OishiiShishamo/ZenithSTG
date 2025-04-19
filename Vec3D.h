@@ -2,6 +2,8 @@
 #ifndef VEC3D_H
 #define VEC3D_H
 
+//WIP
+
 class Vec3D {
 public:
 	double x = 0;
