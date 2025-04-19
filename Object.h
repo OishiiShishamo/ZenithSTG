@@ -57,16 +57,48 @@ public:
 	long long index = 0;
 	std::vector<std::any> params;
 	Object() = default;
-	Object(std::uint8_t alive, std::uint8_t isCol, int objType, const Vec2D& pos, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startShowAngle, double endShowAngle, int showAngleEaseType, int showAngleEaseTime, const Color& color, int style, int blend, int pal, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int popFrame = 0, double length = 0, double width = 0, long long frontNode = 0, long long nextNode = 0, int currentNodeNum = 0, int isHead = 0, long long index = 0 , int ID = 0, const std::vector<std::any>& params = {})
+	Object(std::uint8_t alive, std::uint8_t isCol, int objType, const Vec2D& pos, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startShowAngle, double endShowAngle, int showAngleEaseType, int showAngleEaseTime, const Color& color, int style, int blend, int pal, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int popFrame = 0, double length = 0, double width = 0, long long frontNode = 0, long long nextNode = 0, int currentNodeNum = 0, int isHead = 0, long long index = 0, int ID = 0, const std::vector<std::any>& params = {})
 		: objType(objType), pos(pos), startAngle(startAngle), endAngle(endAngle), angleEaseType(angleEaseType), angleEaseTime(angleEaseTime), startShowAngle(startShowAngle), endShowAngle(endShowAngle), showAngleEaseType(showAngleEaseType), showAngleEaseTime(showAngleEaseTime), color(color), style(style), blend(blend), pal(pal), startColSize(startColSize), endColSize(endColSize), colSizeEaseType(colSizeEaseType), colSizeEaseTime(colSizeEaseTime), colSize(startColSize), startSize(startSize), endSize(endSize), sizeEaseType(sizeEaseType), sizeEaseTime(sizeEaseTime), size(1.0f), startSpeed(startSpeed), endSpeed(endSpeed), speedEaseType(speedEaseType), speedEaseTime(speedEaseTime), popFrame(popFrame), length(length), width(width), frontNode(frontNode), nextNode(nextNode), currentNodeNum(currentNodeNum), index(index), ID(ID), params(params) {
 		flags |= ALIVE * alive | IS_COL * isCol | IS_HEAD * isHead;
 	}
+
+	/**
+	* @brief オブジェクトの動作など。 / Object behavior, etc.
+	*
+	* @param Index 現状用途なし / No current use
+	*/
 	void UpdateObject(long long Index = 0);
+
+	/**
+	* @brief イージングによるパラメータの更新。 / Updating parameters by easing.
+	*/
 	void UpdateEase();
+
+	/**
+	* @brief オブジェクトの移動。 / Moving objects.
+	* 
+	* @param speed 移動スピード / Move Speed
+	*/
 	void MoveObject(double speed);
+
+	/**
+	* @brief オブジェクトの当たり判定 / Collision check.
+	*/
 	virtual void ColliCheckObject();
+
+	/**
+	* @brief 枠外判定 / Out-of-bounds check.
+	*/
 	virtual int CheckPosBounds();
+
+	/**
+	* @brief 当たり判定と枠外判定 / Collision and out-of-bounds check.
+	*/
 	virtual int CheckCollisionAndBounds();
+
+	/**
+	* @brief 移動及びID毎の分岐処理 / Branch processing for each move and ID.
+	*/
 	virtual void MoveFunc();
 };
 
