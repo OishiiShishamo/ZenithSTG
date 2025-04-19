@@ -5,6 +5,7 @@
 #include "Easing.h"
 #include "Laser.h"
 #include "Player.h"
+#include "Time.h"
 
 void
 Laser::ShowLaser() {

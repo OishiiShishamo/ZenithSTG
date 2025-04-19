@@ -20,6 +20,11 @@ Time::ResetTimer() {
 	elapsedus = std::chrono::nanoseconds(0);
 }
 
+std::chrono::milliseconds
+Time::NSec2MSec(std::chrono::nanoseconds ns) {
+	return duration_cast<std::chrono::milliseconds>(ns);
+}
+
 double
 Time::NSec2Double(std::chrono::nanoseconds ns) {
 	return std::chrono::duration<double>(ns).count();

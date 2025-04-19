@@ -10,6 +10,7 @@ public:
 	void StartTimer();
 	void StopTimer();
 	void ResetTimer();
+	std::chrono::milliseconds NSec2MSec(std::chrono::nanoseconds ns);
 	double NSec2Double(std::chrono::nanoseconds);
 	std::chrono::nanoseconds Timer();
 	std::chrono::high_resolution_clock::time_point startTime;

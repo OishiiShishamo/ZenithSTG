@@ -23,6 +23,9 @@ class Vec2D;
 #include <cmath>
 #include <cstdint>
 #include <cstring>
+#include <DirectXMath.h>
+#include <fstream> 
+#include <immintrin.h>
 #include <iomanip>
 #include <iostream>
 #include <numeric>
@@ -31,15 +34,10 @@ class Vec2D;
 #include <tuple>
 #include <type_traits>
 #include <vector>
-#include <thread>
-#include <iostream>
-#include <string>
-#include <DirectXMath.h>
-#include <immintrin.h>
-#include <fstream> 
 
 #include "Collision.h"
 #include "DxLib.h"
+#include "Logging.h"
 #include "Property.h"
 #include "Utility.h"
 #include "Vec2D.h"

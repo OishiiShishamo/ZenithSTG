@@ -151,6 +151,7 @@
     <ClCompile Include="FPS.cpp" />
     <ClCompile Include="Init.cpp" />
     <ClCompile Include="Laser.cpp" />
+    <ClCompile Include="Logging.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="mainLoop.cpp" />
     <ClCompile Include="MathTool.cpp" />
@@ -174,6 +175,7 @@
     <ClInclude Include="headertemplate.h" />
     <ClInclude Include="Init.h" />
     <ClInclude Include="Laser.h" />
+    <ClInclude Include="Logging.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="mainLoop.h" />
     <ClInclude Include="MathTool.h" />
