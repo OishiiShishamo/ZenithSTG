@@ -1,9 +1,20 @@
-﻿#pragma once
+﻿/**
+* @file Bullet.h
+* @brief 弾関連 / Bullet Related.
+* @auther ZenithSTG Dev Team
+*/
+
+#pragma once
 #ifndef BULLET_H
 #define BULLET_H
 
 #include "Object.h"
 
+/**
+* @class Bullet
+* @brief 弾関連 / Bullet Related.
+* @extends Object
+*/
 class Bullet : public Object {
 public:
 	Bullet() = default;

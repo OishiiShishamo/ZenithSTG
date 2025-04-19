@@ -1,15 +1,29 @@
-﻿#pragma once
+﻿/**
+* @file Object.h
+* @brief オブジェクトの基底クラスを定義している / Defines the super class of the object.
+* @auther ZenithSTG Dev Team
+*/
+
+#pragma once
 #ifndef OBJECT_H
 #define OBJECT_H
 
 #include "Color.h"
 
+/**
+* @enum objectFlags
+* @brief オブジェクトの状態をまとめたもの / A summary of the object's state.
+*/
 enum objectFlags {
 	ALIVE = 1 << 0,
 	IS_COL = 1 << 1,
 	IS_HEAD = 1 << 2,
 };
 
+/**
+* @class Object
+* @brief オブジェクトの基底クラス / Objects Super Class!!!!
+*/
 class Object {
 public:
 	std::uint8_t flags = 0b00000010;
