@@ -55,7 +55,9 @@ int bombCanvas;
 int effectCanvas;
 int screenCanvas;
 
-void apply_window_size(void) {
+bool debuging = true;
+
+void apply_window_size() {
 	int width = GetSystemMetrics(SM_CXSCREEN);
 	int height = GetSystemMetrics(SM_CYSCREEN);
 	if (width - height == 560) {
@@ -70,11 +72,13 @@ void apply_window_size(void) {
 	else {
 		Properties.onerror = 1;
 	}
+	if (debuging) Properties.windowSize = 1;
+	
 	return;
 }
 
 int rnd() {
-	int rnd = std::rand() % 65535;    // 0〜99の乱数
+	int rnd = std::rand() % 65535;    // 0〜65536の乱数
 	return rnd;
 }
 
