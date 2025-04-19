@@ -3,7 +3,32 @@
 #include "Color.h"
 #include "Utility.h"
 
+bool debuging = true;
 
+void apply_window_size() {
+	int width = GetSystemMetrics(SM_CXSCREEN);
+	int height = GetSystemMetrics(SM_CYSCREEN);
+	if (width - height == 560) {
+		Properties.windowSize = 0;
+	}
+	else if (width - height == 700) {
+		Properties.windowSize = 1;
+	}
+	else if (width - height == 840) {
+		Properties.windowSize = 2;
+	}
+	else {
+		Properties.onerror = 1;
+	}
+	if (debuging) Properties.windowSize = 1;
+
+	return;
+}
+
+int rnd() {
+	int rnd = std::rand() % 65535;    // 0〜65536の乱数
+	return rnd;
+}
 
 void
 DrawRotaGraph4(int x, int y, double rate, double anglex, double angley, double anglez, int handle, int tranflag, int x_turn_flag, int y_turn_flag) {

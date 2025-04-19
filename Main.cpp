@@ -13,6 +13,7 @@
 #include "playerShot.h"
 #include "resLoad.h"
 #include "Time.h"
+#include "Utility.h"
 
 //TODO: リファクタリングする
 //TODO: フォルダ構成を真面目にやる
@@ -54,33 +55,6 @@ int playerShotCanvas;
 int bombCanvas;
 int effectCanvas;
 int screenCanvas;
-
-bool debuging = true;
-
-void apply_window_size() {
-	int width = GetSystemMetrics(SM_CXSCREEN);
-	int height = GetSystemMetrics(SM_CYSCREEN);
-	if (width - height == 560) {
-		Properties.windowSize = 0;
-	}
-	else if (width - height == 700) {
-		Properties.windowSize = 1;
-	}
-	else if (width - height == 840) {
-		Properties.windowSize = 2;
-	}
-	else {
-		Properties.onerror = 1;
-	}
-	if (debuging) Properties.windowSize = 1;
-	
-	return;
-}
-
-int rnd() {
-	int rnd = std::rand() % 65535;    // 0〜65536の乱数
-	return rnd;
-}
 
 int
 WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
