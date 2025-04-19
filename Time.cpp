@@ -2,6 +2,7 @@
 
 #include "Time.h"
 
+
 void
 Time::StartTimer() {
 	startTime = std::chrono::high_resolution_clock::now();
@@ -40,10 +41,10 @@ Time::ElapsedTime() {
 void
 Time::FrameWait() {
 	std::chrono::nanoseconds FrameDuration(1000000000 / fps);
-	std::chrono::nanoseconds frameElapsed = Timer() - frontFrameTime;
+	std::chrono::nanoseconds frameElapsed = Timer() - frontFrameTime + (std::chrono::nanoseconds)(rnd() / 32768);
 
 	if (frameElapsed < FrameDuration - std::chrono::milliseconds(2)) {
-		std::this_thread::sleep_for(FrameDuration - frameElapsed - std::chrono::milliseconds(2));
+		std::this_thread::sleep_for((FrameDuration - frameElapsed) - std::chrono::milliseconds(2));
 	}
 }
 

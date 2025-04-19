@@ -31,6 +31,8 @@ class Vec2D;
 #include <type_traits>
 #include <vector>
 #include <thread>
+#include <cstdlib>
+#include <math.h>
 
 #include <DirectXMath.h>
 #include <immintrin.h>
@@ -62,6 +64,8 @@ class Vec2D;
 #define MAX_PLAYER_SHOT 8192
 
 #define FPS_HISTORY_LENGTH 120
+
+int rnd();
 
 enum blendType {
 	BLEND_DEFAULT = -1,

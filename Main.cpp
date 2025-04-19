@@ -73,9 +73,15 @@ void apply_window_size(void) {
 	return;
 }
 
+int rnd() {
+	int rnd = std::rand() % 65535;    // 0〜99の乱数
+	return rnd;
+}
+
 int
 WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 	Init();
+	std::srand(42);
 	if (DxLib_Init() == -1)	return -1;
 	apply_window_size();
 	if (Properties.onerror == 1) {
