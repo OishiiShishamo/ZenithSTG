@@ -2,8 +2,6 @@
 
 #include "FPS.h"
 
-//TODO: FPSのカウントもっといい感じに誰かしといて
-
 void
 ShowFPS(int x, int y, int fontSize, int elapsedFrame, Color color) {
 	SetFontSize(fontSize);

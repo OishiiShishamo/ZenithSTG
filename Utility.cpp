@@ -1,7 +1,7 @@
 ﻿#include "Main.h"
 
-#include "Utility.h"
 #include "Color.h"
+#include "Utility.h"
 
 void
 DrawRotaGraph4(int x, int y, double rate, double anglex, double angley, double anglez, int handle, int tranflag, int x_turn_flag, int y_turn_flag) {
@@ -69,7 +69,7 @@ Color
 GetColorHSV(double H, double S, double V) {
 	int hi;
 	double f, p, q, t;
-	double r, g, b;
+	double r = 0, g = 0, b = 0;
 	int ir, ig, ib;
 
 	hi = (int)(H / 60.0f);
