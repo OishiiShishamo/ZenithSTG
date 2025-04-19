@@ -22,6 +22,7 @@ class Vec2D;
 #include <chrono>
 #include <cmath>
 #include <iostream>
+#include <numeric>
 #include <string>
 #include <tuple>
 #include <vector>
@@ -30,6 +31,7 @@ class Vec2D;
 #include <DirectXMath.h>
 #include <immintrin.h>
 
+#include "boost/multiprecision/cpp_int.hpp"
 #include "DxLib.h"
 #include "Utility.h"
 #include "Vec2D.h"
