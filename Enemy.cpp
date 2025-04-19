@@ -76,6 +76,7 @@ Enemy::MoveFunc() {
 			MoveObject(speed);
 			if (CheckCollisionAndBounds()) return;
 		}
+		break;
 	}
 	}
 }

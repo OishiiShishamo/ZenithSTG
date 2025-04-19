@@ -147,6 +147,7 @@ Bullet::MoveFunc() {
 			MoveObject(speed);
 			if (CheckCollisionAndBounds()) return;
 		}
+		break;
 	}
 	}
 }
