@@ -1,4 +1,10 @@
-﻿#pragma once
+﻿/**
+* @file Vec2D.h
+* @brief 2Dのベクトル関連 / 2D Vector Related.
+* @auther ZenithSTG Dev Team
+*/
+
+#pragma once
 #ifndef VECTOR_H
 #define VECTOR_H
 

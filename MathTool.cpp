@@ -1,7 +1,8 @@
 #include <iostream>
 #include <cmath>
 
-double fastSqrt(double x, double epsilon = 1e-3) {
+double
+fastSqrt(double x, double epsilon = 1e-3) {
     if (x < 0) return -1;
     if (x == 0) return 0;
 

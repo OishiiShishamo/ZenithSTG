@@ -11,6 +11,74 @@
 #include "Color.h"
 
 /**
+* @brief オブジェクトの生成に関するもの / Relates to the creation of objects
+*
+* @param pos 生成位置 / Create Position
+* @param color 色 / Color
+* @param style 見た目 / Style
+* @param blend ブレンドモード / Blend Mode
+* @param pal ブレンドのパラメータ / Blend Param
+* @param isCol 判定の有無 / Collision availability
+* @param startColSize 判定サイズの始点 / Start Collision Size
+* @param endColSize 判定サイズの終点 / End Collision Size
+* @param colSizeEaseType 判定サイズのイージング方法 / Easing method for Collision Size
+* @param colSizeEaseTime 判定サイズのイージングにかかる時間 / Time required for Collision Size easing
+* @param startSize 表示サイズの始点 / Start Display Size
+* @param endSize 表示サイズの終点 / End Display Size
+* @param sizeEaseType 表示サイズのイージング方法 / Easing method for Display Size
+* @param sizeEaseTime 表示サイズのイージングにかかる時間 / Time required for Display Size easing
+* @param way way数 / way num
+* @param spread 拡散 / spread
+* @param aim 自機に角度を合わせるか(1 = 自機狙い, 2 = 自機外し) / Aim Player(1 = targeting, 2 = offset targeting)
+* @param startAngle 角度の始点 / Start Angle
+* @param endAngle 角度の終点 / End Angle
+* @param angleEaseType 角度のイージング方法 / Easing method for Angle
+* @param angleEaseTime 角度のイージングにかかる時間 / Time required for Angle easing
+* @param startSpeed 速度の始点 / Start Speed
+* @param endSpeed 速度の終点 / End Speed
+* @param speedEaseType 速度のイージング方法 / Easing method for Speed
+* @param speedEaseTime 速度のイージングにかかる時間 / Time required for Speed easing
+* @param ID 特殊な動作を行うためのID / ID for special operation
+* @param params 特殊な動作を行うためのパラメータ / Parameter for special operation
+*/
+struct objectParams {
+	Vec2D pos = Vec2D(0, 0);
+	double length = 0;
+	double width = 0;
+	Color color = Color(0, 0, 0);
+	int style = 0;
+	int blend = 0;
+	int pal = 255;
+	int isCol = 1;
+	int isAlignedAngle = 1;
+	double startColSize = 0;
+	double endColSize = 0;
+	int colSizeEaseType = 0;
+	int colSizeEaseTime = 0;
+	double startSize = 0;
+	double endSize = 0;
+	int sizeEaseType = 0;
+	int sizeEaseTime = 0;
+	int way = 1;
+	double spread = TAU;
+	int aim = 0;
+	double startAngle = 0;
+	double endAngle = 0;
+	int angleEaseType = 0;
+	int angleEaseTime = 0;
+	double startShowAngle = 0;
+	double endShowAngle = 0;
+	int showAngleEaseType = 0;
+	int showAngleEaseTime = 0;
+	double startSpeed = 0;
+	double endSpeed = 0;
+	int speedEaseType = 0;
+	int speedEaseTime = 0;
+	int ID = 0;
+	std::vector<std::any> params;
+};
+
+/**
 * @enum objectFlags
 * @brief オブジェクトの状態をまとめたもの / A summary of the object's state.
 */

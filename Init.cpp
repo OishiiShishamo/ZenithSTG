@@ -48,6 +48,8 @@ Init() {
 	SetUsePremulAlphaConvertLoad(TRUE);
 	SetWaitVSyncFlag(FALSE);
 	SetFontSize(20);
+
+	std::srand(42);
 	
 	//SetCreateDrawValidGraphMultiSample(16, 8);
 

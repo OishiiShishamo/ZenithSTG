@@ -59,7 +59,6 @@ int screenCanvas;
 int
 WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 	Init();
-	std::srand(42);
 	if (DxLib_Init() == -1)	return -1;
 	apply_window_size();
 	if (Properties.onerror == 1) {
@@ -96,7 +95,7 @@ WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, in
 		if (elapsedFrame == 0) {
 			elapsedFrame = 1;
 		}
-		ShowFPS(0, 0, 20, elapsedFrame, Color(C_WHITE));
+		ShowFPS(Vec2D(0, 0), 20, elapsedFrame, Color(C_WHITE));
 		//DrawFormatString(0, 20, GetColor(C_WHITE), "Objects:%d", Bullets.size() + Lasers.size() + plyrShots.size());
 
 		ScreenFlip();

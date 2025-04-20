@@ -154,7 +154,7 @@
     <ClCompile Include="Logging.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="mainLoop.cpp" />
-    <ClCompile Include="MathTool.cpp" />
+    <ClCompile Include="mathTool.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="playerShot.cpp" />
@@ -172,13 +172,12 @@
     <ClInclude Include="Easing.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="FPS.h" />
-    <ClInclude Include="headertemplate.h" />
     <ClInclude Include="Init.h" />
     <ClInclude Include="Laser.h" />
     <ClInclude Include="Logging.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="mainLoop.h" />
-    <ClInclude Include="MathTool.h" />
+    <ClInclude Include="mathTool.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="playerShot.h" />

@@ -1,8 +1,12 @@
+/**
+* @file Vec2D.h
+* @brief 3Dのベクトル関連(90%未完成) / 3D Vector Related(90% WIP).
+* @auther ZenithSTG Dev Team
+*/
+
 #pragma once
 #ifndef VEC3D_H
 #define VEC3D_H
-
-//WIP
 
 class Vec3D {
 public:
