@@ -39,4 +39,6 @@ public:
 	void RoutinePlayer();
 };
 
+extern Player Plyr;
+
 #endif

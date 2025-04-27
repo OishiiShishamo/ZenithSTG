@@ -2,6 +2,9 @@
 
 #include "FPS.h"
 
+std::array<double, FPS_HISTORY_LENGTH> fpsHistory;
+int fpsHistoryIndex = 0;
+
 void
 ShowFPS(Vec2D pos, int fontSize, int elapsedFrame, Color color) {
 	SetFontSize(fontSize);

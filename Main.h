@@ -15,6 +15,8 @@ class Player;
 class playerShot;
 class mainLoop;
 class Vec2D;
+class Script;
+class Background;
 
 #include <algorithm>
 #include <any>
@@ -36,6 +38,7 @@ class Vec2D;
 #include <vector>
 
 #include "Collision.h"
+#include "Debug.h"
 #include "DxLib.h"
 #include "Logging.h"
 #include "Property.h"
@@ -59,14 +62,14 @@ using namespace std;
 #define BORDER_UP 35
 #define BORDER_DOWN 1045
 
+#define STAGE_NUM 1
+
 #define MAX_BULLET 8192
 #define MAX_LASER 8192
 #define MAX_ENEMY 8192
 #define MAX_PLAYER_SHOT 8192
 
 #define FPS_HISTORY_LENGTH 120
-
-int rnd();
 
 enum blendType {
 	BLEND_DEFAULT = -1,
@@ -134,7 +137,7 @@ extern Property Properties;
 
 extern mainLoop Loop;
 
-extern Player Plyr;
+extern std::array<Script, STAGE_NUM> Scripts;
 
 extern std::array<Bullet, MAX_BULLET> Bullets;
 extern std::array<Laser, MAX_LASER> Lasers;
@@ -149,24 +152,16 @@ extern int currentBlendMode;
 extern int currentBlendPal;
 extern std::array<double, FPS_HISTORY_LENGTH> fpsHistory;
 extern std::array<int, 128> defaultBulletBlend;
+extern std::array<int, 128> defaultEnemyBlend;
 extern std::array<int, 128> defaultPlayerShotBlend;
 extern std::array<double, 128> drawRatioBulletGraphs;
 extern std::array<double, 128> drawRatioEnemyGraphs;
 extern std::array<double, 128> drawRatioPlayerShotGraphs;
 extern int fpsHistoryIndex;
-extern int isColShow;
 
 extern double screenSizeRate;
 extern double screenRotaX;
 extern double screenRotaY;
 extern double screenRotaZ;
-
-extern int backgroundCanvas;
-extern int bulletCanvas;
-extern int playerCanvas;
-extern int playerShotCanvas;
-extern int bombCanvas;
-extern int effectCanvas;
-extern int screenCanvas;
 
 #endif

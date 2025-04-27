@@ -9,8 +9,13 @@
 #include "init.h"
 #include "Player.h"
 #include "resLoad.h"
+#include "screenDraw.h"
 
 resLoad res;
+imageRes imgRes;
+Property Properties;
+
+int numThreads = std::thread::hardware_concurrency();
 
 void
 Init() {
@@ -69,7 +74,11 @@ Init() {
 	defaultBulletBlend[B_LIGHT] = BLEND_ADD;
 	defaultBulletBlend[B_BIG] = BLEND_ADD;
 
+	defaultEnemyBlend.fill(BLEND_NOBLEND);
+
 	defaultPlayerShotBlend.fill(BLEND_NOBLEND);
+
+	drawRatioBulletGraphs.fill(1.0f);
 	drawRatioBulletGraphs[B_NORMAL] = 0.15625f;
 	drawRatioBulletGraphs[B_MIDIAM] = 0.3125f;
 	drawRatioBulletGraphs[B_UROKO] = 0.15625f;
@@ -77,8 +86,10 @@ Init() {
 	drawRatioBulletGraphs[B_LIGHT] = 0.25f;
 	drawRatioBulletGraphs[B_BIG] = 0.75f;
 
+	drawRatioEnemyGraphs.fill(1.0f);
 	drawRatioEnemyGraphs[E_NORMAL] = 0.5f;
 
+	drawRatioPlayerShotGraphs.fill(1.0f);
 	drawRatioPlayerShotGraphs[PS_NORMAL] = 0.5f;
 }
 

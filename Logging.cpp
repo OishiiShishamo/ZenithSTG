@@ -16,18 +16,18 @@ writeLog() {
 }
 
 void
-Logger(std::string logString, int logType) {
+Logger(std::string logString, logType logType) {
 	switch (logType) {
-	case LOG_INFO:
+	case logType::LOG_INFO:
 		addLog("[INFO]: " + logString);
 		break;
-	case LOG_WARNING:
+	case logType::LOG_WARNING:
 		addLog("[WARN]: " + logString);
 		break;
-	case LOG_ERROR:
+	case logType::LOG_ERROR:
 		addLog("[ERR]: " + logString);
 		break;
-	case LOG_DEBUG:
+	case logType::LOG_DEBUG:
 		addLog("[DEBUG]: " + logString);
 		break;
 	default:

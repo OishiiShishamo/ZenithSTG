@@ -4,28 +4,29 @@
 double
 Easing(int easeType, double t, double start, double end) {
 	switch (easeType) {
-	case 0:
+	case LINEAR:
 		return Linear(t, start, end);
 		break;
-	case 1:
+	case EASEINQUAD:
 		return EaseInQuad(t, start, end);
 		break;
-	case 2:
+	case EASEOUTQUAD:
 		return EaseOutQuad(t, start, end);
 		break;
-	case 3:
+	case EASEINOUTQUAD:
 		return EaseInOutQuad(t, start, end);
 		break;
-	case 4:
+	case EASEINCUBIC:
 		return EaseInCubic(t, start, end);
 		break;
-	case 5:
+	case EASEOUTCUBIC:
 		return EaseOutCubic(t, start, end);
 		break;
-	case 6:
+	case EASEINOUTCUBIC:
 		return EaseInOutCubic(t, start, end);
 		break;
 	default:
+		Logger("存在しないイージングタイプを選択しています。 / You have selected an easing type that does not exist.", logType::LOG_WARNING);
 		return Linear(t, start, end);
 		break;
 	}

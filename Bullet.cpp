@@ -8,7 +8,9 @@
 
 //TODO: 引数減らしたラッパー関数作る
 
+std::array<Bullet, MAX_BULLET> Bullets;
 std::array<int, 128> defaultBulletBlend;
+std::array<double, 128> drawRatioBulletGraphs;
 long long bIndex = 0;
 
 void

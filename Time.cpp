@@ -2,6 +2,8 @@
 
 #include "Time.h"
 
+long long frame = 0;
+long long fps = 60;
 
 void
 Time::StartTimer() {

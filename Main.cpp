@@ -12,49 +12,16 @@
 #include "Player.h"
 #include "playerShot.h"
 #include "resLoad.h"
+#include "Script.h"
 #include "Time.h"
 #include "Utility.h"
 
 //TODO: リファクタリングする
 //TODO: フォルダ構成を真面目にやる
 
-imageRes imgRes;
-
-Property Properties;
-
-mainLoop Loop;
-
-Player Plyr;
-
-std::array<Bullet, MAX_BULLET> Bullets;
-std::array<Laser, MAX_LASER> Lasers;
-std::array<Enemy, MAX_ENEMY> Enemies;
-std::array<playerShot, MAX_PLAYER_SHOT> plyrShots;
-
-std::array<double, 128> drawRatioBulletGraphs;
-std::array<double, 128> drawRatioEnemyGraphs;
-std::array<double, 128> drawRatioPlayerShotGraphs;
-
-int numThreads = std::thread::hardware_concurrency();
-
-long long frame = 0;
-long long fps = 60;
 int elapsedFrame = 0;
 int currentBlendMode = BLEND_NOBLEND;
 int currentBlendPal = 255;
-
-std::array<double, FPS_HISTORY_LENGTH> fpsHistory;
-int fpsHistoryIndex = 0;
-
-int isColShow = 0;
-
-int backgroundCanvas;
-int bulletCanvas;
-int playerCanvas;
-int playerShotCanvas;
-int bombCanvas;
-int effectCanvas;
-int screenCanvas;
 
 int
 WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
@@ -63,7 +30,7 @@ WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, in
 	apply_window_size();
 	if (Properties.onerror == 1) {
 		PRINT("ERROR: 画面のサイズに非対応");
-		Logger("画面のサイズに非対応", LOG_ERROR);
+		Logger("画面のサイズに非対応", logType::LOG_WARNING);
 	}
 	switch (Properties.windowSize) {
 	case 0:

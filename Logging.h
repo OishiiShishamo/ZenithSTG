@@ -4,15 +4,15 @@
 
 #include "Main.h"
 
-enum logType {
-	LOG_INFO = 0,
-	LOG_WARNING = 1,
-	LOG_ERROR = 2,
-	LOG_DEBUG = 3,
+enum class logType {
+	LOG_INFO,
+	LOG_WARNING,
+	LOG_ERROR,
+	LOG_DEBUG,
 };
 
 void addLog(std::string log);
 void writeLog();
-void Logger(std::string logString, int logType = LOG_INFO);
+void Logger(std::string logString, logType logType = logType::LOG_INFO);
 
 #endif

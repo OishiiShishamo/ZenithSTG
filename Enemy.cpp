@@ -8,7 +8,9 @@
 
 //TODO: 引数減らしたラッパー関数作る
 
-std::vector<int> defaultEnemyBlend;
+std::array<Enemy, MAX_ENEMY> Enemies;
+std::array<int, 128> defaultEnemyBlend;
+std::array<double, 128> drawRatioEnemyGraphs;
 
 void
 Enemy::ShowEnemy() {

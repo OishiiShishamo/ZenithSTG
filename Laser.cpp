@@ -7,6 +7,8 @@
 #include "Player.h"
 #include "Time.h"
 
+std::array<Laser, MAX_LASER> Lasers;
+
 void
 Laser::ShowLaser() {
 	if (!(flags & ALIVE)) return;

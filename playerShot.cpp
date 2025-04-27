@@ -5,7 +5,9 @@
 #include "Player.h"
 #include "playerShot.h"
 
+std::array<playerShot, MAX_PLAYER_SHOT> plyrShots;
 std::array<int, 128> defaultPlayerShotBlend;
+std::array<double, 128> drawRatioPlayerShotGraphs;
 
 void
 playerShot::ShowPlayerShot() {

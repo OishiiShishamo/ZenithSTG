@@ -81,3 +81,5 @@ Player::RoutinePlayer() {
 	Shot();
 	protectTime--;
 }
+
+Player Plyr;
