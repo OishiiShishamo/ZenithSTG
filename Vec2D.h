@@ -9,6 +9,7 @@
 #define VECTOR_H
 
 #include <emmintrin.h>
+#include <pmmintrin.h>
 
 class Vec2D {
 public:

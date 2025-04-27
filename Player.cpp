@@ -17,7 +17,7 @@ Player::RangePlayer(const Vec2D& v) {
 
 void
 Player::MovePlayer() {
-	vec.xy = _mm_set1_pd(0);
+	vec = Vec2D(_mm_set1_pd(0));
 	if (isMouse == 1) {
 		int x, y;
 		GetMousePoint(&x, &y);
@@ -28,7 +28,9 @@ Player::MovePlayer() {
 		if (GetAsyncKeyState(VK_LEFT)) vec -= Vec2D(1, 0);
 		if (GetAsyncKeyState(VK_UP)) vec -= Vec2D(0, 1);
 		if (GetAsyncKeyState(VK_DOWN)) vec += Vec2D(0, 1);
+
 		vec.VecNorm();
+
 		if (GetAsyncKeyState(VK_SHIFT)) {
 			pos += vec * Slow;
 		}

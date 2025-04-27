@@ -11,10 +11,8 @@ crossProduct(const Vec2D& v1, const Vec2D& v2, const Vec2D& v3) {
     __m128d diff1 = _mm_sub_pd(v2_xy, v1_xy);
     __m128d diff2 = _mm_sub_pd(v3_xy, v1_xy);
 
-    __m128d mul1 = _mm_mul_pd(diff1, diff2);
-
-    __m128d temp = _mm_shuffle_pd(mul1, mul1, 1);
-    __m128d result = _mm_sub_pd(mul1, temp);
+    __m128d mul1 = _mm_mul_pd(diff1, _mm_shuffle_pd(diff2, diff2, 0b01));
+    __m128d result = _mm_sub_pd(mul1, _mm_shuffle_pd(mul1, mul1, 0b01));
 
     alignas(16) double res[2];
     _mm_store_pd(res, result);
@@ -49,10 +47,20 @@ AngleToVec2D(double angle) {
 
 Vec2D
 RotatePoint(const Vec2D& pt, double angle) {
-	double cosA = cos(angle);
-	double sinA = sin(angle);
-	return {
-		pt.GetX() * cosA + pt.GetY() * sinA,
-		pt.GetY() * cosA - pt.GetX() * sinA
-	};
+    double cosA = cos(angle);
+    double sinA = -sin(angle);
+
+    __m128d vec = pt.xy;
+    __m128d rot = _mm_set_pd(cosA, cosA);
+
+    __m128d xy_cos = _mm_mul_pd(vec, rot);
+
+    __m128d sin_vec = _mm_set_pd(sinA, -sinA);
+    __m128d swapped = _mm_shuffle_pd(vec, vec, 0b01);
+
+    __m128d xy_sin = _mm_mul_pd(swapped, sin_vec);
+
+    __m128d result = _mm_add_pd(xy_cos, xy_sin);
+
+    return Vec2D(result);
 }

@@ -109,7 +109,7 @@ Laser::ColliCheckObject() {
 	};
 	Vec2D world[4];
 	for (int i = 0; i < 4; ++i) {
-		Vec2D rot = RotatePoint(local[i], angle + PI / 2);
+		Vec2D rot = RotatePoint(local[i], showAngle + PI / 2);
 		world[i] = pos + rot;
 	}
 	if (
