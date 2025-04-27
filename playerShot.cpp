@@ -16,7 +16,7 @@ playerShot::ShowPlayerShot() {
 		SmartSetDrawBlendMode(defaultPlayerShotBlend[style], pal);
 		SetDrawBright(color.r, color.g, color.b);
 		SetDrawMode(DX_DRAWMODE_BILINEAR);
-		DrawRotaGraph(pos.x, pos.y, size, -showAngle, imgRes.ShotGH[style], TRUE);
+		DrawRotaGraph(pos.GetX(), pos.GetY(), size, -showAngle, imgRes.ShotGH[style], TRUE);
 		SetDrawBright(255, 255, 255);
 		SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 		SetDrawMode(DX_DRAWMODE_NEAREST);
@@ -25,7 +25,7 @@ playerShot::ShowPlayerShot() {
 		SmartSetDrawBlendMode(blend, pal);
 		SetDrawBright(color.r, color.g, color.b);
 		SetDrawMode(DX_DRAWMODE_BILINEAR);
-		DrawRotaGraph(pos.x, pos.y, size, -showAngle, imgRes.ShotGH[style], TRUE);
+		DrawRotaGraph(pos.GetX(), pos.GetY(), size, -showAngle, imgRes.ShotGH[style], TRUE);
 		SetDrawBright(255, 255, 255);
 		SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 		SetDrawMode(DX_DRAWMODE_NEAREST);
@@ -33,8 +33,8 @@ playerShot::ShowPlayerShot() {
 	if (isColShow == 1) {
 		if (flags & IS_COL) {
 			SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-			DrawCircle(pos.x, pos.y, colSize, GetColor(255, 255, 255), 1);
-			DrawFormatString(pos.x, pos.y, GetColor(GetColorHSV(std::fmod(frame, 360), 1, 1).r, GetColorHSV(std::fmod(frame, 360), 1, 1).g, GetColorHSV(std::fmod(frame, 360), 1, 1).b), "%f", colSize);
+			DrawCircle(pos.GetX(), pos.GetY(), colSize, GetColor(255, 255, 255), 1);
+			DrawFormatString(pos.GetX(), pos.GetY(), GetColor(GetColorHSV(std::fmod(frame, 360), 1, 1).r, GetColorHSV(std::fmod(frame, 360), 1, 1).g, GetColorHSV(std::fmod(frame, 360), 1, 1).b), "%f", colSize);
 		}
 	}
 }
@@ -47,10 +47,10 @@ playerShot::ColliCheckObject() {
 int
 playerShot::CheckPosBounds() {
 	double limit = size * 128 * 2 * drawRatioPlayerShotGraphs[style];
-	if (pos.x < BORDER_LEFT - limit) return 1;
-	if (pos.x > BORDER_RIGHT + limit) return 1;
-	if (pos.y < BORDER_UP - limit) return 1;
-	if (pos.y > BORDER_DOWN + limit) return 1;
+	if (pos.GetX() < BORDER_LEFT - limit) return 1;
+	if (pos.GetX() > BORDER_RIGHT + limit) return 1;
+	if (pos.GetY() < BORDER_UP - limit) return 1;
+	if (pos.GetY() > BORDER_DOWN + limit) return 1;
 
 	return 0;
 }

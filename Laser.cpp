@@ -22,18 +22,17 @@ Laser::ShowLaser() {
 	Vec2D world[4];
 	for (int i = 0; i < 4; ++i) {
 		Vec2D rot = RotatePoint(local[i], showAngle + PI / 2);
-		world[i].x = pos.x + rot.x;
-		world[i].y = pos.y + rot.y;
+		world[i] = pos + rot;
 	}
 	if (blend == -1) {
 		SmartSetDrawBlendMode(defaultBulletBlend[style], pal);
 		SetDrawBright(color.r, color.g, color.b);
 		SetDrawMode(DX_DRAWMODE_NEAREST);
 		DrawRectModiGraph(
-			world[0].x, world[0].y,
-			world[1].x, world[1].y,
-			world[2].x, world[2].y,
-			world[3].x, world[3].y,
+			world[0].GetX(), world[0].GetY(),
+			world[1].GetX(), world[1].GetY(),
+			world[2].GetX(), world[2].GetY(),
+			world[3].GetX(), world[3].GetY(),
 			64 - 128 * drawRatioBulletGraphs[style] / 2,
 			64 - 128 * drawRatioBulletGraphs[style] / 2,
 			128 * drawRatioBulletGraphs[style],
@@ -42,10 +41,10 @@ Laser::ShowLaser() {
 			TRUE);
 		SetDrawBright(255, 255, 255);
 		DrawRectModiGraph(
-			world[0].x, world[0].y,
-			world[1].x, world[1].y,
-			world[2].x, world[2].y,
-			world[3].x, world[3].y,
+			world[0].GetX(), world[0].GetY(),
+			world[1].GetX(), world[1].GetY(),
+			world[2].GetX(), world[2].GetY(),
+			world[3].GetX(), world[3].GetY(),
 			64 - 128 * drawRatioBulletGraphs[style] / 2,
 			64 - 128 * drawRatioBulletGraphs[style] / 2,
 			128 * drawRatioBulletGraphs[style],
@@ -60,10 +59,10 @@ Laser::ShowLaser() {
 		SetDrawBright(color.r, color.g, color.b);
 		SetDrawMode(DX_DRAWMODE_NEAREST);
 		DrawRectModiGraph(
-			world[0].x, world[0].y,
-			world[1].x, world[1].y,
-			world[2].x, world[2].y,
-			world[3].x, world[3].y,
+			world[0].GetX(), world[0].GetY(),
+			world[1].GetX(), world[1].GetY(),
+			world[2].GetX(), world[2].GetY(),
+			world[3].GetX(), world[3].GetY(),
 			64 - 128 * drawRatioBulletGraphs[style] / 2,
 			64 - 128 * drawRatioBulletGraphs[style] / 2,
 			128 * drawRatioBulletGraphs[style],
@@ -72,10 +71,10 @@ Laser::ShowLaser() {
 			TRUE);
 		SetDrawBright(255, 255, 255);
 		DrawRectModiGraph(
-			world[0].x, world[0].y,
-			world[1].x, world[1].y,
-			world[2].x, world[2].y,
-			world[3].x, world[3].y,
+			world[0].GetX(), world[0].GetY(),
+			world[1].GetX(), world[1].GetY(),
+			world[2].GetX(), world[2].GetY(),
+			world[3].GetX(), world[3].GetY(),
 			64 - 128 * drawRatioBulletGraphs[style] / 2,
 			64 - 128 * drawRatioBulletGraphs[style] / 2,
 			128 * drawRatioBulletGraphs[style],
@@ -88,8 +87,8 @@ Laser::ShowLaser() {
 	if (isColShow == 1) {
 		if ((flags & IS_COL) == 1) {
 			SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-			DrawCircle(pos.x, pos.y, colSize, GetColor(255, 255, 255), 1);
-			DrawFormatString(pos.x, pos.y, GetColor(GetColorHSV(std::fmod(frame, 360), 1, 1).r, GetColorHSV(std::fmod(frame, 360), 1, 1).g, GetColorHSV(std::fmod(frame, 360), 1, 1).b), "%f", colSize);
+			DrawCircle(pos.GetX(), pos.GetY(), colSize, GetColor(255, 255, 255), 1);
+			DrawFormatString(pos.GetX(), pos.GetY(), GetColor(GetColorHSV(std::fmod(frame, 360), 1, 1).r, GetColorHSV(std::fmod(frame, 360), 1, 1).g, GetColorHSV(std::fmod(frame, 360), 1, 1).b), "%f", colSize);
 		}
 	}
 }
@@ -97,9 +96,8 @@ Laser::ShowLaser() {
 void
 Laser::ColliCheckObject() {
 	double r = (length * length + colSize * colSize) / 4;
-	double dx = pos.x - Plyr.pos.x;
-	double dy = pos.y - Plyr.pos.y;
-	if (dx * dx + dy * dy <= r) {
+	Vec2D d = pos - Plyr.pos;
+	if (d.GetX() * d.GetX() + d.GetY() * d.GetY() <= r) {
 		return;
 	}
 	double halfW = colSize / 2;
@@ -112,8 +110,7 @@ Laser::ColliCheckObject() {
 	Vec2D world[4];
 	for (int i = 0; i < 4; ++i) {
 		Vec2D rot = RotatePoint(local[i], angle + PI / 2);
-		world[i].x = pos.x + rot.x;
-		world[i].y = pos.y + rot.y;
+		world[i] = pos + rot;
 	}
 	if (
 		colPointAndRect(Plyr.pos,
@@ -129,10 +126,10 @@ Laser::ColliCheckObject() {
 int
 Laser::CheckPosBounds() {
 	double limit = size * 128 * 2 * drawRatioBulletGraphs[style];
-	if (pos.x < BORDER_LEFT - limit) return 1;
-	if (pos.x > BORDER_RIGHT + limit) return 1;
-	if (pos.y < BORDER_UP - limit) return 1;
-	if (pos.y > BORDER_DOWN + limit) return 1;
+	if (pos.GetX() < BORDER_LEFT - limit) return 1;
+	if (pos.GetX() > BORDER_RIGHT + limit) return 1;
+	if (pos.GetY() < BORDER_UP - limit) return 1;
+	if (pos.GetY() > BORDER_DOWN + limit) return 1;
 
 	return 0;
 }

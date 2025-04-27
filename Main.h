@@ -36,6 +36,7 @@ class Background;
 #include <tuple>
 #include <type_traits>
 #include <vector>
+#include <emmintrin.h>
 
 #include "Collision.h"
 #include "Debug.h"

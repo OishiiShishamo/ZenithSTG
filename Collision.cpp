@@ -2,9 +2,8 @@
 
 int
 colCircleAndCircle(const Vec2D& v1, const Vec2D& v2, double r) {
-	double dx = v1.x - v2.x;
-	double dy = v1.y - v2.y;
-	if (dx * dx + dy * dy <= r * r) {
+	Vec2D d = v1 - v2;
+	if (d.GetX() * d.GetX() + d.GetY() * d.GetY() <= r * r) {
 		return 1;
 	}
 	else {

@@ -59,8 +59,7 @@ Object::UpdateEase() {
 
 void
 Object::MoveObject(double speed) {
-	pos.x += vec.x * speed;
-	pos.y += vec.y * speed;
+	pos += vec * speed;
 }
 
 void

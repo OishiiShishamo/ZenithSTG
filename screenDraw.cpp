@@ -21,7 +21,7 @@ ScreenDraw() {
 	DrawRotaGraph4(CENTER_X, CENTER_Y, 1.0f, 0, 0, 0, playerCanvas, 1, 0, 0);
 	DrawRotaGraph4(CENTER_X, CENTER_Y, 1.0f, 0, 0, 0, bulletCanvas, 1, 0, 0);
 	if (GetAsyncKeyState(VK_SHIFT)) {
-		DrawRotaGraph(Plyr.pos.x, Plyr.pos.y, 1.0f, 0, imgRes.UIGH[1], TRUE);
+		DrawRotaGraph(Plyr.pos.GetX(), Plyr.pos.GetY(), 1.0f, 0, imgRes.UIGH[1], TRUE);
 	}
 	DrawRotaGraph(CENTER_X, CENTER_Y, 1.0f, 0, imgRes.UIGH[0], 1, 0, 0);
 	SetDrawScreen(DX_SCREEN_BACK);

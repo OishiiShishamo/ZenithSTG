@@ -7,7 +7,7 @@
 
 double
 Player::AimPlayer(const Vec2D& v) {
-	return atan2(-double(pos.y - v.y), double(pos.x - v.x));
+	return atan2(-double(pos.GetY() - v.GetY()), double(pos.GetX() - v.GetX()));
 }
 
 double
@@ -17,43 +17,39 @@ Player::RangePlayer(const Vec2D& v) {
 
 void
 Player::MovePlayer() {
-	vec.x = 0;
-	vec.y = 0;
+	vec.xy = _mm_set1_pd(0);
 	if (isMouse == 1) {
 		int x, y;
 		GetMousePoint(&x, &y);
-		pos.x = x;
-		pos.y = y;
+		pos.xy = _mm_set_pd(y, x);
 	}
 	else {
-		if (GetAsyncKeyState(VK_RIGHT)) vec.x += 1;
-		if (GetAsyncKeyState(VK_LEFT)) vec.x -= 1;
-		if (GetAsyncKeyState(VK_UP)) vec.y -= 1;
-		if (GetAsyncKeyState(VK_DOWN)) vec.y += 1;
+		if (GetAsyncKeyState(VK_RIGHT)) vec += Vec2D(1, 0);
+		if (GetAsyncKeyState(VK_LEFT)) vec -= Vec2D(1, 0);
+		if (GetAsyncKeyState(VK_UP)) vec -= Vec2D(0, 1);
+		if (GetAsyncKeyState(VK_DOWN)) vec += Vec2D(0, 1);
 		vec.VecNorm();
 		if (GetAsyncKeyState(VK_SHIFT)) {
-			pos.x += vec.x * Slow;
-			pos.y += vec.y * Slow;
+			pos += vec * Slow;
 		}
 		else {
-			pos.x += vec.x * Fast;
-			pos.y += vec.y * Fast;
+			pos += vec * Fast;
 		}
 	}
-	if (pos.x < BORDER_LEFT) pos.x = BORDER_LEFT;
-	if (pos.x > BORDER_RIGHT) pos.x = BORDER_RIGHT;
-	if (pos.y > BORDER_DOWN) pos.y = BORDER_DOWN;
-	if (pos.y < BORDER_UP) pos.y = BORDER_UP;
+	if (pos.GetX() < BORDER_LEFT) pos = Vec2D(BORDER_LEFT, pos.GetY());
+	if (pos.GetX() > BORDER_RIGHT) pos = Vec2D(BORDER_RIGHT, pos.GetY());
+	if (pos.GetY() > BORDER_DOWN) pos = Vec2D(pos.GetX(), BORDER_DOWN);
+	if (pos.GetY() < BORDER_UP) pos = Vec2D(pos.GetX(), BORDER_UP);
 }
 
 void
 Player::ShowPlayer() {
 	SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-	DrawRotaGraph(pos.x, pos.y, 1.0f, 0, imgRes.PlayerGH[0], 1);
+	DrawRotaGraph(pos.GetX(), pos.GetY(), 1.0f, 0, imgRes.PlayerGH[0], 1);
 	if (isColShow == 1) {
 		SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-		DrawCircle(pos.x, pos.y, colSize, GetColor(255, 255, 255), 1);
-		DrawFormatString(pos.x, pos.y, GetColor(GetColorHSV(std::fmod(frame, 360), 1, 1).r, GetColorHSV(std::fmod(frame, 360), 1, 1).g, GetColorHSV(std::fmod(frame, 360), 1, 1).b), "%f", colSize);
+		DrawCircle(pos.GetX(), pos.GetY(), colSize, GetColor(255, 255, 255), 1);
+		DrawFormatString(pos.GetX(), pos.GetY(), GetColor(GetColorHSV(std::fmod(frame, 360), 1, 1).r, GetColorHSV(std::fmod(frame, 360), 1, 1).g, GetColorHSV(std::fmod(frame, 360), 1, 1).b), "%f", colSize);
 	}
 }
 
