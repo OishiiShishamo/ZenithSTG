@@ -14,7 +14,7 @@ std::array<double, 128> drawRatioEnemyGraphs;
 
 void
 Enemy::ShowEnemy() {
-	if (!(flags & ALIVE)) return;
+	if (!(flags & IS_ALIVE)) return;
 	if (blend == -1) {
 		SmartSetDrawBlendMode(defaultEnemyBlend[style], pal);
 		SetDrawBright(color.r, color.g, color.b);
@@ -46,7 +46,7 @@ void
 Enemy::ColliCheckObject() {
 	if (colCircleAndCircle(pos, Plyr.pos, colSize + Plyr.colSize)) {
 		Plyr.HitPlayer();
-		flags ^= ALIVE;
+		flags ^= IS_ALIVE;
 	}
 }
 
@@ -86,8 +86,8 @@ Enemy::MoveFunc() {
 void
 CreateEnemy(const Vec2D& pos, const Color& color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID, const std::vector<std::any>& params) {
 	for (int i = 0; i < Enemies.size(); i++) {
-		if (!(Enemies[i].flags & ALIVE)) {
-			Enemies[i].flags = ALIVE | isCol * IS_COL;
+		if (!(Enemies[i].flags & IS_ALIVE)) {
+			Enemies[i].flags = IS_ALIVE | isCol * IS_COL;
 			Enemies[i].objType = OBJECT_ENEMY;
 			Enemies[i].pos = pos;
 			Enemies[i].color = color;

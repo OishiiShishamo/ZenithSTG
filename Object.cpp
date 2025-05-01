@@ -6,7 +6,7 @@
 
 void
 Object::UpdateObject(long long Index) {
-	if (!(flags & ALIVE)) return;
+	if (!(flags & IS_ALIVE)) return;
 
 	UpdateEase();
 
@@ -77,7 +77,7 @@ Object::CheckCollisionAndBounds() {
 		ColliCheckObject();
 	}
 	if (CheckPosBounds()) {
-		flags ^= ALIVE;
+		flags ^= IS_ALIVE;
 		return 1;
 	}
 	return 0;
@@ -97,7 +97,7 @@ Object::MoveFunc() {
 					ColliCheckObject();
 				}
 				if (CheckPosBounds()) {
-					flags ^= ALIVE;
+					flags ^= IS_ALIVE;
 					break;
 				}
 			}
@@ -107,7 +107,7 @@ Object::MoveFunc() {
 			if (flags & IS_COL) {
 				ColliCheckObject();
 			}
-			if (CheckPosBounds()) flags ^= ALIVE;
+			if (CheckPosBounds()) flags ^= IS_ALIVE;
 		}
 	}
 	}

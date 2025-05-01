@@ -38,8 +38,8 @@ AngleToVec3D(double angleX, double angleY, double angleZ) {
 
 Vec3D
 RotatePoint(const Vec3D& pt, double angle) {
-	double cosA = cos(angle);
-	double sinA = sin(angle);
+	double cosA = std::cos(angle);
+	double sinA = std::sin(angle);
 	return {
 		pt.x * cosA + pt.y * sinA,
 		pt.y * cosA - pt.x * sinA
@@ -51,31 +51,31 @@ void GetRotationMatrixX(double angle, double matrix[3][3]) {
 	matrix[0][1] = 0.0;
 	matrix[0][2] = 0.0;
 	matrix[1][0] = 0.0;
-	matrix[1][1] = cos(angle);
-	matrix[1][2] = -sin(angle);
+	matrix[1][1] = std::cos(angle);
+	matrix[1][2] = -std::sin(angle);
 	matrix[2][0] = 0.0;
-	matrix[2][1] = sin(angle);
-	matrix[2][2] = cos(angle);
+	matrix[2][1] = std::sin(angle);
+	matrix[2][2] = std::cos(angle);
 }
 
 void GetRotationMatrixY(double angle, double matrix[3][3]) {
-	matrix[0][0] = cos(angle);
+	matrix[0][0] = std::cos(angle);
 	matrix[0][1] = 0.0;
-	matrix[0][2] = sin(angle);
+	matrix[0][2] = std::sin(angle);
 	matrix[1][0] = 0.0;
 	matrix[1][1] = 1.0;
 	matrix[1][2] = 0.0;
-	matrix[2][0] = -sin(angle);
+	matrix[2][0] = -std::sin(angle);
 	matrix[2][1] = 0.0;
-	matrix[2][2] = cos(angle);
+	matrix[2][2] = std::cos(angle);
 }
 
 void GetRotationMatrixZ(double angle, double matrix[3][3]) {
-	matrix[0][0] = cos(angle);
-	matrix[0][1] = -sin(angle);
+	matrix[0][0] = std::cos(angle);
+	matrix[0][1] = -std::sin(angle);
 	matrix[0][2] = 0.0;
-	matrix[1][0] = sin(angle);
-	matrix[1][1] = cos(angle);
+	matrix[1][0] = std::sin(angle);
+	matrix[1][1] = std::cos(angle);
 	matrix[1][2] = 0.0;
 	matrix[2][0] = 0.0;
 	matrix[2][1] = 0.0;

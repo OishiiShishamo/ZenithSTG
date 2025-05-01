@@ -25,7 +25,7 @@ Script::RunScript() {
 				.startColSize = 16,
 				.endColSize = 16,
 				.way = 8,
-				.startAngle = Rad(sin(Rad(frame)) * 360),
+				.startAngle = Rad(std::sin(Rad(frame)) * 360),
 				.angleEaseType = EASEINCUBIC,
 				.angleEaseTime = 60,
 				.startSpeed = -8,

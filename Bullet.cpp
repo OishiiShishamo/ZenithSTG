@@ -15,7 +15,7 @@ long long bIndex = 0;
 
 void
 Bullet::ShowBullet() {
-	if (!(flags & ALIVE)) return;
+	if (!(flags & IS_ALIVE)) return;
 	Vec2D world[4];
 	const bool isScaled = size > 1.0f;
 	if (isScaled) {
@@ -116,7 +116,7 @@ void
 Bullet::ColliCheckObject() {
 	if (colCircleAndCircle(pos, Plyr.pos, colSize + Plyr.colSize)) {
 		Plyr.HitPlayer();
-		flags ^= ALIVE;
+		flags ^= IS_ALIVE;
 	}
 }
 
@@ -156,8 +156,8 @@ Bullet::MoveFunc() {
 void
 CreateBullet(const Vec2D& pos, const Color& color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID, const std::vector<std::any>& params) {
 	for (int i = 0; i < Bullets.size(); i++) {
-		if (!(Bullets[i].flags & ALIVE)) {
-			Bullets[i].flags = ALIVE | isCol * IS_COL;
+		if (!(Bullets[i].flags & IS_ALIVE)) {
+			Bullets[i].flags = IS_ALIVE | isCol * IS_COL;
 			Bullets[i].objType = OBJECT_BULLET;
 			Bullets[i].pos = pos;
 			Bullets[i].color = color;

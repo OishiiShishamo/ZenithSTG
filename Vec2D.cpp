@@ -40,15 +40,15 @@ Range(const Vec2D& v1, const Vec2D& v2) {
 Vec2D
 AngleToVec2D(double angle) {
 	return { 
-		cos(angle), 
-		-sin(angle) 
+		std::cos(angle), 
+		-std::sin(angle) 
 	};
 }
 
 Vec2D
 RotatePoint(const Vec2D& pt, double angle) {
-    double cosA = cos(angle);
-    double sinA = -sin(angle);
+    double cosA = std::cos(angle);
+    double sinA = -std::sin(angle);
 
     __m128d vec = pt.xy;
     __m128d rot = _mm_set_pd(cosA, cosA);

@@ -83,7 +83,7 @@ struct objectParams {
 * @brief オブジェクトの状態をまとめたもの / A summary of the object's state.
 */
 enum objectFlags {
-	ALIVE = 1 << 0,
+	IS_ALIVE = 1 << 0,
 	IS_COL = 1 << 1,
 	IS_HEAD = 1 << 2,
 };
@@ -141,7 +141,7 @@ public:
 	Object() = default;
 	Object(std::uint8_t alive, std::uint8_t isCol, int objType, const Vec2D& pos, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startShowAngle, double endShowAngle, int showAngleEaseType, int showAngleEaseTime, const Color& color, int style, int blend, int pal, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int popFrame = 0, double length = 0, double width = 0, long long frontNode = 0, long long nextNode = 0, int currentNodeNum = 0, int isHead = 0, long long index = 0, int ID = 0, const std::vector<std::any>& params = {})
 		: objType(objType), pos(pos), startAngle(startAngle), endAngle(endAngle), angleEaseType(angleEaseType), angleEaseTime(angleEaseTime), startShowAngle(startShowAngle), endShowAngle(endShowAngle), showAngleEaseType(showAngleEaseType), showAngleEaseTime(showAngleEaseTime), color(color), style(style), blend(blend), pal(pal), startColSize(startColSize), endColSize(endColSize), colSizeEaseType(colSizeEaseType), colSizeEaseTime(colSizeEaseTime), colSize(startColSize), startSize(startSize), endSize(endSize), sizeEaseType(sizeEaseType), sizeEaseTime(sizeEaseTime), size(1.0f), startSpeed(startSpeed), endSpeed(endSpeed), speedEaseType(speedEaseType), speedEaseTime(speedEaseTime), popFrame(popFrame), length(length), width(width), frontNode(frontNode), nextNode(nextNode), currentNodeNum(currentNodeNum), index(index), ID(ID), params(params) {
-		flags |= ALIVE * alive | IS_COL * isCol | IS_HEAD * isHead;
+		flags |= IS_ALIVE * alive | IS_COL * isCol | IS_HEAD * isHead;
 	}
 
 	/**

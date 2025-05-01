@@ -55,8 +55,6 @@ Init() {
 	SetFontSize(20);
 
 	std::srand(42);
-	
-	//SetCreateDrawValidGraphMultiSample(16, 8);
 
 	Plyr.pos = P_DEFAULT_POS;
 	Plyr.Slow = 5;

@@ -11,7 +11,7 @@ std::array<Laser, MAX_LASER> Lasers;
 
 void
 Laser::ShowLaser() {
-	if (!(flags & ALIVE)) return;
+	if (!(flags & IS_ALIVE)) return;
 	double halfW = width / 2;
 	Vec2D local[4] = {
 		{-halfW, 0},
@@ -119,7 +119,7 @@ Laser::ColliCheckObject() {
 			world[2],
 			world[3])) {
 		Plyr.HitPlayer();
-		flags ^= ALIVE;
+		flags ^= IS_ALIVE;
 	}
 }
 
@@ -159,8 +159,8 @@ Laser::MoveFunc() {
 void
 CreateLaser(const Vec2D& pos, double length, double width, const Color& color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID, const std::vector<std::any>& params) {
 	for (int i = 0; i < Lasers.size(); i++) {
-		if (!(Lasers[i].flags & ALIVE)) {
-			Lasers[i].flags = ALIVE | isCol * IS_COL;
+		if (!(Lasers[i].flags & IS_ALIVE)) {
+			Lasers[i].flags = IS_ALIVE | isCol * IS_COL;
 			Lasers[i].objType = OBJECT_LASER;
 			Lasers[i].pos = pos;
 			Lasers[i].color = color;

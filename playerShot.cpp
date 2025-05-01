@@ -11,7 +11,7 @@ std::array<double, 128> drawRatioPlayerShotGraphs;
 
 void
 playerShot::ShowPlayerShot() {
-	if (!(flags & ALIVE)) return;
+	if (!(flags & IS_ALIVE)) return;
 	if (blend == -1) {
 		SmartSetDrawBlendMode(defaultPlayerShotBlend[style], pal);
 		SetDrawBright(color.r, color.g, color.b);
@@ -80,8 +80,8 @@ playerShot::MoveFunc() {
 void
 CreatePlayerShot(const Vec2D& pos, const Color& color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID, const std::vector<std::any>& params) {
 	for (int i = 0; i < plyrShots.size(); i++) {
-		if (!(plyrShots[i].flags & ALIVE)) {
-			plyrShots[i].flags = ALIVE | isCol * IS_COL;
+		if (!(plyrShots[i].flags & IS_ALIVE)) {
+			plyrShots[i].flags = IS_ALIVE | isCol * IS_COL;
 			plyrShots[i].objType = OBJECT_PLAYER_SHOT;
 			plyrShots[i].pos = pos;
 			plyrShots[i].color = color;

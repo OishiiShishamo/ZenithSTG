@@ -38,18 +38,18 @@ Player::MovePlayer() {
 			pos += vec * Fast;
 		}
 	}
-	if (pos.GetX() < BORDER_LEFT) pos = Vec2D(BORDER_LEFT, pos.GetY());
-	if (pos.GetX() > BORDER_RIGHT) pos = Vec2D(BORDER_RIGHT, pos.GetY());
-	if (pos.GetY() > BORDER_DOWN) pos = Vec2D(pos.GetX(), BORDER_DOWN);
-	if (pos.GetY() < BORDER_UP) pos = Vec2D(pos.GetX(), BORDER_UP);
+	if (pos.GetX() < BORDER_LEFT) pos.SetX(BORDER_LEFT);
+	if (pos.GetX() > BORDER_RIGHT) pos.SetX(BORDER_RIGHT);
+	if (pos.GetY() > BORDER_DOWN) pos.SetY(BORDER_DOWN);
+	if (pos.GetY() < BORDER_UP) pos.SetY(BORDER_UP);
 }
 
 void
 Player::ShowPlayer() {
-	SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+	SmartSetDrawBlendMode(BLEND_NOBLEND, 255);
 	DrawRotaGraph(pos.GetX(), pos.GetY(), 1.0f, 0, imgRes.PlayerGH[0], 1);
 	if (isColShow == 1) {
-		SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+		SmartSetDrawBlendMode(BLEND_NOBLEND, 255);
 		DrawCircle(pos.GetX(), pos.GetY(), colSize, GetColor(255, 255, 255), 1);
 		DrawFormatString(pos.GetX(), pos.GetY(), GetColor(GetColorHSV(std::fmod(frame, 360), 1, 1).r, GetColorHSV(std::fmod(frame, 360), 1, 1).g, GetColorHSV(std::fmod(frame, 360), 1, 1).b), "%f", colSize);
 	}
