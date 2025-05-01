@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <title>ZenithSTG</title>
+    <!--
+    0.1280 720
+    1.1600 900
+    2.1920 1080
+    -->
+    <windowSize>1</windowSize>
+    <isWindow>1</isWindow>
+</root>
