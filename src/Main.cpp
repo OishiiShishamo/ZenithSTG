@@ -62,7 +62,7 @@ WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, in
 		if (elapsedFrame == 0) {
 			elapsedFrame = 1;
 		}
-		ShowFPS(Vec2D(0, 0), 20, elapsedFrame, Color(C_WHITE));
+		ShowFPS(Vec2D(0, 0), elapsedFrame, Color(C_WHITE));
 		//DrawFormatString(0, 20, GetColor(C_WHITE), "Objects:%d", Bullets.size() + Lasers.size() + plyrShots.size());
 
 		ScreenFlip();

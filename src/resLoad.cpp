@@ -41,3 +41,16 @@ void
 resLoad::ShotGHLoad() {
 	imgRes.ShotGH.emplace_back(LoadGraph("res/img/shot/0.png"));
 }
+
+void
+resLoad::FontLoad() {
+	SAFE_ACCESS(fontTypes, UI_0) = CreateFontToHandle("Meiryo UI", 20, 3, DX_FONTTYPE_ANTIALIASING_4X4);
+	SAFE_ACCESS(fontTypes, UI_1) = CreateFontToHandle("Meiryo UI", 40, 3, DX_FONTTYPE_ANTIALIASING_4X4);
+	int i = 0;
+	for (auto& F : fontTypes) {
+		if (F == -1) {
+			Logger("FontID: " + to_string(i) + " FontLoading Fail.", logType::LOG_WARNING);
+		}
+		i++;
+	}
+}

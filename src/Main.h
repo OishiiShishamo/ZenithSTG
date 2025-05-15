@@ -22,7 +22,6 @@ class Background;
 #include <any>
 #include <array>
 #include <chrono>
-#include <cmath>
 #include <cstdint>
 #include <cstring>
 #include <DirectXMath.h>
@@ -39,10 +38,9 @@ class Background;
 #include <pmmintrin.h>
 #include <emmintrin.h>
 
+#include "Global.h"
+
 #include "Collision.h"
-#include "Debug.h"
-#include "DxLib.h"
-#include "Logging.h"
 #include "Property.h"
 #include "Utility.h"
 #include "Vec2D.h"
@@ -50,10 +48,6 @@ class Background;
 using namespace std;
 
 #define PRINT(...) printf(__VA_ARGS__)	
-
-#define PI DX_PI
-#define TAU PI * 2
-#define ICHIDO (PI / 180)
 
 #define CENTER_X 960
 #define CENTER_Y 540
@@ -72,55 +66,6 @@ using namespace std;
 #define MAX_PLAYER_SHOT 8192
 
 #define FPS_HISTORY_LENGTH 120
-
-enum blendType {
-	BLEND_DEFAULT = -1,
-	BLEND_NOBLEND = DX_BLENDMODE_NOBLEND,
-	BLEND_ALPHA = DX_BLENDMODE_ALPHA,
-	BLEND_ADD = DX_BLENDMODE_ADD,
-	BLEND_SUB = DX_BLENDMODE_SUB,
-	BLEND_MULA = DX_BLENDMODE_MULA,
-	BLEND_INVSRC = DX_BLENDMODE_INVSRC,
-	BLEND_PMA_ALPHA = DX_BLENDMODE_PMA_ALPHA,
-	BLEND_PMA_ADD = DX_BLENDMODE_PMA_ADD,
-	BLEND_PMA_SUB = DX_BLENDMODE_PMA_SUB,
-	BLEND_PMA_INVSRC = DX_BLENDMODE_PMA_INVSRC,
-};
-
-enum objectType {
-	OBJECT_BULLET = 0,
-	OBJECT_LASER = 1,
-	OBJECT_BENT_LASER = 2,
-	OBJECT_ENEMY = 3,
-	OBJECT_PLAYER_SHOT = 4,
-};
-
-enum bulletType {
-	B_NORMAL = 0,
-	B_MIDIAM = 1,
-	B_UROKO = 2,
-	B_LASER = 3,
-	B_LIGHT = 4,
-	B_BIG = 5,
-};
-
-enum enemyType {
-	E_NORMAL = 0,
-};
-
-enum playerShotType {
-	PS_NORMAL = 0,
-};
-
-enum easeType {
-	LINEAR = 0,
-	EASEINQUAD = 1,
-	EASEOUTQUAD = 2,
-	EASEINOUTQUAD = 3,
-	EASEINCUBIC = 4,
-	EASEOUTCUBIC = 5,
-	EASEINOUTCUBIC = 6,
-};
 
 struct imageRes {
 	std::vector<int> UIGH;

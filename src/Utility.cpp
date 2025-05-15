@@ -34,80 +34,55 @@ int rnd() {
 void
 DrawRotaGraph4(int x, int y, double rate, double anglex, double angley, double anglez, int handle, int tranflag, int x_turn_flag, int y_turn_flag) {
 	int sx = 0, sy = 0;
-	MATRIX m;
-	VECTOR v;
-
+	if (handle < 0) return;
 	GetGraphSize(handle, &sx, &sy);
-	m = MMult(MMult(MGetRotZ(anglez), MGetRotY(angley)), MGetRotX(anglex));
-	m.m[0][0] *= rate; m.m[0][1] *= rate; m.m[0][2] *= rate;
-	m.m[1][0] *= rate; m.m[1][1] *= rate; m.m[1][2] *= rate;
-	int lux, luy, rux, ruy, rdx, rdy, ldx, ldy;
-	if (x_turn_flag == FALSE) {
-		if (y_turn_flag == FALSE) {
-			v.x = sx / 2; v.y = -sy / 2;  v.z = 0.0;
-			v = VTransform(v, m);
-			rux = x + v.x, ruy = y + v.y;
-			ldx = x - v.x, ldy = y - v.y;
+	if (sx <= 0 || sy <= 0) return;
 
-			v.x = -sx / 2; v.y = -sy / 2;  v.z = 0.0;
-			v = VTransform(v, m);
-			lux = x + v.x, luy = y + v.y;
-			rdx = x - v.x, rdy = y - v.y;
-		}
-		else {
-			v.x = sx / 2; v.y = sy / 2;  v.z = 0.0;
-			v = VTransform(v, m);
-			rux = x + v.x, ruy = y + v.y;
-			ldx = x - v.x, ldy = y - v.y;
+	DirectX::XMMATRIX rotX = DirectX::XMMatrixRotationX(static_cast<double>(anglex));
+	DirectX::XMMATRIX rotY = DirectX::XMMatrixRotationY(static_cast<double>(angley));
+	DirectX::XMMATRIX rotZ = DirectX::XMMatrixRotationZ(static_cast<double>(anglez));
+	DirectX::XMMATRIX scale = DirectX::XMMatrixScaling(static_cast<double>(rate), static_cast<double>(rate), static_cast<double>(rate));
+	DirectX::XMMATRIX m = scale * rotZ * rotY * rotX;
 
-			v.x = -sx / 2; v.y = sy / 2;  v.z = 0.0;
-			v = VTransform(v, m);
-			lux = x + v.x, luy = y + v.y;
-			rdx = x - v.x, rdy = y - v.y;
-		}
-	}
-	else {
-		if (y_turn_flag == FALSE) {
-			v.x = -sx / 2; v.y = -sy / 2;  v.z = 0.0;
-			v = VTransform(v, m);
-			rux = x + v.x, ruy = y + v.y;
-			ldx = x - v.x, ldy = y - v.y;
+	double hw = sx * 0.5f;
+	double hh = sy * 0.5f;
 
-			v.x = sx / 2; v.y = -sy / 2;  v.z = 0.0;
-			v = VTransform(v, m);
-			lux = x + v.x, luy = y + v.y;
-			rdx = x - v.x, rdy = y - v.y;
-		}
-		else {
-			v.x = -sx / 2; v.y = sy / 2;  v.z = 0.0;
-			v = VTransform(v, m);
-			rux = x + v.x, ruy = y + v.y;
-			ldx = x - v.x, ldy = y - v.y;
+	double signX = x_turn_flag ? -1.0f : 1.0f;
+	double signY = y_turn_flag ? -1.0f : 1.0f;
 
-			v.x = sx / 2; v.y = sy / 2;  v.z = 0.0;
-			v = VTransform(v, m);
-			lux = x + v.x, luy = y + v.y;
-			rdx = x - v.x, rdy = y - v.y;
-		}
-	}
+	DirectX::XMVECTOR p1 = DirectX::XMVectorSet(-hw * signX, -hh * signY, 0.0f, 1.0f); // 左上
+	DirectX::XMVECTOR p2 = DirectX::XMVectorSet(hw * signX, -hh * signY, 0.0f, 1.0f);  // 右上
+	DirectX::XMVECTOR p3 = DirectX::XMVectorSet(hw * signX, hh * signY, 0.0f, 1.0f);   // 右下
+	DirectX::XMVECTOR p4 = DirectX::XMVectorSet(-hw * signX, hh * signY, 0.0f, 1.0f);  // 左下
+
+	p1 = DirectX::XMVector3TransformCoord(p1, m);
+	p2 = DirectX::XMVector3TransformCoord(p2, m);
+	p3 = DirectX::XMVector3TransformCoord(p3, m);
+	p4 = DirectX::XMVector3TransformCoord(p4, m);
+
+	int lux = x + static_cast<int>(DirectX::XMVectorGetX(p1));
+	int luy = y + static_cast<int>(DirectX::XMVectorGetY(p1));
+	int rux = x + static_cast<int>(DirectX::XMVectorGetX(p2));
+	int ruy = y + static_cast<int>(DirectX::XMVectorGetY(p2));
+	int rdx = x + static_cast<int>(DirectX::XMVectorGetX(p3));
+	int rdy = y + static_cast<int>(DirectX::XMVectorGetY(p3));
+	int ldx = x + static_cast<int>(DirectX::XMVectorGetX(p4));
+	int ldy = y + static_cast<int>(DirectX::XMVectorGetY(p4));
+
 	DrawModiGraph(lux, luy, rux, ruy, rdx, rdy, ldx, ldy, handle, tranflag);
 }
 
-Color
-GetColorHSV(double H, double S, double V) {
-	int hi;
-	double f, p, q, t;
-	double r = 0, g = 0, b = 0;
-	int ir, ig, ib;
+Color GetColorHSV(double H, double S, double V) {
+	int hi = static_cast<int>(H / 60.0);
+	hi = (hi == 6) ? 5 : hi % 6;
+	double f = (H / 60.0) - hi;
+	double p = V * (1.0 - S);
+	double q = V * (1.0 - f * S);
+	double t = V * (1.0 - (1.0 - f) * S);
 
-	hi = (int)(H / 60.0f);
-	hi = hi == 6 ? 5 : hi %= 6;
-	f = H / 60.0f - (double)hi;
-	p = V * (1.0f - S);
-	q = V * (1.0f - f * S);
-	t = V * (1.0f - (1.0f - f) * S);
-	switch (hi)
-	{
+	double r = 0, g = 0, b = 0;
+
+	switch (hi) {
 	case 0: r = V; g = t; b = p; break;
 	case 1: r = q; g = V; b = p; break;
 	case 2: r = p; g = V; b = t; break;
@@ -116,17 +91,9 @@ GetColorHSV(double H, double S, double V) {
 	case 5: r = V; g = p; b = q; break;
 	}
 
-	ir = (int)(r * 255.0f);
-	if (ir > 255) ir = 255;
-	else if (ir < 0) ir = 0;
-
-	ig = (int)(g * 255.0f);
-	if (ig > 255) ig = 255;
-	else if (ig < 0) ig = 0;
-
-	ib = (int)(b * 255.0f);
-	if (ib > 255) ib = 255;
-	else if (ib < 0) ib = 0;
+	uint8_t ir = static_cast<uint8_t>(std::clamp(r * 255.0, 0.0, 255.0));
+	uint8_t ig = static_cast<uint8_t>(std::clamp(g * 255.0, 0.0, 255.0));
+	uint8_t ib = static_cast<uint8_t>(std::clamp(b * 255.0, 0.0, 255.0));
 
 	return Color(ir, ig, ib);
 }
@@ -146,5 +113,5 @@ SmartSetDrawBlendMode(int BlendMode, int Pal) {
 
 double
 Rad(double angle) {
-	return (PI / 180) * angle;
+	return (pi / 180) * angle;
 }

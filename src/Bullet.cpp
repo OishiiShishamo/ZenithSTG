@@ -16,54 +16,54 @@ long long bIndex = 0;
 void
 Bullet::ShowBullet() {
 	if (!(flags & IS_ALIVE)) return;
-	Vec2D world[4];
+	std::array<Vec2D, 4> world;
 	const bool isScaled = size > 1.0f;
 	if (isScaled) {
-		double half = size / 2 * 128 * drawRatioBulletGraphs[style];
-		Vec2D local[4] = {
-			{-half, -half},
-			{-half, half},
-			{ half, half},
-			{ half, -half}
+		double half = size / 2 * 128 * SAFE_ACCESS(drawRatioBulletGraphs, style);
+		std::array<Vec2D, 4> local = {
+			Vec2D(-half, -half),
+			Vec2D(-half, half),
+			Vec2D(half, half),
+			Vec2D(half, -half)
 		};
 		for (int i = 0; i < 4; ++i) {
-			Vec2D rot = RotatePoint(local[i], showAngle + PI / 2);
-			world[i] = pos + rot;
+			Vec2D rot = RotatePoint(SAFE_ACCESS(local, i), showAngle + pi / 2);
+			SAFE_ACCESS(world, i) = pos + rot;
 		}
 	}
 	if (blend == -1) {
-		SmartSetDrawBlendMode(defaultBulletBlend[style], pal);
+		SmartSetDrawBlendMode(SAFE_ACCESS(defaultBulletBlend, style), pal);
 		SetDrawBright(color.r, color.g, color.b);
 		SetDrawMode(DX_DRAWMODE_BILINEAR);
 		if (isScaled) {
 			DrawRectModiGraph(
-				world[0].GetX(), world[0].GetY(),
-				world[1].GetX(), world[1].GetY(),
-				world[2].GetX(), world[2].GetY(),
-				world[3].GetX(), world[3].GetY(),
-				64 - 128 * drawRatioBulletGraphs[style] / 2,
-				64 - 128 * drawRatioBulletGraphs[style] / 2,
-				128 * drawRatioBulletGraphs[style],
-				128 * drawRatioBulletGraphs[style],
-				imgRes.BulletBackGH[style],
+				SAFE_ACCESS(world, 0).GetX(), SAFE_ACCESS(world, 0).GetY(),
+				SAFE_ACCESS(world, 1).GetX(), SAFE_ACCESS(world, 1).GetY(),
+				SAFE_ACCESS(world, 2).GetX(), SAFE_ACCESS(world, 2).GetY(),
+				SAFE_ACCESS(world, 3).GetX(), SAFE_ACCESS(world, 3).GetY(),
+				64 - 128 * SAFE_ACCESS(drawRatioBulletGraphs, style) / 2,
+				64 - 128 * SAFE_ACCESS(drawRatioBulletGraphs, style) / 2,
+				128 * SAFE_ACCESS(drawRatioBulletGraphs, style),
+				128 * SAFE_ACCESS(drawRatioBulletGraphs, style),
+				SAFE_ACCESS(imgRes.BulletBackGH, style),
 				TRUE);
 		}
-		else DrawRotaGraph(pos.GetX(), pos.GetY(), size, -showAngle, imgRes.BulletBackGH[style], TRUE);
+		else DrawRotaGraph(pos.GetX(), pos.GetY(), size, -showAngle, SAFE_ACCESS(imgRes.BulletBackGH, style), TRUE);
 		SetDrawBright(255, 255, 255);
 		if (isScaled) {
 			DrawRectModiGraph(
-				world[0].GetX(), world[0].GetY(),
-				world[1].GetX(), world[1].GetY(),
-				world[2].GetX(), world[2].GetY(),
-				world[3].GetX(), world[3].GetY(),
-				64 - 128 * drawRatioBulletGraphs[style] / 2,
-				64 - 128 * drawRatioBulletGraphs[style] / 2,
-				128 * drawRatioBulletGraphs[style],
-				128 * drawRatioBulletGraphs[style],
-				imgRes.BulletFrontGH[style],
+				SAFE_ACCESS(world, 0).GetX(), SAFE_ACCESS(world, 0).GetY(),
+				SAFE_ACCESS(world, 1).GetX(), SAFE_ACCESS(world, 1).GetY(),
+				SAFE_ACCESS(world, 2).GetX(), SAFE_ACCESS(world, 2).GetY(),
+				SAFE_ACCESS(world, 3).GetX(), SAFE_ACCESS(world, 3).GetY(),
+				64 - 128 * SAFE_ACCESS(drawRatioBulletGraphs, style) / 2,
+				64 - 128 * SAFE_ACCESS(drawRatioBulletGraphs, style) / 2,
+				128 * SAFE_ACCESS(drawRatioBulletGraphs, style),
+				128 * SAFE_ACCESS(drawRatioBulletGraphs, style),
+				SAFE_ACCESS(imgRes.BulletFrontGH, style),
 				TRUE);
 		}
-		else DrawRotaGraph(pos.GetX(), pos.GetY(), size, -showAngle, imgRes.BulletFrontGH[style], TRUE);
+		else DrawRotaGraph(pos.GetX(), pos.GetY(), size, -showAngle, SAFE_ACCESS(imgRes.BulletFrontGH, style), TRUE);
 		SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 		SetDrawMode(DX_DRAWMODE_NEAREST);
 	}
@@ -73,33 +73,33 @@ Bullet::ShowBullet() {
 		SetDrawMode(DX_DRAWMODE_BILINEAR);
 		if (isScaled) {
 			DrawRectModiGraph(
-				world[0].GetX(), world[0].GetY(),
-				world[1].GetX(), world[1].GetY(),
-				world[2].GetX(), world[2].GetY(),
-				world[3].GetX(), world[3].GetY(),
-				64 - 128 * drawRatioBulletGraphs[style] / 2,
-				64 - 128 * drawRatioBulletGraphs[style] / 2,
-				128 * drawRatioBulletGraphs[style],
-				128 * drawRatioBulletGraphs[style],
-				imgRes.BulletBackGH[style],
+				SAFE_ACCESS(world, 0).GetX(), SAFE_ACCESS(world, 0).GetY(),
+				SAFE_ACCESS(world, 1).GetX(), SAFE_ACCESS(world, 1).GetY(),
+				SAFE_ACCESS(world, 2).GetX(), SAFE_ACCESS(world, 2).GetY(),
+				SAFE_ACCESS(world, 3).GetX(), SAFE_ACCESS(world, 3).GetY(),
+				64 - 128 * SAFE_ACCESS(drawRatioBulletGraphs, style) / 2,
+				64 - 128 * SAFE_ACCESS(drawRatioBulletGraphs, style) / 2,
+				128 * SAFE_ACCESS(drawRatioBulletGraphs, style),
+				128 * SAFE_ACCESS(drawRatioBulletGraphs, style),
+				SAFE_ACCESS(imgRes.BulletBackGH, style),
 				TRUE);
 		}
-		else DrawRotaGraph(pos.GetX(), pos.GetY(), size, -showAngle, imgRes.BulletBackGH[style], TRUE);
+		else DrawRotaGraph(pos.GetX(), pos.GetY(), size, -showAngle, SAFE_ACCESS(imgRes.BulletBackGH, style), TRUE);
 		SetDrawBright(255, 255, 255);
 		if (isScaled) {
 			DrawRectModiGraph(
-				world[0].GetX(), world[0].GetY(),
-				world[1].GetX(), world[1].GetY(),
-				world[2].GetX(), world[2].GetY(),
-				world[3].GetX(), world[3].GetY(),
-				64 - 128 * drawRatioBulletGraphs[style] / 2,
-				64 - 128 * drawRatioBulletGraphs[style] / 2,
-				128 * drawRatioBulletGraphs[style],
-				128 * drawRatioBulletGraphs[style],
-				imgRes.BulletFrontGH[style],
+				SAFE_ACCESS(world, 0).GetX(), SAFE_ACCESS(world, 0).GetY(),
+				SAFE_ACCESS(world, 1).GetX(), SAFE_ACCESS(world, 1).GetY(),
+				SAFE_ACCESS(world, 2).GetX(), SAFE_ACCESS(world, 2).GetY(),
+				SAFE_ACCESS(world, 3).GetX(), SAFE_ACCESS(world, 3).GetY(),
+				64 - 128 * SAFE_ACCESS(drawRatioBulletGraphs, style) / 2,
+				64 - 128 * SAFE_ACCESS(drawRatioBulletGraphs, style) / 2,
+				128 * SAFE_ACCESS(drawRatioBulletGraphs, style),
+				128 * SAFE_ACCESS(drawRatioBulletGraphs, style),
+				SAFE_ACCESS(imgRes.BulletFrontGH, style),
 				TRUE);
 		}
-		else DrawRotaGraph(pos.GetX(), pos.GetY(), size, -showAngle, imgRes.BulletFrontGH[style], TRUE);
+		else DrawRotaGraph(pos.GetX(), pos.GetY(), size, -showAngle, SAFE_ACCESS(imgRes.BulletFrontGH, style), TRUE);
 		SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 		SetDrawMode(DX_DRAWMODE_NEAREST);
 	}
@@ -122,7 +122,7 @@ Bullet::ColliCheckObject() {
 
 int
 Bullet::CheckPosBounds() {
-	double limit = size * 128 * 2 * drawRatioBulletGraphs[style];
+	double limit = size * 128 * 2 * SAFE_ACCESS(drawRatioBulletGraphs, style);
 	if (pos.GetX() < BORDER_LEFT - limit) return 1;
 	if (pos.GetX() > BORDER_RIGHT + limit) return 1;
 	if (pos.GetY() < BORDER_UP - limit) return 1;
@@ -156,44 +156,44 @@ Bullet::MoveFunc() {
 void
 CreateBullet(const Vec2D& pos, const Color& color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID, const std::vector<std::any>& params) {
 	for (int i = 0; i < Bullets.size(); i++) {
-		if (!(Bullets[i].flags & IS_ALIVE)) {
-			Bullets[i].flags = IS_ALIVE | isCol * IS_COL;
-			Bullets[i].objType = OBJECT_BULLET;
-			Bullets[i].pos = pos;
-			Bullets[i].color = color;
-			Bullets[i].style = style;
-			Bullets[i].blend = blend;
-			Bullets[i].pal = pal;
-			Bullets[i].startColSize = startColSize;
-			Bullets[i].endColSize = endColSize;
-			Bullets[i].colSizeEaseType = colSizeEaseType;
-			Bullets[i].colSizeEaseTime = colSizeEaseTime;
-			Bullets[i].startSize = startSize;
-			Bullets[i].endSize = endSize;
-			Bullets[i].sizeEaseType = sizeEaseType;
-			Bullets[i].sizeEaseTime = sizeEaseTime;
+		if (!(SAFE_ACCESS(Bullets, i).flags & IS_ALIVE)) {
+			SAFE_ACCESS(Bullets, i).flags = IS_ALIVE | isCol * IS_COL;
+			SAFE_ACCESS(Bullets, i).objType = OBJECT_BULLET;
+			SAFE_ACCESS(Bullets, i).pos = pos;
+			SAFE_ACCESS(Bullets, i).color = color;
+			SAFE_ACCESS(Bullets, i).style = style;
+			SAFE_ACCESS(Bullets, i).blend = blend;
+			SAFE_ACCESS(Bullets, i).pal = pal;
+			SAFE_ACCESS(Bullets, i).startColSize = startColSize;
+			SAFE_ACCESS(Bullets, i).endColSize = endColSize;
+			SAFE_ACCESS(Bullets, i).colSizeEaseType = colSizeEaseType;
+			SAFE_ACCESS(Bullets, i).colSizeEaseTime = colSizeEaseTime;
+			SAFE_ACCESS(Bullets, i).startSize = startSize;
+			SAFE_ACCESS(Bullets, i).endSize = endSize;
+			SAFE_ACCESS(Bullets, i).sizeEaseType = sizeEaseType;
+			SAFE_ACCESS(Bullets, i).sizeEaseTime = sizeEaseTime;
 			if (aim == 1) {
-				Bullets[i].startAngle = Plyr.AimPlayer(pos) + startAngle;
-				Bullets[i].endAngle = Plyr.AimPlayer(pos) + endAngle;
+				SAFE_ACCESS(Bullets, i).startAngle = Plyr.AimPlayer(pos) + startAngle;
+				SAFE_ACCESS(Bullets, i).endAngle = Plyr.AimPlayer(pos) + endAngle;
 			}
 			else {
-				Bullets[i].startAngle = startAngle;
-				Bullets[i].endAngle = endAngle;
+				SAFE_ACCESS(Bullets, i).startAngle = startAngle;
+				SAFE_ACCESS(Bullets, i).endAngle = endAngle;
 			}
-			Bullets[i].angleEaseType = angleEaseType;
-			Bullets[i].angleEaseTime = angleEaseTime;
-			Bullets[i].startSpeed = startSpeed;
-			Bullets[i].endSpeed = endSpeed;
-			Bullets[i].speedEaseType = speedEaseType;
-			Bullets[i].speedEaseTime = speedEaseTime;
-			Bullets[i].popFrame = frame;
-			Bullets[i].length = 0;
-			Bullets[i].width = 0;
-			Bullets[i].frontNode = 0;
-			Bullets[i].currentNodeNum = 0;
-			Bullets[i].index = bIndex;
-			Bullets[i].ID = ID;
-			Bullets[i].params = params;
+			SAFE_ACCESS(Bullets, i).angleEaseType = angleEaseType;
+			SAFE_ACCESS(Bullets, i).angleEaseTime = angleEaseTime;
+			SAFE_ACCESS(Bullets, i).startSpeed = startSpeed;
+			SAFE_ACCESS(Bullets, i).endSpeed = endSpeed;
+			SAFE_ACCESS(Bullets, i).speedEaseType = speedEaseType;
+			SAFE_ACCESS(Bullets, i).speedEaseTime = speedEaseTime;
+			SAFE_ACCESS(Bullets, i).popFrame = frame;
+			SAFE_ACCESS(Bullets, i).length = 0;
+			SAFE_ACCESS(Bullets, i).width = 0;
+			SAFE_ACCESS(Bullets, i).frontNode = 0;
+			SAFE_ACCESS(Bullets, i).currentNodeNum = 0;
+			SAFE_ACCESS(Bullets, i).index = bIndex;
+			SAFE_ACCESS(Bullets, i).ID = ID;
+			SAFE_ACCESS(Bullets, i).params = params;
 
 			bIndex++;
 			return;

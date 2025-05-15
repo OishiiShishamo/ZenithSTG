@@ -1,5 +1,8 @@
-﻿#include "Vec2D.h"
+﻿#include "Global.h"
+
+#include "Vec2D.h"
 #include "MathTool.h"
+#include <array>
 #include <cmath>
 
 double
@@ -14,9 +17,9 @@ crossProduct(const Vec2D& v1, const Vec2D& v2, const Vec2D& v3) {
     __m128d mul1 = _mm_mul_pd(diff1, _mm_shuffle_pd(diff2, diff2, 0b01));
     __m128d result = _mm_sub_pd(mul1, _mm_shuffle_pd(mul1, mul1, 0b01));
 
-    alignas(16) double res[2];
-    _mm_store_pd(res, result);
-    return res[0];
+    alignas(16) std::array<double, 2> res;
+    _mm_store_pd(res.data(), result);
+    return SAFE_ACCESS(res, 0);
 }
 
 double
@@ -32,9 +35,9 @@ Range(const Vec2D& v1, const Vec2D& v2) {
 
     __m128d length = _mm_sqrt_pd(sum);
 
-    alignas(16) double len[2];
-    _mm_store_pd(len, length);
-    return len[0];
+    alignas(16) std::array<double, 2> len;
+    _mm_store_pd(len.data(), length);
+    return SAFE_ACCESS(len, 0);
 }
 
 Vec2D

@@ -11,7 +11,7 @@
 #include <emmintrin.h>
 #include <pmmintrin.h>
 
-class Vec2D {
+class alignas(16) Vec2D {
 public:
 	__m128d xy;
 
@@ -35,7 +35,7 @@ public:
 	Vec2D& operator/=(double scalar) { xy = _mm_div_pd(xy, _mm_set1_pd(scalar)); return *this; }
 	Vec2D& operator/=(const Vec2D& rhs) { xy = _mm_div_pd(xy, rhs.xy); return *this; }
 
-	bool operator==(const Vec2D& rhs) const { return (_mm_movemask_pd(_mm_cmpeq_pd(xy, rhs.xy)) == 0b11); }
+	bool operator==(const Vec2D& rhs) const { return (*this == rhs); }
 	bool operator!=(const Vec2D& rhs) const { return !(*this == rhs); }
 
 	double GetX() const { return _mm_cvtsd_f64(xy); }

@@ -16,10 +16,10 @@ void
 Enemy::ShowEnemy() {
 	if (!(flags & IS_ALIVE)) return;
 	if (blend == -1) {
-		SmartSetDrawBlendMode(defaultEnemyBlend[style], pal);
+		SmartSetDrawBlendMode(SAFE_ACCESS(defaultEnemyBlend, style), pal);
 		SetDrawBright(color.r, color.g, color.b);
 		SetDrawMode(DX_DRAWMODE_BILINEAR);
-		DrawRotaGraph(pos.GetX(), pos.GetY(), size, -showAngle, imgRes.EnemyGH[style], TRUE);
+		DrawRotaGraph(pos.GetX(), pos.GetY(), size, -showAngle, SAFE_ACCESS(imgRes.EnemyGH, style), TRUE);
 		SetDrawBright(255, 255, 255);
 		SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 		SetDrawMode(DX_DRAWMODE_NEAREST);
@@ -28,7 +28,7 @@ Enemy::ShowEnemy() {
 		SmartSetDrawBlendMode(blend, pal);
 		SetDrawBright(color.r, color.g, color.b);
 		SetDrawMode(DX_DRAWMODE_BILINEAR);
-		DrawRotaGraph(pos.GetX(), pos.GetY(), size, -showAngle, imgRes.EnemyGH[style], TRUE);
+		DrawRotaGraph(pos.GetX(), pos.GetY(), size, -showAngle, SAFE_ACCESS(imgRes.EnemyGH, style), TRUE);
 		SetDrawBright(255, 255, 255);
 		SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 		SetDrawMode(DX_DRAWMODE_NEAREST);
@@ -52,7 +52,7 @@ Enemy::ColliCheckObject() {
 
 int
 Enemy::CheckPosBounds() {
-	double limit = size * 128 * 2 * drawRatioEnemyGraphs[style];
+	double limit = size * 128 * 2 * SAFE_ACCESS(drawRatioEnemyGraphs, style);
 	if (pos.GetX() < BORDER_LEFT - limit) return 1;
 	if (pos.GetX() > BORDER_RIGHT + limit) return 1;
 	if (pos.GetY() < BORDER_UP - limit) return 1;
@@ -86,43 +86,43 @@ Enemy::MoveFunc() {
 void
 CreateEnemy(const Vec2D& pos, const Color& color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID, const std::vector<std::any>& params) {
 	for (int i = 0; i < Enemies.size(); i++) {
-		if (!(Enemies[i].flags & IS_ALIVE)) {
-			Enemies[i].flags = IS_ALIVE | isCol * IS_COL;
-			Enemies[i].objType = OBJECT_ENEMY;
-			Enemies[i].pos = pos;
-			Enemies[i].color = color;
-			Enemies[i].style = style;
-			Enemies[i].blend = blend;
-			Enemies[i].pal = pal;
-			Enemies[i].startColSize = startColSize;
-			Enemies[i].endColSize = endColSize;
-			Enemies[i].colSizeEaseType = colSizeEaseType;
-			Enemies[i].colSizeEaseTime = colSizeEaseTime;
-			Enemies[i].startSize = startSize;
-			Enemies[i].endSize = endSize;
-			Enemies[i].sizeEaseType = sizeEaseType;
-			Enemies[i].sizeEaseTime = sizeEaseTime;
+		if (!(SAFE_ACCESS(Enemies, i).flags & IS_ALIVE)) {
+			SAFE_ACCESS(Enemies, i).flags = IS_ALIVE | isCol * IS_COL;
+			SAFE_ACCESS(Enemies, i).objType = OBJECT_ENEMY;
+			SAFE_ACCESS(Enemies, i).pos = pos;
+			SAFE_ACCESS(Enemies, i).color = color;
+			SAFE_ACCESS(Enemies, i).style = style;
+			SAFE_ACCESS(Enemies, i).blend = blend;
+			SAFE_ACCESS(Enemies, i).pal = pal;
+			SAFE_ACCESS(Enemies, i).startColSize = startColSize;
+			SAFE_ACCESS(Enemies, i).endColSize = endColSize;
+			SAFE_ACCESS(Enemies, i).colSizeEaseType = colSizeEaseType;
+			SAFE_ACCESS(Enemies, i).colSizeEaseTime = colSizeEaseTime;
+			SAFE_ACCESS(Enemies, i).startSize = startSize;
+			SAFE_ACCESS(Enemies, i).endSize = endSize;
+			SAFE_ACCESS(Enemies, i).sizeEaseType = sizeEaseType;
+			SAFE_ACCESS(Enemies, i).sizeEaseTime = sizeEaseTime;
 			if (aim == 1) {
-				Enemies[i].startAngle = Plyr.AimPlayer(pos) + startAngle;
-				Enemies[i].endAngle = Plyr.AimPlayer(pos) + endAngle;
+				SAFE_ACCESS(Enemies, i).startAngle = Plyr.AimPlayer(pos) + startAngle;
+				SAFE_ACCESS(Enemies, i).endAngle = Plyr.AimPlayer(pos) + endAngle;
 			}
 			else {
-				Enemies[i].startAngle = startAngle;
-				Enemies[i].endAngle = endAngle;
+				SAFE_ACCESS(Enemies, i).startAngle = startAngle;
+				SAFE_ACCESS(Enemies, i).endAngle = endAngle;
 			}
-			Enemies[i].angleEaseType = angleEaseType;
-			Enemies[i].angleEaseTime = angleEaseTime;
-			Enemies[i].startSpeed = startSpeed;
-			Enemies[i].endSpeed = endSpeed;
-			Enemies[i].speedEaseType = speedEaseType;
-			Enemies[i].speedEaseTime = speedEaseTime;
-			Enemies[i].popFrame = frame;
-			Enemies[i].length = 0;
-			Enemies[i].width = 0;
-			Enemies[i].frontNode = 0;
-			Enemies[i].currentNodeNum = 0;
-			Enemies[i].ID = ID;
-			Enemies[i].params = params;
+			SAFE_ACCESS(Enemies, i).angleEaseType = angleEaseType;
+			SAFE_ACCESS(Enemies, i).angleEaseTime = angleEaseTime;
+			SAFE_ACCESS(Enemies, i).startSpeed = startSpeed;
+			SAFE_ACCESS(Enemies, i).endSpeed = endSpeed;
+			SAFE_ACCESS(Enemies, i).speedEaseType = speedEaseType;
+			SAFE_ACCESS(Enemies, i).speedEaseTime = speedEaseTime;
+			SAFE_ACCESS(Enemies, i).popFrame = frame;
+			SAFE_ACCESS(Enemies, i).length = 0;
+			SAFE_ACCESS(Enemies, i).width = 0;
+			SAFE_ACCESS(Enemies, i).frontNode = 0;
+			SAFE_ACCESS(Enemies, i).currentNodeNum = 0;
+			SAFE_ACCESS(Enemies, i).ID = ID;
+			SAFE_ACCESS(Enemies, i).params = params;
 			return;
 		}
 	}
@@ -214,9 +214,9 @@ CreateSmartEnemyGroup(objectParams param) {
 
 void
 MoveEnemies() {
-	for (int i = 0; i < Enemies.size(); i++) {
-		Enemies[i].UpdateObject(i);
-		Enemies[i].ShowEnemy();
+	for (auto& E : Enemies) {
+		E.UpdateObject();
+		E.ShowEnemy();
 	}
 	if (frame % 10 == 0) {
 		std::sort(Enemies.begin(), Enemies.end(), [](const Enemy& a, const Enemy& b) {

@@ -22,7 +22,7 @@ double screenRotaZ = 0;
 
 void
 mainLoop::Loop() {
-	Scripts[0].RunScript();
+	SAFE_ACCESS(Scripts, 0).RunScript();
 	SetDrawScreen(backgroundCanvas);
 	ClearDrawScreen();
 	BG.DrawBackground();

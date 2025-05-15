@@ -13,10 +13,10 @@ void
 playerShot::ShowPlayerShot() {
 	if (!(flags & IS_ALIVE)) return;
 	if (blend == -1) {
-		SmartSetDrawBlendMode(defaultPlayerShotBlend[style], pal);
+		SmartSetDrawBlendMode(SAFE_ACCESS(defaultPlayerShotBlend, style), pal);
 		SetDrawBright(color.r, color.g, color.b);
 		SetDrawMode(DX_DRAWMODE_BILINEAR);
-		DrawRotaGraph(pos.GetX(), pos.GetY(), size, -showAngle, imgRes.ShotGH[style], TRUE);
+		DrawRotaGraph(pos.GetX(), pos.GetY(), size, -showAngle, SAFE_ACCESS(imgRes.ShotGH, style), TRUE);
 		SetDrawBright(255, 255, 255);
 		SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 		SetDrawMode(DX_DRAWMODE_NEAREST);
@@ -25,7 +25,7 @@ playerShot::ShowPlayerShot() {
 		SmartSetDrawBlendMode(blend, pal);
 		SetDrawBright(color.r, color.g, color.b);
 		SetDrawMode(DX_DRAWMODE_BILINEAR);
-		DrawRotaGraph(pos.GetX(), pos.GetY(), size, -showAngle, imgRes.ShotGH[style], TRUE);
+		DrawRotaGraph(pos.GetX(), pos.GetY(), size, -showAngle, SAFE_ACCESS(imgRes.ShotGH, style), TRUE);
 		SetDrawBright(255, 255, 255);
 		SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 		SetDrawMode(DX_DRAWMODE_NEAREST);
@@ -46,7 +46,7 @@ playerShot::ColliCheckObject() {
 
 int
 playerShot::CheckPosBounds() {
-	double limit = size * 128 * 2 * drawRatioPlayerShotGraphs[style];
+	double limit = size * 128 * 2 * SAFE_ACCESS(drawRatioPlayerShotGraphs, style);
 	if (pos.GetX() < BORDER_LEFT - limit) return 1;
 	if (pos.GetX() > BORDER_RIGHT + limit) return 1;
 	if (pos.GetY() < BORDER_UP - limit) return 1;
@@ -80,37 +80,37 @@ playerShot::MoveFunc() {
 void
 CreatePlayerShot(const Vec2D& pos, const Color& color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID, const std::vector<std::any>& params) {
 	for (int i = 0; i < plyrShots.size(); i++) {
-		if (!(plyrShots[i].flags & IS_ALIVE)) {
-			plyrShots[i].flags = IS_ALIVE | isCol * IS_COL;
-			plyrShots[i].objType = OBJECT_PLAYER_SHOT;
-			plyrShots[i].pos = pos;
-			plyrShots[i].color = color;
-			plyrShots[i].style = style;
-			plyrShots[i].blend = blend;
-			plyrShots[i].pal = pal;
-			plyrShots[i].startColSize = startColSize;
-			plyrShots[i].endColSize = endColSize;
-			plyrShots[i].colSizeEaseType = colSizeEaseType;
-			plyrShots[i].colSizeEaseTime = colSizeEaseTime;
-			plyrShots[i].startSize = startSize;
-			plyrShots[i].endSize = endSize;
-			plyrShots[i].sizeEaseType = sizeEaseType;
-			plyrShots[i].sizeEaseTime = sizeEaseTime;
-			plyrShots[i].startAngle = startAngle;
-			plyrShots[i].endAngle = endAngle;
-			plyrShots[i].angleEaseType = angleEaseType;
-			plyrShots[i].angleEaseTime = angleEaseTime;
-			plyrShots[i].startSpeed = startSpeed;
-			plyrShots[i].endSpeed = endSpeed;
-			plyrShots[i].speedEaseType = speedEaseType;
-			plyrShots[i].speedEaseTime = speedEaseTime;
-			plyrShots[i].popFrame = frame;
-			plyrShots[i].length = 0;
-			plyrShots[i].width = 0;
-			plyrShots[i].frontNode = 0;
-			plyrShots[i].currentNodeNum = 0;
-			plyrShots[i].ID = 0;
-			plyrShots[i].params = params;
+		if (!(SAFE_ACCESS(plyrShots, i).flags & IS_ALIVE)) {
+			SAFE_ACCESS(plyrShots, i).flags = IS_ALIVE | isCol * IS_COL;
+			SAFE_ACCESS(plyrShots, i).objType = OBJECT_PLAYER_SHOT;
+			SAFE_ACCESS(plyrShots, i).pos = pos;
+			SAFE_ACCESS(plyrShots, i).color = color;
+			SAFE_ACCESS(plyrShots, i).style = style;
+			SAFE_ACCESS(plyrShots, i).blend = blend;
+			SAFE_ACCESS(plyrShots, i).pal = pal;
+			SAFE_ACCESS(plyrShots, i).startColSize = startColSize;
+			SAFE_ACCESS(plyrShots, i).endColSize = endColSize;
+			SAFE_ACCESS(plyrShots, i).colSizeEaseType = colSizeEaseType;
+			SAFE_ACCESS(plyrShots, i).colSizeEaseTime = colSizeEaseTime;
+			SAFE_ACCESS(plyrShots, i).startSize = startSize;
+			SAFE_ACCESS(plyrShots, i).endSize = endSize;
+			SAFE_ACCESS(plyrShots, i).sizeEaseType = sizeEaseType;
+			SAFE_ACCESS(plyrShots, i).sizeEaseTime = sizeEaseTime;
+			SAFE_ACCESS(plyrShots, i).startAngle = startAngle;
+			SAFE_ACCESS(plyrShots, i).endAngle = endAngle;
+			SAFE_ACCESS(plyrShots, i).angleEaseType = angleEaseType;
+			SAFE_ACCESS(plyrShots, i).angleEaseTime = angleEaseTime;
+			SAFE_ACCESS(plyrShots, i).startSpeed = startSpeed;
+			SAFE_ACCESS(plyrShots, i).endSpeed = endSpeed;
+			SAFE_ACCESS(plyrShots, i).speedEaseType = speedEaseType;
+			SAFE_ACCESS(plyrShots, i).speedEaseTime = speedEaseTime;
+			SAFE_ACCESS(plyrShots, i).popFrame = frame;
+			SAFE_ACCESS(plyrShots, i).length = 0;
+			SAFE_ACCESS(plyrShots, i).width = 0;
+			SAFE_ACCESS(plyrShots, i).frontNode = 0;
+			SAFE_ACCESS(plyrShots, i).currentNodeNum = 0;
+			SAFE_ACCESS(plyrShots, i).ID = 0;
+			SAFE_ACCESS(plyrShots, i).params = params;
 			return;
 		}
 	}
@@ -127,6 +127,6 @@ MovePlayerShots() {
 		std::sort(plyrShots.begin(), plyrShots.end(), [](const playerShot& a, const playerShot& b) {
 			return a.popFrame < b.popFrame;
 			});
-		//std::erase_if(plyrShots, [](const playerShot& ps) { return !ps.alive; });
+		//std::erase_if(plyrShots, , )(const playerShot& ps) { return !ps.alive; });
 	}
 }

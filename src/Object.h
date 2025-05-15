@@ -60,7 +60,7 @@ struct objectParams {
 	int sizeEaseType = 0;
 	int sizeEaseTime = 0;
 	int way = 1;
-	double spread = TAU;
+	double spread = tau;
 	int aim = 0;
 	double startAngle = 0;
 	double endAngle = 0;

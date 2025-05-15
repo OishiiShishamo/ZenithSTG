@@ -47,7 +47,7 @@ Player::MovePlayer() {
 void
 Player::ShowPlayer() {
 	SmartSetDrawBlendMode(BLEND_NOBLEND, 255);
-	DrawRotaGraph(pos.GetX(), pos.GetY(), 1.0f, 0, imgRes.PlayerGH[0], 1);
+	DrawRotaGraph(pos.GetX(), pos.GetY(), 1.0f, 0, SAFE_ACCESS(imgRes.PlayerGH, 0), 1);
 	if (isColShow == 1) {
 		SmartSetDrawBlendMode(BLEND_NOBLEND, 255);
 		DrawCircle(pos.GetX(), pos.GetY(), colSize, GetColor(255, 255, 255), 1);

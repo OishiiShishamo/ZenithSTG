@@ -175,6 +175,7 @@
     <ClInclude Include="Easing.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="FPS.h" />
+    <ClInclude Include="Global.h" />
     <ClInclude Include="Init.h" />
     <ClInclude Include="Laser.h" />
     <ClInclude Include="Logging.h" />

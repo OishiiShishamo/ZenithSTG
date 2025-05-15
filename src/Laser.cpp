@@ -13,43 +13,43 @@ void
 Laser::ShowLaser() {
 	if (!(flags & IS_ALIVE)) return;
 	double halfW = width / 2;
-	Vec2D local[4] = {
-		{-halfW, 0},
-		{-halfW, length},
-		{ halfW, length},
-		{ halfW, 0}
+	std::array<Vec2D, 4> local = {
+		Vec2D(-halfW, 0),
+		Vec2D(-halfW, length),
+		Vec2D(halfW, length),
+		Vec2D(halfW, 0)
 	};
-	Vec2D world[4];
+	std::array<Vec2D, 4> world;
 	for (int i = 0; i < 4; ++i) {
-		Vec2D rot = RotatePoint(local[i], showAngle + PI / 2);
-		world[i] = pos + rot;
+		Vec2D rot = RotatePoint(SAFE_ACCESS(local, i), showAngle + pi / 2);
+		SAFE_ACCESS(world, i) = pos + rot;
 	}
 	if (blend == -1) {
-		SmartSetDrawBlendMode(defaultBulletBlend[style], pal);
+		SmartSetDrawBlendMode(SAFE_ACCESS(defaultBulletBlend, style), pal);
 		SetDrawBright(color.r, color.g, color.b);
 		SetDrawMode(DX_DRAWMODE_NEAREST);
 		DrawRectModiGraph(
-			world[0].GetX(), world[0].GetY(),
-			world[1].GetX(), world[1].GetY(),
-			world[2].GetX(), world[2].GetY(),
-			world[3].GetX(), world[3].GetY(),
-			64 - 128 * drawRatioBulletGraphs[style] / 2,
-			64 - 128 * drawRatioBulletGraphs[style] / 2,
-			128 * drawRatioBulletGraphs[style],
-			128 * drawRatioBulletGraphs[style],
-			imgRes.BulletBackGH[style],
+			SAFE_ACCESS(world, 0).GetX(), SAFE_ACCESS(world, 0).GetY(),
+			SAFE_ACCESS(world, 1).GetX(), SAFE_ACCESS(world, 1).GetY(),
+			SAFE_ACCESS(world, 2).GetX(), SAFE_ACCESS(world, 2).GetY(),
+			SAFE_ACCESS(world, 3).GetX(), SAFE_ACCESS(world, 3).GetY(),
+			64 - 128 * SAFE_ACCESS(drawRatioBulletGraphs, style) / 2,
+			64 - 128 * SAFE_ACCESS(drawRatioBulletGraphs, style) / 2,
+			128 * SAFE_ACCESS(drawRatioBulletGraphs, style),
+			128 * SAFE_ACCESS(drawRatioBulletGraphs, style),
+			SAFE_ACCESS(imgRes.BulletBackGH, style),
 			TRUE);
 		SetDrawBright(255, 255, 255);
 		DrawRectModiGraph(
-			world[0].GetX(), world[0].GetY(),
-			world[1].GetX(), world[1].GetY(),
-			world[2].GetX(), world[2].GetY(),
-			world[3].GetX(), world[3].GetY(),
-			64 - 128 * drawRatioBulletGraphs[style] / 2,
-			64 - 128 * drawRatioBulletGraphs[style] / 2,
-			128 * drawRatioBulletGraphs[style],
-			128 * drawRatioBulletGraphs[style],
-			imgRes.BulletFrontGH[style],
+			SAFE_ACCESS(world, 0).GetX(), SAFE_ACCESS(world, 0).GetY(),
+			SAFE_ACCESS(world, 1).GetX(), SAFE_ACCESS(world, 1).GetY(),
+			SAFE_ACCESS(world, 2).GetX(), SAFE_ACCESS(world, 2).GetY(),
+			SAFE_ACCESS(world, 3).GetX(), SAFE_ACCESS(world, 3).GetY(),
+			64 - 128 * SAFE_ACCESS(drawRatioBulletGraphs, style) / 2,
+			64 - 128 * SAFE_ACCESS(drawRatioBulletGraphs, style) / 2,
+			128 * SAFE_ACCESS(drawRatioBulletGraphs, style),
+			128 * SAFE_ACCESS(drawRatioBulletGraphs, style),
+			SAFE_ACCESS(imgRes.BulletFrontGH, style),
 			TRUE);
 		SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 		SetDrawMode(DX_DRAWMODE_NEAREST);
@@ -59,27 +59,27 @@ Laser::ShowLaser() {
 		SetDrawBright(color.r, color.g, color.b);
 		SetDrawMode(DX_DRAWMODE_NEAREST);
 		DrawRectModiGraph(
-			world[0].GetX(), world[0].GetY(),
-			world[1].GetX(), world[1].GetY(),
-			world[2].GetX(), world[2].GetY(),
-			world[3].GetX(), world[3].GetY(),
-			64 - 128 * drawRatioBulletGraphs[style] / 2,
-			64 - 128 * drawRatioBulletGraphs[style] / 2,
-			128 * drawRatioBulletGraphs[style],
-			128 * drawRatioBulletGraphs[style],
-			imgRes.BulletBackGH[style],
+			SAFE_ACCESS(world, 0).GetX(), SAFE_ACCESS(world, 0).GetY(),
+			SAFE_ACCESS(world, 1).GetX(), SAFE_ACCESS(world, 1).GetY(),
+			SAFE_ACCESS(world, 2).GetX(), SAFE_ACCESS(world, 2).GetY(),
+			SAFE_ACCESS(world, 3).GetX(), SAFE_ACCESS(world, 3).GetY(),
+			64 - 128 * SAFE_ACCESS(drawRatioBulletGraphs, style) / 2,
+			64 - 128 * SAFE_ACCESS(drawRatioBulletGraphs, style) / 2,
+			128 * SAFE_ACCESS(drawRatioBulletGraphs, style),
+			128 * SAFE_ACCESS(drawRatioBulletGraphs, style),
+			SAFE_ACCESS(imgRes.BulletBackGH, style),
 			TRUE);
 		SetDrawBright(255, 255, 255);
 		DrawRectModiGraph(
-			world[0].GetX(), world[0].GetY(),
-			world[1].GetX(), world[1].GetY(),
-			world[2].GetX(), world[2].GetY(),
-			world[3].GetX(), world[3].GetY(),
-			64 - 128 * drawRatioBulletGraphs[style] / 2,
-			64 - 128 * drawRatioBulletGraphs[style] / 2,
-			128 * drawRatioBulletGraphs[style],
-			128 * drawRatioBulletGraphs[style],
-			imgRes.BulletFrontGH[style],
+			SAFE_ACCESS(world, 0).GetX(), SAFE_ACCESS(world, 0).GetY(),
+			SAFE_ACCESS(world, 1).GetX(), SAFE_ACCESS(world, 1).GetY(),
+			SAFE_ACCESS(world, 2).GetX(), SAFE_ACCESS(world, 2).GetY(),
+			SAFE_ACCESS(world, 3).GetX(), SAFE_ACCESS(world, 3).GetY(),
+			64 - 128 * SAFE_ACCESS(drawRatioBulletGraphs, style) / 2,
+			64 - 128 * SAFE_ACCESS(drawRatioBulletGraphs, style) / 2,
+			128 * SAFE_ACCESS(drawRatioBulletGraphs, style),
+			128 * SAFE_ACCESS(drawRatioBulletGraphs, style),
+			SAFE_ACCESS(imgRes.BulletFrontGH, style),
 			TRUE);
 		SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 		SetDrawMode(DX_DRAWMODE_NEAREST);
@@ -101,23 +101,23 @@ Laser::ColliCheckObject() {
 		return;
 	}
 	double halfW = colSize / 2;
-	Vec2D local[4] = {
-		{-halfW, 0},
-		{-halfW, length},
-		{ halfW, length},
-		{ halfW, 0}
+	std::array<Vec2D, 4> local = {
+		Vec2D(-halfW, 0),
+		Vec2D(-halfW, length),
+		Vec2D(halfW, length),
+		Vec2D(halfW, 0)
 	};
-	Vec2D world[4];
+	std::array<Vec2D, 4> world;
 	for (int i = 0; i < 4; ++i) {
-		Vec2D rot = RotatePoint(local[i], showAngle + PI / 2);
-		world[i] = pos + rot;
+		Vec2D rot = RotatePoint(SAFE_ACCESS(local, i), showAngle + pi / 2);
+		SAFE_ACCESS(world, i) = pos + rot;
 	}
 	if (
 		colPointAndRect(Plyr.pos,
-			world[0],
-			world[1],
-			world[2],
-			world[3])) {
+			SAFE_ACCESS(world, 0),
+			SAFE_ACCESS(world, 1),
+			SAFE_ACCESS(world, 2),
+			SAFE_ACCESS(world, 3))) {
 		Plyr.HitPlayer();
 		flags ^= IS_ALIVE;
 	}
@@ -125,7 +125,7 @@ Laser::ColliCheckObject() {
 
 int
 Laser::CheckPosBounds() {
-	double limit = size * 128 * 2 * drawRatioBulletGraphs[style];
+	double limit = size * 128 * 2 * SAFE_ACCESS(drawRatioBulletGraphs, style);
 	if (pos.GetX() < BORDER_LEFT - limit) return 1;
 	if (pos.GetX() > BORDER_RIGHT + limit) return 1;
 	if (pos.GetY() < BORDER_UP - limit) return 1;
@@ -159,43 +159,43 @@ Laser::MoveFunc() {
 void
 CreateLaser(const Vec2D& pos, double length, double width, const Color& color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID, const std::vector<std::any>& params) {
 	for (int i = 0; i < Lasers.size(); i++) {
-		if (!(Lasers[i].flags & IS_ALIVE)) {
-			Lasers[i].flags = IS_ALIVE | isCol * IS_COL;
-			Lasers[i].objType = OBJECT_LASER;
-			Lasers[i].pos = pos;
-			Lasers[i].color = color;
-			Lasers[i].style = style;
-			Lasers[i].blend = blend;
-			Lasers[i].pal = pal;
-			Lasers[i].startColSize = startColSize;
-			Lasers[i].endColSize = endColSize;
-			Lasers[i].colSizeEaseType = colSizeEaseType;
-			Lasers[i].colSizeEaseTime = colSizeEaseTime;
-			Lasers[i].startSize = startSize;
-			Lasers[i].endSize = endSize;
-			Lasers[i].sizeEaseType = sizeEaseType;
-			Lasers[i].sizeEaseTime = sizeEaseTime;
+		if (!(SAFE_ACCESS(Lasers, i).flags & IS_ALIVE)) {
+			SAFE_ACCESS(Lasers, i).flags = IS_ALIVE | isCol * IS_COL;
+			SAFE_ACCESS(Lasers, i).objType = OBJECT_LASER;
+			SAFE_ACCESS(Lasers, i).pos = pos;
+			SAFE_ACCESS(Lasers, i).color = color;
+			SAFE_ACCESS(Lasers, i).style = style;
+			SAFE_ACCESS(Lasers, i).blend = blend;
+			SAFE_ACCESS(Lasers, i).pal = pal;
+			SAFE_ACCESS(Lasers, i).startColSize = startColSize;
+			SAFE_ACCESS(Lasers, i).endColSize = endColSize;
+			SAFE_ACCESS(Lasers, i).colSizeEaseType = colSizeEaseType;
+			SAFE_ACCESS(Lasers, i).colSizeEaseTime = colSizeEaseTime;
+			SAFE_ACCESS(Lasers, i).startSize = startSize;
+			SAFE_ACCESS(Lasers, i).endSize = endSize;
+			SAFE_ACCESS(Lasers, i).sizeEaseType = sizeEaseType;
+			SAFE_ACCESS(Lasers, i).sizeEaseTime = sizeEaseTime;
 			if (aim == 1) {
-				Lasers[i].startAngle = Plyr.AimPlayer(pos) + startAngle;
-				Lasers[i].endAngle = Plyr.AimPlayer(pos) + endAngle;
+				SAFE_ACCESS(Lasers, i).startAngle = Plyr.AimPlayer(pos) + startAngle;
+				SAFE_ACCESS(Lasers, i).endAngle = Plyr.AimPlayer(pos) + endAngle;
 			}
 			else {
-				Lasers[i].startAngle = startAngle;
-				Lasers[i].endAngle = endAngle;
+				SAFE_ACCESS(Lasers, i).startAngle = startAngle;
+				SAFE_ACCESS(Lasers, i).endAngle = endAngle;
 			}
-			Lasers[i].angleEaseType = angleEaseType;
-			Lasers[i].angleEaseTime = angleEaseTime;
-			Lasers[i].startSpeed = startSpeed;
-			Lasers[i].endSpeed = endSpeed;
-			Lasers[i].speedEaseType = speedEaseType;
-			Lasers[i].speedEaseTime = speedEaseTime;
-			Lasers[i].popFrame = frame;
-			Lasers[i].length = length;
-			Lasers[i].width = width;
-			Lasers[i].frontNode = 0;
-			Lasers[i].currentNodeNum = 0;
-			Lasers[i].ID = 0;
-			Lasers[i].params = params;
+			SAFE_ACCESS(Lasers, i).angleEaseType = angleEaseType;
+			SAFE_ACCESS(Lasers, i).angleEaseTime = angleEaseTime;
+			SAFE_ACCESS(Lasers, i).startSpeed = startSpeed;
+			SAFE_ACCESS(Lasers, i).endSpeed = endSpeed;
+			SAFE_ACCESS(Lasers, i).speedEaseType = speedEaseType;
+			SAFE_ACCESS(Lasers, i).speedEaseTime = speedEaseTime;
+			SAFE_ACCESS(Lasers, i).popFrame = frame;
+			SAFE_ACCESS(Lasers, i).length = length;
+			SAFE_ACCESS(Lasers, i).width = width;
+			SAFE_ACCESS(Lasers, i).frontNode = 0;
+			SAFE_ACCESS(Lasers, i).currentNodeNum = 0;
+			SAFE_ACCESS(Lasers, i).ID = 0;
+			SAFE_ACCESS(Lasers, i).params = params;
 			return;
 		}
 	}

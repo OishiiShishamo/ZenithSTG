@@ -10,6 +10,7 @@ public:
 	void FaceGHLoad();
 	void PlayerGHLoad();
 	void ShotGHLoad();
+	void FontLoad();
 };
 
 #endif

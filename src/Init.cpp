@@ -15,6 +15,8 @@ resLoad res;
 imageRes imgRes;
 Property Properties;
 
+std::array<int, fontTypeNum> fontTypes;
+
 int numThreads = std::thread::hardware_concurrency();
 
 void
@@ -69,26 +71,26 @@ Init() {
 	fpsHistory.fill(fps);
 
 	defaultBulletBlend.fill(BLEND_NOBLEND);
-	defaultBulletBlend[B_LIGHT] = BLEND_ADD;
-	defaultBulletBlend[B_BIG] = BLEND_ADD;
+	SAFE_ACCESS(defaultBulletBlend, B_LIGHT) = BLEND_ADD;
+	SAFE_ACCESS(defaultBulletBlend, B_BIG) = BLEND_ADD;
 
 	defaultEnemyBlend.fill(BLEND_NOBLEND);
 
 	defaultPlayerShotBlend.fill(BLEND_NOBLEND);
 
 	drawRatioBulletGraphs.fill(1.0f);
-	drawRatioBulletGraphs[B_NORMAL] = 0.15625f;
-	drawRatioBulletGraphs[B_MIDIAM] = 0.3125f;
-	drawRatioBulletGraphs[B_UROKO] = 0.15625f;
-	drawRatioBulletGraphs[B_LASER] = 0.0625f;
-	drawRatioBulletGraphs[B_LIGHT] = 0.25f;
-	drawRatioBulletGraphs[B_BIG] = 0.75f;
+	SAFE_ACCESS(drawRatioBulletGraphs, B_NORMAL) = 0.15625f;
+	SAFE_ACCESS(drawRatioBulletGraphs, B_MIDIAM) = 0.3125f;
+	SAFE_ACCESS(drawRatioBulletGraphs, B_UROKO) = 0.15625f;
+	SAFE_ACCESS(drawRatioBulletGraphs, B_LASER) = 0.0625f;
+	SAFE_ACCESS(drawRatioBulletGraphs, B_LIGHT) = 0.25f;
+	SAFE_ACCESS(drawRatioBulletGraphs, B_BIG) = 0.75f;
 
 	drawRatioEnemyGraphs.fill(1.0f);
-	drawRatioEnemyGraphs[E_NORMAL] = 0.5f;
+	SAFE_ACCESS(drawRatioEnemyGraphs, E_NORMAL) = 0.5f;
 
 	drawRatioPlayerShotGraphs.fill(1.0f);
-	drawRatioPlayerShotGraphs[PS_NORMAL] = 0.5f;
+	SAFE_ACCESS(drawRatioPlayerShotGraphs, PS_NORMAL) = 0.5f;
 }
 
 void
@@ -99,6 +101,7 @@ ResInit() {
 	res.FaceGHLoad();
 	res.PlayerGHLoad();
 	res.ShotGHLoad();
+	res.FontLoad();
 
 	backgroundCanvas = MakeScreen(1920, 1080, 1);
 	bulletCanvas = MakeScreen(1920, 1080, 1);
