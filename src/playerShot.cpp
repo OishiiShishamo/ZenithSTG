@@ -5,9 +5,9 @@
 #include "Player.h"
 #include "playerShot.h"
 
-std::array<playerShot, MAX_PLAYER_SHOT> plyrShots;
-std::array<int, 128> defaultPlayerShotBlend;
-std::array<double, 128> drawRatioPlayerShotGraphs;
+std::unique_ptr<std::array<playerShot, MAX_PLAYER_SHOT>> plyrShots = std::make_unique<std::array<playerShot, MAX_PLAYER_SHOT>>();
+std::array<int, GRAPHIC_HANDLER_NUM> defaultPlayerShotBlend;
+std::array<double, GRAPHIC_HANDLER_NUM> drawRatioPlayerShotGraphs;
 
 void
 playerShot::ShowPlayerShot() {
@@ -34,7 +34,7 @@ playerShot::ShowPlayerShot() {
 		if (flags & IS_COL) {
 			SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 			DrawCircle(pos.GetX(), pos.GetY(), colSize, GetColor(255, 255, 255), 1);
-			DrawFormatString(pos.GetX(), pos.GetY(), GetColor(GetColorHSV(std::fmod(frame, 360), 1, 1).r, GetColorHSV(std::fmod(frame, 360), 1, 1).g, GetColorHSV(std::fmod(frame, 360), 1, 1).b), "%f", colSize);
+			DrawFormatString(pos.GetX(), pos.GetY(), GetColor(GetColorHSV(std::fmod(t, 360), 1, 1).r, GetColorHSV(std::fmod(t, 360), 1, 1).g, GetColorHSV(std::fmod(t, 360), 1, 1).b), "%f", colSize);
 		}
 	}
 }
@@ -79,38 +79,38 @@ playerShot::MoveFunc() {
 
 void
 CreatePlayerShot(const Vec2D& pos, const Color& color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID, const std::vector<std::any>& params) {
-	for (int i = 0; i < plyrShots.size(); i++) {
-		if (!(SAFE_ACCESS(plyrShots, i).flags & IS_ALIVE)) {
-			SAFE_ACCESS(plyrShots, i).flags = IS_ALIVE | isCol * IS_COL;
-			SAFE_ACCESS(plyrShots, i).objType = OBJECT_PLAYER_SHOT;
-			SAFE_ACCESS(plyrShots, i).pos = pos;
-			SAFE_ACCESS(plyrShots, i).color = color;
-			SAFE_ACCESS(plyrShots, i).style = style;
-			SAFE_ACCESS(plyrShots, i).blend = blend;
-			SAFE_ACCESS(plyrShots, i).pal = pal;
-			SAFE_ACCESS(plyrShots, i).startColSize = startColSize;
-			SAFE_ACCESS(plyrShots, i).endColSize = endColSize;
-			SAFE_ACCESS(plyrShots, i).colSizeEaseType = colSizeEaseType;
-			SAFE_ACCESS(plyrShots, i).colSizeEaseTime = colSizeEaseTime;
-			SAFE_ACCESS(plyrShots, i).startSize = startSize;
-			SAFE_ACCESS(plyrShots, i).endSize = endSize;
-			SAFE_ACCESS(plyrShots, i).sizeEaseType = sizeEaseType;
-			SAFE_ACCESS(plyrShots, i).sizeEaseTime = sizeEaseTime;
-			SAFE_ACCESS(plyrShots, i).startAngle = startAngle;
-			SAFE_ACCESS(plyrShots, i).endAngle = endAngle;
-			SAFE_ACCESS(plyrShots, i).angleEaseType = angleEaseType;
-			SAFE_ACCESS(plyrShots, i).angleEaseTime = angleEaseTime;
-			SAFE_ACCESS(plyrShots, i).startSpeed = startSpeed;
-			SAFE_ACCESS(plyrShots, i).endSpeed = endSpeed;
-			SAFE_ACCESS(plyrShots, i).speedEaseType = speedEaseType;
-			SAFE_ACCESS(plyrShots, i).speedEaseTime = speedEaseTime;
-			SAFE_ACCESS(plyrShots, i).popFrame = frame;
-			SAFE_ACCESS(plyrShots, i).length = 0;
-			SAFE_ACCESS(plyrShots, i).width = 0;
-			SAFE_ACCESS(plyrShots, i).frontNode = 0;
-			SAFE_ACCESS(plyrShots, i).currentNodeNum = 0;
-			SAFE_ACCESS(plyrShots, i).ID = 0;
-			SAFE_ACCESS(plyrShots, i).params = params;
+	for (int i = 0; i < plyrShots->size(); i++) {
+		if (!(SAFE_PTR_ACCESS(plyrShots, i).flags & IS_ALIVE)) {
+			SAFE_PTR_ACCESS(plyrShots, i).flags = IS_ALIVE | isCol * IS_COL;
+			SAFE_PTR_ACCESS(plyrShots, i).objType = OBJECT_PLAYER_SHOT;
+			SAFE_PTR_ACCESS(plyrShots, i).pos = pos;
+			SAFE_PTR_ACCESS(plyrShots, i).color = color;
+			SAFE_PTR_ACCESS(plyrShots, i).style = style;
+			SAFE_PTR_ACCESS(plyrShots, i).blend = blend;
+			SAFE_PTR_ACCESS(plyrShots, i).pal = pal;
+			SAFE_PTR_ACCESS(plyrShots, i).startColSize = startColSize;
+			SAFE_PTR_ACCESS(plyrShots, i).endColSize = endColSize;
+			SAFE_PTR_ACCESS(plyrShots, i).colSizeEaseType = colSizeEaseType;
+			SAFE_PTR_ACCESS(plyrShots, i).colSizeEaseTime = colSizeEaseTime;
+			SAFE_PTR_ACCESS(plyrShots, i).startSize = startSize;
+			SAFE_PTR_ACCESS(plyrShots, i).endSize = endSize;
+			SAFE_PTR_ACCESS(plyrShots, i).sizeEaseType = sizeEaseType;
+			SAFE_PTR_ACCESS(plyrShots, i).sizeEaseTime = sizeEaseTime;
+			SAFE_PTR_ACCESS(plyrShots, i).startAngle = startAngle;
+			SAFE_PTR_ACCESS(plyrShots, i).endAngle = endAngle;
+			SAFE_PTR_ACCESS(plyrShots, i).angleEaseType = angleEaseType;
+			SAFE_PTR_ACCESS(plyrShots, i).angleEaseTime = angleEaseTime;
+			SAFE_PTR_ACCESS(plyrShots, i).startSpeed = startSpeed;
+			SAFE_PTR_ACCESS(plyrShots, i).endSpeed = endSpeed;
+			SAFE_PTR_ACCESS(plyrShots, i).speedEaseType = speedEaseType;
+			SAFE_PTR_ACCESS(plyrShots, i).speedEaseTime = speedEaseTime;
+			SAFE_PTR_ACCESS(plyrShots, i).popT = t;
+			SAFE_PTR_ACCESS(plyrShots, i).length = 0;
+			SAFE_PTR_ACCESS(plyrShots, i).width = 0;
+			SAFE_PTR_ACCESS(plyrShots, i).frontNode = 0;
+			SAFE_PTR_ACCESS(plyrShots, i).currentNodeNum = 0;
+			SAFE_PTR_ACCESS(plyrShots, i).ID = 0;
+			SAFE_PTR_ACCESS(plyrShots, i).params = params;
 			return;
 		}
 	}
@@ -119,13 +119,13 @@ CreatePlayerShot(const Vec2D& pos, const Color& color, int style, int blend, int
 
 void
 MovePlayerShots() {
-	for (auto& PS : plyrShots) {
+	for (auto& PS : (*plyrShots)) {
 		PS.UpdateObject();
 		PS.ShowPlayerShot();
 	}
-	if (frame % 10 == 0) {
-		std::sort(plyrShots.begin(), plyrShots.end(), [](const playerShot& a, const playerShot& b) {
-			return a.popFrame < b.popFrame;
+	if (t % 10 == 0) {
+		std::sort(plyrShots->begin(), plyrShots->end(), [](const playerShot& a, const playerShot& b) {
+			return a.popT < b.popT;
 			});
 		//std::erase_if(plyrShots, , )(const playerShot& ps) { return !ps.alive; });
 	}

@@ -19,19 +19,22 @@
 //TODO: リファクタリングする
 //TODO: フォルダ構成を真面目にやる
 
+std::random_device rng;
+
 int elapsedFrame = 0;
 int currentBlendMode = BLEND_NOBLEND;
 int currentBlendPal = 255;
+
+double RandTMP = 0;
+
+long long score = 0;
+long long graze = 0;
 
 int
 WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 	Init();
 	if (DxLib_Init() == -1)	return -1;
 	apply_window_size();
-	if (Properties.onerror == 1) {
-		PRINT("ERROR: 画面のサイズに非対応");
-		Logger("画面のサイズに非対応", logType::LOG_WARNING);
-	}
 	switch (Properties.windowSize) {
 	case 0:
 		SetWindowSize(1280, 720);
@@ -54,9 +57,9 @@ WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, in
 	timeMng.StartTimer();
 	while (1) {
 		timeMng.ElapsedTime();
-		elapsedFrame = timeMng.targetFrame - frame;
-		while (frame < timeMng.targetFrame) {
-			frame++;
+		elapsedFrame = timeMng.targetFrame - t;
+		while (t < timeMng.targetFrame) {
+			t++;
 			Loop.Loop();
 		}
 		if (elapsedFrame == 0) {

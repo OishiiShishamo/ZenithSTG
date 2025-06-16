@@ -99,8 +99,8 @@ Color GetColorHSV(double H, double S, double V) {
 }
 
 Color
-GamingColor(double mul) {
-	return GetColorHSV(std::fmod(frame * mul, 360), 1, 1);
+GamingColor(int offset, double mul) {
+	return GetColorHSV(std::fmod((t + offset) * mul, 360), 1, 1);
 }
 
 void

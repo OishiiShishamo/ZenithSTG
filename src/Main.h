@@ -13,6 +13,7 @@ class Laser;
 class Enemy;
 class Player;
 class playerShot;
+class Effect;
 class mainLoop;
 class Vec2D;
 class Script;
@@ -34,18 +35,19 @@ class Background;
 #include <thread>
 #include <tuple>
 #include <type_traits>
+#include <inttypes.h>
+#include <random>
+#include <stdint.h>
 #include <vector>
 #include <pmmintrin.h>
 #include <emmintrin.h>
 
 #include "Global.h"
+#include "Params.h"
 
 #include "Collision.h"
-#include "Property.h"
 #include "Utility.h"
 #include "Vec2D.h"
-
-using namespace std;
 
 #define PRINT(...) printf(__VA_ARGS__)	
 
@@ -60,22 +62,24 @@ using namespace std;
 
 #define STAGE_NUM 1
 
-#define MAX_BULLET 8192
-#define MAX_LASER 8192
-#define MAX_ENEMY 8192
-#define MAX_PLAYER_SHOT 8192
-
 #define FPS_HISTORY_LENGTH 120
 
+#define GRAPHIC_HANDLER_NUM 256
+#define SOUND_BGM_HANDLER_NUM 256
+#define SOUND_EFFECT_HANDLER_NUM 256
+#define SOUND_VOICES 32
+
 struct imageRes {
-	std::vector<int> UIGH;
-	std::vector<int> BulletBackGH;
-	std::vector<int> BulletFrontGH;
-	std::vector<int> EnemyGH;
-	std::vector<int> FaceGH;
-	std::vector<int> PlayerGH;
-	std::vector<int> ShotGH;
-	std::vector<int> EtcGH;
+	std::array<int, GRAPHIC_HANDLER_NUM> UIGH;
+	std::array<int, GRAPHIC_HANDLER_NUM> BulletBackGH;
+	std::array<int, GRAPHIC_HANDLER_NUM> BulletFrontGH;
+	std::array<int, GRAPHIC_HANDLER_NUM> EffectBackGH;
+	std::array<int, GRAPHIC_HANDLER_NUM> EffectFrontGH;
+	std::array<int, GRAPHIC_HANDLER_NUM> EnemyGH;
+	std::array<int, GRAPHIC_HANDLER_NUM> FaceGH;
+	std::array<int, GRAPHIC_HANDLER_NUM> PlayerGH;
+	std::array<int, GRAPHIC_HANDLER_NUM> ShotGH;
+	std::array<int, GRAPHIC_HANDLER_NUM> EtcGH;
 };
 
 extern imageRes imgRes;
@@ -86,25 +90,35 @@ extern mainLoop Loop;
 
 extern std::array<Script, STAGE_NUM> Scripts;
 
-extern std::array<Bullet, MAX_BULLET> Bullets;
-extern std::array<Laser, MAX_LASER> Lasers;
-extern std::array<Enemy, MAX_ENEMY> Enemies;
-extern std::array<playerShot, MAX_PLAYER_SHOT> plyrShots;
+extern std::unique_ptr<std::array<Bullet, MAX_BULLET>> Bullets;
+extern std::unique_ptr<std::array<Laser, MAX_LASER>> Lasers;
+extern std::unique_ptr<std::array<Enemy, MAX_ENEMY>> Enemies;
+extern std::unique_ptr<std::array<playerShot, MAX_PLAYER_SHOT>> plyrShots;
+extern std::array<Effect, MAX_EFFECT> Effects;
+
+extern std::random_device rng;
 
 extern int numThreads;
 
-extern long long frame;
+extern long long t;
 extern long long fps;
 extern int currentBlendMode;
 extern int currentBlendPal;
 extern std::array<double, FPS_HISTORY_LENGTH> fpsHistory;
-extern std::array<int, 128> defaultBulletBlend;
-extern std::array<int, 128> defaultEnemyBlend;
-extern std::array<int, 128> defaultPlayerShotBlend;
-extern std::array<double, 128> drawRatioBulletGraphs;
-extern std::array<double, 128> drawRatioEnemyGraphs;
-extern std::array<double, 128> drawRatioPlayerShotGraphs;
+extern std::array<int, GRAPHIC_HANDLER_NUM> defaultBulletBlend;
+extern std::array<int, GRAPHIC_HANDLER_NUM> defaultEnemyBlend;
+extern std::array<int, GRAPHIC_HANDLER_NUM> defaultPlayerShotBlend;
+extern std::array<int, GRAPHIC_HANDLER_NUM> defaultEffectBlend;
+extern std::array<double, GRAPHIC_HANDLER_NUM> drawRatioBulletGraphs;
+extern std::array<double, GRAPHIC_HANDLER_NUM> drawRatioEnemyGraphs;
+extern std::array<double, GRAPHIC_HANDLER_NUM> drawRatioPlayerShotGraphs;
+extern std::array<double, GRAPHIC_HANDLER_NUM> drawRatioEffectGraphs;
 extern int fpsHistoryIndex;
+
+extern double RandTMP;
+
+extern long long score;
+extern long long graze;
 
 extern double screenSizeRate;
 extern double screenRotaX;

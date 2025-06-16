@@ -9,7 +9,7 @@ public:
 	std::string title = "ZenithSTG";
 	int windowSize = 2;
 	int isWindow = 1;
-	int onerror = false;
+	long long hiScore = 0;
 };
 
 #endif

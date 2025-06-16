@@ -9,6 +9,7 @@ extern int playerShotCanvas;
 extern int bombCanvas;
 extern int effectCanvas;
 extern int screenCanvas;
+extern int UICanvas;
 
 extern int isWindowSplit;
 

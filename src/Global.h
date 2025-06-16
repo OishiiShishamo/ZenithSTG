@@ -4,14 +4,19 @@
 
 #include <cmath>
 
-#include "DxLib.h"
 #include "Debug.h"
+#include "DxLib.h"
 #include "Logging.h"
+#include "Params.h"
+#include "Property.h"
+#include "Score.h"
 
 #ifdef NDEBUG
 #define SAFE_ACCESS(array, index) (array[index])
+#define SAFE_PTR_ACCESS(array, index) ((*array)[index])
 #else
 #define SAFE_ACCESS(array, index) (array.at(index))
+#define SAFE_PTR_ACCESS(array, index) (array->at(index))
 #endif
 
 inline constexpr double pi = 3.1415926535897932384626433832795;
@@ -40,6 +45,7 @@ enum objectType {
 	OBJECT_BENT_LASER = 2,
 	OBJECT_ENEMY = 3,
 	OBJECT_PLAYER_SHOT = 4,
+	OBJECT_EFFECT = 5,
 };
 
 enum bulletType {
@@ -51,8 +57,13 @@ enum bulletType {
 	B_BIG = 5,
 };
 
+enum effectType {
+	EF_LIGHT = 0,
+	EF_STAR = 1,
+};
+
 enum enemyType {
-	E_NORMAL = 0,
+	EN_NORMAL = 0,
 };
 
 enum playerShotType {
@@ -72,6 +83,12 @@ enum easeType {
 enum fontType {
 	UI_0 = 0,
 	UI_1 = 1,
+};
+
+enum aimType {
+	AIM_FALSE = 0,
+	AIM_TRUE = 1,
+	AIM_TRUE_OFFSET = 2,
 };
 
 extern std::array<int, fontTypeNum> fontTypes;

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -147,6 +147,7 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Easing.cpp" />
+    <ClCompile Include="Effect.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="FPS.cpp" />
     <ClCompile Include="Init.cpp" />
@@ -159,9 +160,12 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="playerShot.cpp" />
     <ClCompile Include="resLoad.cpp" />
+    <ClCompile Include="Score.cpp" />
     <ClCompile Include="screenDraw.cpp" />
     <ClCompile Include="Script.cpp" />
+    <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Time.cpp" />
+    <ClCompile Include="UI.cpp" />
     <ClCompile Include="Utility.cpp" />
     <ClCompile Include="Vec2D.cpp" />
     <ClCompile Include="Vec3D.cpp" />
@@ -173,6 +177,7 @@
     <ClInclude Include="Color.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="Easing.h" />
+    <ClInclude Include="Effect.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="FPS.h" />
     <ClInclude Include="Global.h" />
@@ -183,13 +188,17 @@
     <ClInclude Include="mainLoop.h" />
     <ClInclude Include="mathTool.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="Params.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="playerShot.h" />
     <ClInclude Include="Property.h" />
     <ClInclude Include="resLoad.h" />
+    <ClInclude Include="Score.h" />
     <ClInclude Include="screenDraw.h" />
     <ClInclude Include="Script.h" />
+    <ClInclude Include="Sound.h" />
     <ClInclude Include="Time.h" />
+    <ClInclude Include="UI.h" />
     <ClInclude Include="Utility.h" />
     <ClInclude Include="Vec2D.h" />
     <ClInclude Include="Vec3D.h" />

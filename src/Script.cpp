@@ -13,7 +13,7 @@ Script::RunScript() {
 	switch (ID) {
 	case 0: {
 		//TESTDANMAKUKUKUKUKUKUKUKUKUKUKU
-		if (frame % 1 == 0) {
+		if (t % 1 == 0) {
 			CreateSmartLaserGroup(objectParams{
 				.pos = CENTER,
 				.length = 128,
@@ -24,8 +24,10 @@ Script::RunScript() {
 				.pal = 255,
 				.startColSize = 16,
 				.endColSize = 16,
+				.startSize = 1,
+				.endSize = 1,
 				.way = 8,
-				.startAngle = Rad(std::sin(Rad(frame)) * 360),
+				.startAngle = Rad(std::sin(Rad(t)) * 360),
 				.angleEaseType = EASEINCUBIC,
 				.angleEaseTime = 60,
 				.startSpeed = -8,

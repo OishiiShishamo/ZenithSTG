@@ -4,6 +4,7 @@
 #include "Bullet.h"
 #include "Color.h"
 #include "Easing.h"
+#include "Effect.h"
 #include "Enemy.h"
 #include "Init.h"
 #include "Laser.h"
@@ -13,6 +14,7 @@
 #include "screenDraw.h"
 #include "Script.h"
 #include "Time.h"
+#include "UI.h"
 
 Color gamingColor(0, 0, 0);
 double screenSizeRate = 1.0f;
@@ -37,6 +39,10 @@ mainLoop::Loop() {
 	MoveEnemies();
 	MoveBullets();
 	MoveLasers();
+	//MoveEffects();
+	SetDrawScreen(UICanvas);
+	ClearDrawScreen();
+	DrawUI();
 	SetDrawScreen(screenCanvas);
 	ClearDrawScreen();
 	ScreenDraw();
@@ -44,8 +50,8 @@ mainLoop::Loop() {
 		SaveDrawScreen(0, 0, 1920, 1080, "ScreenShot.bmp");
 	}
 	if (GetAsyncKeyState(VK_F4) & 1) {
-		if (frame > frontChangeWindowSizeFrame + 15) {
-			frontChangeWindowSizeFrame = frame;
+		if (t > frontChangeWindowSizeFrame + 15) {
+			frontChangeWindowSizeFrame = t;
 			Properties.windowSize++;
 			if (Properties.windowSize > 2) Properties.windowSize = 0;
 			switch (Properties.windowSize) {
@@ -69,16 +75,16 @@ mainLoop::Loop() {
 		}
 	}
 	if (GetAsyncKeyState(VK_F11) & 1) {
-		if (frame > frontChangeWindowFrame + 15) {
-			frontChangeWindowFrame = frame;
+		if (t > frontChangeWindowFrame + 15) {
+			frontChangeWindowFrame = t;
 			Properties.isWindow++;
 			if (Properties.isWindow > 1) Properties.isWindow = 0;
 			ChangeWindowMode(Properties.isWindow);
 		}
 	}
 	if (GetAsyncKeyState(VK_RETURN) && GetAsyncKeyState(VK_MENU)) {
-		if (frame > frontChangeWindowFrame + 15) {
-			frontChangeWindowFrame = frame;
+		if (t > frontChangeWindowFrame + 15) {
+			frontChangeWindowFrame = t;
 			Properties.isWindow++;
 			if (Properties.isWindow > 1) Properties.isWindow = 0;
 			ChangeWindowMode(Properties.isWindow);

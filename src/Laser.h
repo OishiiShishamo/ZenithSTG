@@ -13,17 +13,20 @@
 class Laser : public Object {
 public:
 	Laser() = default;
-	Laser(int alive, int isCol, const Vec2D& pos, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startShowAngle, double endShowAngle, int showAngleEaseType, int showAngleEaseTime, Color color, int style, int blend, int pal, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int popFrame, double length, double width, int ID = 0, const std::vector<std::any>& params = {})
-		: Object(alive, isCol, OBJECT_LASER, pos, startAngle, endAngle, angleEaseType, angleEaseTime, startShowAngle, endShowAngle, showAngleEaseType, showAngleEaseTime, color, style, blend, pal, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime, popFrame, length, width, 0, 0, 0, 0, 0, ID, params) {
+	Laser(int alive, int isCol, const Vec2D& pos, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startShowAngle, double endShowAngle, int showAngleEaseType, int showAngleEaseTime, Color color, int style, int blend, int pal, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int popT, double length, double width, int ID = 0, const std::vector<std::any>& params = {})
+		: Object(alive, isCol, OBJECT_LASER, pos, startAngle, endAngle, angleEaseType, angleEaseTime, startShowAngle, endShowAngle, showAngleEaseType, showAngleEaseTime, color, style, blend, pal, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime, popT, length, width, 0, 0, 0, 0, 0, ID, params) {
 	}
 
 	/**
 	* @brief レーザーの描画 / Laser Drawing.
 	*/
 	void ShowLaser();
-	void MoveFunc() override;
 private:
+	void MoveFunc() override;
 	void ColliCheckObject() override;
+#if GRAZE_ENABLED == 1
+	void GrazeObject() override;
+#endif
 	int CheckPosBounds() override;
 	
 };

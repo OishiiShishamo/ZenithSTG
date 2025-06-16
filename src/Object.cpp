@@ -12,11 +12,12 @@ Object::UpdateObject(long long Index) {
 
 	vec = AngleToVec2D(angle);
 	MoveFunc();
+	GrazeObject();
 }
 
 void
 Object::UpdateEase() {
-	double elapsedFrame = (static_cast<double>(frame - popFrame));
+	double elapsedFrame = (static_cast<double>(t - popT));
 	if (angleEaseTime == 0) {
 		angle = endAngle;
 	}
@@ -66,6 +67,10 @@ void
 Object::ColliCheckObject() {
 }
 
+void
+Object::GrazeObject() {
+}
+
 int
 Object::CheckPosBounds() {
 	return 0;
@@ -77,7 +82,7 @@ Object::CheckCollisionAndBounds() {
 		ColliCheckObject();
 	}
 	if (CheckPosBounds()) {
-		flags ^= IS_ALIVE;
+		flags &= ~IS_ALIVE;
 		return 1;
 	}
 	return 0;
@@ -97,7 +102,7 @@ Object::MoveFunc() {
 					ColliCheckObject();
 				}
 				if (CheckPosBounds()) {
-					flags ^= IS_ALIVE;
+					flags &= ~IS_ALIVE;
 					break;
 				}
 			}
@@ -107,7 +112,7 @@ Object::MoveFunc() {
 			if (flags & IS_COL) {
 				ColliCheckObject();
 			}
-			if (CheckPosBounds()) flags ^= IS_ALIVE;
+			if (CheckPosBounds()) flags &= ~IS_ALIVE;
 		}
 	}
 	}

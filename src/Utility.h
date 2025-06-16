@@ -26,7 +26,7 @@ void DrawRotaGraph4(int x, int y, double rate, double anglex, double angley, dou
 
 /**
 * @brief HSVで色を生成 / HSV Color Generation.
-* 
+*
 * @param 色相 / Hue
 * @param 彩度 / Saturation
 * @param 明度 / Value
@@ -35,14 +35,14 @@ Color GetColorHSV(double H, double S, double V);
 
 /**
 * @brief HSVを使用したゲーミングカラーの生成 / HSV used Gaming Color Generation.
-* 
+*
 * @param mul 色の変化速度の倍率 / Color change speed multiplier
 */
-Color GamingColor(double mul = 1);
+Color GamingColor(int offset = 0, double mul = 1);
 
 /**
 * @brief 余計なブレンドモードの切り替えを防いだブレンドモードの切り替え / Switching blend modes preventing unnecessary blend mode switching
-* 
+*
 * @param BlendMode ブレンドモード / Blend Mode
 * @param Pal ブレンドのパラメータ / Blend Param
 */
@@ -50,11 +50,15 @@ void SmartSetDrawBlendMode(int BlendMode, int Pal);
 
 /**
 * @brief 角度からラジアンに変換 / Angle to Radian.
-* 
+*
 * @param angle 角度 / Angle
 */
 double Rad(double angle);
 void apply_window_size();
 int rnd();
+
+inline int isRangeValid(int index, int max, int min = 0) {
+	return ((index >= min) && (index < max)) == 0;
+}
 
 #endif

@@ -51,6 +51,7 @@ struct objectParams {
 	int pal = 255;
 	int isCol = 1;
 	int isAlignedAngle = 1;
+	int isGraze = 1;
 	double startColSize = 0;
 	double endColSize = 0;
 	int colSizeEaseType = 0;
@@ -86,6 +87,7 @@ enum objectFlags {
 	IS_ALIVE = 1 << 0,
 	IS_COL = 1 << 1,
 	IS_HEAD = 1 << 2,
+	IS_GRAZE = 1 << 3,
 };
 
 /**
@@ -94,7 +96,7 @@ enum objectFlags {
 */
 class Object {
 public:
-	std::uint8_t flags = 0b00000010;
+	std::uint8_t flags = 0b00001010;
 	int objType = 0;
 	Vec2D pos = Vec2D(0, 0);
 	Vec2D vec = Vec2D(0, 0);
@@ -112,7 +114,7 @@ public:
 	Color color = Color(0, 0, 0);
 	int style = 0;
 	int blend = 0;
-	int pal = 255;
+	double pal = 255;
 	double startColSize = 0;
 	double endColSize = 0;
 	int colSizeEaseType = 0;
@@ -128,7 +130,7 @@ public:
 	int speedEaseType = 0;
 	int speedEaseTime = 0;
 	double speed = 0.0f;
-	long long popFrame = 0;
+	long long popT = 0;
 	double angleT = 0, speedT = 0, colSizeT = 0, sizeT = 0;
 	double length = 0;
 	double width = 0;
@@ -139,9 +141,9 @@ public:
 	long long index = 0;
 	std::vector<std::any> params;
 	Object() = default;
-	Object(std::uint8_t alive, std::uint8_t isCol, int objType, const Vec2D& pos, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startShowAngle, double endShowAngle, int showAngleEaseType, int showAngleEaseTime, const Color& color, int style, int blend, int pal, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int popFrame = 0, double length = 0, double width = 0, long long frontNode = 0, long long nextNode = 0, int currentNodeNum = 0, int isHead = 0, long long index = 0, int ID = 0, const std::vector<std::any>& params = {})
-		: objType(objType), pos(pos), startAngle(startAngle), endAngle(endAngle), angleEaseType(angleEaseType), angleEaseTime(angleEaseTime), startShowAngle(startShowAngle), endShowAngle(endShowAngle), showAngleEaseType(showAngleEaseType), showAngleEaseTime(showAngleEaseTime), color(color), style(style), blend(blend), pal(pal), startColSize(startColSize), endColSize(endColSize), colSizeEaseType(colSizeEaseType), colSizeEaseTime(colSizeEaseTime), colSize(startColSize), startSize(startSize), endSize(endSize), sizeEaseType(sizeEaseType), sizeEaseTime(sizeEaseTime), size(1.0f), startSpeed(startSpeed), endSpeed(endSpeed), speedEaseType(speedEaseType), speedEaseTime(speedEaseTime), popFrame(popFrame), length(length), width(width), frontNode(frontNode), nextNode(nextNode), currentNodeNum(currentNodeNum), index(index), ID(ID), params(params) {
-		flags |= IS_ALIVE * alive | IS_COL * isCol | IS_HEAD * isHead;
+	Object(std::uint8_t alive, std::uint8_t isCol, int objType, const Vec2D& pos, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startShowAngle, double endShowAngle, int showAngleEaseType, int showAngleEaseTime, const Color& color, int style, int blend, int pal, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int popT = 0, double length = 0, double width = 0, long long frontNode = 0, long long nextNode = 0, int currentNodeNum = 0, int isHead = 0, long long index = 0, int ID = 0, const std::vector<std::any>& params = {}, int isGraze = 1)
+		: objType(objType), pos(pos), startAngle(startAngle), endAngle(endAngle), angleEaseType(angleEaseType), angleEaseTime(angleEaseTime), startShowAngle(startShowAngle), endShowAngle(endShowAngle), showAngleEaseType(showAngleEaseType), showAngleEaseTime(showAngleEaseTime), color(color), style(style), blend(blend), pal(pal), startColSize(startColSize), endColSize(endColSize), colSizeEaseType(colSizeEaseType), colSizeEaseTime(colSizeEaseTime), colSize(startColSize), startSize(startSize), endSize(endSize), sizeEaseType(sizeEaseType), sizeEaseTime(sizeEaseTime), size(1.0f), startSpeed(startSpeed), endSpeed(endSpeed), speedEaseType(speedEaseType), speedEaseTime(speedEaseTime), popT(popT), length(length), width(width), frontNode(frontNode), nextNode(nextNode), currentNodeNum(currentNodeNum), index(index), ID(ID), params(params) {
+		flags |= IS_ALIVE * alive | IS_COL * isCol | IS_HEAD * isHead | IS_GRAZE * isGraze;
 	}
 
 	/**
@@ -149,12 +151,12 @@ public:
 	*
 	* @param Index 現状用途なし / No current use
 	*/
-	void UpdateObject(long long Index = 0);
+	virtual void UpdateObject(long long Index = 0);
 
 	/**
 	* @brief イージングによるパラメータの更新。 / Updating parameters by easing.
 	*/
-	void UpdateEase();
+	virtual void UpdateEase();
 
 	/**
 	* @brief オブジェクトの移動。 / Moving objects.
@@ -167,6 +169,11 @@ public:
 	* @brief オブジェクトの当たり判定 / Collision check.
 	*/
 	virtual void ColliCheckObject();
+
+	/**
+	* @brief オブジェクトの掠り判定とスコアの上昇処理 / Processing of object snatching judgment and score increase.
+	*/
+	virtual void GrazeObject();
 
 	/**
 	* @brief 枠外判定 / Out-of-bounds check.

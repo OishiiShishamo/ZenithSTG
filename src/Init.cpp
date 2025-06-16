@@ -43,6 +43,13 @@ Init() {
 	else {
 		Properties.isWindow = 1;
 	}
+	if (boost::optional<long long> hiScore = pt.get_optional<long long>("root.hiScore")) {
+		Properties.hiScore = hiScore.get();
+		if (Properties.hiScore < 0 || Properties.hiScore > 1) Properties.hiScore = 1;
+	}
+	else {
+		Properties.hiScore = 0;
+	}
 
 	SetOutApplicationLogValidFlag(FALSE);
 	ChangeWindowMode(Properties.isWindow);
@@ -74,6 +81,10 @@ Init() {
 	SAFE_ACCESS(defaultBulletBlend, B_LIGHT) = BLEND_ADD;
 	SAFE_ACCESS(defaultBulletBlend, B_BIG) = BLEND_ADD;
 
+	defaultEffectBlend.fill(BLEND_NOBLEND);
+	SAFE_ACCESS(defaultEffectBlend, EF_LIGHT) = BLEND_ADD;
+	SAFE_ACCESS(defaultEffectBlend, EF_STAR) = BLEND_ADD;
+
 	defaultEnemyBlend.fill(BLEND_NOBLEND);
 
 	defaultPlayerShotBlend.fill(BLEND_NOBLEND);
@@ -86,8 +97,12 @@ Init() {
 	SAFE_ACCESS(drawRatioBulletGraphs, B_LIGHT) = 0.25f;
 	SAFE_ACCESS(drawRatioBulletGraphs, B_BIG) = 0.75f;
 
+	drawRatioEffectGraphs.fill(1.0f);
+	SAFE_ACCESS(drawRatioEffectGraphs, EF_LIGHT) = 0.25f;
+	SAFE_ACCESS(drawRatioEffectGraphs, EF_STAR) = 0.125f;
+
 	drawRatioEnemyGraphs.fill(1.0f);
-	SAFE_ACCESS(drawRatioEnemyGraphs, E_NORMAL) = 0.5f;
+	SAFE_ACCESS(drawRatioEnemyGraphs, EN_NORMAL) = 0.5f;
 
 	drawRatioPlayerShotGraphs.fill(1.0f);
 	SAFE_ACCESS(drawRatioPlayerShotGraphs, PS_NORMAL) = 0.5f;
@@ -97,6 +112,7 @@ void
 ResInit() {
 	res.UIGHLoad();
 	res.BulletGHLoad();
+	res.EffectGHLoad();
 	res.EnemyGHLoad();
 	res.FaceGHLoad();
 	res.PlayerGHLoad();
@@ -110,4 +126,5 @@ ResInit() {
 	bombCanvas = MakeScreen(1920, 1080, 1);
 	effectCanvas = MakeScreen(1920, 1080, 1);
 	screenCanvas = MakeScreen(1920, 1080, 1);
+	UICanvas = MakeScreen(1920, 1080, 1);
 }
