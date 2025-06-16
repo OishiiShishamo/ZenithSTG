@@ -97,7 +97,7 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>../DxLib;../boost/include/boost-1_84</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../DxLib;../boost/include/boost-1_84;$(SolutionDir)Src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
