@@ -1,5 +1,5 @@
 /**
-* @file MathTool.h
+* @file mathTool.h
 * @brief 数学系関数まとめ / Math Functions.
 * @auther ZenithSTG Dev Team
 */

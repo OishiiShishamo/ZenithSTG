@@ -1,7 +1,7 @@
 ﻿#include "Global.h"
 
 #include "Vec2D.h"
-#include "MathTool.h"
+#include "mathTool.h"
 #include <array>
 #include <cmath>
 
