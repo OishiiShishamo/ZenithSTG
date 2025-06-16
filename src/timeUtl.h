@@ -1,6 +1,6 @@
 ﻿#pragma once
-#ifndef TIME_H
-#define TIME_H
+#ifndef TIMEUTL_H
+#define TIMEUTL_H
 
 class Time {
 public:
