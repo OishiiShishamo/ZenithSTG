@@ -5,7 +5,7 @@
 #include "Easing.h"
 #include "Laser.h"
 #include "Player.h"
-#include "Time.h"
+#include "timeUtl.h"
 #include "Effect.h"
 
 std::unique_ptr<std::array<Laser, MAX_LASER>> Lasers = std::make_unique< std::array<Laser, MAX_LASER>>();

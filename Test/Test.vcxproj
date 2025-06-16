@@ -24,7 +24,7 @@
     <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
     <ConfigurationType>Application</ConfigurationType>
     <PlatformToolset>v143</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -90,7 +90,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PreprocessorDefinitions>X64;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -111,6 +111,32 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\Background.cpp" />
+    <ClCompile Include="..\src\Bullet.cpp" />
+    <ClCompile Include="..\src\Collision.cpp" />
+    <ClCompile Include="..\src\Easing.cpp" />
+    <ClCompile Include="..\src\Effect.cpp" />
+    <ClCompile Include="..\src\Enemy.cpp" />
+    <ClCompile Include="..\src\FPS.cpp" />
+    <ClCompile Include="..\src\Init.cpp" />
+    <ClCompile Include="..\src\Laser.cpp" />
+    <ClCompile Include="..\src\Logging.cpp" />
+    <ClCompile Include="..\src\Main.cpp" />
+    <ClCompile Include="..\src\mainLoop.cpp" />
+    <ClCompile Include="..\src\mathTool.cpp" />
+    <ClCompile Include="..\src\Object.cpp" />
+    <ClCompile Include="..\src\Player.cpp" />
+    <ClCompile Include="..\src\playerShot.cpp" />
+    <ClCompile Include="..\src\resLoad.cpp" />
+    <ClCompile Include="..\src\Score.cpp" />
+    <ClCompile Include="..\src\screenDraw.cpp" />
+    <ClCompile Include="..\src\Script.cpp" />
+    <ClCompile Include="..\src\Sound.cpp" />
+    <ClCompile Include="..\src\timeUtl.cpp" />
+    <ClCompile Include="..\src\UI.cpp" />
+    <ClCompile Include="..\src\Utility.cpp" />
+    <ClCompile Include="..\src\Vec2D.cpp" />
+    <ClCompile Include="..\src\Vec3D.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

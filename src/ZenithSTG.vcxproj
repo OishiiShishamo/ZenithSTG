@@ -164,7 +164,7 @@
     <ClCompile Include="screenDraw.cpp" />
     <ClCompile Include="Script.cpp" />
     <ClCompile Include="Sound.cpp" />
-    <ClCompile Include="Time.cpp" />
+    <ClCompile Include="timeUtl.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Utility.cpp" />
     <ClCompile Include="Vec2D.cpp" />
@@ -197,7 +197,7 @@
     <ClInclude Include="screenDraw.h" />
     <ClInclude Include="Script.h" />
     <ClInclude Include="Sound.h" />
-    <ClInclude Include="Time.h" />
+    <ClInclude Include="timeUtl.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="Utility.h" />
     <ClInclude Include="Vec2D.h" />

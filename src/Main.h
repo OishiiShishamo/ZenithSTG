@@ -4,7 +4,7 @@
 
 struct imageRes;
 
-class Time;
+class timeUtl;
 class Property;
 class Color;
 class Object;

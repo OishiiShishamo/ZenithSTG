@@ -13,7 +13,7 @@
 #include "playerShot.h"
 #include "resLoad.h"
 #include "Script.h"
-#include "Time.h"
+#include "timeUtl.h"
 #include "Utility.h"
 
 //TODO: リファクタリングする

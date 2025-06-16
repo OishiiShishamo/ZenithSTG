@@ -13,7 +13,7 @@
 #include "playerShot.h"
 #include "screenDraw.h"
 #include "Script.h"
-#include "Time.h"
+#include "timeUtl.h"
 #include "UI.h"
 
 Color gamingColor(0, 0, 0);

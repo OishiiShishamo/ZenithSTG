@@ -2,7 +2,7 @@
 #ifndef TIMEUTL_H
 #define TIMEUTL_H
 
-class Time {
+class timeUtl {
 public:
 	long long targetFrame = 0;
 	std::chrono::nanoseconds frontFrameTime;
@@ -18,6 +18,6 @@ public:
 	void FrameWait();
 };
 
-extern Time timeMng;
+extern timeUtl timeMng;
 
 #endif
