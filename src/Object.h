@@ -168,7 +168,7 @@ public:
 	/**
 	* @brief オブジェクトの当たり判定 / Collision check.
 	*/
-	virtual void ColliCheckObject();
+	virtual int ColliCheckObject();
 
 	/**
 	* @brief オブジェクトの掠り判定とスコアの上昇処理 / Processing of object snatching judgment and score increase.

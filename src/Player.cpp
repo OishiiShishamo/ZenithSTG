@@ -64,12 +64,13 @@ Player::Shot() {
 
 void
 Player::HitPlayer() {
-	if (protectTime < 0) {
-		protectTime = Protect;
-		pos = P_DEFAULT_POS;
-		Life -= 1;
-		Bomb = defaultBomb;
+	if (protectTime > 0) {
+		return;
 	}
+	protectTime = Protect;
+	//pos = P_DEFAULT_POS;
+	Life -= 1;
+	Bomb = defaultBomb;
 }
 
 void

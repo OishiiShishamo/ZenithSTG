@@ -39,9 +39,9 @@ playerShot::ShowPlayerShot() {
 	}
 }
 
-void
+int
 playerShot::ColliCheckObject() {
-	return;
+	return 0;
 }
 
 int
@@ -77,7 +77,7 @@ playerShot::MoveFunc() {
 	}
 }
 
-void
+int
 CreatePlayerShot(const Vec2D& pos, const Color& color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID, const std::vector<std::any>& params) {
 	for (int i = 0; i < plyrShots->size(); i++) {
 		if (!(SAFE_PTR_ACCESS(plyrShots, i).flags & IS_ALIVE)) {
@@ -111,10 +111,10 @@ CreatePlayerShot(const Vec2D& pos, const Color& color, int style, int blend, int
 			SAFE_PTR_ACCESS(plyrShots, i).currentNodeNum = 0;
 			SAFE_PTR_ACCESS(plyrShots, i).ID = 0;
 			SAFE_PTR_ACCESS(plyrShots, i).params = params;
-			return;
+			return 0;
 		}
 	}
-	//plyrShots.emplace_back(1, isCol, pos, startAngle, endAngle, angleEaseType, angleEaseTime, 0, 0, 0, 0, color, style, blend, pal, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime, frame, ID, params);
+	return 1;
 }
 
 void

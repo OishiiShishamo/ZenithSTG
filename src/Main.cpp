@@ -27,8 +27,8 @@ int currentBlendPal = 255;
 
 double RandTMP = 0;
 
-long long score = 0;
-long long graze = 0;
+std::atomic<long long> score = 0;
+std::atomic<long long> graze = 0;
 
 int
 WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {

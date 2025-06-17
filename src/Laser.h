@@ -23,7 +23,7 @@ public:
 	void ShowLaser();
 private:
 	void MoveFunc() override;
-	void ColliCheckObject() override;
+	int ColliCheckObject() override;
 #if GRAZE_ENABLED == 1
 	void GrazeObject() override;
 #endif
@@ -36,7 +36,7 @@ private:
 *
 * @see objectParams 引数の詳細はこちらを参照 / See here for details of the argument.
 */
-void CreateLaser(const Vec2D& pos, double length, double width, const Color& color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID = 0, const std::vector<std::any>& params = {});
+int CreateLaser(const Vec2D& pos, double length, double width, const Color& color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID = 0, const std::vector<std::any>& params = {});
 
 /**
 * @brief 複数のレーザーの生成 / Create Multiple Laser.

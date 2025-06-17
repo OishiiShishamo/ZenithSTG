@@ -19,7 +19,10 @@ class Vec2D;
 class Script;
 class Background;
 
+#define NOMINMAX
+
 #include <algorithm>
+#include <atomic>
 #include <any>
 #include <array>
 #include <chrono>
@@ -117,8 +120,8 @@ extern int fpsHistoryIndex;
 
 extern double RandTMP;
 
-extern long long score;
-extern long long graze;
+extern std::atomic<long long> score;
+extern std::atomic<long long> graze;
 
 extern double screenSizeRate;
 extern double screenRotaX;

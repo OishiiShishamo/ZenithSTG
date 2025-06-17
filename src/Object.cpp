@@ -11,8 +11,8 @@ Object::UpdateObject(long long Index) {
 	UpdateEase();
 
 	vec = AngleToVec2D(angle);
-	MoveFunc();
 	GrazeObject();
+	MoveFunc();
 }
 
 void
@@ -63,8 +63,9 @@ Object::MoveObject(double speed) {
 	pos += vec * speed;
 }
 
-void
+int
 Object::ColliCheckObject() {
+	return 0;
 }
 
 void
@@ -79,7 +80,10 @@ Object::CheckPosBounds() {
 int
 Object::CheckCollisionAndBounds() {
 	if (flags & IS_COL) {
-		ColliCheckObject();
+		if (ColliCheckObject()) {
+			flags &= ~IS_ALIVE;
+			return 1;
+		}
 	}
 	if (CheckPosBounds()) {
 		flags &= ~IS_ALIVE;

@@ -14,19 +14,19 @@ Script::RunScript() {
 	case 0: {
 		//TESTDANMAKUKUKUKUKUKUKUKUKUKUKU
 		if (t % 1 == 0) {
-			CreateSmartLaserGroup(objectParams{
+			CreateSmartBulletGroup(objectParams{
 				.pos = CENTER,
 				.length = 128,
 				.width = 32,
 				.color = GamingColor(),
-				.style = B_LASER,
+				.style = B_UROKO,
 				.blend = BLEND_ADD,
 				.pal = 255,
 				.startColSize = 16,
 				.endColSize = 16,
 				.startSize = 1,
 				.endSize = 1,
-				.way = 8,
+				.way = 128,
 				.startAngle = Rad(std::sin(Rad(t)) * 360),
 				.angleEaseType = EASEINCUBIC,
 				.angleEaseTime = 60,
