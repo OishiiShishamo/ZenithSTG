@@ -4,7 +4,7 @@
 
 #define UI_POS_OFFSET Vec2D(1400, 50)
 
-#define MAX_BULLET 9000
+#define MAX_BULLET 8192
 #define MAX_LASER 8192
 #define MAX_ENEMY 8192
 #define MAX_PLAYER_SHOT 8192
