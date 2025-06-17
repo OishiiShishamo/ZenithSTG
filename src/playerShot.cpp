@@ -118,15 +118,22 @@ CreatePlayerShot(const Vec2D& pos, const Color& color, int style, int blend, int
 }
 
 void
+ParallelUpdatePlayerShots(std::array<playerShot, MAX_PLAYER_SHOT>& playerShots) {
+	std::for_each(std::execution::par_unseq, playerShots.begin(), playerShots.end(),
+		[](playerShot& PS) {
+			PS.UpdateObject();
+		});
+}
+
+void
 MovePlayerShots() {
+	ParallelUpdatePlayerShots(*plyrShots);
 	for (auto& PS : (*plyrShots)) {
-		PS.UpdateObject();
 		PS.ShowPlayerShot();
 	}
 	if (t % 10 == 0) {
 		std::sort(plyrShots->begin(), plyrShots->end(), [](const playerShot& a, const playerShot& b) {
 			return a.popT < b.popT;
 			});
-		//std::erase_if(plyrShots, , )(const playerShot& ps) { return !ps.alive; });
 	}
 }

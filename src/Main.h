@@ -29,6 +29,7 @@ class Background;
 #include <cstdint>
 #include <cstring>
 #include <DirectXMath.h>
+#include <execution>
 #include <fstream> 
 #include <immintrin.h>
 #include <iomanip>

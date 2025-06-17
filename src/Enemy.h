@@ -57,6 +57,8 @@ void CreateSimpleEnemyGroup(const Vec2D& pos, const Color& color, int style, int
 */
 void CreateSmartEnemyGroup(objectParams param);
 
+void ParallelUpdateEnemies(std::array<Enemy, MAX_ENEMY>& enemies);
+
 /**
 * @brief 敵の動作と描画 / Enemy Movement and Drawing.
 */

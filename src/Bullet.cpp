@@ -299,32 +299,16 @@ CreateSmartBulletGroup(objectParams param) {
 
 void
 ParallelUpdateBullets(std::array<Bullet, MAX_BULLET>& bullets) {
-	const int chunkSize = (MAX_BULLET + numThreads - 1) / numThreads;
-
-	std::vector<std::thread> threads;
-
-	for (int i = 0; i < numThreads; ++i) {
-		int start = i * chunkSize;
-		int end = std::min(start + chunkSize, MAX_BULLET);
-
-		threads.emplace_back([start, end, &bullets]() {
-			for (int j = start; j < end; ++j) {
-				bullets[j].UpdateObject();
-			}
-			});
-	}
-
-	for (auto& th : threads) th.join();
+	std::for_each(std::execution::par_unseq, bullets.begin(), bullets.end(),
+		[](Bullet& B) {
+			B.UpdateObject();
+		});
 }
 
-//numThreads
 void
 MoveBullets() {
-
 	ParallelUpdateBullets(*Bullets);
-
 	for (auto& B : (*Bullets)) {
-		//B.UpdateObject();
 		B.ShowBullet();
 	}
 	if (t % 1 == 0) {

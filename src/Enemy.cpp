@@ -209,9 +209,17 @@ CreateSmartEnemyGroup(objectParams param) {
 }
 
 void
+ParallelUpdateEnemies(std::array<Enemy, MAX_ENEMY>& enemies) {
+	std::for_each(std::execution::par_unseq, enemies.begin(), enemies.end(),
+		[](Enemy& E) {
+			E.UpdateObject();
+		});
+}
+
+void
 MoveEnemies() {
+	ParallelUpdateEnemies(*Enemies);
 	for (auto& E : (*Enemies)) {
-		E.UpdateObject();
 		E.ShowEnemy();
 	}
 	if (t % 10 == 0) {

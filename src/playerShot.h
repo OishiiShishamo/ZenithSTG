@@ -34,6 +34,8 @@ private:
 */
 int CreatePlayerShot(const Vec2D& pos, const Color& color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID = 0, const std::vector<std::any>& params = {});
 
+void ParallelUpdatePlayerShots(std::array<playerShot, MAX_PLAYER_SHOT>& playerShots);
+
 /**
 * @brief プレイヤーショットの動作と描画 / Player Shot Movement and Drawing.
 */

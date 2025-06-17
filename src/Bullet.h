@@ -63,6 +63,8 @@ void CreateSimpleBulletGroup(const Vec2D& pos, const Color& color, int style, in
 */
 void CreateSmartBulletGroup(objectParams param);
 
+void ParallelUpdateBullets(std::array<Bullet, MAX_BULLET>& bullets);
+
 /**
 * @brief 弾の動作と描画 / Bullet Movement and Drawing.
 */

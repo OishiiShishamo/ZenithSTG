@@ -319,9 +319,17 @@ CreateSmartLaserGroup(objectParams param) {
 }
 
 void
+ParallelUpdateLasers(std::array<Laser, MAX_LASER>& lasers) {
+	std::for_each(std::execution::par_unseq, lasers.begin(), lasers.end(),
+		[](Laser& L) {
+			L.UpdateObject();
+		});
+}
+
+void
 MoveLasers() {
+	ParallelUpdateLasers(*Lasers);
 	for (auto& L : (*Lasers)) {
-		L.UpdateObject();
 		L.ShowLaser();
 	}
 	if (t % 10 == 0) {

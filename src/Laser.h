@@ -59,6 +59,8 @@ void CreateSimpleLaserGroup(const Vec2D& pos, double length, double width, const
 */
 void CreateSmartLaserGroup(objectParams param);
 
+void ParallelUpdateLasers(std::array<Laser, MAX_LASER>& lasers);
+
 /**
 * @brief レーザーの動作と描画 / Laser Movement and Drawing.
 */
