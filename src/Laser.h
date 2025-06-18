@@ -28,8 +28,11 @@ private:
 	void GrazeObject() override;
 #endif
 	int CheckPosBounds() override;
+	int CheckCollisionAndBounds() override;
 	
 };
+
+void PushBlankLasers(int idx);
 
 /**
 * @brief レーザーの生成 / Create Laser.

@@ -8,8 +8,6 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
-#include "Main.h"
-
 #include "Object.h"
 
 class Enemy : public Object {
@@ -27,7 +25,10 @@ private:
 	void MoveFunc() override;
 	int ColliCheckObject() override;
 	int CheckPosBounds() override;
+	int CheckCollisionAndBounds() override;
 };
+
+void PushBlankEnemies(int idx);
 
 /**
 * @brief 敵の生成 / Create Enemy.

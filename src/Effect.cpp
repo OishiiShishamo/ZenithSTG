@@ -15,7 +15,7 @@ Effect::UpdateObject(long long Index) {
 
 	vec = AngleToVec2D(angle);
 	MoveFunc();
-	if(pal <= 0) flags &= ~IS_ALIVE;
+	if(t - popT >= palEaseTime) flags &= ~IS_ALIVE;
 }
 
 void
@@ -68,6 +68,7 @@ Effect::UpdateEase() {
 		if (palT > 1) palT = 1;
 		pal = Easing(palEaseType, palT, startPal, 0);
 	}
+	Logger(std::to_string(pal), logType::LOG_DEBUG);
 }
 
 void
@@ -180,7 +181,7 @@ Effect::MoveFunc() {
 }
 
 void
-CreateEffect(const Vec2D& pos, const Color& color, int style, int blend, int pal, int palEaseTime, int palEaseType, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID, const std::vector<std::any>& params) {
+CreateEffect(const Vec2D& pos, const Color& color, int style, int blend, double pal, int palEaseTime, int palEaseType, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID, const std::vector<std::any>& params) {
 	for (int i = 0; i < Effects.size(); i++) {
 		if (!(SAFE_ACCESS(Effects, i).flags & IS_ALIVE)) {
 			SAFE_ACCESS(Effects, i).flags = IS_ALIVE | isCol * IS_COL;
@@ -231,10 +232,8 @@ CreateEffect(const Vec2D& pos, const Color& color, int style, int blend, int pal
 void
 MoveEffects() {
 	for (auto& E : Effects) {
-		if (E.flags & IS_ALIVE){
-			E.UpdateObject();
-			E.ShowEffect();
-		}
+		E.UpdateObject();
+		E.ShowEffect();
 	}
 	if (t % 1 == 0) {
 		std::sort(Effects.begin(), Effects.end(), [](const Effect& a, const Effect& b) {
@@ -245,8 +244,8 @@ MoveEffects() {
 
 void
 GrazeEffect(const Vec2D& pos) {
-	for (int i = 0; i < 32; i++) {
+	for (int i = 0; i < 1; i++) {
 		RandTMP = std::fmod(rng() / 100.0f, 360);
-		CreateEffect(pos, Color(C_WHITE), EF_STAR, BLEND_ADD, 255, 5000, EASEINQUAD, 0, 0, 0, 0, 0, std::fmod(rng() / 100.0f, 1.5f), 0, 120, EASEINQUAD, 0, RandTMP, RandTMP, 0, 0, std::fmod(rng() / 100.0f, 32) + 16, 0, 120, EASEINQUAD);
+		CreateEffect(pos, Color(C_WHITE), EF_STAR, BLEND_ADD, 255, 15, EASEINQUAD, 0, 0, 0, 0, 0, std::fmod(rng() / 100.0f, 1.5f), 0, 120, EASEINQUAD, 0, RandTMP, RandTMP, 0, 0, std::fmod(rng() / 100.0f, 32) + 16, 0, 120, EASEINQUAD);
 	}
 }

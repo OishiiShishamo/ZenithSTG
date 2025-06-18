@@ -44,7 +44,7 @@ public:
 *
 * @see objectParams 引数の詳細はこちらを参照 / See here for details of the argument.
 */
-void CreateEffect(const Vec2D& pos, const Color& color, int style, int blend, int pal, int palEaseTime, int palEaseType, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID = 0, const std::vector<std::any>& params = {});
+void CreateEffect(const Vec2D& pos, const Color& color, int style, int blend, double pal, int palEaseTime, int palEaseType, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID = 0, const std::vector<std::any>& params = {});
 
 /**
 * @brief エフェクトの動作と描画 / Effect Movement and Drawing.

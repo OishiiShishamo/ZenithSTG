@@ -28,9 +28,9 @@ DrawUI(Color fontColor) {
 	}
 #if GRAZE_ENABLED == 1
 	DrawFormatStringToHandle(UI_POS_OFFSET.GetX(), UI_POS_OFFSET.GetY(), GetColor(fontColor.r, fontColor.g, fontColor.b), SAFE_ACCESS(fontTypes, UI_1), "Score: \nHi-Score: \nPlayer: \nBomb: \nGraze: ");
-	DrawFormatStringToHandle(UI_POS_OFFSET.GetX() + 200, UI_POS_OFFSET.GetY(), GetColor(fontColor.r, fontColor.g, fontColor.b), SAFE_ACCESS(fontTypes, UI_1), "%s\n%s\n%d\n%d\n%" PRId64, scoreStr, hiScoreStr, Plyr.Life.load(), Plyr.Bomb.load(), graze.load());
+	DrawFormatStringToHandle(UI_POS_OFFSET.GetX() + 200, UI_POS_OFFSET.GetY(), GetColor(fontColor.r, fontColor.g, fontColor.b), SAFE_ACCESS(fontTypes, UI_1), "%s\n%s\n%d\n%d\n%" PRId64, scoreStr.c_str(), hiScoreStr.c_str(), Plyr.Life.load(), Plyr.Bomb.load(), graze.load());
 #else
 	DrawFormatStringToHandle(UI_POS_OFFSET.GetX(), UI_POS_OFFSET.GetY(), GetColor(fontColor.r, fontColor.g, fontColor.b), SAFE_ACCESS(fontTypes, UI_1), "Score: \nHi-Score: \nPlayer: \nBomb: ");
-	DrawFormatStringToHandle(UI_POS_OFFSET.GetX() + 200, UI_POS_OFFSET.GetY(), GetColor(fontColor.r, fontColor.g, fontColor.b), SAFE_ACCESS(fontTypes, UI_1), "%s\n%s\n%d\n%d" PRId64, scoreStr, hiScoreStr, Plyr.Life.load(), Plyr.Bomb.load());
+	DrawFormatStringToHandle(UI_POS_OFFSET.GetX() + 200, UI_POS_OFFSET.GetY(), GetColor(fontColor.r, fontColor.g, fontColor.b), SAFE_ACCESS(fontTypes, UI_1), "%s\n%s\n%d\n%d" PRId64, scoreStr.c_str(), hiScoreStr.c_str(), Plyr.Life.load(), Plyr.Bomb.load());
 #endif
 }

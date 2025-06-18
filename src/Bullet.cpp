@@ -3,9 +3,13 @@
 #include "Bullet.h"
 #include "Color.h"
 #include "Easing.h"
+#include "Effect.h"
+#include "Enemy.h"
+#include "Laser.h"
 #include "Object.h"
 #include "Player.h"
-#include "Effect.h"
+#include "playerShot.h"
+#include "Vec2D.h"
 
 //TODO: 引数減らしたラッパー関数作る
 
@@ -190,6 +194,12 @@ Bullet::MoveFunc() {
 	}
 }
 
+void
+PushBlankBullets(int idx) {
+	std::lock_guard<std::mutex> lock(BlankBulletsMutex);
+	BlankBullets.emplace_back(idx);
+}
+
 int
 CreateBullet(const Vec2D& pos, const Color& color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID, const std::vector<std::any>& params) {
 	if (BlankBullets.empty()) return 1;
@@ -235,11 +245,6 @@ CreateBullet(const Vec2D& pos, const Color& color, int style, int blend, int pal
 	BlankBullets.pop_back();
 	bIndex++;
 	return 0;
-}
-
-void PushBlankBullets(int idx) {
-	std::lock_guard<std::mutex> lock(BlankBulletsMutex);
-	BlankBullets.emplace_back(idx);
 }
 
 void

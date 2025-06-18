@@ -25,7 +25,10 @@ private:
 	void MoveFunc() override;
 	int ColliCheckObject() override;
 	int CheckPosBounds() override;
+	int CheckCollisionAndBounds() override;
 };
+
+void PushBlankPlayerShots(int idx);
 
 /**
 * @brief プレイヤーショットの生成 / Create Player Shot.

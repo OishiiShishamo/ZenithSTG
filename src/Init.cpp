@@ -5,6 +5,9 @@
 #include <boost/property_tree/xml_parser.hpp>
 
 #include "Bullet.h"
+#include "Laser.h"
+#include "Enemy.h"
+#include "playerShot.h"
 #include "Color.h"
 #include "init.h"
 #include "Player.h"
@@ -110,6 +113,18 @@ Init() {
 	for (int i = 0; i < MAX_BULLET; i++) {
 		SAFE_ACCESS(BulletPtrs, i) = &SAFE_PTR_ACCESS(Bullets, i);
 		BlankBullets.emplace_back(i);
+	}
+	for (int i = 0; i < MAX_LASER; i++) {
+		SAFE_ACCESS(LaserPtrs, i) = &SAFE_PTR_ACCESS(Lasers, i);
+		BlankLasers.emplace_back(i);
+	}
+	for (int i = 0; i < MAX_ENEMY; i++) {
+		SAFE_ACCESS(EnemyPtrs, i) = &SAFE_PTR_ACCESS(Enemies, i);
+		BlankEnemies.emplace_back(i);
+	}
+	for (int i = 0; i < MAX_PLAYER_SHOT; i++) {
+		SAFE_ACCESS(PlayerShotPtrs, i) = &SAFE_PTR_ACCESS(plyrShots, i);
+		BlankPlayerShots.emplace_back(i);
 	}
 }
 

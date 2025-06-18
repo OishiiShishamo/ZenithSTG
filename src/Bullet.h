@@ -38,7 +38,6 @@ private:
 };
 
 void PushBlankBullets(int idx);
-bool PopBlankBullets(int& idx);
 
 /**
 * @brief 弾の生成 / Create Bullet.

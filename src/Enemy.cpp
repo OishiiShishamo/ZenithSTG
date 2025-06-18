@@ -1,14 +1,22 @@
 ﻿#include "Main.h"
 
+#include "Bullet.h"
 #include "Color.h"
 #include "Easing.h"
+#include "Effect.h"
 #include "Enemy.h"
+#include "Laser.h"
 #include "Object.h"
 #include "Player.h"
+#include "playerShot.h"
+#include "Vec2D.h"
 
 //TODO: 引数減らしたラッパー関数作る
 
 std::unique_ptr<std::array<Enemy, MAX_ENEMY>> Enemies = std::make_unique<std::array<Enemy, MAX_ENEMY>>();
+std::array<Enemy*, MAX_ENEMY> EnemyPtrs;
+std::vector<int> BlankEnemies;
+std::mutex BlankEnemyMutex;
 std::array<int, GRAPHIC_HANDLER_NUM> defaultEnemyBlend;
 std::array<double, GRAPHIC_HANDLER_NUM> drawRatioEnemyGraphs;
 
@@ -62,6 +70,23 @@ Enemy::CheckPosBounds() {
 	return 0;
 }
 
+int
+Enemy::CheckCollisionAndBounds() {
+	if (flags & IS_COL) {
+		if (ColliCheckObject()) {
+			PushBlankEnemies(index);
+			flags &= ~IS_ALIVE;
+			return 1;
+		}
+	}
+	if (CheckPosBounds()) {
+		PushBlankEnemies(index);
+		flags &= ~IS_ALIVE;
+		return 1;
+	}
+	return 0;
+}
+
 void
 Enemy::MoveFunc() {
 	switch (ID) {
@@ -84,50 +109,54 @@ Enemy::MoveFunc() {
 	}
 }
 
+void
+PushBlankEnemies(int idx) {
+	std::lock_guard<std::mutex> lock(BlankEnemyMutex);
+	BlankEnemies.emplace_back(idx);
+}
+
 int
 CreateEnemy(const Vec2D& pos, const Color& color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID, const std::vector<std::any>& params) {
-	for (int i = 0; i < Enemies->size(); i++) {
-		if (!(SAFE_PTR_ACCESS(Enemies, i).flags & IS_ALIVE)) {
-			SAFE_PTR_ACCESS(Enemies, i).flags = IS_ALIVE | isCol * IS_COL;
-			SAFE_PTR_ACCESS(Enemies, i).objType = OBJECT_ENEMY;
-			SAFE_PTR_ACCESS(Enemies, i).pos = pos;
-			SAFE_PTR_ACCESS(Enemies, i).color = color;
-			SAFE_PTR_ACCESS(Enemies, i).style = style;
-			SAFE_PTR_ACCESS(Enemies, i).blend = blend;
-			SAFE_PTR_ACCESS(Enemies, i).pal = pal;
-			SAFE_PTR_ACCESS(Enemies, i).startColSize = startColSize;
-			SAFE_PTR_ACCESS(Enemies, i).endColSize = endColSize;
-			SAFE_PTR_ACCESS(Enemies, i).colSizeEaseType = colSizeEaseType;
-			SAFE_PTR_ACCESS(Enemies, i).colSizeEaseTime = colSizeEaseTime;
-			SAFE_PTR_ACCESS(Enemies, i).startSize = startSize;
-			SAFE_PTR_ACCESS(Enemies, i).endSize = endSize;
-			SAFE_PTR_ACCESS(Enemies, i).sizeEaseType = sizeEaseType;
-			SAFE_PTR_ACCESS(Enemies, i).sizeEaseTime = sizeEaseTime;
-			if (aim == AIM_TRUE) {
-				SAFE_PTR_ACCESS(Enemies, i).startAngle = Plyr.AimPlayer(pos) + startAngle;
-				SAFE_PTR_ACCESS(Enemies, i).endAngle = Plyr.AimPlayer(pos) + endAngle;
-			}
-			else {
-				SAFE_PTR_ACCESS(Enemies, i).startAngle = startAngle;
-				SAFE_PTR_ACCESS(Enemies, i).endAngle = endAngle;
-			}
-			SAFE_PTR_ACCESS(Enemies, i).angleEaseType = angleEaseType;
-			SAFE_PTR_ACCESS(Enemies, i).angleEaseTime = angleEaseTime;
-			SAFE_PTR_ACCESS(Enemies, i).startSpeed = startSpeed;
-			SAFE_PTR_ACCESS(Enemies, i).endSpeed = endSpeed;
-			SAFE_PTR_ACCESS(Enemies, i).speedEaseType = speedEaseType;
-			SAFE_PTR_ACCESS(Enemies, i).speedEaseTime = speedEaseTime;
-			SAFE_PTR_ACCESS(Enemies, i).popT = t;
-			SAFE_PTR_ACCESS(Enemies, i).length = 0;
-			SAFE_PTR_ACCESS(Enemies, i).width = 0;
-			SAFE_PTR_ACCESS(Enemies, i).frontNode = 0;
-			SAFE_PTR_ACCESS(Enemies, i).currentNodeNum = 0;
-			SAFE_PTR_ACCESS(Enemies, i).ID = ID;
-			SAFE_PTR_ACCESS(Enemies, i).params = params;
-			return 0;
-		}
+	if (BlankEnemies.empty()) return 1;
+	int idx = BlankEnemies.back();
+	SAFE_PTR_ACCESS(Enemies, idx).flags = IS_ALIVE | isCol * IS_COL;
+	SAFE_PTR_ACCESS(Enemies, idx).objType = OBJECT_ENEMY;
+	SAFE_PTR_ACCESS(Enemies, idx).pos = pos;
+	SAFE_PTR_ACCESS(Enemies, idx).color = color;
+	SAFE_PTR_ACCESS(Enemies, idx).style = style;
+	SAFE_PTR_ACCESS(Enemies, idx).blend = blend;
+	SAFE_PTR_ACCESS(Enemies, idx).pal = pal;
+	SAFE_PTR_ACCESS(Enemies, idx).startColSize = startColSize;
+	SAFE_PTR_ACCESS(Enemies, idx).endColSize = endColSize;
+	SAFE_PTR_ACCESS(Enemies, idx).colSizeEaseType = colSizeEaseType;
+	SAFE_PTR_ACCESS(Enemies, idx).colSizeEaseTime = colSizeEaseTime;
+	SAFE_PTR_ACCESS(Enemies, idx).startSize = startSize;
+	SAFE_PTR_ACCESS(Enemies, idx).endSize = endSize;
+	SAFE_PTR_ACCESS(Enemies, idx).sizeEaseType = sizeEaseType;
+	SAFE_PTR_ACCESS(Enemies, idx).sizeEaseTime = sizeEaseTime;
+	if (aim == AIM_TRUE) {
+		SAFE_PTR_ACCESS(Enemies, idx).startAngle = Plyr.AimPlayer(pos) + startAngle;
+		SAFE_PTR_ACCESS(Enemies, idx).endAngle = Plyr.AimPlayer(pos) + endAngle;
 	}
-	return 1;
+	else {
+		SAFE_PTR_ACCESS(Enemies, idx).startAngle = startAngle;
+		SAFE_PTR_ACCESS(Enemies, idx).endAngle = endAngle;
+	}
+	SAFE_PTR_ACCESS(Enemies, idx).angleEaseType = angleEaseType;
+	SAFE_PTR_ACCESS(Enemies, idx).angleEaseTime = angleEaseTime;
+	SAFE_PTR_ACCESS(Enemies, idx).startSpeed = startSpeed;
+	SAFE_PTR_ACCESS(Enemies, idx).endSpeed = endSpeed;
+	SAFE_PTR_ACCESS(Enemies, idx).speedEaseType = speedEaseType;
+	SAFE_PTR_ACCESS(Enemies, idx).speedEaseTime = speedEaseTime;
+	SAFE_PTR_ACCESS(Enemies, idx).popT = t;
+	SAFE_PTR_ACCESS(Enemies, idx).length = 0;
+	SAFE_PTR_ACCESS(Enemies, idx).width = 0;
+	SAFE_PTR_ACCESS(Enemies, idx).frontNode = 0;
+	SAFE_PTR_ACCESS(Enemies, idx).currentNodeNum = 0;
+	SAFE_PTR_ACCESS(Enemies, idx).ID = ID;
+	SAFE_PTR_ACCESS(Enemies, idx).params = params;
+	BlankEnemies.pop_back();
+	return 0;
 }
 
 void
@@ -219,12 +248,12 @@ ParallelUpdateEnemies(std::array<Enemy, MAX_ENEMY>& enemies) {
 void
 MoveEnemies() {
 	ParallelUpdateEnemies(*Enemies);
-	for (auto& E : (*Enemies)) {
-		E.ShowEnemy();
+	for (auto* E : EnemyPtrs) {
+		E->ShowEnemy();
 	}
 	if (t % 10 == 0) {
-		std::sort(Enemies->begin(), Enemies->end(), [](const Enemy& a, const Enemy& b) {
-			return a.popT < b.popT;
+		std::sort(EnemyPtrs.begin(), EnemyPtrs.end(), [](const Enemy* a, const Enemy* b) {
+			return a->popT < b->popT;
 			});
 	}
 }

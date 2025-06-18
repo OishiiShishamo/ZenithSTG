@@ -3,12 +3,19 @@
 #include "Bullet.h"
 #include "Color.h"
 #include "Easing.h"
-#include "Laser.h"
-#include "Player.h"
-#include "timeUtl.h"
 #include "Effect.h"
+#include "Enemy.h"
+#include "Laser.h"
+#include "Object.h"
+#include "Player.h"
+#include "playerShot.h"
+#include "Vec2D.h"
+#include "timeUtl.h"
 
 std::unique_ptr<std::array<Laser, MAX_LASER>> Lasers = std::make_unique< std::array<Laser, MAX_LASER>>();
+std::array<Laser*, MAX_LASER> LaserPtrs;
+std::vector<int> BlankLasers;
+std::mutex BlankLaserMutex;
 
 void
 Laser::ShowLaser() {
@@ -172,6 +179,23 @@ Laser::CheckPosBounds() {
 	return 0;
 }
 
+int
+Laser::CheckCollisionAndBounds() {
+	if (flags & IS_COL) {
+		if (ColliCheckObject()) {
+			PushBlankLasers(index);
+			flags &= ~IS_ALIVE;
+			return 1;
+		}
+	}
+	if (CheckPosBounds()) {
+		PushBlankLasers(index);
+		flags &= ~IS_ALIVE;
+		return 1;
+	}
+	return 0;
+}
+
 void
 Laser::MoveFunc() {
 	switch (ID) {
@@ -194,50 +218,54 @@ Laser::MoveFunc() {
 	}
 }
 
+void
+PushBlankLasers(int idx) {
+	std::lock_guard<std::mutex> lock(BlankLaserMutex);
+	BlankLasers.emplace_back(idx);
+}
+
 int
 CreateLaser(const Vec2D& pos, double length, double width, const Color& color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID, const std::vector<std::any>& params) {
-	for (int i = 0; i < Lasers->size(); i++) {
-		if (!(SAFE_PTR_ACCESS(Lasers, i).flags & IS_ALIVE)) {
-			SAFE_PTR_ACCESS(Lasers, i).flags = IS_ALIVE | isCol * IS_COL | IS_GRAZE;
-			SAFE_PTR_ACCESS(Lasers, i).objType = OBJECT_LASER;
-			SAFE_PTR_ACCESS(Lasers, i).pos = pos;
-			SAFE_PTR_ACCESS(Lasers, i).color = color;
-			SAFE_PTR_ACCESS(Lasers, i).style = style;
-			SAFE_PTR_ACCESS(Lasers, i).blend = blend;
-			SAFE_PTR_ACCESS(Lasers, i).pal = pal;
-			SAFE_PTR_ACCESS(Lasers, i).startColSize = startColSize;
-			SAFE_PTR_ACCESS(Lasers, i).endColSize = endColSize;
-			SAFE_PTR_ACCESS(Lasers, i).colSizeEaseType = colSizeEaseType;
-			SAFE_PTR_ACCESS(Lasers, i).colSizeEaseTime = colSizeEaseTime;
-			SAFE_PTR_ACCESS(Lasers, i).startSize = startSize;
-			SAFE_PTR_ACCESS(Lasers, i).endSize = endSize;
-			SAFE_PTR_ACCESS(Lasers, i).sizeEaseType = sizeEaseType;
-			SAFE_PTR_ACCESS(Lasers, i).sizeEaseTime = sizeEaseTime;
-			if (aim == AIM_TRUE) {
-				SAFE_PTR_ACCESS(Lasers, i).startAngle = Plyr.AimPlayer(pos) + startAngle;
-				SAFE_PTR_ACCESS(Lasers, i).endAngle = Plyr.AimPlayer(pos) + endAngle;
-			}
-			else {
-				SAFE_PTR_ACCESS(Lasers, i).startAngle = startAngle;
-				SAFE_PTR_ACCESS(Lasers, i).endAngle = endAngle;
-			}
-			SAFE_PTR_ACCESS(Lasers, i).angleEaseType = angleEaseType;
-			SAFE_PTR_ACCESS(Lasers, i).angleEaseTime = angleEaseTime;
-			SAFE_PTR_ACCESS(Lasers, i).startSpeed = startSpeed;
-			SAFE_PTR_ACCESS(Lasers, i).endSpeed = endSpeed;
-			SAFE_PTR_ACCESS(Lasers, i).speedEaseType = speedEaseType;
-			SAFE_PTR_ACCESS(Lasers, i).speedEaseTime = speedEaseTime;
-			SAFE_PTR_ACCESS(Lasers, i).popT = t;
-			SAFE_PTR_ACCESS(Lasers, i).length = length;
-			SAFE_PTR_ACCESS(Lasers, i).width = width;
-			SAFE_PTR_ACCESS(Lasers, i).frontNode = 0;
-			SAFE_PTR_ACCESS(Lasers, i).currentNodeNum = 0;
-			SAFE_PTR_ACCESS(Lasers, i).ID = ID;
-			SAFE_PTR_ACCESS(Lasers, i).params = params;
-			return 0;
-		}
+	if (BlankLasers.empty()) return 1;
+	int idx = BlankLasers.back();
+	SAFE_PTR_ACCESS(Lasers, idx).flags = IS_ALIVE | isCol * IS_COL | IS_GRAZE;
+	SAFE_PTR_ACCESS(Lasers, idx).objType = OBJECT_LASER;
+	SAFE_PTR_ACCESS(Lasers, idx).pos = pos;
+	SAFE_PTR_ACCESS(Lasers, idx).color = color;
+	SAFE_PTR_ACCESS(Lasers, idx).style = style;
+	SAFE_PTR_ACCESS(Lasers, idx).blend = blend;
+	SAFE_PTR_ACCESS(Lasers, idx).pal = pal;
+	SAFE_PTR_ACCESS(Lasers, idx).startColSize = startColSize;
+	SAFE_PTR_ACCESS(Lasers, idx).endColSize = endColSize;
+	SAFE_PTR_ACCESS(Lasers, idx).colSizeEaseType = colSizeEaseType;
+	SAFE_PTR_ACCESS(Lasers, idx).colSizeEaseTime = colSizeEaseTime;
+	SAFE_PTR_ACCESS(Lasers, idx).startSize = startSize;
+	SAFE_PTR_ACCESS(Lasers, idx).endSize = endSize;
+	SAFE_PTR_ACCESS(Lasers, idx).sizeEaseType = sizeEaseType;
+	SAFE_PTR_ACCESS(Lasers, idx).sizeEaseTime = sizeEaseTime;
+	if (aim == AIM_TRUE) {
+		SAFE_PTR_ACCESS(Lasers, idx).startAngle = Plyr.AimPlayer(pos) + startAngle;
+		SAFE_PTR_ACCESS(Lasers, idx).endAngle = Plyr.AimPlayer(pos) + endAngle;
 	}
-	return 1;
+	else {
+		SAFE_PTR_ACCESS(Lasers, idx).startAngle = startAngle;
+		SAFE_PTR_ACCESS(Lasers, idx).endAngle = endAngle;
+	}
+	SAFE_PTR_ACCESS(Lasers, idx).angleEaseType = angleEaseType;
+	SAFE_PTR_ACCESS(Lasers, idx).angleEaseTime = angleEaseTime;
+	SAFE_PTR_ACCESS(Lasers, idx).startSpeed = startSpeed;
+	SAFE_PTR_ACCESS(Lasers, idx).endSpeed = endSpeed;
+	SAFE_PTR_ACCESS(Lasers, idx).speedEaseType = speedEaseType;
+	SAFE_PTR_ACCESS(Lasers, idx).speedEaseTime = speedEaseTime;
+	SAFE_PTR_ACCESS(Lasers, idx).popT = t;
+	SAFE_PTR_ACCESS(Lasers, idx).length = length;
+	SAFE_PTR_ACCESS(Lasers, idx).width = width;
+	SAFE_PTR_ACCESS(Lasers, idx).frontNode = 0;
+	SAFE_PTR_ACCESS(Lasers, idx).currentNodeNum = 0;
+	SAFE_PTR_ACCESS(Lasers, idx).ID = ID;
+	SAFE_PTR_ACCESS(Lasers, idx).params = params;
+	BlankLasers.pop_back();
+	return 0;
 }
 
 void
@@ -329,12 +357,12 @@ ParallelUpdateLasers(std::array<Laser, MAX_LASER>& lasers) {
 void
 MoveLasers() {
 	ParallelUpdateLasers(*Lasers);
-	for (auto& L : (*Lasers)) {
-		L.ShowLaser();
+	for (auto* L : LaserPtrs) {
+		L->ShowLaser();
 	}
 	if (t % 10 == 0) {
-		std::sort(Lasers->begin(), Lasers->end(), [](const Laser& a, const Laser& b) {
-			return a.popT < b.popT;
+		std::sort(LaserPtrs.begin(), LaserPtrs.end(), [](const Laser* a, const Laser* b) {
+			return a->popT < b->popT;
 			});
 	}
 }

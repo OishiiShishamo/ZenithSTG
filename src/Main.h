@@ -98,8 +98,14 @@ extern std::unique_ptr<std::array<Bullet, MAX_BULLET>> Bullets;
 extern std::array<Bullet*, MAX_BULLET> BulletPtrs;
 extern std::vector<int> BlankBullets;
 extern std::unique_ptr<std::array<Laser, MAX_LASER>> Lasers;
+extern std::array<Laser*, MAX_LASER> LaserPtrs;
+extern std::vector<int> BlankLasers;
 extern std::unique_ptr<std::array<Enemy, MAX_ENEMY>> Enemies;
+extern std::array<Enemy*, MAX_ENEMY> EnemyPtrs;
+extern std::vector<int> BlankEnemies;
 extern std::unique_ptr<std::array<playerShot, MAX_PLAYER_SHOT>> plyrShots;
+extern std::array<playerShot*, MAX_PLAYER_SHOT> PlayerShotPtrs;
+extern std::vector<int> BlankPlayerShots;
 extern std::array<Effect, MAX_EFFECT> Effects;
 
 extern std::random_device rng;
