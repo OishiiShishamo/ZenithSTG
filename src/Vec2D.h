@@ -28,6 +28,7 @@ public:
 	Vec2D operator/(double scalar) const { return Vec2D(_mm_div_pd(xy, _mm_set1_pd(scalar))); }
 	Vec2D operator/(const Vec2D& rhs) const { return Vec2D(_mm_div_pd(xy, rhs.xy)); }
 
+	Vec2D& operator=(const Vec2D& rhs) { if (this != &rhs) { xy = rhs.xy; return *this; } }
 	Vec2D& operator+=(const Vec2D& rhs) { xy = _mm_add_pd(xy, rhs.xy); return *this; }
 	Vec2D& operator-=(const Vec2D& rhs) { xy = _mm_sub_pd(xy, rhs.xy); return *this; }
 	Vec2D& operator*=(double scalar) { xy = _mm_mul_pd(xy, _mm_set1_pd(scalar)); return *this; }

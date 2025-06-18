@@ -68,7 +68,7 @@ Player::HitPlayer() {
 		return;
 	}
 	protectTime = Protect;
-	//pos = P_DEFAULT_POS;
+	pos = P_DEFAULT_POS;
 	Life -= 1;
 	Bomb = defaultBomb;
 }

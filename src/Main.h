@@ -95,6 +95,8 @@ extern mainLoop Loop;
 extern std::array<Script, STAGE_NUM> Scripts;
 
 extern std::unique_ptr<std::array<Bullet, MAX_BULLET>> Bullets;
+extern std::array<Bullet*, MAX_BULLET> BulletPtrs;
+extern std::vector<int> BlankBullets;
 extern std::unique_ptr<std::array<Laser, MAX_LASER>> Lasers;
 extern std::unique_ptr<std::array<Enemy, MAX_ENEMY>> Enemies;
 extern std::unique_ptr<std::array<playerShot, MAX_PLAYER_SHOT>> plyrShots;

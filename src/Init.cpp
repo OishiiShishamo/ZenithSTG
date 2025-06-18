@@ -106,6 +106,11 @@ Init() {
 
 	drawRatioPlayerShotGraphs.fill(1.0f);
 	SAFE_ACCESS(drawRatioPlayerShotGraphs, PS_NORMAL) = 0.5f;
+
+	for (int i = 0; i < MAX_BULLET; i++) {
+		SAFE_ACCESS(BulletPtrs, i) = &SAFE_PTR_ACCESS(Bullets, i);
+		BlankBullets.emplace_back(i);
+	}
 }
 
 void

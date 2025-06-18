@@ -15,7 +15,7 @@ Effect::UpdateObject(long long Index) {
 
 	vec = AngleToVec2D(angle);
 	MoveFunc();
-	if(pal <= 0.01) flags &= ~IS_ALIVE;
+	if(pal <= 0) flags &= ~IS_ALIVE;
 }
 
 void

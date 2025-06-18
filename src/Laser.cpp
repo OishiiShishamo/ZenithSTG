@@ -232,7 +232,7 @@ CreateLaser(const Vec2D& pos, double length, double width, const Color& color, i
 			SAFE_PTR_ACCESS(Lasers, i).width = width;
 			SAFE_PTR_ACCESS(Lasers, i).frontNode = 0;
 			SAFE_PTR_ACCESS(Lasers, i).currentNodeNum = 0;
-			SAFE_PTR_ACCESS(Lasers, i).ID = 0;
+			SAFE_PTR_ACCESS(Lasers, i).ID = ID;
 			SAFE_PTR_ACCESS(Lasers, i).params = params;
 			return 0;
 		}

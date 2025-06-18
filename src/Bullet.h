@@ -33,11 +33,16 @@ private:
 	void GrazeObject() override;
 #endif
 	int CheckPosBounds() override;
+
+	int CheckCollisionAndBounds() override;
 };
+
+void PushBlankBullets(int idx);
+bool PopBlankBullets(int& idx);
 
 /**
 * @brief 弾の生成 / Create Bullet.
-* 
+*
 * @see objectParams 引数の詳細はこちらを参照 / See here for details of the argument.
 */
 int CreateBullet(const Vec2D& pos, const Color& color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID = 0, const std::vector<std::any>& params = {});

@@ -138,6 +138,7 @@ public:
 	long long nextNode = -1;
 	int currentNodeNum = 0;
 	int ID = 0;
+	long long order = 0;
 	long long index = 0;
 	std::vector<std::any> params;
 	Object() = default;

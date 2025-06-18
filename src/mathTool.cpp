@@ -8,7 +8,7 @@ fastSqrt(double x, double epsilon = 1e-3) {
 
     double guess = x;
     while (std::abs(guess * guess - x) > epsilon) {
-        guess = (guess + x / guess) / 2.0;
+        guess = (guess + x / guess) / 2;
     }
     return guess;
 }

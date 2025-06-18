@@ -27,7 +27,7 @@ mainLoop::Loop() {
 	SAFE_ACCESS(Scripts, 0).RunScript();
 	SetDrawScreen(backgroundCanvas);
 	ClearDrawScreen();
-	BG.DrawBackground();
+	//BG.DrawBackground();
 	SetDrawScreen(playerShotCanvas);
 	ClearDrawScreen();
 	MovePlayerShots();
