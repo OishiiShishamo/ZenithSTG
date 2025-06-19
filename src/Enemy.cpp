@@ -153,6 +153,7 @@ CreateEnemy(const Vec2D& pos, const Color& color, int style, int blend, int pal,
 	SAFE_PTR_ACCESS(Enemies, idx).width = 0;
 	SAFE_PTR_ACCESS(Enemies, idx).frontNode = 0;
 	SAFE_PTR_ACCESS(Enemies, idx).currentNodeNum = 0;
+	SAFE_PTR_ACCESS(Enemies, idx).index = idx;
 	SAFE_PTR_ACCESS(Enemies, idx).ID = ID;
 	SAFE_PTR_ACCESS(Enemies, idx).params = params;
 	BlankEnemies.pop_back();

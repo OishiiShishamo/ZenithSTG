@@ -141,6 +141,7 @@ CreatePlayerShot(const Vec2D& pos, const Color& color, int style, int blend, int
 	SAFE_PTR_ACCESS(plyrShots, idx).width = 0;
 	SAFE_PTR_ACCESS(plyrShots, idx).frontNode = 0;
 	SAFE_PTR_ACCESS(plyrShots, idx).currentNodeNum = 0;
+	SAFE_PTR_ACCESS(plyrShots, idx).index = idx;
 	SAFE_PTR_ACCESS(plyrShots, idx).ID = 0;
 	SAFE_PTR_ACCESS(plyrShots, idx).params = params;
 	BlankPlayerShots.pop_back();
