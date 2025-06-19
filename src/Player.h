@@ -7,7 +7,7 @@
 #define P_DEFAULT_POS Vec2D(P_DEFAULT_X, P_DEFAULT_Y)
 #define DEFAULT_LIFE 2
 #define DEFAULT_BOMB 3
-#define PLAYER_COL 5.0f
+#define PLAYER_COL 0.0f
 #define PLAYER_PROTECT 60
 
 #define PLAYER_NUM 1
@@ -18,9 +18,9 @@ class Player {
 public:
 	Vec2D pos = Vec2D(0, 0);
 	Vec2D vec = Vec2D(0, 0);
-	int defaultLife = 0;
+	int defaultLife = DEFAULT_LIFE;
 	std::atomic<int> Life = 0;
-	int defaultBomb = 0;
+	int defaultBomb = DEFAULT_BOMB;
 	std::atomic<int> Bomb = 0;
 	double colSize = 0.0f;
 	double Slow = 0;

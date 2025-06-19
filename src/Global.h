@@ -10,6 +10,7 @@
 #include "Params.h"
 #include "Property.h"
 #include "Score.h"
+#include "Sound.h"
 
 #ifdef NDEBUG
 #define SAFE_ACCESS(array, index) (array[index])
@@ -83,6 +84,11 @@ enum easeType {
 enum fontType {
 	UI_0 = 0,
 	UI_1 = 1,
+};
+
+enum soundEffectType {
+	SE_GRAZE = 0,
+	SE_PLAYER_HIT = 1,
 };
 
 enum aimType {

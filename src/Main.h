@@ -17,6 +17,7 @@ class Effect;
 class mainLoop;
 class Vec2D;
 class Script;
+class Sound;
 class Background;
 
 #define NOMINMAX
@@ -69,9 +70,6 @@ class Background;
 #define FPS_HISTORY_LENGTH 120
 
 #define GRAPHIC_HANDLER_NUM 256
-#define SOUND_BGM_HANDLER_NUM 256
-#define SOUND_EFFECT_HANDLER_NUM 256
-#define SOUND_VOICES 32
 
 struct imageRes {
 	std::array<int, GRAPHIC_HANDLER_NUM> UIGH;
@@ -87,6 +85,7 @@ struct imageRes {
 };
 
 extern imageRes imgRes;
+extern Sound soundMng;
 
 extern Property Properties;
 

@@ -1,6 +1,7 @@
 ﻿#include "Color.h"
 #include "Player.h"
 #include "playerShot.h"
+#include "Sound.h"
 
 //TODO: もっと真面目に作る
 //TODO: コントローラーに対応させる
@@ -71,6 +72,7 @@ Player::HitPlayer() {
 	pos = P_DEFAULT_POS;
 	Life -= 1;
 	Bomb = defaultBomb;
+	soundMng.ReserveSE(SE_PLAYER_HIT);
 }
 
 void

@@ -5,12 +5,13 @@
 #include "Easing.h"
 #include "Effect.h"
 #include "Enemy.h"
+#include "Graze.h"
 #include "Laser.h"
 #include "Object.h"
 #include "Player.h"
 #include "playerShot.h"
-#include "Vec2D.h"
 #include "timeUtl.h"
+#include "Vec2D.h"
 
 std::unique_ptr<std::array<Laser, MAX_LASER>> Lasers = std::make_unique< std::array<Laser, MAX_LASER>>();
 std::array<Laser*, MAX_LASER> LaserPtrs;
@@ -158,9 +159,7 @@ Laser::GrazeObject() {
 			SAFE_ACCESS(world, 1),
 			SAFE_ACCESS(world, 2),
 			SAFE_ACCESS(world, 3))) {
-		addScore(GrazeScore);
-		graze++;
-		//GrazeEffect(Plyr.pos);
+		Graze();
 #if LASER_GRAZE_EVERY_FRAME == 0
 		flags &= ~IS_GRAZE;
 #endif

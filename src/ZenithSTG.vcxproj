@@ -150,6 +150,7 @@
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="FPS.cpp" />
+    <ClCompile Include="Graze.cpp" />
     <ClCompile Include="Init.cpp" />
     <ClCompile Include="Laser.cpp" />
     <ClCompile Include="Logging.cpp" />
@@ -180,6 +181,7 @@
     <ClInclude Include="Effect.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="FPS.h" />
+    <ClInclude Include="Graze.h" />
     <ClInclude Include="Global.h" />
     <ClInclude Include="Init.h" />
     <ClInclude Include="Laser.h" />

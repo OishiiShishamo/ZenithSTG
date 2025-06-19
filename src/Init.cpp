@@ -5,14 +5,15 @@
 #include <boost/property_tree/xml_parser.hpp>
 
 #include "Bullet.h"
-#include "Laser.h"
-#include "Enemy.h"
-#include "playerShot.h"
 #include "Color.h"
+#include "Enemy.h"
 #include "init.h"
+#include "Laser.h"
 #include "Player.h"
+#include "playerShot.h"
 #include "resLoad.h"
 #include "screenDraw.h"
+#include "Sound.h"
 
 resLoad res;
 imageRes imgRes;
@@ -48,10 +49,26 @@ Init() {
 	}
 	if (boost::optional<long long> hiScore = pt.get_optional<long long>("root.hiScore")) {
 		Properties.hiScore = hiScore.get();
-		if (Properties.hiScore < 0 || Properties.hiScore > 1) Properties.hiScore = 1;
+		if (Properties.hiScore < 0) Properties.hiScore = 0;
 	}
 	else {
 		Properties.hiScore = 0;
+	}
+	if (boost::optional<int> BGMVolume = pt.get_optional<int>("root.BGMVolume")) {
+		Properties.BGMVolume = BGMVolume.get();
+		if (Properties.BGMVolume < 0) Properties.BGMVolume = 0;
+		if (Properties.BGMVolume > 100) Properties.BGMVolume = 100;
+	}
+	else {
+		Properties.BGMVolume = Properties.BGMVolume;
+	}
+	if (boost::optional<int> SEVolume = pt.get_optional<int>("root.SEVolume")) {
+		Properties.SEVolume = SEVolume.get();
+		if (Properties.SEVolume < 0) Properties.SEVolume = 0;
+		if (Properties.SEVolume > 100) Properties.SEVolume = 100;
+	}
+	else {
+		Properties.SEVolume = Properties.SEVolume;
 	}
 
 	SetOutApplicationLogValidFlag(FALSE);
@@ -138,6 +155,8 @@ ResInit() {
 	res.PlayerGHLoad();
 	res.ShotGHLoad();
 	res.FontLoad();
+
+	soundMng.SoundLoad();
 
 	backgroundCanvas = MakeScreen(1920, 1080, 1);
 	bulletCanvas = MakeScreen(1920, 1080, 1);

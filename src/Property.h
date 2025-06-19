@@ -10,6 +10,8 @@ public:
 	int windowSize = 2;
 	int isWindow = 1;
 	std::atomic<long long> hiScore = 0;
+	int BGMVolume = 100;
+	int SEVolume = 80;
 };
 
 #endif

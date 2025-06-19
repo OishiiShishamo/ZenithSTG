@@ -9,6 +9,7 @@
 #include "Object.h"
 #include "Player.h"
 #include "playerShot.h"
+#include "Graze.h"
 #include "Vec2D.h"
 
 //TODO: 引数減らしたラッパー関数作る
@@ -123,8 +124,8 @@ Bullet::ShowBullet() {
 int
 Bullet::ColliCheckObject() {
 	if (colCircleAndCircle(pos, Plyr.pos, colSize + Plyr.colSize)) {
-		//Plyr.HitPlayer();
-		//return 1;
+		Plyr.HitPlayer();
+		return 1;
 	}
 	return 0;
 }
@@ -134,9 +135,7 @@ void
 Bullet::GrazeObject() {
 	if ((flags & IS_GRAZE) == 0) return;
 	if (colCircleAndCircle(pos, Plyr.pos, colSize + Plyr.colSize + GrazeRange)) {
-		addScore(GrazeScore);
-		graze++;
-		//GrazeEffect(Plyr.pos);
+		Graze();
 #if BULLET_GRAZE_EVERY_FRAME == 0
 		flags &= ~IS_GRAZE;
 #endif

@@ -13,6 +13,7 @@
 #include "playerShot.h"
 #include "screenDraw.h"
 #include "Script.h"
+#include "Sound.h"
 #include "timeUtl.h"
 #include "UI.h"
 
@@ -43,6 +44,7 @@ mainLoop::Loop() {
 	SetDrawScreen(UICanvas);
 	ClearDrawScreen();
 	DrawUI();
+	soundMng.ReservePlaySE();
 	SetDrawScreen(screenCanvas);
 	ClearDrawScreen();
 	ScreenDraw();
