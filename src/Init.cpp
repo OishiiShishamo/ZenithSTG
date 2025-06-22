@@ -81,6 +81,8 @@ Init() {
 	SetUseDirect3DVersion(DX_DIRECT3D_11);
 	SetUsePremulAlphaConvertLoad(TRUE);
 	SetWaitVSyncFlag(FALSE);
+	SetUseASyncLoadFlag(FALSE);
+	SetEnableWASAPIFlag(TRUE, FALSE, 0);
 	SetFontSize(20);
 
 	std::srand(42);

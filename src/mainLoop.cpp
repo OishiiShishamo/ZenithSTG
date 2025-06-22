@@ -26,6 +26,7 @@ double screenRotaZ = 0;
 void
 mainLoop::Loop() {
 	SAFE_ACCESS(Scripts, 0).RunScript();
+	soundMng.ReservePlaySE();
 	SetDrawScreen(backgroundCanvas);
 	ClearDrawScreen();
 	//BG.DrawBackground();
@@ -44,7 +45,6 @@ mainLoop::Loop() {
 	SetDrawScreen(UICanvas);
 	ClearDrawScreen();
 	DrawUI();
-	soundMng.ReservePlaySE();
 	SetDrawScreen(screenCanvas);
 	ClearDrawScreen();
 	ScreenDraw();

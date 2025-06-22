@@ -87,8 +87,10 @@ enum fontType {
 };
 
 enum soundEffectType {
+	SE_NONE = -1,
 	SE_GRAZE = 0,
 	SE_PLAYER_HIT = 1,
+	SE_ENEMY_SHOT = 2,
 };
 
 enum aimType {

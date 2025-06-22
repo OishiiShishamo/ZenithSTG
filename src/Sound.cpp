@@ -41,6 +41,9 @@ Sound::ReservePlaySE() {
 
 void
 Sound::ReserveSE(int ID) {
+	if (isRangeValid(ID, SOUND_EFFECT_HANDLER_NUM)) {
+		return;
+	}
 	SAFE_ACCESS(SEReservation, ID) = 1;
 }
 
@@ -48,15 +51,16 @@ void
 Sound::SoundLoad() {
 	SEAdd(SE_GRAZE, "res/snd/SE/SE_Graze.wav");
 	SEAdd(SE_PLAYER_HIT, "res/snd/SE/SE_PlayerHit.wav");
+	SEAdd(SE_ENEMY_SHOT, "res/snd/SE/SE_EnemyShot.wav");
 }
 
 void
 Sound::SEAdd(int ID, std::string path) {
-	/*if (isRangeValid(ID, SOUND_EFFECT_HANDLER_NUM)) {
+	if (isRangeValid(ID, SOUND_EFFECT_HANDLER_NUM)) {
 		return;
-	}*/
+	}
 	for(auto& S : SAFE_ACCESS(SEHandler, ID)) {
 		S = LoadSoundMem(path.c_str());
-		ChangeVolumeSoundMem(255 / 100 * Properties.SEVolume, S);
+		ChangeVolumeSoundMem(static_cast<int>(255.0 * Properties.SEVolume / 100.0), S);
 	}
 }

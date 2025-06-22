@@ -77,12 +77,14 @@ Script::RunScript() {
 				.way = 48,
 				.spread = Rad(180),
 				.startAngle = Rad(std::sin(Rad(t)) * 360),
+				.endAngle = 0,
 				.angleEaseType = EASEINCUBIC,
 				.angleEaseTime = 60,
 				.startSpeed = -15,
 				.endSpeed = 15,
 				.speedEaseType = EASEINOUTCUBIC,
-				.speedEaseTime = 60
+				.speedEaseTime = 60,
+				.SE = SE_ENEMY_SHOT,
 				});
 			/*CreateSmartBulletGroup(objectParams{
 				.pos = CENTER,

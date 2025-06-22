@@ -38,6 +38,7 @@
 * @param endSpeed 速度の終点 / End Speed
 * @param speedEaseType 速度のイージング方法 / Easing method for Speed
 * @param speedEaseTime 速度のイージングにかかる時間 / Time required for Speed easing
+* @param SE SE番号 / SE Number
 * @param ID 特殊な動作を行うためのID / ID for special operation
 * @param params 特殊な動作を行うためのパラメータ / Parameter for special operation
 */
@@ -62,7 +63,7 @@ struct objectParams {
 	int sizeEaseTime = 0;
 	int way = 1;
 	double spread = tau;
-	int aim = 0;
+	int aim = AIM_FALSE;
 	double startAngle = 0;
 	double endAngle = 0;
 	int angleEaseType = 0;
@@ -75,6 +76,7 @@ struct objectParams {
 	double endSpeed = 0;
 	int speedEaseType = 0;
 	int speedEaseTime = 0;
+	int SE = SE_NONE;
 	int ID = 0;
 	std::vector<std::any> params;
 };

@@ -44,21 +44,21 @@ void PushBlankBullets(int idx);
 *
 * @see objectParams 引数の詳細はこちらを参照 / See here for details of the argument.
 */
-int CreateBullet(const Vec2D& pos, const Color& color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID = 0, const std::vector<std::any>& params = {});
+int CreateBullet(const Vec2D& pos, const Color& color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int SE = SE_NONE, int ID = 0, const std::vector<std::any>& params = {});
 
 /**
 * @brief 複数の弾の生成 / Create Multiple Bullet.
 *
 * @see objectParams 引数の詳細はこちらを参照 / See here for details of the argument.
 */
-void CreateBulletGroup(const Vec2D& pos, const Color& color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int way, double spread, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID = 0, const std::vector<std::any>& params = {});
+void CreateBulletGroup(const Vec2D& pos, const Color& color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int way, double spread, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int SE = SE_NONE, int ID = 0, const std::vector<std::any>& params = {});
 
 /**
 * @brief 複数の弾の生成(引数減少版) / Create Multiple Bullet(reduced argument version).
 *
 * @see objectParams 引数の詳細はこちらを参照 / See here for details of the argument.
 */
-void CreateSimpleBulletGroup(const Vec2D& pos, const Color& color, int style, int blend, int pal, double colSize, double size, int way, double spread, int aim, double angle, double speed, int ID = 0, const std::vector<std::any>& params = {});
+void CreateSimpleBulletGroup(const Vec2D& pos, const Color& color, int style, int blend, int pal, double colSize, double size, int way, double spread, int aim, double angle, double speed, int SE = SE_NONE, int ID = 0, const std::vector<std::any>& params = {});
 
 /**
 * @brief 構造体を引数とした複数の弾の生成 / Create Multiple Bullet with structure as argument.

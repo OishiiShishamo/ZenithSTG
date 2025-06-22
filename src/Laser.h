@@ -39,21 +39,21 @@ void PushBlankLasers(int idx);
 *
 * @see objectParams 引数の詳細はこちらを参照 / See here for details of the argument.
 */
-int CreateLaser(const Vec2D& pos, double length, double width, const Color& color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID = 0, const std::vector<std::any>& params = {});
+int CreateLaser(const Vec2D& pos, double length, double width, const Color& color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int SE = SE_NONE, int ID = 0, const std::vector<std::any>& params = {});
 
 /**
 * @brief 複数のレーザーの生成 / Create Multiple Laser.
 *
 * @see objectParams 引数の詳細はこちらを参照 / See here for details of the argument.
 */
-void CreateLaserGroup(const Vec2D& pos, double length, double width, const Color& color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int way, double spread, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID = 0, const std::vector<std::any>& params = {});
+void CreateLaserGroup(const Vec2D& pos, double length, double width, const Color& color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int way, double spread, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int SE = SE_NONE, int ID = 0, const std::vector<std::any>& params = {});
 
 /**
 * @brief 複数のレーザーの生成(引数減少版) / Create Multiple Laser(reduced argument version).
 *
 * @see objectParams 引数の詳細はこちらを参照 / See here for details of the argument.
 */
-void CreateSimpleLaserGroup(const Vec2D& pos, double length, double width, const Color& color, int style, int blend, int pal, double colSize, double size, int way, double spread, int aim, double angle, double speed, int ID = 0, const std::vector<std::any>& params = {});
+void CreateSimpleLaserGroup(const Vec2D& pos, double length, double width, const Color& color, int style, int blend, int pal, double colSize, double size, int way, double spread, int aim, double angle, double speed, int SE = SE_NONE, int ID = 0, const std::vector<std::any>& params = {});
 
 /**
 * @brief 構造体を引数とした複数のレーザーの生成 / Create Multiple Laser with structure as argument.
