@@ -114,6 +114,7 @@ CreatePlayerShot(const Vec2D& pos, const Color& color, int style, int blend, int
 	soundMng.ReserveSE(SE); 
 	if (BlankPlayerShots.empty()) return 1;
 	int idx = BlankPlayerShots.back();
+	BlankPlayerShots.pop_back();
 	SAFE_PTR_ACCESS(plyrShots, idx).flags = IS_ALIVE | isCol * IS_COL;
 	SAFE_PTR_ACCESS(plyrShots, idx).objType = OBJECT_PLAYER_SHOT;
 	SAFE_PTR_ACCESS(plyrShots, idx).pos = pos;
@@ -145,7 +146,6 @@ CreatePlayerShot(const Vec2D& pos, const Color& color, int style, int blend, int
 	SAFE_PTR_ACCESS(plyrShots, idx).index = idx;
 	SAFE_PTR_ACCESS(plyrShots, idx).ID = 0;
 	SAFE_PTR_ACCESS(plyrShots, idx).params = params;
-	BlankPlayerShots.pop_back();
 	return 0;
 }
 

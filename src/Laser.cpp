@@ -229,6 +229,7 @@ CreateLaser(const Vec2D& pos, double length, double width, const Color& color, i
 	soundMng.ReserveSE(SE);
 	if (BlankLasers.empty()) return 1;
 	int idx = BlankLasers.back();
+	BlankLasers.pop_back();
 	SAFE_PTR_ACCESS(Lasers, idx).flags = IS_ALIVE | isCol * IS_COL | IS_GRAZE;
 	SAFE_PTR_ACCESS(Lasers, idx).objType = OBJECT_LASER;
 	SAFE_PTR_ACCESS(Lasers, idx).pos = pos;
@@ -266,7 +267,6 @@ CreateLaser(const Vec2D& pos, double length, double width, const Color& color, i
 	SAFE_PTR_ACCESS(Lasers, idx).index = idx;
 	SAFE_PTR_ACCESS(Lasers, idx).ID = ID;
 	SAFE_PTR_ACCESS(Lasers, idx).params = params;
-	BlankLasers.pop_back();
 	return 0;
 }
 

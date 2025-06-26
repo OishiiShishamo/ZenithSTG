@@ -120,6 +120,7 @@ CreateEnemy(const Vec2D& pos, const Color& color, int style, int blend, int pal,
 	soundMng.ReserveSE(SE);
 	if (BlankEnemies.empty()) return 1;
 	int idx = BlankEnemies.back();
+	BlankEnemies.pop_back();
 	SAFE_PTR_ACCESS(Enemies, idx).flags = IS_ALIVE | isCol * IS_COL;
 	SAFE_PTR_ACCESS(Enemies, idx).objType = OBJECT_ENEMY;
 	SAFE_PTR_ACCESS(Enemies, idx).pos = pos;
@@ -157,7 +158,6 @@ CreateEnemy(const Vec2D& pos, const Color& color, int style, int blend, int pal,
 	SAFE_PTR_ACCESS(Enemies, idx).index = idx;
 	SAFE_PTR_ACCESS(Enemies, idx).ID = ID;
 	SAFE_PTR_ACCESS(Enemies, idx).params = params;
-	BlankEnemies.pop_back();
 	return 0;
 }
 
