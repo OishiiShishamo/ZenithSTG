@@ -124,7 +124,7 @@ Bullet::ShowBullet() {
 int
 Bullet::ColliCheckObject() {
 	if (colCircleAndCircle(pos, Plyr.pos, colSize + Plyr.colSize)) {
-		//Plyr.HitPlayer();
+		Plyr.HitPlayer();
 		return 1;
 	}
 	return 0;

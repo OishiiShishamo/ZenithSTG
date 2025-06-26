@@ -223,9 +223,6 @@ int CreateEffect(const Vec2D& pos, const Color& color, int style, int blend, dou
 		SAFE_PTR_ACCESS(Effects, idx).startAngle = startAngle;
 		SAFE_PTR_ACCESS(Effects, idx).endAngle = endAngle;
 	}
-	if(SAFE_PTR_ACCESS(Effects, idx).isAlignedAngle == 1) {
-	//	SAFE_PTR_ACCESS(Effects, idx).showAngle = SAFE_PTR_ACCESS(Effects, idx).startAngle;
-	}
 	SAFE_PTR_ACCESS(Effects, idx).angleEaseType = angleEaseType;
 	SAFE_PTR_ACCESS(Effects, idx).angleEaseTime = angleEaseTime;
 	SAFE_PTR_ACCESS(Effects, idx).startSpeed = startSpeed;
