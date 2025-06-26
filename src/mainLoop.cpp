@@ -41,7 +41,7 @@ mainLoop::Loop() {
 	MoveEnemies();
 	MoveBullets();
 	MoveLasers();
-	//MoveEffects();
+	MoveEffects();
 	SetDrawScreen(UICanvas);
 	ClearDrawScreen();
 	DrawUI();

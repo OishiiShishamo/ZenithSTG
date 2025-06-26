@@ -204,6 +204,7 @@ CreateBullet(const Vec2D& pos, const Color& color, int style, int blend, int pal
 	soundMng.ReserveSE(SE);
 	if (BlankBullets.empty()) return 1;
 	int idx = BlankBullets.back();
+	BlankBullets.pop_back();
 	SAFE_PTR_ACCESS(Bullets, idx).flags = IS_ALIVE | isCol * IS_COL | IS_GRAZE;
 	SAFE_PTR_ACCESS(Bullets, idx).objType = OBJECT_BULLET;
 	SAFE_PTR_ACCESS(Bullets, idx).pos = pos;
@@ -242,7 +243,6 @@ CreateBullet(const Vec2D& pos, const Color& color, int style, int blend, int pal
 	SAFE_PTR_ACCESS(Bullets, idx).index = idx;
 	SAFE_PTR_ACCESS(Bullets, idx).ID = ID;
 	SAFE_PTR_ACCESS(Bullets, idx).params = params;
-	BlankBullets.pop_back();
 	bIndex++;
 	return 0;
 }

@@ -14,6 +14,7 @@
 #include "resLoad.h"
 #include "screenDraw.h"
 #include "Sound.h"
+#include "Effect.h"
 
 resLoad res;
 imageRes imgRes;
@@ -144,6 +145,10 @@ Init() {
 	for (int i = 0; i < MAX_PLAYER_SHOT; i++) {
 		SAFE_ACCESS(PlayerShotPtrs, i) = &SAFE_PTR_ACCESS(plyrShots, i);
 		BlankPlayerShots.emplace_back(i);
+	}
+	for (int i = 0; i < MAX_EFFECT; i++) {
+		SAFE_ACCESS(EffectPtrs, i) = &SAFE_PTR_ACCESS(Effects, i);
+		BlankEffects.emplace_back(i);
 	}
 }
 

@@ -2,10 +2,16 @@
 #include "Effect.h"
 #include "Player.h"
 #include "Easing.h"
+#include <algorithm>
+#include <execution>
 
-std::array<Effect, MAX_EFFECT> Effects;
+std::unique_ptr<std::array<Effect, MAX_EFFECT>> Effects = std::make_unique<std::array<Effect, MAX_EFFECT>>();
+std::array<Effect*, MAX_EFFECT> EffectPtrs;
+std::vector<int> BlankEffects;
+std::mutex BlankEffectsMutex;
 std::array<int, GRAPHIC_HANDLER_NUM> defaultEffectBlend;
 std::array<double, GRAPHIC_HANDLER_NUM> drawRatioEffectGraphs;
+long long eIndex = 0;
 
 void
 Effect::UpdateObject(long long Index) {
@@ -15,7 +21,10 @@ Effect::UpdateObject(long long Index) {
 
 	vec = AngleToVec2D(angle);
 	MoveFunc();
-	if(t - popT >= palEaseTime) flags &= ~IS_ALIVE;
+	if (t - popT >= palEaseTime) {
+		PushBlankEffects(index);
+		flags &= ~IS_ALIVE;
+	}
 }
 
 void
@@ -59,16 +68,6 @@ Effect::UpdateEase() {
 		if (sizeT > 1) sizeT = 1;
 		size = Easing(sizeEaseType, sizeT, startSize, endSize);
 	}
-
-	if (palEaseTime == 0) {
-		pal = 0;
-	}
-	else {
-		palT = elapsedFrame / palEaseTime;
-		if (palT > 1) palT = 1;
-		pal = Easing(palEaseType, palT, startPal, 0);
-	}
-	Logger(std::to_string(pal), logType::LOG_DEBUG);
 }
 
 void
@@ -180,65 +179,76 @@ Effect::MoveFunc() {
 	}
 }
 
-void
-CreateEffect(const Vec2D& pos, const Color& color, int style, int blend, double pal, int palEaseTime, int palEaseType, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID, const std::vector<std::any>& params) {
-	for (int i = 0; i < Effects.size(); i++) {
-		if (!(SAFE_ACCESS(Effects, i).flags & IS_ALIVE)) {
-			SAFE_ACCESS(Effects, i).flags = IS_ALIVE | isCol * IS_COL;
-			SAFE_ACCESS(Effects, i).objType = OBJECT_EFFECT;
-			SAFE_ACCESS(Effects, i).pos = pos;
-			SAFE_ACCESS(Effects, i).color = color;
-			SAFE_ACCESS(Effects, i).style = style;
-			SAFE_ACCESS(Effects, i).blend = blend;
-			SAFE_ACCESS(Effects, i).pal = pal;
-			SAFE_ACCESS(Effects, i).startPal = pal;
-			SAFE_ACCESS(Effects, i).palEaseTime = palEaseTime;
-			SAFE_ACCESS(Effects, i).palEaseType = palEaseType;
-			SAFE_ACCESS(Effects, i).startColSize = startColSize;
-			SAFE_ACCESS(Effects, i).endColSize = endColSize;
-			SAFE_ACCESS(Effects, i).colSizeEaseType = colSizeEaseType;
-			SAFE_ACCESS(Effects, i).colSizeEaseTime = colSizeEaseTime;
-			SAFE_ACCESS(Effects, i).startSize = startSize;
-			SAFE_ACCESS(Effects, i).endSize = endSize;
-			SAFE_ACCESS(Effects, i).sizeEaseType = sizeEaseType;
-			SAFE_ACCESS(Effects, i).sizeEaseTime = sizeEaseTime;
-			if (aim == 1) {
-				SAFE_ACCESS(Effects, i).startAngle = Plyr.AimPlayer(pos) + startAngle;
-				SAFE_ACCESS(Effects, i).endAngle = Plyr.AimPlayer(pos) + endAngle;
-			}
-			else {
-				SAFE_ACCESS(Effects, i).startAngle = startAngle;
-				SAFE_ACCESS(Effects, i).endAngle = endAngle;
-			}
-			SAFE_ACCESS(Effects, i).angleEaseType = angleEaseType;
-			SAFE_ACCESS(Effects, i).angleEaseTime = angleEaseTime;
-			SAFE_ACCESS(Effects, i).startSpeed = startSpeed;
-			SAFE_ACCESS(Effects, i).endSpeed = endSpeed;
-			SAFE_ACCESS(Effects, i).speedEaseType = speedEaseType;
-			SAFE_ACCESS(Effects, i).speedEaseTime = speedEaseTime;
-			SAFE_ACCESS(Effects, i).popT = t;
-			SAFE_ACCESS(Effects, i).length = 0;
-			SAFE_ACCESS(Effects, i).width = 0;
-			SAFE_ACCESS(Effects, i).frontNode = 0;
-			SAFE_ACCESS(Effects, i).currentNodeNum = 0;
-			SAFE_ACCESS(Effects, i).index = 0;
-			SAFE_ACCESS(Effects, i).ID = ID;
-			SAFE_ACCESS(Effects, i).params = params;
-			return;
-		}
-	}
+void PushBlankEffects(int idx) {
+	std::lock_guard<std::mutex> lock(BlankEffectsMutex);
+	BlankEffects.emplace_back(idx);
 }
 
-void
-MoveEffects() {
-	for (auto& E : Effects) {
-		E.UpdateObject();
-		E.ShowEffect();
+int CreateEffect(const Vec2D& pos, const Color& color, int style, int blend, double pal, int palEaseType, int palEaseTime, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID, const std::vector<std::any>& params) {
+	if (BlankEffects.empty()) return 1;
+	int idx = BlankEffects.back();
+	BlankEffects.pop_back();
+	SAFE_PTR_ACCESS(Effects, idx).flags = IS_ALIVE | isCol * IS_COL;
+	SAFE_PTR_ACCESS(Effects, idx).objType = OBJECT_EFFECT;
+	SAFE_PTR_ACCESS(Effects, idx).pos = pos;
+	SAFE_PTR_ACCESS(Effects, idx).color = color;
+	SAFE_PTR_ACCESS(Effects, idx).style = style;
+	SAFE_PTR_ACCESS(Effects, idx).blend = blend;
+	SAFE_PTR_ACCESS(Effects, idx).pal = pal;
+	SAFE_PTR_ACCESS(Effects, idx).startPal = pal;
+	SAFE_PTR_ACCESS(Effects, idx).palEaseType = palEaseType;
+	SAFE_PTR_ACCESS(Effects, idx).palEaseTime = palEaseTime;
+	SAFE_PTR_ACCESS(Effects, idx).startColSize = startColSize;
+	SAFE_PTR_ACCESS(Effects, idx).endColSize = endColSize;
+	SAFE_PTR_ACCESS(Effects, idx).colSizeEaseType = colSizeEaseType;
+	SAFE_PTR_ACCESS(Effects, idx).colSizeEaseTime = colSizeEaseTime;
+	SAFE_PTR_ACCESS(Effects, idx).startSize = startSize;
+	SAFE_PTR_ACCESS(Effects, idx).endSize = endSize;
+	SAFE_PTR_ACCESS(Effects, idx).sizeEaseType = sizeEaseType;
+	SAFE_PTR_ACCESS(Effects, idx).sizeEaseTime = sizeEaseTime;
+	if (aim == 1) {
+		SAFE_PTR_ACCESS(Effects, idx).startAngle = Plyr.AimPlayer(pos) + startAngle;
+		SAFE_PTR_ACCESS(Effects, idx).endAngle = Plyr.AimPlayer(pos) + endAngle;
 	}
+	else {
+		SAFE_PTR_ACCESS(Effects, idx).startAngle = startAngle;
+		SAFE_PTR_ACCESS(Effects, idx).endAngle = endAngle;
+	}
+	SAFE_PTR_ACCESS(Effects, idx).angleEaseType = angleEaseType;
+	SAFE_PTR_ACCESS(Effects, idx).angleEaseTime = angleEaseTime;
+	SAFE_PTR_ACCESS(Effects, idx).startSpeed = startSpeed;
+	SAFE_PTR_ACCESS(Effects, idx).endSpeed = endSpeed;
+	SAFE_PTR_ACCESS(Effects, idx).speedEaseType = speedEaseType;
+	SAFE_PTR_ACCESS(Effects, idx).speedEaseTime = speedEaseTime;
+	SAFE_PTR_ACCESS(Effects, idx).popT = t;
+	SAFE_PTR_ACCESS(Effects, idx).length = 0;
+	SAFE_PTR_ACCESS(Effects, idx).width = 0;
+	SAFE_PTR_ACCESS(Effects, idx).frontNode = 0;
+	SAFE_PTR_ACCESS(Effects, idx).currentNodeNum = 0;
+	SAFE_PTR_ACCESS(Effects, idx).order = eIndex;
+	SAFE_PTR_ACCESS(Effects, idx).index = idx;
+	SAFE_PTR_ACCESS(Effects, idx).ID = ID;
+	SAFE_PTR_ACCESS(Effects, idx).params = params;
+	eIndex++;
+	return 0;
+}
+
+void ParallelUpdateEffects(std::array<Effect, MAX_EFFECT>& effects) {
+	std::for_each(std::execution::par_unseq, effects.begin(), effects.end(),
+		[](Effect& E) {
+			E.UpdateObject();
+		});
+}
+
+void MoveEffects() {
 	if (t % 1 == 0) {
-		std::sort(Effects.begin(), Effects.end(), [](const Effect& a, const Effect& b) {
-			return a.popT < b.popT;
-			});
+		std::sort(EffectPtrs.begin(), EffectPtrs.end(), [](const Effect* a, const Effect* b) {
+			return a->order < b->order;
+		});
+	}
+	ParallelUpdateEffects(*Effects);
+	for (auto* E : EffectPtrs) {
+		E->ShowEffect();
 	}
 }
 
@@ -246,6 +256,6 @@ void
 GrazeEffect(const Vec2D& pos) {
 	for (int i = 0; i < 1; i++) {
 		RandTMP = std::fmod(rng() / 100.0f, 360);
-		CreateEffect(pos, Color(C_WHITE), EF_STAR, BLEND_ADD, 255, 15, EASEINQUAD, 0, 0, 0, 0, 0, std::fmod(rng() / 100.0f, 1.5f), 0, 120, EASEINQUAD, 0, RandTMP, RandTMP, 0, 0, std::fmod(rng() / 100.0f, 32) + 16, 0, 120, EASEINQUAD);
+		CreateEffect(pos, Color(C_WHITE), EF_STAR, BLEND_ADD, 255, EASEINQUAD, 5, 0, 0, 0, 0, 0, std::fmod(rng() / 100.0f, 1.5f), 0, EASEINQUAD, 120, 0, RandTMP, RandTMP, 0, 0, std::fmod(rng() / 100.0f, 32), 0, EASEINQUAD, 120);
 	}
 }

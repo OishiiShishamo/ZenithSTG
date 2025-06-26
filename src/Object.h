@@ -57,8 +57,8 @@ struct objectParams {
 	double endColSize = 0;
 	int colSizeEaseType = 0;
 	int colSizeEaseTime = 0;
-	double startSize = 0;
-	double endSize = 0;
+	double startSize = 1;
+	double endSize = 1;
 	int sizeEaseType = 0;
 	int sizeEaseTime = 0;
 	int way = 1;

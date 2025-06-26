@@ -105,7 +105,9 @@ extern std::vector<int> BlankEnemies;
 extern std::unique_ptr<std::array<playerShot, MAX_PLAYER_SHOT>> plyrShots;
 extern std::array<playerShot*, MAX_PLAYER_SHOT> PlayerShotPtrs;
 extern std::vector<int> BlankPlayerShots;
-extern std::array<Effect, MAX_EFFECT> Effects;
+extern std::unique_ptr<std::array<Effect, MAX_EFFECT>> Effects;
+extern std::array<Effect*, MAX_EFFECT> EffectPtrs;
+extern std::vector<int> BlankEffects;
 
 extern std::random_device rng;
 
