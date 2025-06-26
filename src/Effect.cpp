@@ -68,6 +68,15 @@ Effect::UpdateEase() {
 		if (sizeT > 1) sizeT = 1;
 		size = Easing(sizeEaseType, sizeT, startSize, endSize);
 	}
+
+	if (palEaseTime == 0) {
+		pal = 0;
+	}
+	else {
+		palT = elapsedFrame / palEaseTime;
+		if (palT > 1) palT = 1;
+		pal = Easing(palEaseType, palT, startPal, 0);
+	}
 }
 
 void
@@ -214,6 +223,9 @@ int CreateEffect(const Vec2D& pos, const Color& color, int style, int blend, dou
 		SAFE_PTR_ACCESS(Effects, idx).startAngle = startAngle;
 		SAFE_PTR_ACCESS(Effects, idx).endAngle = endAngle;
 	}
+	if(SAFE_PTR_ACCESS(Effects, idx).isAlignedAngle == 1) {
+	//	SAFE_PTR_ACCESS(Effects, idx).showAngle = SAFE_PTR_ACCESS(Effects, idx).startAngle;
+	}
 	SAFE_PTR_ACCESS(Effects, idx).angleEaseType = angleEaseType;
 	SAFE_PTR_ACCESS(Effects, idx).angleEaseTime = angleEaseTime;
 	SAFE_PTR_ACCESS(Effects, idx).startSpeed = startSpeed;
@@ -256,6 +268,6 @@ void
 GrazeEffect(const Vec2D& pos) {
 	for (int i = 0; i < 1; i++) {
 		RandTMP = std::fmod(rng() / 100.0f, 360);
-		CreateEffect(pos, Color(C_WHITE), EF_STAR, BLEND_ADD, 255, EASEINQUAD, 5, 0, 0, 0, 0, 0, std::fmod(rng() / 100.0f, 1.5f), 0, EASEINQUAD, 120, 0, RandTMP, RandTMP, 0, 0, std::fmod(rng() / 100.0f, 32), 0, EASEINQUAD, 120);
+		CreateEffect(pos, Color(C_WHITE), EF_STAR, BLEND_ADD, 255, EASEINQUAD, 15, 0, 0, 0, 0, 0, std::fmod(rng() / 100.0f, 1.5f), 0, EASEINQUAD, 120, 0, RandTMP, RandTMP, 0, 0, std::fmod(rng() / 100.0f, 32), 0, EASEINQUAD, 120);
 	}
 }
