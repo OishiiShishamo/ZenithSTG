@@ -1,7 +1,6 @@
 #include "Main.h"
 
 #include "Background.h"
-#include "Color.h"
 
 void
 Background::DrawBackground() {

@@ -2,7 +2,6 @@
 
 #include "resLoad.h"
 #include "Player.h"
-#include "Color.h"
 
 
 void

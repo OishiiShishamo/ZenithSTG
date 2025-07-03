@@ -1,6 +1,5 @@
 ﻿#include "Main.h"
 
-#include "Easing.h"
 #include "Object.h"
 #include "Player.h"
 

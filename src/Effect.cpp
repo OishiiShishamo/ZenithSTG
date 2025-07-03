@@ -1,9 +1,6 @@
 #include "Main.h"
 #include "Effect.h"
 #include "Player.h"
-#include "Easing.h"
-#include <algorithm>
-#include <execution>
 
 std::unique_ptr<std::array<Effect, MAX_EFFECT>> Effects = std::make_unique<std::array<Effect, MAX_EFFECT>>();
 std::array<Effect*, MAX_EFFECT> EffectPtrs;
@@ -141,14 +138,14 @@ Effect::ShowEffect() {
 			DrawRectModiGraph(
 				SAFE_ACCESS(world, 0).GetX(), SAFE_ACCESS(world, 0).GetY(),
 				SAFE_ACCESS(world, 1).GetX(), SAFE_ACCESS(world, 1).GetY(),
-					SAFE_ACCESS(world, 2).GetX(), SAFE_ACCESS(world, 2).GetY(),
-					SAFE_ACCESS(world, 3).GetX(), SAFE_ACCESS(world, 3).GetY(),
-					64 - 128 * SAFE_ACCESS(drawRatioEffectGraphs, style) / 2,
-					64 - 128 * SAFE_ACCESS(drawRatioEffectGraphs, style) / 2,
-					128 * SAFE_ACCESS(drawRatioEffectGraphs, style),
-					128 * SAFE_ACCESS(drawRatioEffectGraphs, style),
-					SAFE_ACCESS(imgRes.EffectBackGH, style),
-					TRUE);
+				SAFE_ACCESS(world, 2).GetX(), SAFE_ACCESS(world, 2).GetY(),
+				SAFE_ACCESS(world, 3).GetX(), SAFE_ACCESS(world, 3).GetY(),
+				64 - 128 * SAFE_ACCESS(drawRatioEffectGraphs, style) / 2,
+				64 - 128 * SAFE_ACCESS(drawRatioEffectGraphs, style) / 2,
+				128 * SAFE_ACCESS(drawRatioEffectGraphs, style),
+				128 * SAFE_ACCESS(drawRatioEffectGraphs, style),
+				SAFE_ACCESS(imgRes.EffectBackGH, style),
+				TRUE);
 		}
 		else DrawRotaGraph(pos.GetX(), pos.GetY(), size, -showAngle, SAFE_ACCESS(imgRes.EffectBackGH, style), TRUE);
 		SetDrawBright(255, 255, 255);
@@ -253,7 +250,7 @@ void MoveEffects() {
 	if (t % 1 == 0) {
 		std::sort(EffectPtrs.begin(), EffectPtrs.end(), [](const Effect* a, const Effect* b) {
 			return a->order < b->order;
-		});
+			});
 	}
 	ParallelUpdateEffects(*Effects);
 	for (auto* E : EffectPtrs) {

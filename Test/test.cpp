@@ -3,7 +3,6 @@
 #include "Main.h"
 #include "Easing.h"
 #include "Global.h"
-#include <cmath>
 
 const double EPSILON = 1e-9;
 

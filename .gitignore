@@ -21,3 +21,4 @@ boost/
 ScreenShot.bmp
 ScreenShot.png
 *.txt
+*.pch

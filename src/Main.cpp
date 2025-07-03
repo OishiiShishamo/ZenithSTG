@@ -1,8 +1,6 @@
 ﻿#include "Main.h"
 
 #include "Bullet.h"
-#include "Color.h"
-#include "Easing.h"
 #include "Enemy.h"
 #include "FPS.h"
 #include "Init.h"

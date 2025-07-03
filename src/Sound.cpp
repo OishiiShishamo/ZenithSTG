@@ -31,7 +31,7 @@ void
 Sound::ReservePlaySE() {
 	int i = 0;
 	for (auto& R : SEReservation) {
-		if(R == 1) {
+		if (R == 1) {
 			R = 0;
 			PlaySE(i);
 		}
@@ -59,7 +59,7 @@ Sound::SEAdd(int ID, std::string path) {
 	if (isRangeValid(ID, SOUND_EFFECT_HANDLER_NUM)) {
 		return;
 	}
-	for(auto& S : SAFE_ACCESS(SEHandler, ID)) {
+	for (auto& S : SAFE_ACCESS(SEHandler, ID)) {
 		S = LoadSoundMem(path.c_str());
 		ChangeVolumeSoundMem(static_cast<int>(255.0 * Properties.SEVolume / 100.0), S);
 	}

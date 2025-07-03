@@ -1,6 +1,4 @@
-﻿#include "Easing.h"
-
-//ラッパ関数
+﻿//ラッパ関数
 double
 Easing(int easeType, double t, double start, double end) {
 	switch (easeType) {

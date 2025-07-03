@@ -1,7 +1,6 @@
 #include "Main.h"
 
 #include "Player.h"
-#include "screenDraw.h"
 
 int backgroundCanvas;
 int bulletCanvas;

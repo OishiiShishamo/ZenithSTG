@@ -1,6 +1,5 @@
 ﻿#include "Main.h"
 
-#include "Color.h"
 #include "Utility.h"
 
 bool debuging = true;

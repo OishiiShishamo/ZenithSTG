@@ -2,8 +2,6 @@
 
 #include "Background.h"
 #include "Bullet.h"
-#include "Color.h"
-#include "Easing.h"
 #include "Effect.h"
 #include "Enemy.h"
 #include "Init.h"
@@ -11,7 +9,6 @@
 #include "mainLoop.h"
 #include "Player.h"
 #include "playerShot.h"
-#include "screenDraw.h"
 #include "Script.h"
 #include "Sound.h"
 #include "timeUtl.h"

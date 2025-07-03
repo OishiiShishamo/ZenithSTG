@@ -8,9 +8,6 @@
 #ifndef VEC2D_H
 #define VEC2D_H
 
-#include <emmintrin.h>
-#include <pmmintrin.h>
-
 class alignas(16) Vec2D {
 public:
 	__m128d xy;

@@ -1,7 +1,5 @@
 #include "Vec3D.h"
 
-#include <cmath>
-
 Vec3D
 sumVec3D(Vec3D v1, Vec3D v2) {
 	return Vec3D(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);

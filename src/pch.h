@@ -1,0 +1,44 @@
+#pragma once
+#ifndef PCH_H
+#define PCH_H
+
+#include <algorithm>
+#include <any>
+#include <array>
+#include <atomic>
+#include <chrono>
+#include <cstdint>
+#include <cstring>
+#include <DirectXMath.h>
+#include <emmintrin.h>
+#include <execution>
+#include <fstream> 
+#include <immintrin.h>
+#include <inttypes.h>
+#include <iomanip>
+#include <iostream>
+#include <memory>
+#include <mutex>
+#include <numeric>
+#include <pmmintrin.h>
+#include <random>
+#include <stdint.h>
+#include <string>
+#include <thread>
+#include <tuple>
+#include <type_traits>
+#include <vector>
+
+#include "DxLib.h"
+
+#include <boost/lexical_cast.hpp>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/xml_parser.hpp>
+
+#include "Collision.h"
+#include "Color.h"
+#include "Easing.h"
+#include "Logging.h"
+#include "screenDraw.h"
+
+#endif

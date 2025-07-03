@@ -8,8 +8,6 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
-#include "Color.h"
-
 /**
 * @brief オブジェクトの生成に関するもの / Relates to the creation of objects
 *

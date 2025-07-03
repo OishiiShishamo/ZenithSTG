@@ -6,7 +6,7 @@
 
 /**
 * @brief 円形と円形の当たり判定 / Circular and circular hit detection.
-* 
+*
 * @param v1 座標1 / Position1
 * @param v2 座標2 / Position2
 * @param r 半径 / Radius
@@ -15,7 +15,7 @@ int colCircleAndCircle(const Vec2D& v1, const Vec2D& v2, double r);
 
 /**
 * @brief 点と矩形の当たり判定 / Point and rectangle pertinence.
-* 
+*
 * @param v 点の座標 / Point position
 * @param v1 矩形の頂点座標1 / Rectangle vertex coordinates1
 * @param v2 矩形の頂点座標2 / Rectangle vertex coordinates2

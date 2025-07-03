@@ -1,8 +1,6 @@
 ﻿#include "Main.h"
 
 #include "Bullet.h"
-#include "Color.h"
-#include "Easing.h"
 #include "Effect.h"
 #include "Enemy.h"
 #include "Laser.h"
@@ -217,7 +215,7 @@ CreateSimpleEnemyGroup(const Vec2D& pos, const Color& color, int style, int blen
 
 void
 CreateSmartEnemyGroup(objectParams param) {
-	soundMng.ReserveSE(param.SE); 
+	soundMng.ReserveSE(param.SE);
 	switch (param.aim) {
 	case AIM_FALSE:
 		for (int i = 0; i < param.way; i++) {

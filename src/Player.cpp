@@ -1,5 +1,4 @@
-﻿#include "Color.h"
-#include "Player.h"
+﻿#include "Player.h"
 #include "playerShot.h"
 #include "Sound.h"
 

@@ -1,5 +1,3 @@
-#include "Logging.h"
-
 std::string debugging = "";
 
 void

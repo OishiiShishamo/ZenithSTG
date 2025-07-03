@@ -2,11 +2,7 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
-#include <cmath>
-
 #include "Debug.h"
-#include "DxLib.h"
-#include "Logging.h"
 #include "Params.h"
 #include "Property.h"
 #include "Score.h"

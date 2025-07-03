@@ -1,18 +1,12 @@
 ﻿#include "Main.h"
 
-#include <boost/lexical_cast.hpp>
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/xml_parser.hpp>
-
 #include "Bullet.h"
-#include "Color.h"
 #include "Enemy.h"
 #include "init.h"
 #include "Laser.h"
 #include "Player.h"
 #include "playerShot.h"
 #include "resLoad.h"
-#include "screenDraw.h"
 #include "Sound.h"
 #include "Effect.h"
 

@@ -1,4 +1,3 @@
-#include "Color.h"
 #include "Global.h"
 #include "Main.h"
 #include "Player.h"

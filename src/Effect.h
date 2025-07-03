@@ -3,10 +3,6 @@
 #define EFFECT_H
 
 #include "Object.h"
-#include <memory>
-#include <array>
-#include <vector>
-#include <mutex>
 
 /**
 * @class Effect

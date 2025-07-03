@@ -22,35 +22,9 @@ class Background;
 
 #define NOMINMAX
 
-#include <algorithm>
-#include <atomic>
-#include <any>
-#include <array>
-#include <chrono>
-#include <cstdint>
-#include <cstring>
-#include <DirectXMath.h>
-#include <execution>
-#include <fstream> 
-#include <immintrin.h>
-#include <iomanip>
-#include <iostream>
-#include <numeric>
-#include <string>
-#include <thread>
-#include <tuple>
-#include <type_traits>
-#include <inttypes.h>
-#include <random>
-#include <stdint.h>
-#include <vector>
-#include <pmmintrin.h>
-#include <emmintrin.h>
-
 #include "Global.h"
 #include "Params.h"
 
-#include "Collision.h"
 #include "Utility.h"
 #include "Vec2D.h"
 

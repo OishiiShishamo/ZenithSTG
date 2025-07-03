@@ -2,7 +2,6 @@
 
 #include "Bullet.h"
 #include "Color.h"
-#include "Easing.h"
 #include "Effect.h"
 #include "Enemy.h"
 #include "Laser.h"
@@ -14,7 +13,7 @@
 
 //TODO: 引数減らしたラッパー関数作る
 
-std::unique_ptr<std::array<Bullet, MAX_BULLET>> Bullets = std::make_unique< std::array<Bullet, MAX_BULLET>>();
+std::unique_ptr<std::array<Bullet, MAX_BULLET>> Bullets = std::make_unique<std::array<Bullet, MAX_BULLET>>();
 std::array<Bullet*, MAX_BULLET> BulletPtrs;
 std::vector<int> BlankBullets;
 std::mutex BlankBulletsMutex;
