@@ -2,7 +2,7 @@
 
 #include "Background.h"
 #include "Bullet.h"
-#include "Effect.h"
+#include "Particle.h"
 #include "Enemy.h"
 #include "Init.h"
 #include "Laser.h"
@@ -38,7 +38,7 @@ mainLoop::Loop() {
 	MoveEnemies();
 	MoveBullets();
 	MoveLasers();
-	MoveEffects();
+	MoveParticles();
 	SetDrawScreen(UICanvas);
 	ClearDrawScreen();
 	DrawUI();

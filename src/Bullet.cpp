@@ -2,7 +2,7 @@
 
 #include "Bullet.h"
 #include "Color.h"
-#include "Effect.h"
+#include "Particle.h"
 #include "Enemy.h"
 #include "Laser.h"
 #include "Object.h"
@@ -11,9 +11,7 @@
 #include "Graze.h"
 #include "Vec2D.h"
 
-//TODO: 引数減らしたラッパー関数作る
-
-std::unique_ptr<std::array<Bullet, MAX_BULLET>> Bullets = std::make_unique<std::array<Bullet, MAX_BULLET>>();
+std::array<Bullet, MAX_BULLET> Bullets;
 std::array<Bullet*, MAX_BULLET> BulletPtrs;
 std::vector<int> BlankBullets;
 std::mutex BlankBulletsMutex;
@@ -204,44 +202,44 @@ CreateBullet(const Vec2D& pos, const Color& color, int style, int blend, int pal
 	if (BlankBullets.empty()) return 1;
 	int idx = BlankBullets.back();
 	BlankBullets.pop_back();
-	SAFE_PTR_ACCESS(Bullets, idx).flags = IS_ALIVE | isCol * IS_COL | IS_GRAZE;
-	SAFE_PTR_ACCESS(Bullets, idx).objType = OBJECT_BULLET;
-	SAFE_PTR_ACCESS(Bullets, idx).pos = pos;
-	SAFE_PTR_ACCESS(Bullets, idx).color = color;
-	SAFE_PTR_ACCESS(Bullets, idx).style = style;
-	SAFE_PTR_ACCESS(Bullets, idx).blend = blend;
-	SAFE_PTR_ACCESS(Bullets, idx).pal = pal;
-	SAFE_PTR_ACCESS(Bullets, idx).startColSize = startColSize;
-	SAFE_PTR_ACCESS(Bullets, idx).endColSize = endColSize;
-	SAFE_PTR_ACCESS(Bullets, idx).colSizeEaseType = colSizeEaseType;
-	SAFE_PTR_ACCESS(Bullets, idx).colSizeEaseTime = colSizeEaseTime;
-	SAFE_PTR_ACCESS(Bullets, idx).startSize = startSize;
-	SAFE_PTR_ACCESS(Bullets, idx).endSize = endSize;
-	SAFE_PTR_ACCESS(Bullets, idx).sizeEaseType = sizeEaseType;
-	SAFE_PTR_ACCESS(Bullets, idx).sizeEaseTime = sizeEaseTime;
+	SAFE_ACCESS(Bullets, idx).flags = IS_ALIVE | isCol * IS_COL | IS_GRAZE;
+	SAFE_ACCESS(Bullets, idx).objType = OBJECT_BULLET;
+	SAFE_ACCESS(Bullets, idx).pos = pos;
+	SAFE_ACCESS(Bullets, idx).color = color;
+	SAFE_ACCESS(Bullets, idx).style = style;
+	SAFE_ACCESS(Bullets, idx).blend = blend;
+	SAFE_ACCESS(Bullets, idx).pal = pal;
+	SAFE_ACCESS(Bullets, idx).startColSize = startColSize;
+	SAFE_ACCESS(Bullets, idx).endColSize = endColSize;
+	SAFE_ACCESS(Bullets, idx).colSizeEaseType = colSizeEaseType;
+	SAFE_ACCESS(Bullets, idx).colSizeEaseTime = colSizeEaseTime;
+	SAFE_ACCESS(Bullets, idx).startSize = startSize;
+	SAFE_ACCESS(Bullets, idx).endSize = endSize;
+	SAFE_ACCESS(Bullets, idx).sizeEaseType = sizeEaseType;
+	SAFE_ACCESS(Bullets, idx).sizeEaseTime = sizeEaseTime;
 	if (aim == AIM_TRUE) {
-		SAFE_PTR_ACCESS(Bullets, idx).startAngle = Plyr.AimPlayer(pos) + startAngle;
-		SAFE_PTR_ACCESS(Bullets, idx).endAngle = Plyr.AimPlayer(pos) + endAngle;
+		SAFE_ACCESS(Bullets, idx).startAngle = Plyr.AimPlayer(pos) + startAngle;
+		SAFE_ACCESS(Bullets, idx).endAngle = Plyr.AimPlayer(pos) + endAngle;
 	}
 	else {
-		SAFE_PTR_ACCESS(Bullets, idx).startAngle = startAngle;
-		SAFE_PTR_ACCESS(Bullets, idx).endAngle = endAngle;
+		SAFE_ACCESS(Bullets, idx).startAngle = startAngle;
+		SAFE_ACCESS(Bullets, idx).endAngle = endAngle;
 	}
-	SAFE_PTR_ACCESS(Bullets, idx).angleEaseType = angleEaseType;
-	SAFE_PTR_ACCESS(Bullets, idx).angleEaseTime = angleEaseTime;
-	SAFE_PTR_ACCESS(Bullets, idx).startSpeed = startSpeed;
-	SAFE_PTR_ACCESS(Bullets, idx).endSpeed = endSpeed;
-	SAFE_PTR_ACCESS(Bullets, idx).speedEaseType = speedEaseType;
-	SAFE_PTR_ACCESS(Bullets, idx).speedEaseTime = speedEaseTime;
-	SAFE_PTR_ACCESS(Bullets, idx).popT = t;
-	SAFE_PTR_ACCESS(Bullets, idx).length = 0;
-	SAFE_PTR_ACCESS(Bullets, idx).width = 0;
-	SAFE_PTR_ACCESS(Bullets, idx).frontNode = 0;
-	SAFE_PTR_ACCESS(Bullets, idx).currentNodeNum = 0;
-	SAFE_PTR_ACCESS(Bullets, idx).order = bIndex;
-	SAFE_PTR_ACCESS(Bullets, idx).index = idx;
-	SAFE_PTR_ACCESS(Bullets, idx).ID = ID;
-	SAFE_PTR_ACCESS(Bullets, idx).params = params;
+	SAFE_ACCESS(Bullets, idx).angleEaseType = angleEaseType;
+	SAFE_ACCESS(Bullets, idx).angleEaseTime = angleEaseTime;
+	SAFE_ACCESS(Bullets, idx).startSpeed = startSpeed;
+	SAFE_ACCESS(Bullets, idx).endSpeed = endSpeed;
+	SAFE_ACCESS(Bullets, idx).speedEaseType = speedEaseType;
+	SAFE_ACCESS(Bullets, idx).speedEaseTime = speedEaseTime;
+	SAFE_ACCESS(Bullets, idx).popT = t;
+	SAFE_ACCESS(Bullets, idx).length = 0;
+	SAFE_ACCESS(Bullets, idx).width = 0;
+	SAFE_ACCESS(Bullets, idx).frontNode = 0;
+	SAFE_ACCESS(Bullets, idx).currentNodeNum = 0;
+	SAFE_ACCESS(Bullets, idx).order = bIndex;
+	SAFE_ACCESS(Bullets, idx).index = idx;
+	SAFE_ACCESS(Bullets, idx).ID = ID;
+	SAFE_ACCESS(Bullets, idx).params = params;
 	bIndex++;
 	return 0;
 }
@@ -342,7 +340,7 @@ MoveBullets() {
 			return a->order < b->order;
 			});
 	}
-	ParallelUpdateBullets(*Bullets);
+	ParallelUpdateBullets(Bullets);
 	for (auto* B : BulletPtrs) {
 		B->ShowBullet();
 	}

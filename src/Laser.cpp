@@ -1,7 +1,7 @@
 ﻿#include "Main.h"
 
 #include "Bullet.h"
-#include "Effect.h"
+#include "Particle.h"
 #include "Enemy.h"
 #include "Graze.h"
 #include "Laser.h"
@@ -12,7 +12,7 @@
 #include "timeUtl.h"
 #include "Vec2D.h"
 
-std::unique_ptr<std::array<Laser, MAX_LASER>> Lasers = std::make_unique< std::array<Laser, MAX_LASER>>();
+std::array<Laser, MAX_LASER> Lasers;
 std::array<Laser*, MAX_LASER> LaserPtrs;
 std::vector<int> BlankLasers;
 std::mutex BlankLaserMutex;
@@ -228,43 +228,43 @@ CreateLaser(const Vec2D& pos, double length, double width, const Color& color, i
 	if (BlankLasers.empty()) return 1;
 	int idx = BlankLasers.back();
 	BlankLasers.pop_back();
-	SAFE_PTR_ACCESS(Lasers, idx).flags = IS_ALIVE | isCol * IS_COL | IS_GRAZE;
-	SAFE_PTR_ACCESS(Lasers, idx).objType = OBJECT_LASER;
-	SAFE_PTR_ACCESS(Lasers, idx).pos = pos;
-	SAFE_PTR_ACCESS(Lasers, idx).color = color;
-	SAFE_PTR_ACCESS(Lasers, idx).style = style;
-	SAFE_PTR_ACCESS(Lasers, idx).blend = blend;
-	SAFE_PTR_ACCESS(Lasers, idx).pal = pal;
-	SAFE_PTR_ACCESS(Lasers, idx).startColSize = startColSize;
-	SAFE_PTR_ACCESS(Lasers, idx).endColSize = endColSize;
-	SAFE_PTR_ACCESS(Lasers, idx).colSizeEaseType = colSizeEaseType;
-	SAFE_PTR_ACCESS(Lasers, idx).colSizeEaseTime = colSizeEaseTime;
-	SAFE_PTR_ACCESS(Lasers, idx).startSize = startSize;
-	SAFE_PTR_ACCESS(Lasers, idx).endSize = endSize;
-	SAFE_PTR_ACCESS(Lasers, idx).sizeEaseType = sizeEaseType;
-	SAFE_PTR_ACCESS(Lasers, idx).sizeEaseTime = sizeEaseTime;
+	SAFE_ACCESS(Lasers, idx).flags = IS_ALIVE | isCol * IS_COL | IS_GRAZE;
+	SAFE_ACCESS(Lasers, idx).objType = OBJECT_LASER;
+	SAFE_ACCESS(Lasers, idx).pos = pos;
+	SAFE_ACCESS(Lasers, idx).color = color;
+	SAFE_ACCESS(Lasers, idx).style = style;
+	SAFE_ACCESS(Lasers, idx).blend = blend;
+	SAFE_ACCESS(Lasers, idx).pal = pal;
+	SAFE_ACCESS(Lasers, idx).startColSize = startColSize;
+	SAFE_ACCESS(Lasers, idx).endColSize = endColSize;
+	SAFE_ACCESS(Lasers, idx).colSizeEaseType = colSizeEaseType;
+	SAFE_ACCESS(Lasers, idx).colSizeEaseTime = colSizeEaseTime;
+	SAFE_ACCESS(Lasers, idx).startSize = startSize;
+	SAFE_ACCESS(Lasers, idx).endSize = endSize;
+	SAFE_ACCESS(Lasers, idx).sizeEaseType = sizeEaseType;
+	SAFE_ACCESS(Lasers, idx).sizeEaseTime = sizeEaseTime;
 	if (aim == AIM_TRUE) {
-		SAFE_PTR_ACCESS(Lasers, idx).startAngle = Plyr.AimPlayer(pos) + startAngle;
-		SAFE_PTR_ACCESS(Lasers, idx).endAngle = Plyr.AimPlayer(pos) + endAngle;
+		SAFE_ACCESS(Lasers, idx).startAngle = Plyr.AimPlayer(pos) + startAngle;
+		SAFE_ACCESS(Lasers, idx).endAngle = Plyr.AimPlayer(pos) + endAngle;
 	}
 	else {
-		SAFE_PTR_ACCESS(Lasers, idx).startAngle = startAngle;
-		SAFE_PTR_ACCESS(Lasers, idx).endAngle = endAngle;
+		SAFE_ACCESS(Lasers, idx).startAngle = startAngle;
+		SAFE_ACCESS(Lasers, idx).endAngle = endAngle;
 	}
-	SAFE_PTR_ACCESS(Lasers, idx).angleEaseType = angleEaseType;
-	SAFE_PTR_ACCESS(Lasers, idx).angleEaseTime = angleEaseTime;
-	SAFE_PTR_ACCESS(Lasers, idx).startSpeed = startSpeed;
-	SAFE_PTR_ACCESS(Lasers, idx).endSpeed = endSpeed;
-	SAFE_PTR_ACCESS(Lasers, idx).speedEaseType = speedEaseType;
-	SAFE_PTR_ACCESS(Lasers, idx).speedEaseTime = speedEaseTime;
-	SAFE_PTR_ACCESS(Lasers, idx).popT = t;
-	SAFE_PTR_ACCESS(Lasers, idx).length = length;
-	SAFE_PTR_ACCESS(Lasers, idx).width = width;
-	SAFE_PTR_ACCESS(Lasers, idx).frontNode = 0;
-	SAFE_PTR_ACCESS(Lasers, idx).currentNodeNum = 0;
-	SAFE_PTR_ACCESS(Lasers, idx).index = idx;
-	SAFE_PTR_ACCESS(Lasers, idx).ID = ID;
-	SAFE_PTR_ACCESS(Lasers, idx).params = params;
+	SAFE_ACCESS(Lasers, idx).angleEaseType = angleEaseType;
+	SAFE_ACCESS(Lasers, idx).angleEaseTime = angleEaseTime;
+	SAFE_ACCESS(Lasers, idx).startSpeed = startSpeed;
+	SAFE_ACCESS(Lasers, idx).endSpeed = endSpeed;
+	SAFE_ACCESS(Lasers, idx).speedEaseType = speedEaseType;
+	SAFE_ACCESS(Lasers, idx).speedEaseTime = speedEaseTime;
+	SAFE_ACCESS(Lasers, idx).popT = t;
+	SAFE_ACCESS(Lasers, idx).length = length;
+	SAFE_ACCESS(Lasers, idx).width = width;
+	SAFE_ACCESS(Lasers, idx).frontNode = 0;
+	SAFE_ACCESS(Lasers, idx).currentNodeNum = 0;
+	SAFE_ACCESS(Lasers, idx).index = idx;
+	SAFE_ACCESS(Lasers, idx).ID = ID;
+	SAFE_ACCESS(Lasers, idx).params = params;
 	return 0;
 }
 
@@ -359,13 +359,13 @@ ParallelUpdateLasers(std::array<Laser, MAX_LASER>& lasers) {
 
 void
 MoveLasers() {
-	ParallelUpdateLasers(*Lasers);
-	for (auto* L : LaserPtrs) {
-		L->ShowLaser();
-	}
 	if (t % 10 == 0) {
 		std::sort(LaserPtrs.begin(), LaserPtrs.end(), [](const Laser* a, const Laser* b) {
 			return a->popT < b->popT;
 			});
+	}
+	ParallelUpdateLasers(Lasers);
+	for (auto* L : LaserPtrs) {
+		L->ShowLaser();
 	}
 }

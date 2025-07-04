@@ -8,7 +8,7 @@
 #include "playerShot.h"
 #include "resLoad.h"
 #include "Sound.h"
-#include "Effect.h"
+#include "Particle.h"
 
 resLoad res;
 imageRes imgRes;
@@ -98,9 +98,9 @@ Init() {
 	SAFE_ACCESS(defaultBulletBlend, B_LIGHT) = BLEND_ADD;
 	SAFE_ACCESS(defaultBulletBlend, B_BIG) = BLEND_ADD;
 
-	defaultEffectBlend.fill(BLEND_NOBLEND);
-	SAFE_ACCESS(defaultEffectBlend, EF_LIGHT) = BLEND_ADD;
-	SAFE_ACCESS(defaultEffectBlend, EF_STAR) = BLEND_ADD;
+	defaultParticleBlend.fill(BLEND_NOBLEND);
+	SAFE_ACCESS(defaultParticleBlend, P_LIGHT) = BLEND_ADD;
+	SAFE_ACCESS(defaultParticleBlend, P_STAR) = BLEND_ADD;
 
 	defaultEnemyBlend.fill(BLEND_NOBLEND);
 
@@ -114,9 +114,9 @@ Init() {
 	SAFE_ACCESS(drawRatioBulletGraphs, B_LIGHT) = 0.25f;
 	SAFE_ACCESS(drawRatioBulletGraphs, B_BIG) = 0.75f;
 
-	drawRatioEffectGraphs.fill(1.0f);
-	SAFE_ACCESS(drawRatioEffectGraphs, EF_LIGHT) = 0.25f;
-	SAFE_ACCESS(drawRatioEffectGraphs, EF_STAR) = 0.125f;
+	drawRatioParticleGraphs.fill(1.0f);
+	SAFE_ACCESS(drawRatioParticleGraphs, P_LIGHT) = 0.25f;
+	SAFE_ACCESS(drawRatioParticleGraphs, P_STAR) = 0.125f;
 
 	drawRatioEnemyGraphs.fill(1.0f);
 	SAFE_ACCESS(drawRatioEnemyGraphs, EN_NORMAL) = 0.5f;
@@ -125,24 +125,24 @@ Init() {
 	SAFE_ACCESS(drawRatioPlayerShotGraphs, PS_NORMAL) = 0.5f;
 
 	for (int i = 0; i < MAX_BULLET; i++) {
-		SAFE_ACCESS(BulletPtrs, i) = &SAFE_PTR_ACCESS(Bullets, i);
+		SAFE_ACCESS(BulletPtrs, i) = &SAFE_ACCESS(Bullets, i);
 		BlankBullets.emplace_back(i);
 	}
 	for (int i = 0; i < MAX_LASER; i++) {
-		SAFE_ACCESS(LaserPtrs, i) = &SAFE_PTR_ACCESS(Lasers, i);
+		SAFE_ACCESS(LaserPtrs, i) = &SAFE_ACCESS(Lasers, i);
 		BlankLasers.emplace_back(i);
 	}
 	for (int i = 0; i < MAX_ENEMY; i++) {
-		SAFE_ACCESS(EnemyPtrs, i) = &SAFE_PTR_ACCESS(Enemies, i);
+		SAFE_ACCESS(EnemyPtrs, i) = &SAFE_ACCESS(Enemies, i);
 		BlankEnemies.emplace_back(i);
 	}
 	for (int i = 0; i < MAX_PLAYER_SHOT; i++) {
-		SAFE_ACCESS(PlayerShotPtrs, i) = &SAFE_PTR_ACCESS(plyrShots, i);
+		SAFE_ACCESS(PlayerShotPtrs, i) = &SAFE_ACCESS(plyrShots, i);
 		BlankPlayerShots.emplace_back(i);
 	}
-	for (int i = 0; i < MAX_EFFECT; i++) {
-		SAFE_ACCESS(EffectPtrs, i) = &SAFE_PTR_ACCESS(Effects, i);
-		BlankEffects.emplace_back(i);
+	for (int i = 0; i < MAX_PARTICLE; i++) {
+		SAFE_ACCESS(ParticlePtrs, i) = &SAFE_ACCESS(Particles, i);
+		BlankParticles.emplace_back(i);
 	}
 }
 
@@ -150,7 +150,7 @@ void
 ResInit() {
 	res.UIGHLoad();
 	res.BulletGHLoad();
-	res.EffectGHLoad();
+	res.ParticleGHLoad();
 	res.EnemyGHLoad();
 	res.FaceGHLoad();
 	res.PlayerGHLoad();
@@ -164,7 +164,7 @@ ResInit() {
 	playerCanvas = MakeScreen(1920, 1080, 1);
 	playerShotCanvas = MakeScreen(1920, 1080, 1);
 	bombCanvas = MakeScreen(1920, 1080, 1);
-	effectCanvas = MakeScreen(1920, 1080, 1);
+	particleCanvas = MakeScreen(1920, 1080, 1);
 	screenCanvas = MakeScreen(1920, 1080, 1);
 	UICanvas = MakeScreen(1920, 1080, 1);
 }

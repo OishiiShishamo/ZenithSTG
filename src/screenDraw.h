@@ -7,7 +7,7 @@ extern int bulletCanvas;
 extern int playerCanvas;
 extern int playerShotCanvas;
 extern int bombCanvas;
-extern int effectCanvas;
+extern int particleCanvas;
 extern int screenCanvas;
 extern int UICanvas;
 

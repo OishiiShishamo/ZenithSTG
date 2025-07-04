@@ -1,7 +1,7 @@
 ﻿#include "Main.h"
 
 #include "Bullet.h"
-#include "Effect.h"
+#include "Particle.h"
 #include "Enemy.h"
 #include "Laser.h"
 #include "Object.h"
@@ -9,7 +9,7 @@
 #include "playerShot.h"
 #include "Vec2D.h"
 
-std::unique_ptr<std::array<playerShot, MAX_PLAYER_SHOT>> plyrShots = std::make_unique<std::array<playerShot, MAX_PLAYER_SHOT>>();
+std::array<playerShot, MAX_PLAYER_SHOT> plyrShots;
 std::array<playerShot*, MAX_PLAYER_SHOT> PlayerShotPtrs;
 std::vector<int> BlankPlayerShots;
 std::mutex BlankPlayerShotMutex;
@@ -113,37 +113,37 @@ CreatePlayerShot(const Vec2D& pos, const Color& color, int style, int blend, int
 	if (BlankPlayerShots.empty()) return 1;
 	int idx = BlankPlayerShots.back();
 	BlankPlayerShots.pop_back();
-	SAFE_PTR_ACCESS(plyrShots, idx).flags = IS_ALIVE | isCol * IS_COL;
-	SAFE_PTR_ACCESS(plyrShots, idx).objType = OBJECT_PLAYER_SHOT;
-	SAFE_PTR_ACCESS(plyrShots, idx).pos = pos;
-	SAFE_PTR_ACCESS(plyrShots, idx).color = color;
-	SAFE_PTR_ACCESS(plyrShots, idx).style = style;
-	SAFE_PTR_ACCESS(plyrShots, idx).blend = blend;
-	SAFE_PTR_ACCESS(plyrShots, idx).pal = pal;
-	SAFE_PTR_ACCESS(plyrShots, idx).startColSize = startColSize;
-	SAFE_PTR_ACCESS(plyrShots, idx).endColSize = endColSize;
-	SAFE_PTR_ACCESS(plyrShots, idx).colSizeEaseType = colSizeEaseType;
-	SAFE_PTR_ACCESS(plyrShots, idx).colSizeEaseTime = colSizeEaseTime;
-	SAFE_PTR_ACCESS(plyrShots, idx).startSize = startSize;
-	SAFE_PTR_ACCESS(plyrShots, idx).endSize = endSize;
-	SAFE_PTR_ACCESS(plyrShots, idx).sizeEaseType = sizeEaseType;
-	SAFE_PTR_ACCESS(plyrShots, idx).sizeEaseTime = sizeEaseTime;
-	SAFE_PTR_ACCESS(plyrShots, idx).startAngle = startAngle;
-	SAFE_PTR_ACCESS(plyrShots, idx).endAngle = endAngle;
-	SAFE_PTR_ACCESS(plyrShots, idx).angleEaseType = angleEaseType;
-	SAFE_PTR_ACCESS(plyrShots, idx).angleEaseTime = angleEaseTime;
-	SAFE_PTR_ACCESS(plyrShots, idx).startSpeed = startSpeed;
-	SAFE_PTR_ACCESS(plyrShots, idx).endSpeed = endSpeed;
-	SAFE_PTR_ACCESS(plyrShots, idx).speedEaseType = speedEaseType;
-	SAFE_PTR_ACCESS(plyrShots, idx).speedEaseTime = speedEaseTime;
-	SAFE_PTR_ACCESS(plyrShots, idx).popT = t;
-	SAFE_PTR_ACCESS(plyrShots, idx).length = 0;
-	SAFE_PTR_ACCESS(plyrShots, idx).width = 0;
-	SAFE_PTR_ACCESS(plyrShots, idx).frontNode = 0;
-	SAFE_PTR_ACCESS(plyrShots, idx).currentNodeNum = 0;
-	SAFE_PTR_ACCESS(plyrShots, idx).index = idx;
-	SAFE_PTR_ACCESS(plyrShots, idx).ID = 0;
-	SAFE_PTR_ACCESS(plyrShots, idx).params = params;
+	SAFE_ACCESS(plyrShots, idx).flags = IS_ALIVE | isCol * IS_COL;
+	SAFE_ACCESS(plyrShots, idx).objType = OBJECT_PLAYER_SHOT;
+	SAFE_ACCESS(plyrShots, idx).pos = pos;
+	SAFE_ACCESS(plyrShots, idx).color = color;
+	SAFE_ACCESS(plyrShots, idx).style = style;
+	SAFE_ACCESS(plyrShots, idx).blend = blend;
+	SAFE_ACCESS(plyrShots, idx).pal = pal;
+	SAFE_ACCESS(plyrShots, idx).startColSize = startColSize;
+	SAFE_ACCESS(plyrShots, idx).endColSize = endColSize;
+	SAFE_ACCESS(plyrShots, idx).colSizeEaseType = colSizeEaseType;
+	SAFE_ACCESS(plyrShots, idx).colSizeEaseTime = colSizeEaseTime;
+	SAFE_ACCESS(plyrShots, idx).startSize = startSize;
+	SAFE_ACCESS(plyrShots, idx).endSize = endSize;
+	SAFE_ACCESS(plyrShots, idx).sizeEaseType = sizeEaseType;
+	SAFE_ACCESS(plyrShots, idx).sizeEaseTime = sizeEaseTime;
+	SAFE_ACCESS(plyrShots, idx).startAngle = startAngle;
+	SAFE_ACCESS(plyrShots, idx).endAngle = endAngle;
+	SAFE_ACCESS(plyrShots, idx).angleEaseType = angleEaseType;
+	SAFE_ACCESS(plyrShots, idx).angleEaseTime = angleEaseTime;
+	SAFE_ACCESS(plyrShots, idx).startSpeed = startSpeed;
+	SAFE_ACCESS(plyrShots, idx).endSpeed = endSpeed;
+	SAFE_ACCESS(plyrShots, idx).speedEaseType = speedEaseType;
+	SAFE_ACCESS(plyrShots, idx).speedEaseTime = speedEaseTime;
+	SAFE_ACCESS(plyrShots, idx).popT = t;
+	SAFE_ACCESS(plyrShots, idx).length = 0;
+	SAFE_ACCESS(plyrShots, idx).width = 0;
+	SAFE_ACCESS(plyrShots, idx).frontNode = 0;
+	SAFE_ACCESS(plyrShots, idx).currentNodeNum = 0;
+	SAFE_ACCESS(plyrShots, idx).index = idx;
+	SAFE_ACCESS(plyrShots, idx).ID = 0;
+	SAFE_ACCESS(plyrShots, idx).params = params;
 	return 0;
 }
 
@@ -157,7 +157,7 @@ ParallelUpdatePlayerShots(std::array<playerShot, MAX_PLAYER_SHOT>& playerShots) 
 
 void
 MovePlayerShots() {
-	ParallelUpdatePlayerShots(*plyrShots);
+	ParallelUpdatePlayerShots(plyrShots);
 	for (auto* PS : PlayerShotPtrs) {
 		PS->ShowPlayerShot();
 	}

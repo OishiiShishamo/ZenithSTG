@@ -1,7 +1,7 @@
 #include "Graze.h"
 #include "Score.h"
 #include "Sound.h"
-#include "Effect.h"
+#include "Particle.h"
 #include "Player.h"
 
 void
@@ -9,5 +9,5 @@ Graze() {
 	addScore(GrazeScore);
 	graze++;
 	soundMng.ReserveSE(SE_GRAZE);
-	GrazeEffect(Plyr.pos);
+	GrazeParticle(Plyr.pos);
 }

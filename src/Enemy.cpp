@@ -1,7 +1,7 @@
 ﻿#include "Main.h"
 
 #include "Bullet.h"
-#include "Effect.h"
+#include "Particle.h"
 #include "Enemy.h"
 #include "Laser.h"
 #include "Object.h"
@@ -11,7 +11,7 @@
 
 //TODO: 引数減らしたラッパー関数作る
 
-std::unique_ptr<std::array<Enemy, MAX_ENEMY>> Enemies = std::make_unique<std::array<Enemy, MAX_ENEMY>>();
+std::array<Enemy, MAX_ENEMY> Enemies;
 std::array<Enemy*, MAX_ENEMY> EnemyPtrs;
 std::vector<int> BlankEnemies;
 std::mutex BlankEnemyMutex;
@@ -119,43 +119,43 @@ CreateEnemy(const Vec2D& pos, const Color& color, int style, int blend, int pal,
 	if (BlankEnemies.empty()) return 1;
 	int idx = BlankEnemies.back();
 	BlankEnemies.pop_back();
-	SAFE_PTR_ACCESS(Enemies, idx).flags = IS_ALIVE | isCol * IS_COL;
-	SAFE_PTR_ACCESS(Enemies, idx).objType = OBJECT_ENEMY;
-	SAFE_PTR_ACCESS(Enemies, idx).pos = pos;
-	SAFE_PTR_ACCESS(Enemies, idx).color = color;
-	SAFE_PTR_ACCESS(Enemies, idx).style = style;
-	SAFE_PTR_ACCESS(Enemies, idx).blend = blend;
-	SAFE_PTR_ACCESS(Enemies, idx).pal = pal;
-	SAFE_PTR_ACCESS(Enemies, idx).startColSize = startColSize;
-	SAFE_PTR_ACCESS(Enemies, idx).endColSize = endColSize;
-	SAFE_PTR_ACCESS(Enemies, idx).colSizeEaseType = colSizeEaseType;
-	SAFE_PTR_ACCESS(Enemies, idx).colSizeEaseTime = colSizeEaseTime;
-	SAFE_PTR_ACCESS(Enemies, idx).startSize = startSize;
-	SAFE_PTR_ACCESS(Enemies, idx).endSize = endSize;
-	SAFE_PTR_ACCESS(Enemies, idx).sizeEaseType = sizeEaseType;
-	SAFE_PTR_ACCESS(Enemies, idx).sizeEaseTime = sizeEaseTime;
+	SAFE_ACCESS(Enemies, idx).flags = IS_ALIVE | isCol * IS_COL;
+	SAFE_ACCESS(Enemies, idx).objType = OBJECT_ENEMY;
+	SAFE_ACCESS(Enemies, idx).pos = pos;
+	SAFE_ACCESS(Enemies, idx).color = color;
+	SAFE_ACCESS(Enemies, idx).style = style;
+	SAFE_ACCESS(Enemies, idx).blend = blend;
+	SAFE_ACCESS(Enemies, idx).pal = pal;
+	SAFE_ACCESS(Enemies, idx).startColSize = startColSize;
+	SAFE_ACCESS(Enemies, idx).endColSize = endColSize;
+	SAFE_ACCESS(Enemies, idx).colSizeEaseType = colSizeEaseType;
+	SAFE_ACCESS(Enemies, idx).colSizeEaseTime = colSizeEaseTime;
+	SAFE_ACCESS(Enemies, idx).startSize = startSize;
+	SAFE_ACCESS(Enemies, idx).endSize = endSize;
+	SAFE_ACCESS(Enemies, idx).sizeEaseType = sizeEaseType;
+	SAFE_ACCESS(Enemies, idx).sizeEaseTime = sizeEaseTime;
 	if (aim == AIM_TRUE) {
-		SAFE_PTR_ACCESS(Enemies, idx).startAngle = Plyr.AimPlayer(pos) + startAngle;
-		SAFE_PTR_ACCESS(Enemies, idx).endAngle = Plyr.AimPlayer(pos) + endAngle;
+		SAFE_ACCESS(Enemies, idx).startAngle = Plyr.AimPlayer(pos) + startAngle;
+		SAFE_ACCESS(Enemies, idx).endAngle = Plyr.AimPlayer(pos) + endAngle;
 	}
 	else {
-		SAFE_PTR_ACCESS(Enemies, idx).startAngle = startAngle;
-		SAFE_PTR_ACCESS(Enemies, idx).endAngle = endAngle;
+		SAFE_ACCESS(Enemies, idx).startAngle = startAngle;
+		SAFE_ACCESS(Enemies, idx).endAngle = endAngle;
 	}
-	SAFE_PTR_ACCESS(Enemies, idx).angleEaseType = angleEaseType;
-	SAFE_PTR_ACCESS(Enemies, idx).angleEaseTime = angleEaseTime;
-	SAFE_PTR_ACCESS(Enemies, idx).startSpeed = startSpeed;
-	SAFE_PTR_ACCESS(Enemies, idx).endSpeed = endSpeed;
-	SAFE_PTR_ACCESS(Enemies, idx).speedEaseType = speedEaseType;
-	SAFE_PTR_ACCESS(Enemies, idx).speedEaseTime = speedEaseTime;
-	SAFE_PTR_ACCESS(Enemies, idx).popT = t;
-	SAFE_PTR_ACCESS(Enemies, idx).length = 0;
-	SAFE_PTR_ACCESS(Enemies, idx).width = 0;
-	SAFE_PTR_ACCESS(Enemies, idx).frontNode = 0;
-	SAFE_PTR_ACCESS(Enemies, idx).currentNodeNum = 0;
-	SAFE_PTR_ACCESS(Enemies, idx).index = idx;
-	SAFE_PTR_ACCESS(Enemies, idx).ID = ID;
-	SAFE_PTR_ACCESS(Enemies, idx).params = params;
+	SAFE_ACCESS(Enemies, idx).angleEaseType = angleEaseType;
+	SAFE_ACCESS(Enemies, idx).angleEaseTime = angleEaseTime;
+	SAFE_ACCESS(Enemies, idx).startSpeed = startSpeed;
+	SAFE_ACCESS(Enemies, idx).endSpeed = endSpeed;
+	SAFE_ACCESS(Enemies, idx).speedEaseType = speedEaseType;
+	SAFE_ACCESS(Enemies, idx).speedEaseTime = speedEaseTime;
+	SAFE_ACCESS(Enemies, idx).popT = t;
+	SAFE_ACCESS(Enemies, idx).length = 0;
+	SAFE_ACCESS(Enemies, idx).width = 0;
+	SAFE_ACCESS(Enemies, idx).frontNode = 0;
+	SAFE_ACCESS(Enemies, idx).currentNodeNum = 0;
+	SAFE_ACCESS(Enemies, idx).index = idx;
+	SAFE_ACCESS(Enemies, idx).ID = ID;
+	SAFE_ACCESS(Enemies, idx).params = params;
 	return 0;
 }
 
@@ -250,7 +250,7 @@ ParallelUpdateEnemies(std::array<Enemy, MAX_ENEMY>& enemies) {
 
 void
 MoveEnemies() {
-	ParallelUpdateEnemies(*Enemies);
+	ParallelUpdateEnemies(Enemies);
 	for (auto* E : EnemyPtrs) {
 		E->ShowEnemy();
 	}

@@ -42,7 +42,7 @@ enum objectType {
 	OBJECT_BENT_LASER = 2,
 	OBJECT_ENEMY = 3,
 	OBJECT_PLAYER_SHOT = 4,
-	OBJECT_EFFECT = 5,
+	OBJECT_PARTICLE = 5,
 };
 
 enum bulletType {
@@ -54,9 +54,9 @@ enum bulletType {
 	B_BIG = 5,
 };
 
-enum effectType {
-	EF_LIGHT = 0,
-	EF_STAR = 1,
+enum particleType {
+	P_LIGHT = 0,
+	P_STAR = 1,
 };
 
 enum enemyType {

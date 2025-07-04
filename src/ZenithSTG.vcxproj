@@ -159,7 +159,7 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Easing.cpp" />
-    <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="Particle.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="FPS.cpp" />
     <ClCompile Include="Graze.cpp" />
@@ -196,7 +196,7 @@
     <ClInclude Include="Color.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="Easing.h" />
-    <ClInclude Include="Effect.h" />
+    <ClInclude Include="Particle.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="FPS.h" />
     <ClInclude Include="Graze.h" />

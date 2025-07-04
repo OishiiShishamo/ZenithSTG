@@ -7,7 +7,7 @@ int bulletCanvas;
 int playerCanvas;
 int playerShotCanvas;
 int bombCanvas;
-int effectCanvas;
+int particleCanvas;
 int screenCanvas;
 int UICanvas;
 

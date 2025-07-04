@@ -17,9 +17,9 @@ resLoad::BulletGHLoad() {
 }
 
 void
-resLoad::EffectGHLoad() {
-	LoadDivGraph("res/img/effect/Effect_Back.png", 256, 16, 16, 128, 128, imgRes.EffectBackGH.data());
-	LoadDivGraph("res/img/effect/Effect_Front.png", 256, 16, 16, 128, 128, imgRes.EffectFrontGH.data());
+resLoad::ParticleGHLoad() {
+	LoadDivGraph("res/img/particle/Particle_Back.png", 256, 16, 16, 128, 128, imgRes.ParticleBackGH.data());
+	LoadDivGraph("res/img/particle/Particle_Front.png", 256, 16, 16, 128, 128, imgRes.ParticleFrontGH.data());
 }
 
 void

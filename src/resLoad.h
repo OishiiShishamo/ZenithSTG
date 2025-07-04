@@ -6,7 +6,7 @@ class resLoad {
 public:
 	void UIGHLoad();
 	void BulletGHLoad();
-	void EffectGHLoad();
+	void ParticleGHLoad();
 	void EnemyGHLoad();
 	void FaceGHLoad();
 	void PlayerGHLoad();

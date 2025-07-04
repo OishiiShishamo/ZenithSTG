@@ -13,7 +13,7 @@ class Laser;
 class Enemy;
 class Player;
 class playerShot;
-class Effect;
+class Particle;
 class mainLoop;
 class Vec2D;
 class Script;
@@ -49,8 +49,8 @@ struct imageRes {
 	std::array<int, GRAPHIC_HANDLER_NUM> UIGH;
 	std::array<int, GRAPHIC_HANDLER_NUM> BulletBackGH;
 	std::array<int, GRAPHIC_HANDLER_NUM> BulletFrontGH;
-	std::array<int, GRAPHIC_HANDLER_NUM> EffectBackGH;
-	std::array<int, GRAPHIC_HANDLER_NUM> EffectFrontGH;
+	std::array<int, GRAPHIC_HANDLER_NUM> ParticleBackGH;
+	std::array<int, GRAPHIC_HANDLER_NUM> ParticleFrontGH;
 	std::array<int, GRAPHIC_HANDLER_NUM> EnemyGH;
 	std::array<int, GRAPHIC_HANDLER_NUM> FaceGH;
 	std::array<int, GRAPHIC_HANDLER_NUM> PlayerGH;
@@ -67,21 +67,21 @@ extern mainLoop Loop;
 
 extern std::array<Script, STAGE_NUM> Scripts;
 
-extern std::unique_ptr<std::array<Bullet, MAX_BULLET>> Bullets;
+extern std::array<Bullet, MAX_BULLET> Bullets;
 extern std::array<Bullet*, MAX_BULLET> BulletPtrs;
 extern std::vector<int> BlankBullets;
-extern std::unique_ptr<std::array<Laser, MAX_LASER>> Lasers;
+extern std::array<Laser, MAX_LASER> Lasers;
 extern std::array<Laser*, MAX_LASER> LaserPtrs;
 extern std::vector<int> BlankLasers;
-extern std::unique_ptr<std::array<Enemy, MAX_ENEMY>> Enemies;
+extern std::array<Enemy, MAX_ENEMY> Enemies;
 extern std::array<Enemy*, MAX_ENEMY> EnemyPtrs;
 extern std::vector<int> BlankEnemies;
-extern std::unique_ptr<std::array<playerShot, MAX_PLAYER_SHOT>> plyrShots;
+extern std::array<playerShot, MAX_PLAYER_SHOT> plyrShots;
 extern std::array<playerShot*, MAX_PLAYER_SHOT> PlayerShotPtrs;
 extern std::vector<int> BlankPlayerShots;
-extern std::unique_ptr<std::array<Effect, MAX_EFFECT>> Effects;
-extern std::array<Effect*, MAX_EFFECT> EffectPtrs;
-extern std::vector<int> BlankEffects;
+extern std::array<Particle, MAX_PARTICLE> Particles;
+extern std::array<Particle*, MAX_PARTICLE> ParticlePtrs;
+extern std::vector<int> BlankParticles;
 
 extern std::random_device rng;
 
@@ -95,11 +95,11 @@ extern std::array<double, FPS_HISTORY_LENGTH> fpsHistory;
 extern std::array<int, GRAPHIC_HANDLER_NUM> defaultBulletBlend;
 extern std::array<int, GRAPHIC_HANDLER_NUM> defaultEnemyBlend;
 extern std::array<int, GRAPHIC_HANDLER_NUM> defaultPlayerShotBlend;
-extern std::array<int, GRAPHIC_HANDLER_NUM> defaultEffectBlend;
+extern std::array<int, GRAPHIC_HANDLER_NUM> defaultParticleBlend;
 extern std::array<double, GRAPHIC_HANDLER_NUM> drawRatioBulletGraphs;
 extern std::array<double, GRAPHIC_HANDLER_NUM> drawRatioEnemyGraphs;
 extern std::array<double, GRAPHIC_HANDLER_NUM> drawRatioPlayerShotGraphs;
-extern std::array<double, GRAPHIC_HANDLER_NUM> drawRatioEffectGraphs;
+extern std::array<double, GRAPHIC_HANDLER_NUM> drawRatioParticleGraphs;
 extern int fpsHistoryIndex;
 
 extern double RandTMP;
