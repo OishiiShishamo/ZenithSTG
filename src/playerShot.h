@@ -5,8 +5,8 @@
 */
 
 #pragma once
-#ifndef PLAYERSHOT_H
-#define PLAYERSHOT_H
+#ifndef ZENITHSTG_SRC_PLAYERSHOT_H_
+#define ZENITHSTG_SRC_PLAYERSHOT_H_
 
 #include "Object.h"
 

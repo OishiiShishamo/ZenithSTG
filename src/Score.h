@@ -1,6 +1,6 @@
 #pragma once
-#ifndef SCORE_H
-#define SCORE_H
+#ifndef ZENITHSTG_SRC_SCORE_H_
+#define ZENITHSTG_SRC_SCORE_H_
 
 void addScore(long long num);
 void setScore(long long num);

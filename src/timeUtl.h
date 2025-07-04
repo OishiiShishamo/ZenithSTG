@@ -1,6 +1,6 @@
 ﻿#pragma once
-#ifndef TIMEUTL_H
-#define TIMEUTL_H
+#ifndef ZENITHSTG_SRC_TIMEUTL_H_
+#define ZENITHSTG_SRC_TIMEUTL_H_
 
 class timeUtl {
 public:

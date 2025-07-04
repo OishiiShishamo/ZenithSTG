@@ -5,8 +5,8 @@
 */
 
 #pragma once
-#ifndef MATH_TOOL_H
-#define MATH_TOOL_H
+#ifndef ZENITHSTG_SRC_MATHTOOL_H_
+#define ZENITHSTG_SRC_MATHTOOL_H_
 
 /**
 * @brief ニュートン法を用いた高速な平方根の計算 / Fast square root calculations using Newton's method.

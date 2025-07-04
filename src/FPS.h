@@ -5,8 +5,8 @@
 */
 
 #pragma once
-#ifndef FPS_H
-#define FPS_H
+#ifndef ZENITHSTG_SRC_FPS_H_
+#define ZENITHSTG_SRC_FPS_H_
 
 #include "Color.h"
 

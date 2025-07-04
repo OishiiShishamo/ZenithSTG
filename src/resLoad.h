@@ -1,6 +1,6 @@
 ﻿#pragma once
-#ifndef RESLOAD_H
-#define RESLOAD_H
+#ifndef ZENITHSTG_SRC_RESLOAD_H_
+#define ZENITHSTG_SRC_RESLOAD_H_
 
 class resLoad {
 public:

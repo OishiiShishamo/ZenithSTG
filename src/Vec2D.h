@@ -5,8 +5,8 @@
 */
 
 #pragma once
-#ifndef VEC2D_H
-#define VEC2D_H
+#ifndef ZENITHSTG_SRC_VEC2D_H_
+#define ZENITHSTG_SRC_VEC2D_H_
 
 class alignas(16) Vec2D {
 public:

@@ -1,6 +1,6 @@
 #pragma once
-#ifndef GLOBAL_H
-#define GLOBAL_H
+#ifndef ZENITHSTG_SRC_GLOBAL_H_
+#define ZENITHSTG_SRC_GLOBAL_H_
 
 #include "Debug.h"
 #include "Params.h"

@@ -5,8 +5,8 @@
 */
 
 #pragma once
-#ifndef OBJECT_H
-#define OBJECT_H
+#ifndef ZENITHSTG_SRC_OBJECT_H_
+#define ZENITHSTG_SRC_OBJECT_H_
 
 /**
 * @brief オブジェクトの生成に関するもの / Relates to the creation of objects

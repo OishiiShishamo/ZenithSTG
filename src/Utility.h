@@ -5,8 +5,8 @@
 */
 
 #pragma once
-#ifndef UTILITY_H
-#define UTILITY_H
+#ifndef ZENITHSTG_SRC_UTILITY_H_
+#define ZENITHSTG_SRC_UTILITY_H_
 
 /**
 * @brief 画像を3D回転させて描画する。 / Draws an image with 3D rotation.

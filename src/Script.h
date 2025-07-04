@@ -1,6 +1,6 @@
 #pragma once
-#ifndef SCRIPT_H
-#define SCRIPT_H
+#ifndef ZENITHSTG_SRC_SCRIPT_H_
+#define ZENITHSTG_SRC_SCRIPT_H_
 
 class Script {
 public:

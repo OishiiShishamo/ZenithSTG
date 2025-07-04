@@ -1,6 +1,6 @@
 #pragma once
-#ifndef PARAMS_H
-#define PARAMS_H
+#ifndef ZENITHSTG_SRC_PARAMS_H_
+#define ZENITHSTG_SRC_PARAMS_H_
 
 #define UI_POS_OFFSET Vec2D(1400, 50)
 

@@ -1,6 +1,6 @@
 ﻿#pragma once
-#ifndef EASING_H
-#define EASING_H
+#ifndef ZENITHSTG_SRC_EASING_H_
+#define ZENITHSTG_SRC_EASING_H_
 
 #include "Main.h"
 

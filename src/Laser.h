@@ -5,8 +5,8 @@
 */
 
 #pragma once
-#ifndef LASER_H
-#define LASER_H
+#ifndef ZENITHSTG_SRC_LASER_H_
+#define ZENITHSTG_SRC_LASER_H_
 
 #include "Object.h"
 

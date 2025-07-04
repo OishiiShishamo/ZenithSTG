@@ -1,6 +1,6 @@
 #pragma once
-#ifndef SOUND_H
-#define SOUND_H
+#ifndef ZENITHSTG_SRC_SOUND_H_
+#define ZENITHSTG_SRC_SOUND_H_
 
 #include "Global.h"
 #include "Main.h"

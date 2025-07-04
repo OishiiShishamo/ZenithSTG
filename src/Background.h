@@ -1,6 +1,6 @@
 #pragma once
-#ifndef BACKGROUND_H
-#define BACKGROUND_H
+#ifndef ZENITHSTG_SRC_BACKGROUND_H_
+#define ZENITHSTG_SRC_BACKGROUND_H_
 
 class Background {
 public:

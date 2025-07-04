@@ -1,6 +1,6 @@
 ﻿#pragma once
-#ifndef COLLISION_H
-#define COLLISION_H
+#ifndef ZENITHSTG_SRC_COLLISION_H_
+#define ZENITHSTG_SRC_COLLISION_H_
 
 #include "Main.h"
 

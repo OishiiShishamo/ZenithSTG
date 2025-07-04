@@ -1,6 +1,6 @@
 #pragma once
-#ifndef PARTICLE_H
-#define PARTICLE_H
+#ifndef ZENITHSTG_SRC_PARTICLE_H_
+#define ZENITHSTG_SRC_PARTICLE_H_
 
 #include "Object.h"
 

@@ -1,6 +1,6 @@
 #pragma once
-#ifndef GRAZE_H
-#define GRAZE_H
+#ifndef ZENITHSTG_SRC_GRAZE_H_
+#define ZENITHSTG_SRC_GRAZE_H_
 
 void Graze();
 

@@ -5,8 +5,8 @@
 */
 
 #pragma once
-#ifndef INIT_H
-#define INIT_H
+#ifndef ZENITHSTG_SRC_INIT_H_
+#define ZENITHSTG_SRC_INIT_H_
 
 /**
 * @brief DxLib_Init()実行前に行う初期化処理 / Initialization process performed before DxLib_Init() execution.

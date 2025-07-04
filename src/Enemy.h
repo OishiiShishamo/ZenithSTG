@@ -5,8 +5,8 @@
 */
 
 #pragma once
-#ifndef ENEMY_H
-#define ENEMY_H
+#ifndef ZENITHSTG_SRC_ENEMY_H_
+#define ZENITHSTG_SRC_ENEMY_H_
 
 #include "Object.h"
 

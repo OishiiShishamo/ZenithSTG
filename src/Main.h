@@ -1,6 +1,6 @@
 ﻿#pragma once
-#ifndef MAIN_H
-#define MAIN_H
+#ifndef ZENITHSTG_SRC_MAIN_H_
+#define ZENITHSTG_SRC_MAIN_H_
 
 struct imageRes;
 

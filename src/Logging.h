@@ -1,6 +1,6 @@
 #pragma once
-#ifndef LOGGING_H
-#define LOGGING_H
+#ifndef ZENITHSTG_SRC_LOGGING_H_
+#define ZENITHSTG_SRC_LOGGING_H_
 
 #include "Main.h"
 

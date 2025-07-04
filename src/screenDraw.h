@@ -1,6 +1,6 @@
 #pragma once
-#ifndef SCREEN_DRAW_H
-#define SCREEN_DRAW_H
+#ifndef ZENITHSTG_SRC_SCREEN_DRAW_H_
+#define ZENITHSTG_SRC_SCREEN_DRAW_H_
 
 extern int backgroundCanvas;
 extern int bulletCanvas;

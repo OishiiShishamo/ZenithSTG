@@ -5,8 +5,8 @@
 */
 
 #pragma once
-#ifndef VEC3D_H
-#define VEC3D_H
+#ifndef ZENITHSTG_SRC_VEC3D_H_
+#define ZENITHSTG_SRC_VEC3D_H_
 
 class Vec3D {
 public:

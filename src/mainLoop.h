@@ -1,6 +1,6 @@
 ﻿#pragma once
-#ifndef MAINLOOP_H
-#define MAINLOOP_H
+#ifndef ZENITHSTG_SRC_MAINLOOP_H_
+#define ZENITHSTG_SRC_MAINLOOP_H_
 
 #include "Main.h"
 

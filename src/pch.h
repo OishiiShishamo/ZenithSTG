@@ -1,6 +1,6 @@
 #pragma once
-#ifndef PCH_H
-#define PCH_H
+#ifndef ZENITHSTG_SRC_PCH_H_
+#define ZENITHSTG_SRC_PCH_H_
 
 #include <algorithm>
 #include <any>

@@ -1,6 +1,6 @@
 ﻿#pragma once
-#ifndef COLOR_H
-#define COLOR_H
+#ifndef ZENITHSTG_SRC_COLOR_H_
+#define ZENITHSTG_SRC_COLOR_H_
 
 #include "Main.h"
 

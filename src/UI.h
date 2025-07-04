@@ -1,6 +1,6 @@
 #pragma once
-#ifndef UI_H
-#define UI_H
+#ifndef ZENITHSTG_SRC_UI_H_
+#define ZENITHSTG_SRC_UI_H_
 
 void DrawUI(Color fontColor = Color(C_WHITE));
 

@@ -5,8 +5,8 @@
 */
 
 #pragma once
-#ifndef BULLET_H
-#define BULLET_H
+#ifndef ZENITHSTG_SRC_BULLET_H_
+#define ZENITHSTG_SRC_BULLET_H_
 
 #include "Object.h"
 

@@ -1,6 +1,6 @@
 ﻿#pragma once
-#ifndef PROPERTY_H
-#define PROPERTY_H
+#ifndef ZENITHSTG_SRC_PROPERTY_H_
+#define ZENITHSTG_SRC_PROPERTY_H_
 
 class Property {
 public:

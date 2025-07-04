@@ -1,6 +1,6 @@
 ﻿#pragma once
-#ifndef PLAYER_H
-#define PLAYER_H
+#ifndef ZENITHSTG_SRC_PLAYER_H_
+#define ZENITHSTG_SRC_PLAYER_H_
 
 #define P_DEFAULT_X CENTER_X
 #define P_DEFAULT_Y 900
