@@ -8,7 +8,7 @@
 #ifndef ZENITHSTG_SRC_FPS_H_
 #define ZENITHSTG_SRC_FPS_H_
 
-#include "Color.h"
+#include "color.h"
 
 /**
 * @brief 実FPSの計算と表示 / Calculation and display of real FPS.

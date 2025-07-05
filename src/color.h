@@ -2,7 +2,7 @@
 #ifndef ZENITHSTG_SRC_COLOR_H_
 #define ZENITHSTG_SRC_COLOR_H_
 
-#include "Main.h"
+#include "main.h"
 
 //SIMPLE
 

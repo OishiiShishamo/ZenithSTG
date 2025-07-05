@@ -2,7 +2,7 @@
 #ifndef ZENITHSTG_SRC_PARTICLE_H_
 #define ZENITHSTG_SRC_PARTICLE_H_
 
-#include "Object.h"
+#include "object.h"
 
 /**
 * @class Particle

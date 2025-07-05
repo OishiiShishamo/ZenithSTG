@@ -1,7 +1,7 @@
-﻿#include "Main.h"
+﻿#include "main.h"
 
-#include "resLoad.h"
-#include "Player.h"
+#include "res_load.h"
+#include "player.h"
 
 
 void

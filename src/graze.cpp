@@ -1,8 +1,8 @@
-#include "Graze.h"
-#include "Score.h"
-#include "Sound.h"
-#include "Particle.h"
-#include "Player.h"
+#include "graze.h"
+#include "score.h"
+#include "sound.h"
+#include "particle.h"
+#include "player.h"
 
 void
 Graze() {

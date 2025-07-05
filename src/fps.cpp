@@ -1,7 +1,7 @@
-﻿#include "Main.h"
+﻿#include "main.h"
 
-#include "FPS.h"
-#include "Bullet.h"
+#include "fps.h"
+#include "bullet.h"
 
 std::array<double, kFpsHistoryLength> fps_history;
 int fps_history_index = 0;

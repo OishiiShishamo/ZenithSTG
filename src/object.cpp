@@ -1,7 +1,7 @@
-﻿#include "Main.h"
+﻿#include "main.h"
 
-#include "Object.h"
-#include "Player.h"
+#include "object.h"
+#include "player.h"
 
 void
 Object::UpdateObject() {

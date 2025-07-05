@@ -1,8 +1,8 @@
-#include "Global.h"
-#include "Main.h"
-#include "Player.h"
-#include "UI.h"
-#include "Vec2D.h"
+#include "global.h"
+#include "main.h"
+#include "player.h"
+#include "ui.h"
+#include "vec2d.h"
 
 std::string score_str = "";
 std::string hi_score_str = "";

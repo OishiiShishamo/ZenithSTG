@@ -2,8 +2,8 @@
 #ifndef ZENITHSTG_SRC_SOUND_H_
 #define ZENITHSTG_SRC_SOUND_H_
 
-#include "Global.h"
-#include "Main.h"
+#include "global.h"
+#include "main.h"
 
 #define kSoundBgmHandlerNum 256
 #define kSoundEffectHandlerNum 256

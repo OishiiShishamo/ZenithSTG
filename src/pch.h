@@ -35,10 +35,10 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
-#include "Collision.h"
-#include "Color.h"
-#include "Easing.h"
-#include "Logging.h"
+#include "collision.h"
+#include "color.h"
+#include "easing.h"
+#include "logging.h"
 #include "screen_draw.h"
 
 #endif

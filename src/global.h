@@ -2,11 +2,11 @@
 #ifndef ZENITHSTG_SRC_GLOBAL_H_
 #define ZENITHSTG_SRC_GLOBAL_H_
 
-#include "Debug.h"
-#include "Params.h"
-#include "Property.h"
-#include "Score.h"
-#include "Sound.h"
+#include "debug.h"
+#include "params.h"
+#include "property.h"
+#include "score.h"
+#include "sound.h"
 
 inline constexpr double kPi = 3.1415926535897932384626433832795;
 inline constexpr double kTau = kPi * 2;

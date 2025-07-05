@@ -1,6 +1,6 @@
-#include "Main.h"
+#include "main.h"
 
-#include "Player.h"
+#include "player.h"
 
 int background_canvas;
 int bullet_canvas;

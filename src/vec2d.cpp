@@ -1,7 +1,7 @@
-﻿#include "Global.h"
+﻿#include "global.h"
 
-#include "Vec2D.h"
-#include "mathTool.h"
+#include "vec2d.h"
+#include "math_tool.h"
 
 double
 CrossProduct(const Vec2D& v1, const Vec2D& v2, const Vec2D& v3) {

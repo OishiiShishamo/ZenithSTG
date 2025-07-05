@@ -1,8 +1,8 @@
 #include "gtest/gtest.h"
-#include "Vec2D.h"
-#include "Main.h"
-#include "Easing.h"
-#include "Global.h"
+#include "vec2d.h"
+#include "main.h"
+#include "easing.h"
+#include "global.h"
 
 const double EPSILON = 1e-9;
 

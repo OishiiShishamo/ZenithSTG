@@ -1,6 +1,6 @@
-﻿#include "Player.h"
+﻿#include "player.h"
 #include "player_shot.h"
-#include "Sound.h"
+#include "sound.h"
 
 //TODO: もっと真面目に作る
 //TODO: コントローラーに対応させる

@@ -22,11 +22,11 @@ class Background;
 
 #define NOMINMAX
 
-#include "Global.h"
-#include "Params.h"
+#include "global.h"
+#include "params.h"
 
-#include "Utility.h"
-#include "Vec2D.h"
+#include "utility.h"
+#include "vec2d.h"
 
 #define PRINT(...) printf(__VA_ARGS__)	
 

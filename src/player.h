@@ -16,7 +16,7 @@
 
 #define kPlayerNum 1
 
-#include "Main.h"
+#include "main.h"
 
 class Player {
 public:

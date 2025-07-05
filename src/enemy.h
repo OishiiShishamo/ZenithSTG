@@ -8,7 +8,7 @@
 #ifndef ZENITHSTG_SRC_ENEMY_H_
 #define ZENITHSTG_SRC_ENEMY_H_
 
-#include "Object.h"
+#include "object.h"
 
 class Enemy : public Object {
 public:

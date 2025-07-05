@@ -1,4 +1,4 @@
-#include "Vec3D.h"
+#include "vec3d.h"
 
 Vec3D
 sumVec3D(Vec3D v1, Vec3D v2) {

@@ -1,18 +1,18 @@
-﻿#include "Main.h"
+﻿#include "main.h"
 
-#include "Bullet.h"
-#include "Enemy.h"
-#include "FPS.h"
-#include "Init.h"
-#include "Laser.h"
+#include "bullet.h"
+#include "enemy.h"
+#include "fps.h"
+#include "init.h"
+#include "laser.h"
 #include "main_loop.h"
-#include "Object.h"
-#include "Player.h"
+#include "object.h"
+#include "player.h"
 #include "player_shot.h"
 #include "res_load.h"
-#include "Script.h"
+#include "script.h"
 #include "time_utl.h"
-#include "Utility.h"
+#include "utility.h"
 
 //TODO: リファクタリングする
 //TODO: フォルダ構成を真面目にやる

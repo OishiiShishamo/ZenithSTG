@@ -1,10 +1,10 @@
-#include "Main.h"
+#include "main.h"
 
 #include "background.h"
-#include "Bullet.h"
-#include "Enemy.h"
-#include "Laser.h"
-#include "Script.h"
+#include "bullet.h"
+#include "enemy.h"
+#include "laser.h"
+#include "script.h"
 
 std::array<Script, kStageNum> scripts;
 

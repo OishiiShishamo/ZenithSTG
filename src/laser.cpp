@@ -1,16 +1,16 @@
-﻿#include "Main.h"
+﻿#include "main.h"
 
-#include "Bullet.h"
-#include "Particle.h"
-#include "Enemy.h"
-#include "Graze.h"
-#include "Laser.h"
-#include "Object.h"
-#include "Player.h"
+#include "bullet.h"
+#include "particle.h"
+#include "enemy.h"
+#include "graze.h"
+#include "laser.h"
+#include "object.h"
+#include "player.h"
 #include "player_shot.h"
-#include "Sound.h"
+#include "sound.h"
 #include "time_utl.h"
-#include "Vec2D.h"
+#include "vec2d.h"
 
 std::array<Laser, kMaxLaser> lasers;
 std::array<Laser*, kMaxLaser> laser_ptrs;

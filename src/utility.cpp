@@ -1,6 +1,6 @@
-﻿#include "Main.h"
+﻿#include "main.h"
 
-#include "Utility.h"
+#include "utility.h"
 
 bool debuging = true;
 

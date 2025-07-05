@@ -2,7 +2,7 @@
 #ifndef ZENITHSTG_SRC_MAINLOOP_H_
 #define ZENITHSTG_SRC_MAINLOOP_H_
 
-#include "Main.h"
+#include "main.h"
 
 //TODO: 変数名いい感じにする
 

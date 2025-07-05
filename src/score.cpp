@@ -1,5 +1,5 @@
-#include "Main.h"
-#include "Score.h"
+#include "main.h"
+#include "score.h"
 
 void
 AddScore(long long num) {

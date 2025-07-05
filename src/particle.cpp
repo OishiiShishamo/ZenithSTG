@@ -1,6 +1,6 @@
-#include "Main.h"
-#include "Particle.h"
-#include "Player.h"
+#include "main.h"
+#include "particle.h"
+#include "player.h"
 
 std::array<Particle, kMaxParticle> particles;
 std::array<Particle*, kMaxParticle> particle_ptrs;

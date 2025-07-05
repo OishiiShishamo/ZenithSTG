@@ -8,6 +8,6 @@ public:
 	void DrawBackground();
 };
 
-extern Background BG;
+extern Background bg_;
 
 #endif

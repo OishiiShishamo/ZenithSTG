@@ -167,8 +167,8 @@
     <ClCompile Include="Laser.cpp" />
     <ClCompile Include="Logging.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="mainLoop.cpp" />
-    <ClCompile Include="mathTool.cpp" />
+    <ClCompile Include="main_loop.cpp" />
+    <ClCompile Include="math_tool.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -177,13 +177,13 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="playerShot.cpp" />
-    <ClCompile Include="resLoad.cpp" />
+    <ClCompile Include="player_shot.cpp" />
+    <ClCompile Include="res_load.cpp" />
     <ClCompile Include="Score.cpp" />
-    <ClCompile Include="screenDraw.cpp" />
+    <ClCompile Include="screen_draw.cpp" />
     <ClCompile Include="Script.cpp" />
     <ClCompile Include="Sound.cpp" />
-    <ClCompile Include="timeUtl.cpp" />
+    <ClCompile Include="time_utl.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Utility.cpp" />
     <ClCompile Include="Vec2D.cpp" />
@@ -205,20 +205,20 @@
     <ClInclude Include="Laser.h" />
     <ClInclude Include="Logging.h" />
     <ClInclude Include="Main.h" />
-    <ClInclude Include="mainLoop.h" />
-    <ClInclude Include="mathTool.h" />
+    <ClInclude Include="main_loop.h" />
+    <ClInclude Include="math_tool.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Params.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="playerShot.h" />
+    <ClInclude Include="player_shot.h" />
     <ClInclude Include="Property.h" />
-    <ClInclude Include="resLoad.h" />
+    <ClInclude Include="res_load.h" />
     <ClInclude Include="Score.h" />
-    <ClInclude Include="screenDraw.h" />
+    <ClInclude Include="screen_draw.h" />
     <ClInclude Include="Script.h" />
     <ClInclude Include="Sound.h" />
-    <ClInclude Include="timeUtl.h" />
+    <ClInclude Include="time_utl.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="Utility.h" />
     <ClInclude Include="Vec2D.h" />

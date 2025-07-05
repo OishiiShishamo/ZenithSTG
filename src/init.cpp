@@ -1,14 +1,14 @@
-﻿#include "Main.h"
+﻿#include "main.h"
 
-#include "Bullet.h"
-#include "Enemy.h"
+#include "bullet.h"
+#include "enemy.h"
 #include "init.h"
-#include "Laser.h"
-#include "Player.h"
+#include "laser.h"
+#include "player.h"
 #include "player_shot.h"
 #include "res_load.h"
-#include "Sound.h"
-#include "Particle.h"
+#include "sound.h"
+#include "particle.h"
 
 resLoad res;
 imageRes img_res;

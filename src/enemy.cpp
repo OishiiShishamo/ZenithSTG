@@ -1,15 +1,13 @@
-﻿#include "Main.h"
+﻿#include "main.h"
 
-#include "Bullet.h"
-#include "Particle.h"
-#include "Enemy.h"
-#include "Laser.h"
-#include "Object.h"
-#include "Player.h"
+#include "bullet.h"
+#include "particle.h"
+#include "enemy.h"
+#include "laser.h"
+#include "object.h"
+#include "player.h"
 #include "player_shot.h"
-#include "Vec2D.h"
-
-//TODO: 引数減らしたラッパー関数作る
+#include "vec2d.h"
 
 std::array<Enemy, kMaxEnemy> enemies;
 std::array<Enemy*, kMaxEnemy> enemy_ptrs;

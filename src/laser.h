@@ -8,7 +8,7 @@
 #ifndef ZENITHSTG_SRC_LASER_H_
 #define ZENITHSTG_SRC_LASER_H_
 
-#include "Object.h"
+#include "object.h"
 
 class Laser : public Object {
 public:

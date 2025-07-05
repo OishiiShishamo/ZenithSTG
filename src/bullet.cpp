@@ -1,15 +1,15 @@
-﻿#include "Main.h"
+﻿#include "main.h"
 
-#include "Bullet.h"
-#include "Color.h"
-#include "Particle.h"
-#include "Enemy.h"
-#include "Laser.h"
-#include "Object.h"
-#include "Player.h"
+#include "bullet.h"
+#include "color.h"
+#include "particle.h"
+#include "enemy.h"
+#include "laser.h"
+#include "object.h"
+#include "player.h"
 #include "player_shot.h"
-#include "Graze.h"
-#include "Vec2D.h"
+#include "graze.h"
+#include "vec2d.h"
 
 std::array<Bullet, kMaxBullet> bullets;
 std::array<Bullet*, kMaxBullet> bullet_ptrs;
