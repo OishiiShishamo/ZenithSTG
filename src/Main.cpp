@@ -5,13 +5,13 @@
 #include "FPS.h"
 #include "Init.h"
 #include "Laser.h"
-#include "mainLoop.h"
+#include "main_loop.h"
 #include "Object.h"
 #include "Player.h"
-#include "playerShot.h"
-#include "resLoad.h"
+#include "player_shot.h"
+#include "res_load.h"
 #include "Script.h"
-#include "timeUtl.h"
+#include "time_utl.h"
 #include "Utility.h"
 
 //TODO: リファクタリングする

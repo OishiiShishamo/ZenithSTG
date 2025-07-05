@@ -7,7 +7,7 @@
 #include "Laser.h"
 #include "Object.h"
 #include "Player.h"
-#include "playerShot.h"
+#include "player_shot.h"
 #include "Graze.h"
 #include "Vec2D.h"
 

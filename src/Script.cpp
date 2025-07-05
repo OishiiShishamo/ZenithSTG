@@ -1,6 +1,6 @@
 #include "Main.h"
 
-#include "Background.h"
+#include "background.h"
 #include "Bullet.h"
 #include "Enemy.h"
 #include "Laser.h"

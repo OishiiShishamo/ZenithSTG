@@ -1,3 +1,5 @@
+#include "math_tool.h"
+
 double
 FastSqrt(double x, double epsilon = 1e-3) {
 	if (x < 0) return -1;

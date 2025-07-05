@@ -7,9 +7,9 @@
 #include "Laser.h"
 #include "Object.h"
 #include "Player.h"
-#include "playerShot.h"
+#include "player_shot.h"
 #include "Sound.h"
-#include "timeUtl.h"
+#include "time_utl.h"
 #include "Vec2D.h"
 
 std::array<Laser, kMaxLaser> lasers;

@@ -5,8 +5,8 @@
 #include "init.h"
 #include "Laser.h"
 #include "Player.h"
-#include "playerShot.h"
-#include "resLoad.h"
+#include "player_shot.h"
+#include "res_load.h"
 #include "Sound.h"
 #include "Particle.h"
 

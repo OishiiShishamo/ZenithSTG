@@ -1,17 +1,17 @@
 ﻿#include "Main.h"
 
-#include "Background.h"
+#include "background.h"
 #include "Bullet.h"
 #include "Particle.h"
 #include "Enemy.h"
 #include "Init.h"
 #include "Laser.h"
-#include "mainLoop.h"
+#include "main_loop.h"
 #include "Player.h"
-#include "playerShot.h"
+#include "player_shot.h"
 #include "Script.h"
 #include "Sound.h"
-#include "timeUtl.h"
+#include "time_utl.h"
 #include "UI.h"
 
 double screen_size_rate = 1.0f;

@@ -1,5 +1,5 @@
 ﻿#include "Player.h"
-#include "playerShot.h"
+#include "player_shot.h"
 #include "Sound.h"
 
 //TODO: もっと真面目に作る
