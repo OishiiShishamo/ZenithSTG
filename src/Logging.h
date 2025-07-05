@@ -4,15 +4,15 @@
 
 #include "Main.h"
 
-enum class logType {
-	LOG_INFO,
-	LOG_WARNING,
-	LOG_ERROR,
-	LOG_DEBUG,
+enum class LogType {
+	kLogInfo,
+	kLogWarning,
+	kLogError,
+	kLogDebug,
 };
 
-void addLog(std::string log);
-void writeLog();
-void Logger(std::string logString, logType logType = logType::LOG_INFO);
+void AddLogQue(std::string log);
+void WriteLog();
+void Logger(std::string log_string, LogType log_type = LogType::kLogInfo);
 
 #endif

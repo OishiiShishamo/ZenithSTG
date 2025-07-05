@@ -7,8 +7,8 @@ long long fps = 60;
 
 void
 timeUtl::StartTimer() {
-	startTime = std::chrono::high_resolution_clock::now();
-	frontFrameTime = std::chrono::nanoseconds(0);
+	start_time = std::chrono::high_resolution_clock::now();
+	front_frame_time = std::chrono::nanoseconds(0);
 }
 
 void
@@ -34,24 +34,24 @@ timeUtl::NSec2Double(std::chrono::nanoseconds ns) {
 
 std::chrono::nanoseconds
 timeUtl::Timer() {
-	return elapsedus + std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() - startTime);
+	return elapsedus + std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() - start_time);
 }
 
 std::chrono::nanoseconds
 timeUtl::ElapsedTime() {
-	std::chrono::nanoseconds tmp = frontFrameTime;
-	frontFrameTime = Timer();
-	targetFrame = static_cast<double>(Timer().count()) / std::chrono::nanoseconds(1000000000 / fps).count();
+	std::chrono::nanoseconds tmp = front_frame_time;
+	front_frame_time = Timer();
+	target_frame = static_cast<double>(Timer().count()) / std::chrono::nanoseconds(1000000000 / fps).count();
 	return Timer() - tmp;
 }
 
 void
 timeUtl::FrameWait() {
-	std::chrono::nanoseconds FrameDuration(1000000000 / fps);
-	std::chrono::nanoseconds frameElapsed = Timer() - frontFrameTime + (std::chrono::nanoseconds)(rnd() / 32768);
+	std::chrono::nanoseconds frame_duration(1000000000 / fps);
+	std::chrono::nanoseconds frame_elapsed = Timer() - front_frame_time + (std::chrono::nanoseconds)((rng() % 65535) / 32768);
 
-	if (frameElapsed < FrameDuration - std::chrono::milliseconds(2)) {
-		std::this_thread::sleep_for((FrameDuration - frameElapsed) - std::chrono::milliseconds(2));
+	if (frame_elapsed < frame_duration - std::chrono::milliseconds(2)) {
+		std::this_thread::sleep_for((frame_duration - frame_elapsed) - std::chrono::milliseconds(2));
 	}
 }
 

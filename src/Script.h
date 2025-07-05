@@ -4,7 +4,7 @@
 
 class Script {
 public:
-	int ID = 0;
+	int id = 0;
 	void RunScript();
 private:
 };

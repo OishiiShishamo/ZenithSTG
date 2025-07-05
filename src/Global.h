@@ -8,93 +8,86 @@
 #include "Score.h"
 #include "Sound.h"
 
-#ifdef NDEBUG
-#define SAFE_ACCESS(array, index) (array[index])
-#define SAFE_PTR_ACCESS(array, index) ((*array)[index])
-#else
-#define SAFE_ACCESS(array, index) (array.at(index))
-#define SAFE_PTR_ACCESS(array, index) (array->at(index))
-#endif
+inline constexpr double kPi = 3.1415926535897932384626433832795;
+inline constexpr double kTau = kPi * 2;
+inline constexpr double kOneDeg = (kPi / 180);
 
-inline constexpr double pi = 3.1415926535897932384626433832795;
-inline constexpr double tau = pi * 2;
-inline constexpr double oneDeg = (pi / 180);
+inline constexpr int kFontTypeNum = 128;
 
-inline constexpr int fontTypeNum = 128;
-
-enum blendType {
-	BLEND_DEFAULT = -1,
-	BLEND_NOBLEND = DX_BLENDMODE_NOBLEND,
-	BLEND_ALPHA = DX_BLENDMODE_ALPHA,
-	BLEND_ADD = DX_BLENDMODE_ADD,
-	BLEND_SUB = DX_BLENDMODE_SUB,
-	BLEND_MULA = DX_BLENDMODE_MULA,
-	BLEND_INVSRC = DX_BLENDMODE_INVSRC,
-	BLEND_PMA_ALPHA = DX_BLENDMODE_PMA_ALPHA,
-	BLEND_PMA_ADD = DX_BLENDMODE_PMA_ADD,
-	BLEND_PMA_SUB = DX_BLENDMODE_PMA_SUB,
-	BLEND_PMA_INVSRC = DX_BLENDMODE_PMA_INVSRC,
+enum BlendType {
+	kBlendDefault = -1,
+	kBlendNoblend = DX_BLENDMODE_NOBLEND,
+	kBlendAlpha = DX_BLENDMODE_ALPHA,
+	kBlendAdd = DX_BLENDMODE_ADD,
+	kBlendSub = DX_BLENDMODE_SUB,
+	kBlendMulA = DX_BLENDMODE_MULA,
+	kBlendInvSrc = DX_BLENDMODE_INVSRC,
+	kBlendPmaAlpha = DX_BLENDMODE_PMA_ALPHA,
+	kBlendPmaAdd = DX_BLENDMODE_PMA_ADD,
+	kBlendPmaSub = DX_BLENDMODE_PMA_SUB,
+	kBlendPmaInvSrc = DX_BLENDMODE_PMA_INVSRC,
 };
 
-enum objectType {
-	OBJECT_BULLET = 0,
-	OBJECT_LASER = 1,
-	OBJECT_BENT_LASER = 2,
-	OBJECT_ENEMY = 3,
-	OBJECT_PLAYER_SHOT = 4,
-	OBJECT_PARTICLE = 5,
+enum ObjectType {
+	kObjectBase = 0,
+	kObjectBullet = 1,
+	kObjectLaser = 2,
+	kObjectBentLaser = 3,
+	kObjectEnemy = 4,
+	kObjectPlayerShot = 5,
+	kObjectParticle = 6,
 };
 
-enum bulletType {
-	B_NORMAL = 0,
-	B_MIDIAM = 1,
-	B_UROKO = 2,
-	B_LASER = 3,
-	B_LIGHT = 4,
-	B_BIG = 5,
+enum BulletType {
+	kBulletNormal = 0,
+	kBulletMedium = 1,
+	kBulletScale = 2,
+	kBulletLaser = 3,
+	kBulletLight = 4,
+	kBulletBig = 5,
 };
 
-enum particleType {
-	P_LIGHT = 0,
-	P_STAR = 1,
+enum ParticleType {
+	kParticleLight = 0,
+	kParticleStar = 1,
 };
 
-enum enemyType {
-	EN_NORMAL = 0,
+enum EnemyType {
+	kEnemyNormal = 0,
 };
 
-enum playerShotType {
-	PS_NORMAL = 0,
+enum PlayerShotType {
+	kPlayerShotNormal = 0,
 };
 
-enum easeType {
-	LINEAR = 0,
-	EASEINQUAD = 1,
-	EASEOUTQUAD = 2,
-	EASEINOUTQUAD = 3,
-	EASEINCUBIC = 4,
-	EASEOUTCUBIC = 5,
-	EASEINOUTCUBIC = 6,
+enum EaseType {
+	kLinear = 0,
+	kEaseInQuad = 1,
+	kEaseOutQuad = 2,
+	kEaseInOutQuad = 3,
+	kEaseInCubic = 4,
+	kEaseOutCubic = 5,
+	kEaseInOutCubic = 6,
 };
 
-enum fontType {
-	UI_0 = 0,
-	UI_1 = 1,
+enum FontType {
+	kFontUi0 = 0,
+	kFontUi1 = 1,
 };
 
-enum soundEffectType {
-	SE_NONE = -1,
-	SE_GRAZE = 0,
-	SE_PLAYER_HIT = 1,
-	SE_ENEMY_SHOT = 2,
+enum SoundEffectType {
+	kSoundEffectNone = -1,
+	kSoundEffectGraze = 0,
+	kSoundEffectPlayerHit = 1,
+	kSoundEffectEnemyShot = 2,
 };
 
-enum aimType {
-	AIM_FALSE = 0,
-	AIM_TRUE = 1,
-	AIM_TRUE_OFFSET = 2,
+enum AimType {
+	kAimFalse = 0,
+	kAimTrue = 1,
+	kAimOffset = 2,
 };
 
-extern std::array<int, fontTypeNum> fontTypes;
+extern std::array<int, kFontTypeNum> font_types;
 
 #endif

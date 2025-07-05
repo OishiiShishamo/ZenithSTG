@@ -14,46 +14,45 @@
 #include "timeUtl.h"
 #include "UI.h"
 
-Color gamingColor(0, 0, 0);
-double screenSizeRate = 1.0f;
-double screenRotaX = 0;
-double screenRotaY = 0;
-double screenRotaZ = 0;
+double screen_size_rate = 1.0f;
+double screen_rota_x = 0;
+double screen_rota_y = 0;
+double screen_rota_z = 0;
 
 void
-mainLoop::Loop() {
-	SAFE_ACCESS(Scripts, 0).RunScript();
-	soundMng.ReservePlaySE();
-	SetDrawScreen(backgroundCanvas);
+mainLoop::Update() {
+	SafeAccess(scripts, 0).RunScript();
+	sound_mng_.ReservePlaySe();
+	SetDrawScreen(background_canvas);
 	ClearDrawScreen();
 	//BG.DrawBackground();
-	SetDrawScreen(playerShotCanvas);
+	SetDrawScreen(player_shot_canvas);
 	ClearDrawScreen();
 	MovePlayerShots();
-	SetDrawScreen(playerCanvas);
+	SetDrawScreen(player_canvas);
 	ClearDrawScreen();
 	Plyr.RoutinePlayer();
-	SetDrawScreen(bulletCanvas);
+	SetDrawScreen(bullet_canvas);
 	ClearDrawScreen();
 	MoveEnemies();
 	MoveBullets();
 	MoveLasers();
 	MoveParticles();
-	SetDrawScreen(UICanvas);
+	SetDrawScreen(ui_canvas);
 	ClearDrawScreen();
-	DrawUI();
-	SetDrawScreen(screenCanvas);
+	DrawUi();
+	SetDrawScreen(screen_canvas);
 	ClearDrawScreen();
 	ScreenDraw();
 	if (CheckHitKey(KEY_INPUT_P) == 1) {
 		SaveDrawScreen(0, 0, 1920, 1080, "ScreenShot.bmp");
 	}
 	if (GetAsyncKeyState(VK_F4) & 1) {
-		if (t > frontChangeWindowSizeFrame + 15) {
-			frontChangeWindowSizeFrame = t;
-			Properties.windowSize++;
-			if (Properties.windowSize > 2) Properties.windowSize = 0;
-			switch (Properties.windowSize) {
+		if (t > front_change_window_size_frame + 15) {
+			front_change_window_size_frame = t;
+			properties_.window_size++;
+			if (properties_.window_size > 2) properties_.window_size = 0;
+			switch (properties_.window_size) {
 			case 0:
 				SetWindowSize(1280, 720);
 				ResInit();
@@ -74,21 +73,21 @@ mainLoop::Loop() {
 		}
 	}
 	if (GetAsyncKeyState(VK_F11) & 1) {
-		if (t > frontChangeWindowFrame + 15) {
-			frontChangeWindowFrame = t;
-			Properties.isWindow++;
-			if (Properties.isWindow > 1) Properties.isWindow = 0;
-			ChangeWindowMode(Properties.isWindow);
+		if (t > front_change_window_frame + 15) {
+			front_change_window_frame = t;
+			properties_.is_window++;
+			if (properties_.is_window > 1) properties_.is_window = 0;
+			ChangeWindowMode(properties_.is_window);
 		}
 	}
 	if (GetAsyncKeyState(VK_RETURN) && GetAsyncKeyState(VK_MENU)) {
-		if (t > frontChangeWindowFrame + 15) {
-			frontChangeWindowFrame = t;
-			Properties.isWindow++;
-			if (Properties.isWindow > 1) Properties.isWindow = 0;
-			ChangeWindowMode(Properties.isWindow);
+		if (t > front_change_window_frame + 15) {
+			front_change_window_frame = t;
+			properties_.is_window++;
+			if (properties_.is_window > 1) properties_.is_window = 0;
+			ChangeWindowMode(properties_.is_window);
 		}
 	}
 }
 
-mainLoop Loop;
+mainLoop loop_;

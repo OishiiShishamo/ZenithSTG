@@ -12,52 +12,52 @@
 #include "timeUtl.h"
 #include "Vec2D.h"
 
-std::array<Laser, MAX_LASER> Lasers;
-std::array<Laser*, MAX_LASER> LaserPtrs;
-std::vector<int> BlankLasers;
-std::mutex BlankLaserMutex;
+std::array<Laser, kMaxLaser> lasers;
+std::array<Laser*, kMaxLaser> laser_ptrs;
+std::vector<int> blank_lasers;
+std::mutex blank_laser_mutex;
 
 void
 Laser::ShowLaser() {
-	if (!(flags & IS_ALIVE)) return;
-	double halfW = width / 2;
+	if (!(flags & kIsAlive)) return;
+	double half_w = width / 2;
 	std::array<Vec2D, 4> local = {
-		Vec2D(-halfW, 0),
-		Vec2D(-halfW, length),
-		Vec2D(halfW, length),
-		Vec2D(halfW, 0)
+		Vec2D(-half_w, 0),
+		Vec2D(-half_w, length),
+		Vec2D(half_w, length),
+		Vec2D(half_w, 0)
 	};
 	std::array<Vec2D, 4> world;
 	for (int i = 0; i < 4; ++i) {
-		Vec2D rot = RotatePoint(SAFE_ACCESS(local, i), showAngle + pi / 2);
-		SAFE_ACCESS(world, i) = pos + rot;
+		Vec2D rot = RotatePoint(SafeAccess(local, i), show_angle + kPi / 2);
+		SafeAccess(world, i) = pos + rot;
 	}
 	if (blend == -1) {
-		SmartSetDrawBlendMode(SAFE_ACCESS(defaultBulletBlend, style), pal);
+		SmartSetDrawBlendMode(SafeAccess(default_bullet_blend, style), pal);
 		SetDrawBright(color.r, color.g, color.b);
 		SetDrawMode(DX_DRAWMODE_NEAREST);
 		DrawRectModiGraph(
-			SAFE_ACCESS(world, 0).GetX(), SAFE_ACCESS(world, 0).GetY(),
-			SAFE_ACCESS(world, 1).GetX(), SAFE_ACCESS(world, 1).GetY(),
-			SAFE_ACCESS(world, 2).GetX(), SAFE_ACCESS(world, 2).GetY(),
-			SAFE_ACCESS(world, 3).GetX(), SAFE_ACCESS(world, 3).GetY(),
-			64 - 128 * SAFE_ACCESS(drawRatioBulletGraphs, style) / 2,
-			64 - 128 * SAFE_ACCESS(drawRatioBulletGraphs, style) / 2,
-			128 * SAFE_ACCESS(drawRatioBulletGraphs, style),
-			128 * SAFE_ACCESS(drawRatioBulletGraphs, style),
-			SAFE_ACCESS(imgRes.BulletBackGH, style),
+			SafeAccess(world, 0).GetX(), SafeAccess(world, 0).GetY(),
+			SafeAccess(world, 1).GetX(), SafeAccess(world, 1).GetY(),
+			SafeAccess(world, 2).GetX(), SafeAccess(world, 2).GetY(),
+			SafeAccess(world, 3).GetX(), SafeAccess(world, 3).GetY(),
+			64 - 128 * SafeAccess(draw_ratio_bullet_graphs, style) / 2,
+			64 - 128 * SafeAccess(draw_ratio_bullet_graphs, style) / 2,
+			128 * SafeAccess(draw_ratio_bullet_graphs, style),
+			128 * SafeAccess(draw_ratio_bullet_graphs, style),
+			SafeAccess(img_res.bullet_back_gh, style),
 			TRUE);
 		SetDrawBright(255, 255, 255);
 		DrawRectModiGraph(
-			SAFE_ACCESS(world, 0).GetX(), SAFE_ACCESS(world, 0).GetY(),
-			SAFE_ACCESS(world, 1).GetX(), SAFE_ACCESS(world, 1).GetY(),
-			SAFE_ACCESS(world, 2).GetX(), SAFE_ACCESS(world, 2).GetY(),
-			SAFE_ACCESS(world, 3).GetX(), SAFE_ACCESS(world, 3).GetY(),
-			64 - 128 * SAFE_ACCESS(drawRatioBulletGraphs, style) / 2,
-			64 - 128 * SAFE_ACCESS(drawRatioBulletGraphs, style) / 2,
-			128 * SAFE_ACCESS(drawRatioBulletGraphs, style),
-			128 * SAFE_ACCESS(drawRatioBulletGraphs, style),
-			SAFE_ACCESS(imgRes.BulletFrontGH, style),
+			SafeAccess(world, 0).GetX(), SafeAccess(world, 0).GetY(),
+			SafeAccess(world, 1).GetX(), SafeAccess(world, 1).GetY(),
+			SafeAccess(world, 2).GetX(), SafeAccess(world, 2).GetY(),
+			SafeAccess(world, 3).GetX(), SafeAccess(world, 3).GetY(),
+			64 - 128 * SafeAccess(draw_ratio_bullet_graphs, style) / 2,
+			64 - 128 * SafeAccess(draw_ratio_bullet_graphs, style) / 2,
+			128 * SafeAccess(draw_ratio_bullet_graphs, style),
+			128 * SafeAccess(draw_ratio_bullet_graphs, style),
+			SafeAccess(img_res.bullet_front_gh, style),
 			TRUE);
 		SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 		SetDrawMode(DX_DRAWMODE_NEAREST);
@@ -67,100 +67,100 @@ Laser::ShowLaser() {
 		SetDrawBright(color.r, color.g, color.b);
 		SetDrawMode(DX_DRAWMODE_NEAREST);
 		DrawRectModiGraph(
-			SAFE_ACCESS(world, 0).GetX(), SAFE_ACCESS(world, 0).GetY(),
-			SAFE_ACCESS(world, 1).GetX(), SAFE_ACCESS(world, 1).GetY(),
-			SAFE_ACCESS(world, 2).GetX(), SAFE_ACCESS(world, 2).GetY(),
-			SAFE_ACCESS(world, 3).GetX(), SAFE_ACCESS(world, 3).GetY(),
-			64 - 128 * SAFE_ACCESS(drawRatioBulletGraphs, style) / 2,
-			64 - 128 * SAFE_ACCESS(drawRatioBulletGraphs, style) / 2,
-			128 * SAFE_ACCESS(drawRatioBulletGraphs, style),
-			128 * SAFE_ACCESS(drawRatioBulletGraphs, style),
-			SAFE_ACCESS(imgRes.BulletBackGH, style),
+			SafeAccess(world, 0).GetX(), SafeAccess(world, 0).GetY(),
+			SafeAccess(world, 1).GetX(), SafeAccess(world, 1).GetY(),
+			SafeAccess(world, 2).GetX(), SafeAccess(world, 2).GetY(),
+			SafeAccess(world, 3).GetX(), SafeAccess(world, 3).GetY(),
+			64 - 128 * SafeAccess(draw_ratio_bullet_graphs, style) / 2,
+			64 - 128 * SafeAccess(draw_ratio_bullet_graphs, style) / 2,
+			128 * SafeAccess(draw_ratio_bullet_graphs, style),
+			128 * SafeAccess(draw_ratio_bullet_graphs, style),
+			SafeAccess(img_res.bullet_back_gh, style),
 			TRUE);
 		SetDrawBright(255, 255, 255);
 		DrawRectModiGraph(
-			SAFE_ACCESS(world, 0).GetX(), SAFE_ACCESS(world, 0).GetY(),
-			SAFE_ACCESS(world, 1).GetX(), SAFE_ACCESS(world, 1).GetY(),
-			SAFE_ACCESS(world, 2).GetX(), SAFE_ACCESS(world, 2).GetY(),
-			SAFE_ACCESS(world, 3).GetX(), SAFE_ACCESS(world, 3).GetY(),
-			64 - 128 * SAFE_ACCESS(drawRatioBulletGraphs, style) / 2,
-			64 - 128 * SAFE_ACCESS(drawRatioBulletGraphs, style) / 2,
-			128 * SAFE_ACCESS(drawRatioBulletGraphs, style),
-			128 * SAFE_ACCESS(drawRatioBulletGraphs, style),
-			SAFE_ACCESS(imgRes.BulletFrontGH, style),
+			SafeAccess(world, 0).GetX(), SafeAccess(world, 0).GetY(),
+			SafeAccess(world, 1).GetX(), SafeAccess(world, 1).GetY(),
+			SafeAccess(world, 2).GetX(), SafeAccess(world, 2).GetY(),
+			SafeAccess(world, 3).GetX(), SafeAccess(world, 3).GetY(),
+			64 - 128 * SafeAccess(draw_ratio_bullet_graphs, style) / 2,
+			64 - 128 * SafeAccess(draw_ratio_bullet_graphs, style) / 2,
+			128 * SafeAccess(draw_ratio_bullet_graphs, style),
+			128 * SafeAccess(draw_ratio_bullet_graphs, style),
+			SafeAccess(img_res.bullet_front_gh, style),
 			TRUE);
 		SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 		SetDrawMode(DX_DRAWMODE_NEAREST);
 	}
-	if (isColShow == 1) {
-		if ((flags & IS_COL) == 1) {
+	if (kIsColShow == 1) {
+		if ((flags & kIsCol) == 1) {
 			SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-			DrawCircle(pos.GetX(), pos.GetY(), colSize, GetColor(255, 255, 255), 1);
-			DrawFormatString(pos.GetX(), pos.GetY(), GetColor(GetColorHSV(std::fmod(t, 360), 1, 1).r, GetColorHSV(std::fmod(t, 360), 1, 1).g, GetColorHSV(std::fmod(t, 360), 1, 1).b), "%f", colSize);
+			DrawCircle(pos.GetX(), pos.GetY(), col_size, GetColor(255, 255, 255), 1);
+			DrawFormatString(pos.GetX(), pos.GetY(), GetColor(GetColorHsv(std::fmod(t, 360), 1, 1).r, GetColorHsv(std::fmod(t, 360), 1, 1).g, GetColorHsv(std::fmod(t, 360), 1, 1).b), "%f", col_size);
 		}
 	}
 }
 
 int
 Laser::ColliCheckObject() {
-	double r = (length * length + colSize * colSize) / 4;
+	double r = (length * length + col_size * col_size) / 4;
 	Vec2D d = pos - Plyr.pos;
 	if (d.GetX() * d.GetX() + d.GetY() * d.GetY() <= r) {
 		return 0;
 	}
-	double halfW = colSize / 2;
+	double half_w = col_size / 2;
 	std::array<Vec2D, 4> local = {
-		Vec2D(-halfW, 0),
-		Vec2D(-halfW, length),
-		Vec2D(halfW, length),
-		Vec2D(halfW, 0)
+		Vec2D(-half_w, 0),
+		Vec2D(-half_w, length),
+		Vec2D(half_w, length),
+		Vec2D(half_w, 0)
 	};
 	std::array<Vec2D, 4> world;
 	for (int i = 0; i < 4; ++i) {
-		Vec2D rot = RotatePoint(SAFE_ACCESS(local, i), showAngle + pi / 2);
-		SAFE_ACCESS(world, i) = pos + rot;
+		Vec2D rot = RotatePoint(SafeAccess(local, i), show_angle + kPi / 2);
+		SafeAccess(world, i) = pos + rot;
 	}
 	if (
-		colPointAndRect(Plyr.pos,
-			SAFE_ACCESS(world, 0),
-			SAFE_ACCESS(world, 1),
-			SAFE_ACCESS(world, 2),
-			SAFE_ACCESS(world, 3))) {
+		ColPointAndRect(Plyr.pos,
+			SafeAccess(world, 0),
+			SafeAccess(world, 1),
+			SafeAccess(world, 2),
+			SafeAccess(world, 3))) {
 		Plyr.HitPlayer();
 		return 1;
 	}
 	return 0;
 }
 
-#if GRAZE_ENABLED == 1
+#if kGrazeEnabled == 1
 void
 Laser::GrazeObject() {
-	double r = (length * length + colSize * colSize + GrazeRange * GrazeRange) / 4;
+	double r = (length * length + col_size * col_size + kGrazeRange * kGrazeRange) / 4;
 	Vec2D d = pos - Plyr.pos;
-	if (d.GetX() * d.GetX() + d.GetY() * d.GetY() <= r || (flags & IS_GRAZE) == 0) {
+	if (d.GetX() * d.GetX() + d.GetY() * d.GetY() <= r || (flags & kIsGraze) == 0) {
 		return;
 	}
-	double halfW = (colSize + GrazeRange) / 2;
+	double half_w = (col_size + kGrazeRange) / 2;
 	std::array<Vec2D, 4> local = {
-		Vec2D(-halfW, 0),
-		Vec2D(-halfW, length),
-		Vec2D(halfW, length),
-		Vec2D(halfW, 0)
+		Vec2D(-half_w, 0),
+		Vec2D(-half_w, length),
+		Vec2D(half_w, length),
+		Vec2D(half_w, 0)
 	};
 	std::array<Vec2D, 4> world;
 	for (int i = 0; i < 4; ++i) {
-		Vec2D rot = RotatePoint(SAFE_ACCESS(local, i), showAngle + pi / 2);
-		SAFE_ACCESS(world, i) = pos + rot;
+		Vec2D rot = RotatePoint(SafeAccess(local, i), show_angle + kPi / 2);
+		SafeAccess(world, i) = pos + rot;
 	}
 	if (
-		colPointAndRect(Plyr.pos,
-			SAFE_ACCESS(world, 0),
-			SAFE_ACCESS(world, 1),
-			SAFE_ACCESS(world, 2),
-			SAFE_ACCESS(world, 3))) {
+		ColPointAndRect(Plyr.pos,
+			SafeAccess(world, 0),
+			SafeAccess(world, 1),
+			SafeAccess(world, 2),
+			SafeAccess(world, 3))) {
 		Graze();
-#if LASER_GRAZE_EVERY_FRAME == 0
-		flags &= ~IS_GRAZE;
+#if kLaserGrazeEveryFrame == 0
+		flags &= ~kIsGraze;
 #endif
 	}
 }
@@ -168,27 +168,27 @@ Laser::GrazeObject() {
 
 int
 Laser::CheckPosBounds() {
-	double limit = size * 128 * 2 * SAFE_ACCESS(drawRatioBulletGraphs, style);
-	if (pos.GetX() < BORDER_LEFT - limit) return 1;
-	if (pos.GetX() > BORDER_RIGHT + limit) return 1;
-	if (pos.GetY() < BORDER_UP - limit) return 1;
-	if (pos.GetY() > BORDER_DOWN + limit) return 1;
+	double limit = size * 128 * 2 * SafeAccess(draw_ratio_bullet_graphs, style);
+	if (pos.GetX() < kBorderLeft - limit) return 1;
+	if (pos.GetX() > kBorderRight + limit) return 1;
+	if (pos.GetY() < kBorderUp - limit) return 1;
+	if (pos.GetY() > kBorderDown + limit) return 1;
 
 	return 0;
 }
 
 int
 Laser::CheckCollisionAndBounds() {
-	if (flags & IS_COL) {
+	if (flags & kIsCol) {
 		if (ColliCheckObject()) {
 			PushBlankLasers(index);
-			flags &= ~IS_ALIVE;
+			flags &= ~kIsAlive;
 			return 1;
 		}
 	}
 	if (CheckPosBounds()) {
 		PushBlankLasers(index);
-		flags &= ~IS_ALIVE;
+		flags &= ~kIsAlive;
 		return 1;
 	}
 	return 0;
@@ -196,10 +196,10 @@ Laser::CheckCollisionAndBounds() {
 
 void
 Laser::MoveFunc() {
-	switch (ID) {
+	switch (id) {
 	case 0:
 	default: {
-		int needsMultiStep = speed >= colSize + Plyr.colSize && flags & IS_COL;
+		int needsMultiStep = speed >= col_size + Plyr.col_size && flags & kIsCol;
 		if (needsMultiStep) {
 			int step = static_cast<int>(std::ceil(speed / 1.0f));
 			for (int i = 0; i < step; i++) {
@@ -218,139 +218,139 @@ Laser::MoveFunc() {
 
 void
 PushBlankLasers(int idx) {
-	std::lock_guard<std::mutex> lock(BlankLaserMutex);
-	BlankLasers.emplace_back(idx);
+	std::lock_guard<std::mutex> lock(blank_laser_mutex);
+	blank_lasers.emplace_back(idx);
 }
 
 int
-CreateLaser(const Vec2D& pos, double length, double width, const Color& color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int SE, int ID, const std::vector<std::any>& params) {
-	soundMng.ReserveSE(SE);
-	if (BlankLasers.empty()) return 1;
-	int idx = BlankLasers.back();
-	BlankLasers.pop_back();
-	SAFE_ACCESS(Lasers, idx).flags = IS_ALIVE | isCol * IS_COL | IS_GRAZE;
-	SAFE_ACCESS(Lasers, idx).objType = OBJECT_LASER;
-	SAFE_ACCESS(Lasers, idx).pos = pos;
-	SAFE_ACCESS(Lasers, idx).color = color;
-	SAFE_ACCESS(Lasers, idx).style = style;
-	SAFE_ACCESS(Lasers, idx).blend = blend;
-	SAFE_ACCESS(Lasers, idx).pal = pal;
-	SAFE_ACCESS(Lasers, idx).startColSize = startColSize;
-	SAFE_ACCESS(Lasers, idx).endColSize = endColSize;
-	SAFE_ACCESS(Lasers, idx).colSizeEaseType = colSizeEaseType;
-	SAFE_ACCESS(Lasers, idx).colSizeEaseTime = colSizeEaseTime;
-	SAFE_ACCESS(Lasers, idx).startSize = startSize;
-	SAFE_ACCESS(Lasers, idx).endSize = endSize;
-	SAFE_ACCESS(Lasers, idx).sizeEaseType = sizeEaseType;
-	SAFE_ACCESS(Lasers, idx).sizeEaseTime = sizeEaseTime;
-	if (aim == AIM_TRUE) {
-		SAFE_ACCESS(Lasers, idx).startAngle = Plyr.AimPlayer(pos) + startAngle;
-		SAFE_ACCESS(Lasers, idx).endAngle = Plyr.AimPlayer(pos) + endAngle;
+CreateLaser(const Vec2D& pos, double length, double width, const Color& color, int style, int blend, int pal, int is_col, double start_col_size, double end_col_size, int col_size_ease_type, int col_size_ease_time, double start_size, double end_size, int size_ease_type, int size_ease_time, int aim, double start_angle, double end_angle, int angle_ease_type, int angle_ease_time, double start_speed, double end_speed, int speed_ease_type, int speed_ease_time, int se, int id, const std::vector<std::any>& params) {
+	sound_mng_.ReserveSe(se);
+	if (blank_lasers.empty()) return 1;
+	int idx = blank_lasers.back();
+	blank_lasers.pop_back();
+	SafeAccess(lasers, idx).flags = kIsAlive | is_col * kIsCol | kIsGraze;
+	SafeAccess(lasers, idx).obj_type = kObjectLaser;
+	SafeAccess(lasers, idx).pos = pos;
+	SafeAccess(lasers, idx).color = color;
+	SafeAccess(lasers, idx).style = style;
+	SafeAccess(lasers, idx).blend = blend;
+	SafeAccess(lasers, idx).pal = pal;
+	SafeAccess(lasers, idx).start_col_size = start_col_size;
+	SafeAccess(lasers, idx).end_col_size = end_col_size;
+	SafeAccess(lasers, idx).col_size_ease_type = col_size_ease_type;
+	SafeAccess(lasers, idx).col_size_ease_time = col_size_ease_time;
+	SafeAccess(lasers, idx).start_size = start_size;
+	SafeAccess(lasers, idx).end_size = end_size;
+	SafeAccess(lasers, idx).size_ease_type = size_ease_type;
+	SafeAccess(lasers, idx).size_ease_time = size_ease_time;
+	if (aim == kAimTrue) {
+		SafeAccess(lasers, idx).start_angle = Plyr.AimPlayer(pos) + start_angle;
+		SafeAccess(lasers, idx).end_angle = Plyr.AimPlayer(pos) + end_angle;
 	}
 	else {
-		SAFE_ACCESS(Lasers, idx).startAngle = startAngle;
-		SAFE_ACCESS(Lasers, idx).endAngle = endAngle;
+		SafeAccess(lasers, idx).start_angle = start_angle;
+		SafeAccess(lasers, idx).end_angle = end_angle;
 	}
-	SAFE_ACCESS(Lasers, idx).angleEaseType = angleEaseType;
-	SAFE_ACCESS(Lasers, idx).angleEaseTime = angleEaseTime;
-	SAFE_ACCESS(Lasers, idx).startSpeed = startSpeed;
-	SAFE_ACCESS(Lasers, idx).endSpeed = endSpeed;
-	SAFE_ACCESS(Lasers, idx).speedEaseType = speedEaseType;
-	SAFE_ACCESS(Lasers, idx).speedEaseTime = speedEaseTime;
-	SAFE_ACCESS(Lasers, idx).popT = t;
-	SAFE_ACCESS(Lasers, idx).length = length;
-	SAFE_ACCESS(Lasers, idx).width = width;
-	SAFE_ACCESS(Lasers, idx).frontNode = 0;
-	SAFE_ACCESS(Lasers, idx).currentNodeNum = 0;
-	SAFE_ACCESS(Lasers, idx).index = idx;
-	SAFE_ACCESS(Lasers, idx).ID = ID;
-	SAFE_ACCESS(Lasers, idx).params = params;
+	SafeAccess(lasers, idx).angle_ease_type = angle_ease_type;
+	SafeAccess(lasers, idx).angle_ease_time = angle_ease_time;
+	SafeAccess(lasers, idx).start_speed = start_speed;
+	SafeAccess(lasers, idx).end_speed = end_speed;
+	SafeAccess(lasers, idx).speed_ease_type = speed_ease_type;
+	SafeAccess(lasers, idx).speed_ease_time = speed_ease_time;
+	SafeAccess(lasers, idx).pop_t = t;
+	SafeAccess(lasers, idx).length = length;
+	SafeAccess(lasers, idx).width = width;
+	SafeAccess(lasers, idx).front_node = 0;
+	SafeAccess(lasers, idx).current_node_num = 0;
+	SafeAccess(lasers, idx).index = idx;
+	SafeAccess(lasers, idx).id = id;
+	SafeAccess(lasers, idx).params = params;
 	return 0;
 }
 
 void
-CreateLaserGroup(const Vec2D& pos, double length, double width, const Color& color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int way, double spread, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int SE, int ID, const std::vector<std::any>& params) {
-	soundMng.ReserveSE(SE);
+CreateLaserGroup(const Vec2D& pos, double length, double width, const Color& color, int style, int blend, int pal, int is_col, double start_col_size, double end_col_size, int col_size_ease_type, int col_size_ease_time, double start_size, double end_size, int size_ease_type, int size_ease_time, int way, double spread, int aim, double start_angle, double end_angle, int angle_ease_type, int angle_ease_time, double start_speed, double end_speed, int speed_ease_type, int speed_ease_time, int se, int id, const std::vector<std::any>& params) {
+	sound_mng_.ReserveSe(se);
 	switch (aim) {
-	case AIM_FALSE:
+	case kAimFalse:
 		for (int i = 0; i < way; i++) {
-			if (CreateLaser(pos, length, width, color, style, blend, pal, isCol, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, 0, spread / way * i + startAngle - spread / 2, spread / way * i + endAngle - spread / 2, angleEaseType, angleEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime, SE_NONE, ID, params)) return;
+			if (CreateLaser(pos, length, width, color, style, blend, pal, is_col, start_col_size, end_col_size, col_size_ease_type, col_size_ease_time, start_size, end_size, size_ease_type, size_ease_time, 0, spread / way * i + start_angle - spread / 2, spread / way * i + end_angle - spread / 2, angle_ease_type, angle_ease_time, start_speed, end_speed, speed_ease_type, speed_ease_time, kSoundEffectNone, id, params)) return;
 		}
 		break;
-	case AIM_TRUE:
+	case kAimTrue:
 		for (int i = 0; i < way; i++) {
-			if (CreateLaser(pos, length, width, color, style, blend, pal, isCol, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, 1, spread / way * i + startAngle - spread / 2, spread / way * i + endAngle - spread / 2, angleEaseType, angleEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime, SE_NONE, ID, params)) return;
+			if (CreateLaser(pos, length, width, color, style, blend, pal, is_col, start_col_size, end_col_size, col_size_ease_type, col_size_ease_time, start_size, end_size, size_ease_type, size_ease_time, 1, spread / way * i + start_angle - spread / 2, spread / way * i + end_angle - spread / 2, angle_ease_type, angle_ease_time, start_speed, end_speed, speed_ease_type, speed_ease_time, kSoundEffectNone, id, params)) return;
 		}
 		break;
-	case AIM_TRUE_OFFSET:
+	case kAimOffset:
 		for (int i = 0; i < way; i++) {
-			if (CreateLaser(pos, length, width, color, style, blend, pal, isCol, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, 1, spread / way * i + startAngle + spread / (way * 2) - spread / 2, spread / way * i + endAngle + spread / (way * 2) - spread / 2, angleEaseType, angleEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime, SE_NONE, ID, params)) return;
+			if (CreateLaser(pos, length, width, color, style, blend, pal, is_col, start_col_size, end_col_size, col_size_ease_type, col_size_ease_time, start_size, end_size, size_ease_type, size_ease_time, 1, spread / way * i + start_angle + spread / (way * 2) - spread / 2, spread / way * i + end_angle + spread / (way * 2) - spread / 2, angle_ease_type, angle_ease_time, start_speed, end_speed, speed_ease_type, speed_ease_time, kSoundEffectNone, id, params)) return;
 		}
 		break;
 	default:
 		for (int i = 0; i < way; i++) {
-			if (CreateLaser(pos, length, width, color, style, blend, pal, isCol, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, 0, spread / way * i + startAngle - spread / 2, spread / way * i + endAngle - spread / 2, angleEaseType, angleEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime, SE_NONE, ID, params)) return;
+			if (CreateLaser(pos, length, width, color, style, blend, pal, is_col, start_col_size, end_col_size, col_size_ease_type, col_size_ease_time, start_size, end_size, size_ease_type, size_ease_time, 0, spread / way * i + start_angle - spread / 2, spread / way * i + end_angle - spread / 2, angle_ease_type, angle_ease_time, start_speed, end_speed, speed_ease_type, speed_ease_time, kSoundEffectNone, id, params)) return;
 		}
 		break;
 	}
 }
 
 void
-CreateSimpleLaserGroup(const Vec2D& pos, double length, double width, const Color& color, int style, int blend, int pal, double colSize, double size, int way, double spread, int aim, double angle, double speed, int SE, int ID, const std::vector<std::any>& params) {
-	soundMng.ReserveSE(SE);
+CreateSimpleLaserGroup(const Vec2D& pos, double length, double width, const Color& color, int style, int blend, int pal, double col_size, double size, int way, double spread, int aim, double angle, double speed, int se, int id, const std::vector<std::any>& params) {
+	sound_mng_.ReserveSe(se);
 	switch (aim) {
-	case AIM_FALSE:
+	case kAimFalse:
 		for (int i = 0; i < way; i++) {
-			if (CreateLaser(pos, length, width, color, style, blend, pal, 1, colSize, colSize, 0, 0, size, size, 0, 0, 0, spread / way * i + angle - spread / 2, spread / way * i + angle - spread / 2, 0, 0, speed, speed, 0, 0, SE_NONE, ID, params)) return;
+			if (CreateLaser(pos, length, width, color, style, blend, pal, 1, col_size, col_size, 0, 0, size, size, 0, 0, 0, spread / way * i + angle - spread / 2, spread / way * i + angle - spread / 2, 0, 0, speed, speed, 0, 0, kSoundEffectNone, id, params)) return;
 		}
 		break;
-	case AIM_TRUE:
+	case kAimTrue:
 		for (int i = 0; i < way; i++) {
-			if (CreateLaser(pos, length, width, color, style, blend, pal, 0, colSize, colSize, 0, 0, size, size, 0, 0, 1, spread / way * i + angle - spread / 2, spread / way * i + angle - spread / 2, 0, 0, speed, speed, 0, 0, SE_NONE, ID, params)) return;
+			if (CreateLaser(pos, length, width, color, style, blend, pal, 0, col_size, col_size, 0, 0, size, size, 0, 0, 1, spread / way * i + angle - spread / 2, spread / way * i + angle - spread / 2, 0, 0, speed, speed, 0, 0, kSoundEffectNone, id, params)) return;
 		}
 		break;
-	case AIM_TRUE_OFFSET:
+	case kAimOffset:
 		for (int i = 0; i < way; i++) {
-			if (CreateLaser(pos, length, width, color, style, blend, pal, 1, colSize, colSize, 0, 0, size, size, 0, 0, 1, spread / way * i + angle + spread / (way * 2) - spread / 2, spread / way * i + angle + spread / (way * 2) - spread / 2, 0, 0, speed, speed, 0, 0, SE_NONE, ID, params)) return;
+			if (CreateLaser(pos, length, width, color, style, blend, pal, 1, col_size, col_size, 0, 0, size, size, 0, 0, 1, spread / way * i + angle + spread / (way * 2) - spread / 2, spread / way * i + angle + spread / (way * 2) - spread / 2, 0, 0, speed, speed, 0, 0, kSoundEffectNone, id, params)) return;
 		}
 		break;
 	default:
 		for (int i = 0; i < way; i++) {
-			if (CreateLaser(pos, length, width, color, style, blend, pal, 1, colSize, colSize, 0, 0, size, size, 0, 0, 0, spread / way * i + angle - spread / 2, spread / way * i + angle - spread / 2, 0, 0, speed, speed, 0, 0, SE_NONE, ID, params)) return;
+			if (CreateLaser(pos, length, width, color, style, blend, pal, 1, col_size, col_size, 0, 0, size, size, 0, 0, 0, spread / way * i + angle - spread / 2, spread / way * i + angle - spread / 2, 0, 0, speed, speed, 0, 0, kSoundEffectNone, id, params)) return;
 		}
 		break;
 	}
 }
 
 void
-CreateSmartLaserGroup(objectParams param) {
-	soundMng.ReserveSE(param.SE);
+CreateSmartLaserGroup(ObjectParams param) {
+	sound_mng_.ReserveSe(param.se);
 	switch (param.aim) {
-	case AIM_FALSE:
+	case kAimFalse:
 		for (int i = 0; i < param.way; i++) {
-			if (CreateLaser(param.pos, param.length, param.width, param.color, param.style, param.blend, param.pal, param.isCol, param.startColSize, param.endColSize, param.colSizeEaseType, param.colSizeEaseTime, param.startSize, param.endSize, param.sizeEaseType, param.sizeEaseTime, 0, param.spread / param.way * i + param.startAngle - param.spread / 2, param.spread / param.way * i + param.endAngle - param.spread / 2, param.angleEaseType, param.angleEaseTime, param.startSpeed, param.endSpeed, param.speedEaseType, param.speedEaseTime, SE_NONE, param.ID, param.params)) return;
+			if (CreateLaser(param.pos, param.length, param.width, param.color, param.style, param.blend, param.pal, param.is_col, param.start_col_size, param.end_col_size, param.col_size_ease_type, param.col_size_ease_time, param.start_size, param.end_size, param.size_ease_type, param.size_ease_time, 0, param.spread / param.way * i + param.start_angle - param.spread / 2, param.spread / param.way * i + param.end_angle - param.spread / 2, param.angle_ease_type, param.angle_ease_time, param.start_speed, param.end_speed, param.speed_ease_type, param.speed_ease_time, kSoundEffectNone, param.id, param.params)) return;
 		}
 		break;
-	case AIM_TRUE:
+	case kAimTrue:
 		for (int i = 0; i < param.way; i++) {
-			if (CreateLaser(param.pos, param.length, param.width, param.color, param.style, param.blend, param.pal, param.isCol, param.startColSize, param.endColSize, param.colSizeEaseType, param.colSizeEaseTime, param.startSize, param.endSize, param.sizeEaseType, param.sizeEaseTime, 1, param.spread / param.way * i + param.startAngle - param.spread / 2, param.spread / param.way * i + param.endAngle - param.spread / 2, param.angleEaseType, param.angleEaseTime, param.startSpeed, param.endSpeed, param.speedEaseType, param.speedEaseTime, SE_NONE, param.ID, param.params)) return;
+			if (CreateLaser(param.pos, param.length, param.width, param.color, param.style, param.blend, param.pal, param.is_col, param.start_col_size, param.end_col_size, param.col_size_ease_type, param.col_size_ease_time, param.start_size, param.end_size, param.size_ease_type, param.size_ease_time, 1, param.spread / param.way * i + param.start_angle - param.spread / 2, param.spread / param.way * i + param.end_angle - param.spread / 2, param.angle_ease_type, param.angle_ease_time, param.start_speed, param.end_speed, param.speed_ease_type, param.speed_ease_time, kSoundEffectNone, param.id, param.params)) return;
 		}
 		break;
-	case AIM_TRUE_OFFSET:
+	case kAimOffset:
 		for (int i = 0; i < param.way; i++) {
-			if (CreateLaser(param.pos, param.length, param.width, param.color, param.style, param.blend, param.pal, param.isCol, param.startColSize, param.endColSize, param.colSizeEaseType, param.colSizeEaseTime, param.startSize, param.endSize, param.sizeEaseType, param.sizeEaseTime, 1, param.spread / param.way * i + param.startAngle + param.spread / (param.way * 2) - param.spread / 2, param.spread / param.way * i + param.endAngle + param.spread / (param.way * 2) - param.spread / 2, param.angleEaseType, param.angleEaseTime, param.startSpeed, param.endSpeed, param.speedEaseType, param.speedEaseTime, SE_NONE, param.ID, param.params)) return;
+			if (CreateLaser(param.pos, param.length, param.width, param.color, param.style, param.blend, param.pal, param.is_col, param.start_col_size, param.end_col_size, param.col_size_ease_type, param.col_size_ease_time, param.start_size, param.end_size, param.size_ease_type, param.size_ease_time, 1, param.spread / param.way * i + param.start_angle + param.spread / (param.way * 2) - param.spread / 2, param.spread / param.way * i + param.end_angle + param.spread / (param.way * 2) - param.spread / 2, param.angle_ease_type, param.angle_ease_time, param.start_speed, param.end_speed, param.speed_ease_type, param.speed_ease_time, kSoundEffectNone, param.id, param.params)) return;
 		}
 		break;
 	default:
 		for (int i = 0; i < param.way; i++) {
-			if (CreateLaser(param.pos, param.length, param.width, param.color, param.style, param.blend, param.pal, param.isCol, param.startColSize, param.endColSize, param.colSizeEaseType, param.colSizeEaseTime, param.startSize, param.endSize, param.sizeEaseType, param.sizeEaseTime, 0, param.spread / param.way * i + param.startAngle - param.spread / 2, param.spread / param.way * i + param.endAngle - param.spread / 2, param.angleEaseType, param.angleEaseTime, param.startSpeed, param.endSpeed, param.speedEaseType, param.speedEaseTime, SE_NONE, param.ID, param.params)) return;
+			if (CreateLaser(param.pos, param.length, param.width, param.color, param.style, param.blend, param.pal, param.is_col, param.start_col_size, param.end_col_size, param.col_size_ease_type, param.col_size_ease_time, param.start_size, param.end_size, param.size_ease_type, param.size_ease_time, 0, param.spread / param.way * i + param.start_angle - param.spread / 2, param.spread / param.way * i + param.end_angle - param.spread / 2, param.angle_ease_type, param.angle_ease_time, param.start_speed, param.end_speed, param.speed_ease_type, param.speed_ease_time, kSoundEffectNone, param.id, param.params)) return;
 		}
 		break;
 	}
 }
 
 void
-ParallelUpdateLasers(std::array<Laser, MAX_LASER>& lasers) {
+ParallelUpdateLasers(std::array<Laser, kMaxLaser>& lasers) {
 	std::for_each(std::execution::par_unseq, lasers.begin(), lasers.end(),
 		[](Laser& L) {
 			L.UpdateObject();
@@ -360,12 +360,12 @@ ParallelUpdateLasers(std::array<Laser, MAX_LASER>& lasers) {
 void
 MoveLasers() {
 	if (t % 10 == 0) {
-		std::sort(LaserPtrs.begin(), LaserPtrs.end(), [](const Laser* a, const Laser* b) {
-			return a->popT < b->popT;
+		std::sort(laser_ptrs.begin(), laser_ptrs.end(), [](const Laser* a, const Laser* b) {
+			return a->pop_t < b->pop_t;
 			});
 	}
-	ParallelUpdateLasers(Lasers);
-	for (auto* L : LaserPtrs) {
+	ParallelUpdateLasers(lasers);
+	for (auto* L : laser_ptrs) {
 		L->ShowLaser();
 	}
 }

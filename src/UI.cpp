@@ -4,32 +4,32 @@
 #include "UI.h"
 #include "Vec2D.h"
 
-std::string scoreStr = "";
-std::string hiScoreStr = "";
+std::string score_str = "";
+std::string hi_score_str = "";
 
 void
-DrawUI(Color fontColor) {
+DrawUi(Color fontColor) {
 	if (GetAsyncKeyState(VK_SHIFT)) {
-		DrawRotaGraph(Plyr.pos.GetX(), Plyr.pos.GetY(), 1.0f, 0, SAFE_ACCESS(imgRes.UIGH, 1), TRUE);
+		DrawRotaGraph(Plyr.pos.GetX(), Plyr.pos.GetY(), 1.0f, 0, SafeAccess(img_res.ui_gh, 1), TRUE);
 	}
-	DrawRotaGraph(CENTER_X, CENTER_Y, 1.0f, 0, SAFE_ACCESS(imgRes.UIGH, 0), 1, 0, 0);
+	DrawRotaGraph(kCenterX, kCenterY, 1.0f, 0, SafeAccess(img_res.ui_gh, 0), 1, 0, 0);
 	if (score.load() == 0) {
-		scoreStr = "0";
+		score_str = "0";
 	}
 	else {
-		scoreStr = std::to_string(score.load()) + "0";
+		score_str = std::to_string(score.load()) + "0";
 	}
-	if (Properties.hiScore == 0) {
-		hiScoreStr = "0";
+	if (properties_.hi_score == 0) {
+		hi_score_str = "0";
 	}
 	else {
-		hiScoreStr = std::to_string(Properties.hiScore) + "0";
+		hi_score_str = std::to_string(properties_.hi_score) + "0";
 	}
-#if GRAZE_ENABLED == 1
-	DrawFormatStringToHandle(UI_POS_OFFSET.GetX(), UI_POS_OFFSET.GetY(), GetColor(fontColor.r, fontColor.g, fontColor.b), SAFE_ACCESS(fontTypes, UI_1), "Score: \nHi-Score: \nPlayer: \nBomb: \nGraze: ");
-	DrawFormatStringToHandle(UI_POS_OFFSET.GetX() + 200, UI_POS_OFFSET.GetY(), GetColor(fontColor.r, fontColor.g, fontColor.b), SAFE_ACCESS(fontTypes, UI_1), "%s\n%s\n%d\n%d\n%" PRId64, scoreStr.c_str(), hiScoreStr.c_str(), Plyr.Life.load(), Plyr.Bomb.load(), graze.load());
+#if kGrazeEnabled == 1
+	DrawFormatStringToHandle(kUiPosOffset.GetX(), kUiPosOffset.GetY(), GetColor(fontColor.r, fontColor.g, fontColor.b), SafeAccess(font_types, kFontUi1), "Score: \nHi-Score: \nPlayer: \nBomb: \nGraze: ");
+	DrawFormatStringToHandle(kUiPosOffset.GetX() + 200, kUiPosOffset.GetY(), GetColor(fontColor.r, fontColor.g, fontColor.b), SafeAccess(font_types, kFontUi1), "%s\n%s\n%d\n%d\n%" PRId64, score_str.c_str(), hi_score_str.c_str(), Plyr.life.load(), Plyr.bomb.load(), graze.load());
 #else
-	DrawFormatStringToHandle(UI_POS_OFFSET.GetX(), UI_POS_OFFSET.GetY(), GetColor(fontColor.r, fontColor.g, fontColor.b), SAFE_ACCESS(fontTypes, UI_1), "Score: \nHi-Score: \nPlayer: \nBomb: ");
-	DrawFormatStringToHandle(UI_POS_OFFSET.GetX() + 200, UI_POS_OFFSET.GetY(), GetColor(fontColor.r, fontColor.g, fontColor.b), SAFE_ACCESS(fontTypes, UI_1), "%s\n%s\n%d\n%d" PRId64, scoreStr.c_str(), hiScoreStr.c_str(), Plyr.Life.load(), Plyr.Bomb.load());
+	DrawFormatStringToHandle(kUiPosOffset.GetX(), kUiPosOffset.GetY(), GetColor(fontColor.r, fontColor.g, fontColor.b), SafeAccess(font_types, UI_1), "Score: \nHi-Score: \nPlayer: \nBomb: ");
+	DrawFormatStringToHandle(kUiPosOffset.GetX() + 200, kUiPosOffset.GetY(), GetColor(fontColor.r, fontColor.g, fontColor.b), SafeAccess(font_types, UI_1), "%s\n%s\n%d\n%d" PRId64, score_str.c_str(), hi_score_str.c_str(), Plyr.life.load(), Plyr.bomb.load());
 #endif
 }

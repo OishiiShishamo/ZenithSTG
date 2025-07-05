@@ -5,7 +5,7 @@
 #include "Main.h"
 
 //ラッパ関数
-double Easing(int easeType, double t, double start, double end);
+double Easing(int ease_type, double t, double start, double end);
 
 double Linear(double t, double start, double end);
 

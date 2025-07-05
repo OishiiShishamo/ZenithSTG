@@ -1,30 +1,30 @@
 ﻿//ラッパ関数
 double
-Easing(int easeType, double t, double start, double end) {
-	switch (easeType) {
-	case LINEAR:
+Easing(int ease_type, double t, double start, double end) {
+	switch (ease_type) {
+	case kLinear:
 		return Linear(t, start, end);
 		break;
-	case EASEINQUAD:
+	case kEaseInQuad:
 		return EaseInQuad(t, start, end);
 		break;
-	case EASEOUTQUAD:
+	case kEaseOutQuad:
 		return EaseOutQuad(t, start, end);
 		break;
-	case EASEINOUTQUAD:
+	case kEaseInOutQuad:
 		return EaseInOutQuad(t, start, end);
 		break;
-	case EASEINCUBIC:
+	case kEaseInCubic:
 		return EaseInCubic(t, start, end);
 		break;
-	case EASEOUTCUBIC:
+	case kEaseOutCubic:
 		return EaseOutCubic(t, start, end);
 		break;
-	case EASEINOUTCUBIC:
+	case kEaseInOutCubic:
 		return EaseInOutCubic(t, start, end);
 		break;
 	default:
-		Logger("存在しないイージングタイプを選択しています。 / You have selected an easing type that does not exist.", logType::LOG_WARNING);
+		Logger("存在しないイージングタイプを選択しています。 / You have selected an easing type that does not exist.", LogType::kLogWarning);
 		return Linear(t, start, end);
 		break;
 	}

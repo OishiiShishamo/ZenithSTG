@@ -4,8 +4,8 @@
 #include "Player.h"
 
 void
-Object::UpdateObject(long long Index) {
-	if (!(flags & IS_ALIVE)) return;
+Object::UpdateObject() {
+	if (!(flags & kIsAlive)) return;
 
 	UpdateEase();
 
@@ -16,44 +16,44 @@ Object::UpdateObject(long long Index) {
 
 void
 Object::UpdateEase() {
-	double elapsedFrame = (static_cast<double>(t - popT));
-	if (angleEaseTime == 0) {
-		angle = endAngle;
+	double elapsed_frame = (static_cast<double>(t - pop_t));
+	if (angle_ease_time == 0) {
+		angle = end_angle;
 	}
 	else {
-		angleT = elapsedFrame / angleEaseTime;
-		if (angleT > 1)angleT = 1;
-		angle = Easing(angleEaseType, angleT, startAngle, endAngle);
+		angle_t = elapsed_frame / angle_ease_time;
+		if (angle_t > 1)angle_t = 1;
+		angle = Easing(angle_ease_type, angle_t, start_angle, end_angle);
 	}
-	if (isAlignedAngle == 1) {
-		showAngle = angle;
+	if (is_aligned_angle == 1) {
+		show_angle = angle;
 	}
 
-	if (speedEaseTime == 0) {
-		speed = endSpeed;
+	if (speed_ease_time == 0) {
+		speed = end_speed;
 	}
 	else {
-		speedT = elapsedFrame / speedEaseTime;
-		if (speedT > 1) speedT = 1;
-		speed = Easing(speedEaseType, speedT, startSpeed, endSpeed);
+		speed_t = elapsed_frame / speed_ease_time;
+		if (speed_t > 1) speed_t = 1;
+		speed = Easing(speed_ease_type, speed_t, start_speed, end_speed);
 	}
 
-	if (colSizeEaseTime == 0) {
-		colSize = endColSize;
+	if (col_size_ease_time == 0) {
+		col_size = end_col_size;
 	}
 	else {
-		colSizeT = elapsedFrame / colSizeEaseTime;
-		if (colSizeT > 1)colSizeT = 1;
-		colSize = Easing(colSizeEaseType, colSizeT, startColSize, endColSize);
+		col_tize_t = elapsed_frame / col_size_ease_time;
+		if (col_tize_t > 1)col_tize_t = 1;
+		col_size = Easing(col_size_ease_type, col_tize_t, start_col_size, end_col_size);
 	}
 
-	if (sizeEaseTime == 0) {
-		size = endSize;
+	if (size_ease_time == 0) {
+		size = end_size;
 	}
 	else {
-		sizeT = elapsedFrame / sizeEaseTime;
-		if (sizeT > 1) sizeT = 1;
-		size = Easing(sizeEaseType, sizeT, startSize, endSize);
+		size_t = elapsed_frame / size_ease_time;
+		if (size_t > 1) size_t = 1;
+		size = Easing(size_ease_type, size_t, start_size, end_size);
 	}
 }
 
@@ -78,14 +78,14 @@ Object::CheckPosBounds() {
 
 int
 Object::CheckCollisionAndBounds() {
-	if (flags & IS_COL) {
+	if (flags & kIsCol) {
 		if (ColliCheckObject()) {
-			flags &= ~IS_ALIVE;
+			flags &= ~kIsAlive;
 			return 1;
 		}
 	}
 	if (CheckPosBounds()) {
-		flags &= ~IS_ALIVE;
+		flags &= ~kIsAlive;
 		return 1;
 	}
 	return 0;
@@ -93,29 +93,29 @@ Object::CheckCollisionAndBounds() {
 
 void
 Object::MoveFunc() {
-	switch (ID) {
+	switch (id) {
 	case 0:
 	default: {
-		int needsMultiStep = speed >= colSize + Plyr.colSize && flags & IS_COL;
+		int needsMultiStep = speed >= col_size + Plyr.col_size && flags & kIsCol;
 		if (needsMultiStep) {
 			int step = static_cast<int>(std::ceil(speed / 1.0f));
 			for (int i = 0; i < step; i++) {
 				MoveObject(speed / step);
-				if (flags & IS_COL) {
+				if (flags & kIsCol) {
 					ColliCheckObject();
 				}
 				if (CheckPosBounds()) {
-					flags &= ~IS_ALIVE;
+					flags &= ~kIsAlive;
 					break;
 				}
 			}
 		}
 		else {
 			MoveObject(speed);
-			if (flags & IS_COL) {
+			if (flags & kIsCol) {
 				ColliCheckObject();
 			}
-			if (CheckPosBounds()) flags &= ~IS_ALIVE;
+			if (CheckPosBounds()) flags &= ~kIsAlive;
 		}
 	}
 	}

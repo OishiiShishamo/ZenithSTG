@@ -2,13 +2,13 @@
 #include "Score.h"
 
 void
-addScore(long long num) {
+AddScore(long long num) {
 	score += num;
-	if (score > Properties.hiScore) Properties.hiScore = score.load();
+	if (score > properties_.hi_score) properties_.hi_score = score.load();
 }
 
 void
-setScore(long long num) {
+SetScore(long long num) {
 	score = num;
-	if (score > Properties.hiScore) Properties.hiScore = score.load();
+	if (score > properties_.hi_score) properties_.hi_score = score.load();
 }

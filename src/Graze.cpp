@@ -6,8 +6,8 @@
 
 void
 Graze() {
-	addScore(GrazeScore);
+	AddScore(kGrazeScore);
 	graze++;
-	soundMng.ReserveSE(SE_GRAZE);
+	sound_mng_.ReserveSe(kSoundEffectGraze);
 	GrazeParticle(Plyr.pos);
 }

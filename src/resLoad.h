@@ -4,13 +4,13 @@
 
 class resLoad {
 public:
-	void UIGHLoad();
-	void BulletGHLoad();
-	void ParticleGHLoad();
-	void EnemyGHLoad();
-	void FaceGHLoad();
-	void PlayerGHLoad();
-	void ShotGHLoad();
+	void UiGhLoad();
+	void BulletGhLoad();
+	void ParticleGhLoad();
+	void EnemyGhLoad();
+	void FaceGhLoad();
+	void PlayerGhLoad();
+	void ShotGhLoad();
 	void FontLoad();
 };
 

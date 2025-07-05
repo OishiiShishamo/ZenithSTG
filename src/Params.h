@@ -2,20 +2,20 @@
 #ifndef ZENITHSTG_SRC_PARAMS_H_
 #define ZENITHSTG_SRC_PARAMS_H_
 
-#define UI_POS_OFFSET Vec2D(1400, 50)
+#define kUiPosOffset Vec2D(1400, 50)
 
-#define MAX_BULLET 8192
-#define MAX_LASER 8192
-#define MAX_ENEMY 8192
-#define MAX_PLAYER_SHOT 8192
-#define MAX_PARTICLE 8192
+#define kMaxBullet 8192
+#define kMaxLaser 8192
+#define kMaxEnemy 8192
+#define kMaxPlayerShot 8192
+#define kMaxParticle 8192
 
-#define GRAZE_ENABLED 1
-#define BULLET_GRAZE_EVERY_FRAME 0
-#define LASER_GRAZE_EVERY_FRAME 1
+#define kGrazeEnabled 1
+#define kBulletGrazeEveryFrame 0
+#define kLaserGrazeEveryFrame 1
 
-inline constexpr long long GrazeScore = 1;
+inline constexpr long long kGrazeScore = 1;
 
-inline constexpr int GrazeRange = 16;
+inline constexpr int kGrazeRange = 16;
 
 #endif

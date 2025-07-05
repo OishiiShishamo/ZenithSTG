@@ -2,87 +2,87 @@
 #include "Particle.h"
 #include "Player.h"
 
-std::array<Particle, MAX_PARTICLE> Particles;
-std::array<Particle*, MAX_PARTICLE> ParticlePtrs;
-std::vector<int> BlankParticles;
-std::mutex BlankParticlesMutex;
-std::array<int, GRAPHIC_HANDLER_NUM> defaultParticleBlend;
-std::array<double, GRAPHIC_HANDLER_NUM> drawRatioParticleGraphs;
-long long eIndex = 0;
+std::array<Particle, kMaxParticle> particles;
+std::array<Particle*, kMaxParticle> particle_ptrs;
+std::vector<int> blank_particles;
+std::mutex blank_particles_mutex;
+std::array<int, kGraphicHandlerNum> default_particle_blend;
+std::array<double, kGraphicHandlerNum> draw_ratio_particle_graphs;
+long long particle_index = 0;
 
 void
-Particle::UpdateObject(long long Index) {
-	if (!(flags & IS_ALIVE)) return;
+Particle::UpdateObject() {
+	if (!(flags & kIsAlive)) return;
 
 	UpdateEase();
 
 	vec = AngleToVec2D(angle);
 	MoveFunc();
-	if (t - popT >= palEaseTime) {
+	if (t - pop_t >= pal_ease_time) {
 		PushBlankParticles(index);
-		flags &= ~IS_ALIVE;
+		flags &= ~kIsAlive;
 	}
 }
 
 void
 Particle::UpdateEase() {
-	double elapsedFrame = (static_cast<double>(t - popT));
-	if (angleEaseTime == 0) {
-		angle = endAngle;
+	double elapsed_frame = (static_cast<double>(t - pop_t));
+	if (angle_ease_time == 0) {
+		angle = end_angle;
 	}
 	else {
-		angleT = elapsedFrame / angleEaseTime;
-		if (angleT > 1)angleT = 1;
-		angle = Easing(angleEaseType, angleT, startAngle, endAngle);
+		angle_t = elapsed_frame / angle_ease_time;
+		if (angle_t > 1)angle_t = 1;
+		angle = Easing(angle_ease_type, angle_t, start_angle, end_angle);
 	}
-	if (isAlignedAngle == 1) {
-		showAngle = angle;
+	if (is_aligned_angle == 1) {
+		show_angle = angle;
 	}
 
-	if (speedEaseTime == 0) {
-		speed = endSpeed;
+	if (speed_ease_time == 0) {
+		speed = end_speed;
 	}
 	else {
-		speedT = elapsedFrame / speedEaseTime;
-		if (speedT > 1) speedT = 1;
-		speed = Easing(speedEaseType, speedT, startSpeed, endSpeed);
+		speed_t = elapsed_frame / speed_ease_time;
+		if (speed_t > 1) speed_t = 1;
+		speed = Easing(speed_ease_type, speed_t, start_speed, end_speed);
 	}
 
-	if (colSizeEaseTime == 0) {
-		colSize = endColSize;
+	if (col_size_ease_time == 0) {
+		col_size = end_col_size;
 	}
 	else {
-		colSizeT = elapsedFrame / colSizeEaseTime;
-		if (colSizeT > 1)colSizeT = 1;
-		colSize = Easing(colSizeEaseType, colSizeT, startColSize, endColSize);
+		col_tize_t = elapsed_frame / col_size_ease_time;
+		if (col_tize_t > 1)col_tize_t = 1;
+		col_size = Easing(col_size_ease_type, col_tize_t, start_col_size, end_col_size);
 	}
 
-	if (sizeEaseTime == 0) {
-		size = endSize;
+	if (size_ease_time == 0) {
+		size = end_size;
 	}
 	else {
-		sizeT = elapsedFrame / sizeEaseTime;
-		if (sizeT > 1) sizeT = 1;
-		size = Easing(sizeEaseType, sizeT, startSize, endSize);
+		size_t = elapsed_frame / size_ease_time;
+		if (size_t > 1) size_t = 1;
+		size = Easing(size_ease_type, size_t, start_size, end_size);
 	}
 
-	if (palEaseTime == 0) {
+	if (pal_ease_time == 0) {
 		pal = 0;
 	}
 	else {
-		palT = elapsedFrame / palEaseTime;
-		if (palT > 1) palT = 1;
-		pal = Easing(palEaseType, palT, startPal, 0);
+		pal_t = elapsed_frame / pal_ease_time;
+		if (pal_t > 1) pal_t = 1;
+		pal = Easing(pal_ease_type, pal_t, start_pal, 0);
 	}
 }
 
 void
 Particle::ShowParticle() {
-	if (!(flags & IS_ALIVE)) return;
+	if (!(flags & kIsAlive)) return;
 	std::array<Vec2D, 4> world;
 	const bool isScaled = size > 1.0f;
 	if (isScaled) {
-		double half = size / 2 * 128 * SAFE_ACCESS(drawRatioParticleGraphs, style);
+		double half = size / 2 * 128 * SafeAccess(draw_ratio_particle_graphs, style);
 		std::array<Vec2D, 4> local = {
 			Vec2D(-half, -half),
 			Vec2D(-half, half),
@@ -90,43 +90,43 @@ Particle::ShowParticle() {
 			Vec2D(half, -half)
 		};
 		for (int i = 0; i < 4; ++i) {
-			Vec2D rot = RotatePoint(SAFE_ACCESS(local, i), showAngle + pi / 2);
-			SAFE_ACCESS(world, i) = pos + rot;
+			Vec2D rot = RotatePoint(SafeAccess(local, i), show_angle + kPi / 2);
+			SafeAccess(world, i) = pos + rot;
 		}
 	}
 	if (blend == -1) {
-		SmartSetDrawBlendMode(SAFE_ACCESS(defaultParticleBlend, style), pal);
+		SmartSetDrawBlendMode(SafeAccess(default_particle_blend, style), pal);
 		SetDrawBright(color.r, color.g, color.b);
 		SetDrawMode(DX_DRAWMODE_BILINEAR);
 		if (isScaled) {
 			DrawRectModiGraph(
-				SAFE_ACCESS(world, 0).GetX(), SAFE_ACCESS(world, 0).GetY(),
-				SAFE_ACCESS(world, 1).GetX(), SAFE_ACCESS(world, 1).GetY(),
-				SAFE_ACCESS(world, 2).GetX(), SAFE_ACCESS(world, 2).GetY(),
-				SAFE_ACCESS(world, 3).GetX(), SAFE_ACCESS(world, 3).GetY(),
-				64 - 128 * SAFE_ACCESS(drawRatioParticleGraphs, style) / 2,
-				64 - 128 * SAFE_ACCESS(drawRatioParticleGraphs, style) / 2,
-				128 * SAFE_ACCESS(drawRatioParticleGraphs, style),
-				128 * SAFE_ACCESS(drawRatioParticleGraphs, style),
-				SAFE_ACCESS(imgRes.ParticleBackGH, style),
+				SafeAccess(world, 0).GetX(), SafeAccess(world, 0).GetY(),
+				SafeAccess(world, 1).GetX(), SafeAccess(world, 1).GetY(),
+				SafeAccess(world, 2).GetX(), SafeAccess(world, 2).GetY(),
+				SafeAccess(world, 3).GetX(), SafeAccess(world, 3).GetY(),
+				64 - 128 * SafeAccess(draw_ratio_particle_graphs, style) / 2,
+				64 - 128 * SafeAccess(draw_ratio_particle_graphs, style) / 2,
+				128 * SafeAccess(draw_ratio_particle_graphs, style),
+				128 * SafeAccess(draw_ratio_particle_graphs, style),
+				SafeAccess(img_res.particle_back_gh, style),
 				TRUE);
 		}
-		else DrawRotaGraph(pos.GetX(), pos.GetY(), size, -showAngle, SAFE_ACCESS(imgRes.ParticleBackGH, style), TRUE);
+		else DrawRotaGraph(pos.GetX(), pos.GetY(), size, -show_angle, SafeAccess(img_res.particle_back_gh, style), TRUE);
 		SetDrawBright(255, 255, 255);
 		if (isScaled) {
 			DrawRectModiGraph(
-				SAFE_ACCESS(world, 0).GetX(), SAFE_ACCESS(world, 0).GetY(),
-				SAFE_ACCESS(world, 1).GetX(), SAFE_ACCESS(world, 1).GetY(),
-				SAFE_ACCESS(world, 2).GetX(), SAFE_ACCESS(world, 2).GetY(),
-				SAFE_ACCESS(world, 3).GetX(), SAFE_ACCESS(world, 3).GetY(),
-				64 - 128 * SAFE_ACCESS(drawRatioParticleGraphs, style) / 2,
-				64 - 128 * SAFE_ACCESS(drawRatioParticleGraphs, style) / 2,
-				128 * SAFE_ACCESS(drawRatioParticleGraphs, style),
-				128 * SAFE_ACCESS(drawRatioParticleGraphs, style),
-				SAFE_ACCESS(imgRes.ParticleFrontGH, style),
+				SafeAccess(world, 0).GetX(), SafeAccess(world, 0).GetY(),
+				SafeAccess(world, 1).GetX(), SafeAccess(world, 1).GetY(),
+				SafeAccess(world, 2).GetX(), SafeAccess(world, 2).GetY(),
+				SafeAccess(world, 3).GetX(), SafeAccess(world, 3).GetY(),
+				64 - 128 * SafeAccess(draw_ratio_particle_graphs, style) / 2,
+				64 - 128 * SafeAccess(draw_ratio_particle_graphs, style) / 2,
+				128 * SafeAccess(draw_ratio_particle_graphs, style),
+				128 * SafeAccess(draw_ratio_particle_graphs, style),
+				SafeAccess(img_res.particle_front_gh, style),
 				TRUE);
 		}
-		else DrawRotaGraph(pos.GetX(), pos.GetY(), size, -showAngle, SAFE_ACCESS(imgRes.ParticleFrontGH, style), TRUE);
+		else DrawRotaGraph(pos.GetX(), pos.GetY(), size, -show_angle, SafeAccess(img_res.particle_front_gh, style), TRUE);
 		SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 		SetDrawMode(DX_DRAWMODE_NEAREST);
 	}
@@ -136,48 +136,48 @@ Particle::ShowParticle() {
 		SetDrawMode(DX_DRAWMODE_BILINEAR);
 		if (isScaled) {
 			DrawRectModiGraph(
-				SAFE_ACCESS(world, 0).GetX(), SAFE_ACCESS(world, 0).GetY(),
-				SAFE_ACCESS(world, 1).GetX(), SAFE_ACCESS(world, 1).GetY(),
-				SAFE_ACCESS(world, 2).GetX(), SAFE_ACCESS(world, 2).GetY(),
-				SAFE_ACCESS(world, 3).GetX(), SAFE_ACCESS(world, 3).GetY(),
-				64 - 128 * SAFE_ACCESS(drawRatioParticleGraphs, style) / 2,
-				64 - 128 * SAFE_ACCESS(drawRatioParticleGraphs, style) / 2,
-				128 * SAFE_ACCESS(drawRatioParticleGraphs, style),
-				128 * SAFE_ACCESS(drawRatioParticleGraphs, style),
-				SAFE_ACCESS(imgRes.ParticleBackGH, style),
+				SafeAccess(world, 0).GetX(), SafeAccess(world, 0).GetY(),
+				SafeAccess(world, 1).GetX(), SafeAccess(world, 1).GetY(),
+				SafeAccess(world, 2).GetX(), SafeAccess(world, 2).GetY(),
+				SafeAccess(world, 3).GetX(), SafeAccess(world, 3).GetY(),
+				64 - 128 * SafeAccess(draw_ratio_particle_graphs, style) / 2,
+				64 - 128 * SafeAccess(draw_ratio_particle_graphs, style) / 2,
+				128 * SafeAccess(draw_ratio_particle_graphs, style),
+				128 * SafeAccess(draw_ratio_particle_graphs, style),
+				SafeAccess(img_res.particle_back_gh, style),
 				TRUE);
 		}
-		else DrawRotaGraph(pos.GetX(), pos.GetY(), size, -showAngle, SAFE_ACCESS(imgRes.ParticleBackGH, style), TRUE);
+		else DrawRotaGraph(pos.GetX(), pos.GetY(), size, -show_angle, SafeAccess(img_res.particle_back_gh, style), TRUE);
 		SetDrawBright(255, 255, 255);
 		if (isScaled) {
 			DrawRectModiGraph(
-				SAFE_ACCESS(world, 0).GetX(), SAFE_ACCESS(world, 0).GetY(),
-				SAFE_ACCESS(world, 1).GetX(), SAFE_ACCESS(world, 1).GetY(),
-				SAFE_ACCESS(world, 2).GetX(), SAFE_ACCESS(world, 2).GetY(),
-				SAFE_ACCESS(world, 3).GetX(), SAFE_ACCESS(world, 3).GetY(),
-				64 - 128 * SAFE_ACCESS(drawRatioParticleGraphs, style) / 2,
-				64 - 128 * SAFE_ACCESS(drawRatioParticleGraphs, style) / 2,
-				128 * SAFE_ACCESS(drawRatioParticleGraphs, style),
-				128 * SAFE_ACCESS(drawRatioParticleGraphs, style),
-				SAFE_ACCESS(imgRes.ParticleFrontGH, style),
+				SafeAccess(world, 0).GetX(), SafeAccess(world, 0).GetY(),
+				SafeAccess(world, 1).GetX(), SafeAccess(world, 1).GetY(),
+				SafeAccess(world, 2).GetX(), SafeAccess(world, 2).GetY(),
+				SafeAccess(world, 3).GetX(), SafeAccess(world, 3).GetY(),
+				64 - 128 * SafeAccess(draw_ratio_particle_graphs, style) / 2,
+				64 - 128 * SafeAccess(draw_ratio_particle_graphs, style) / 2,
+				128 * SafeAccess(draw_ratio_particle_graphs, style),
+				128 * SafeAccess(draw_ratio_particle_graphs, style),
+				SafeAccess(img_res.particle_front_gh, style),
 				TRUE);
 		}
-		else DrawRotaGraph(pos.GetX(), pos.GetY(), size, -showAngle, SAFE_ACCESS(imgRes.ParticleFrontGH, style), TRUE);
+		else DrawRotaGraph(pos.GetX(), pos.GetY(), size, -show_angle, SafeAccess(img_res.particle_front_gh, style), TRUE);
 		SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 		SetDrawMode(DX_DRAWMODE_NEAREST);
 	}
-	if (isColShow == 1) {
-		if (flags & IS_COL) {
+	if (kIsColShow == 1) {
+		if (flags & kIsCol) {
 			SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-			DrawCircle(pos.GetX(), pos.GetY(), colSize, GetColor(255, 255, 255), 1);
-			DrawFormatString(pos.GetX(), pos.GetY(), GetColor(GetColorHSV(std::fmod(t, 360), 1, 1).r, GetColorHSV(std::fmod(t, 360), 1, 1).g, GetColorHSV(std::fmod(t, 360), 1, 1).b), "%f", colSize);
+			DrawCircle(pos.GetX(), pos.GetY(), col_size, GetColor(255, 255, 255), 1);
+			DrawFormatString(pos.GetX(), pos.GetY(), GetColor(GetColorHsv(std::fmod(t, 360), 1, 1).r, GetColorHsv(std::fmod(t, 360), 1, 1).g, GetColorHsv(std::fmod(t, 360), 1, 1).b), "%f", col_size);
 		}
 	}
 }
 
 void
 Particle::MoveFunc() {
-	switch (ID) {
+	switch (id) {
 	case 0:
 	default: {
 		MoveObject(speed);
@@ -186,60 +186,60 @@ Particle::MoveFunc() {
 }
 
 void PushBlankParticles(int idx) {
-	std::lock_guard<std::mutex> lock(BlankParticlesMutex);
-	BlankParticles.emplace_back(idx);
+	std::lock_guard<std::mutex> lock(blank_particles_mutex);
+	blank_particles.emplace_back(idx);
 }
 
-int CreateParticle(const Vec2D& pos, const Color& color, int style, int blend, double pal, int palEaseType, int palEaseTime, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int ID, const std::vector<std::any>& params) {
-	if (BlankParticles.empty()) return 1;
-	int idx = BlankParticles.back();
-	BlankParticles.pop_back();
-	SAFE_ACCESS(Particles, idx).flags = IS_ALIVE | isCol * IS_COL;
-	SAFE_ACCESS(Particles, idx).objType = OBJECT_PARTICLE;
-	SAFE_ACCESS(Particles, idx).pos = pos;
-	SAFE_ACCESS(Particles, idx).color = color;
-	SAFE_ACCESS(Particles, idx).style = style;
-	SAFE_ACCESS(Particles, idx).blend = blend;
-	SAFE_ACCESS(Particles, idx).pal = pal;
-	SAFE_ACCESS(Particles, idx).startPal = pal;
-	SAFE_ACCESS(Particles, idx).palEaseType = palEaseType;
-	SAFE_ACCESS(Particles, idx).palEaseTime = palEaseTime;
-	SAFE_ACCESS(Particles, idx).startColSize = startColSize;
-	SAFE_ACCESS(Particles, idx).endColSize = endColSize;
-	SAFE_ACCESS(Particles, idx).colSizeEaseType = colSizeEaseType;
-	SAFE_ACCESS(Particles, idx).colSizeEaseTime = colSizeEaseTime;
-	SAFE_ACCESS(Particles, idx).startSize = startSize;
-	SAFE_ACCESS(Particles, idx).endSize = endSize;
-	SAFE_ACCESS(Particles, idx).sizeEaseType = sizeEaseType;
-	SAFE_ACCESS(Particles, idx).sizeEaseTime = sizeEaseTime;
+int CreateParticle(const Vec2D& pos, const Color& color, int style, int blend, double pal, int palEaseType, int palEaseTime, int is_col, double start_col_size, double end_col_size, int col_size_ease_type, int col_size_ease_time, double start_size, double end_size, int size_ease_type, int size_ease_time, int aim, double start_angle, double end_angle, int angle_ease_type, int angle_ease_time, double start_speed, double end_speed, int speed_ease_type, int speed_ease_time, int id, const std::vector<std::any>& params) {
+	if (blank_particles.empty()) return 1;
+	int idx = blank_particles.back();
+	blank_particles.pop_back();
+	SafeAccess(particles, idx).flags = kIsAlive | is_col * kIsCol;
+	SafeAccess(particles, idx).obj_type = kObjectParticle;
+	SafeAccess(particles, idx).pos = pos;
+	SafeAccess(particles, idx).color = color;
+	SafeAccess(particles, idx).style = style;
+	SafeAccess(particles, idx).blend = blend;
+	SafeAccess(particles, idx).pal = pal;
+	SafeAccess(particles, idx).start_pal = pal;
+	SafeAccess(particles, idx).pal_ease_type = palEaseType;
+	SafeAccess(particles, idx).pal_ease_time = palEaseTime;
+	SafeAccess(particles, idx).start_col_size = start_col_size;
+	SafeAccess(particles, idx).end_col_size = end_col_size;
+	SafeAccess(particles, idx).col_size_ease_type = col_size_ease_type;
+	SafeAccess(particles, idx).col_size_ease_time = col_size_ease_time;
+	SafeAccess(particles, idx).start_size = start_size;
+	SafeAccess(particles, idx).end_size = end_size;
+	SafeAccess(particles, idx).size_ease_type = size_ease_type;
+	SafeAccess(particles, idx).size_ease_time = size_ease_time;
 	if (aim == 1) {
-		SAFE_ACCESS(Particles, idx).startAngle = Plyr.AimPlayer(pos) + startAngle;
-		SAFE_ACCESS(Particles, idx).endAngle = Plyr.AimPlayer(pos) + endAngle;
+		SafeAccess(particles, idx).start_angle = Plyr.AimPlayer(pos) + start_angle;
+		SafeAccess(particles, idx).end_angle = Plyr.AimPlayer(pos) + end_angle;
 	}
 	else {
-		SAFE_ACCESS(Particles, idx).startAngle = startAngle;
-		SAFE_ACCESS(Particles, idx).endAngle = endAngle;
+		SafeAccess(particles, idx).start_angle = start_angle;
+		SafeAccess(particles, idx).end_angle = end_angle;
 	}
-	SAFE_ACCESS(Particles, idx).angleEaseType = angleEaseType;
-	SAFE_ACCESS(Particles, idx).angleEaseTime = angleEaseTime;
-	SAFE_ACCESS(Particles, idx).startSpeed = startSpeed;
-	SAFE_ACCESS(Particles, idx).endSpeed = endSpeed;
-	SAFE_ACCESS(Particles, idx).speedEaseType = speedEaseType;
-	SAFE_ACCESS(Particles, idx).speedEaseTime = speedEaseTime;
-	SAFE_ACCESS(Particles, idx).popT = t;
-	SAFE_ACCESS(Particles, idx).length = 0;
-	SAFE_ACCESS(Particles, idx).width = 0;
-	SAFE_ACCESS(Particles, idx).frontNode = 0;
-	SAFE_ACCESS(Particles, idx).currentNodeNum = 0;
-	SAFE_ACCESS(Particles, idx).order = eIndex;
-	SAFE_ACCESS(Particles, idx).index = idx;
-	SAFE_ACCESS(Particles, idx).ID = ID;
-	SAFE_ACCESS(Particles, idx).params = params;
-	eIndex++;
+	SafeAccess(particles, idx).angle_ease_type = angle_ease_type;
+	SafeAccess(particles, idx).angle_ease_time = angle_ease_time;
+	SafeAccess(particles, idx).start_speed = start_speed;
+	SafeAccess(particles, idx).end_speed = end_speed;
+	SafeAccess(particles, idx).speed_ease_type = speed_ease_type;
+	SafeAccess(particles, idx).speed_ease_time = speed_ease_time;
+	SafeAccess(particles, idx).pop_t = t;
+	SafeAccess(particles, idx).length = 0;
+	SafeAccess(particles, idx).width = 0;
+	SafeAccess(particles, idx).front_node = 0;
+	SafeAccess(particles, idx).current_node_num = 0;
+	SafeAccess(particles, idx).order = particle_index;
+	SafeAccess(particles, idx).index = idx;
+	SafeAccess(particles, idx).id = id;
+	SafeAccess(particles, idx).params = params;
+	particle_index++;
 	return 0;
 }
 
-void ParallelUpdateParticles(std::array<Particle, MAX_PARTICLE>& particles) {
+void ParallelUpdateParticles(std::array<Particle, kMaxParticle>& particles) {
 	std::for_each(std::execution::par_unseq, particles.begin(), particles.end(),
 		[](Particle& E) {
 			E.UpdateObject();
@@ -248,12 +248,12 @@ void ParallelUpdateParticles(std::array<Particle, MAX_PARTICLE>& particles) {
 
 void MoveParticles() {
 	if (t % 1 == 0) {
-		std::sort(ParticlePtrs.begin(), ParticlePtrs.end(), [](const Particle* a, const Particle* b) {
+		std::sort(particle_ptrs.begin(), particle_ptrs.end(), [](const Particle* a, const Particle* b) {
 			return a->order < b->order;
 			});
 	}
-	ParallelUpdateParticles(Particles);
-	for (auto* E : ParticlePtrs) {
+	ParallelUpdateParticles(particles);
+	for (auto* E : particle_ptrs) {
 		E->ShowParticle();
 	}
 }
@@ -261,7 +261,7 @@ void MoveParticles() {
 void
 GrazeParticle(const Vec2D& pos) {
 	for (int i = 0; i < 1; i++) {
-		RandTMP = std::fmod(rng() / 100.0f, 360);
-		CreateParticle(pos, Color(C_WHITE), P_STAR, BLEND_ADD, 255, EASEINQUAD, 15, 0, 0, 0, 0, 0, std::fmod(rng() / 100.0f, 1.5f), 0, EASEINQUAD, 120, 0, RandTMP, RandTMP, 0, 0, std::fmod(rng() / 100.0f, 32), 0, EASEINQUAD, 120);
+		rand_tmp = std::fmod(rng() / 100.0f, 360);
+		CreateParticle(pos, Color(kColorWhite), kParticleStar, kBlendAdd, 255, kEaseInQuad, 15, 0, 0, 0, 0, 0, std::fmod(rng() / 100.0f, 1.5f), 0, kEaseInQuad, 120, 0, rand_tmp, rand_tmp, 0, 0, std::fmod(rng() / 100.0f, 32), 0, kEaseInQuad, 120);
 	}
 }

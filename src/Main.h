@@ -30,86 +30,86 @@ class Background;
 
 #define PRINT(...) printf(__VA_ARGS__)	
 
-#define CENTER_X 960
-#define CENTER_Y 540
-#define CENTER Vec2D(CENTER_X, CENTER_Y)
+#define kCenterX 960
+#define kCenterY 540
+#define kCenter Vec2D(kCenterX, kCenterY)
 
-#define BORDER_LEFT 528
-#define BORDER_RIGHT 1392
-#define BORDER_UP 35
-#define BORDER_DOWN 1045
+#define kBorderLeft 528
+#define kBorderRight 1392
+#define kBorderUp 35
+#define kBorderDown 1045
 
-#define STAGE_NUM 1
+#define kStageNum 1
 
-#define FPS_HISTORY_LENGTH 120
+#define kFpsHistoryLength 120
 
-#define GRAPHIC_HANDLER_NUM 256
+#define kGraphicHandlerNum 256
 
 struct imageRes {
-	std::array<int, GRAPHIC_HANDLER_NUM> UIGH;
-	std::array<int, GRAPHIC_HANDLER_NUM> BulletBackGH;
-	std::array<int, GRAPHIC_HANDLER_NUM> BulletFrontGH;
-	std::array<int, GRAPHIC_HANDLER_NUM> ParticleBackGH;
-	std::array<int, GRAPHIC_HANDLER_NUM> ParticleFrontGH;
-	std::array<int, GRAPHIC_HANDLER_NUM> EnemyGH;
-	std::array<int, GRAPHIC_HANDLER_NUM> FaceGH;
-	std::array<int, GRAPHIC_HANDLER_NUM> PlayerGH;
-	std::array<int, GRAPHIC_HANDLER_NUM> ShotGH;
-	std::array<int, GRAPHIC_HANDLER_NUM> EtcGH;
+	std::array<int, kGraphicHandlerNum> ui_gh;
+	std::array<int, kGraphicHandlerNum> bullet_back_gh;
+	std::array<int, kGraphicHandlerNum> bullet_front_gh;
+	std::array<int, kGraphicHandlerNum> particle_back_gh;
+	std::array<int, kGraphicHandlerNum> particle_front_gh;
+	std::array<int, kGraphicHandlerNum> enemy_gh;
+	std::array<int, kGraphicHandlerNum> face_gh;
+	std::array<int, kGraphicHandlerNum> player_gh;
+	std::array<int, kGraphicHandlerNum> shot_gh;
+	std::array<int, kGraphicHandlerNum> etc_gh;
 };
 
-extern imageRes imgRes;
-extern Sound soundMng;
+extern imageRes img_res;
+extern Sound sound_mng_;
 
-extern Property Properties;
+extern Property properties_;
 
-extern mainLoop Loop;
+extern mainLoop loop_;
 
-extern std::array<Script, STAGE_NUM> Scripts;
+extern std::array<Script, kStageNum> scripts;
 
-extern std::array<Bullet, MAX_BULLET> Bullets;
-extern std::array<Bullet*, MAX_BULLET> BulletPtrs;
-extern std::vector<int> BlankBullets;
-extern std::array<Laser, MAX_LASER> Lasers;
-extern std::array<Laser*, MAX_LASER> LaserPtrs;
-extern std::vector<int> BlankLasers;
-extern std::array<Enemy, MAX_ENEMY> Enemies;
-extern std::array<Enemy*, MAX_ENEMY> EnemyPtrs;
-extern std::vector<int> BlankEnemies;
-extern std::array<playerShot, MAX_PLAYER_SHOT> plyrShots;
-extern std::array<playerShot*, MAX_PLAYER_SHOT> PlayerShotPtrs;
-extern std::vector<int> BlankPlayerShots;
-extern std::array<Particle, MAX_PARTICLE> Particles;
-extern std::array<Particle*, MAX_PARTICLE> ParticlePtrs;
-extern std::vector<int> BlankParticles;
+extern std::array<Bullet, kMaxBullet> bullets;
+extern std::array<Bullet*, kMaxBullet> bullet_ptrs;
+extern std::vector<int> blank_bullets;
+extern std::array<Laser, kMaxLaser> lasers;
+extern std::array<Laser*, kMaxLaser> laser_ptrs;
+extern std::vector<int> blank_lasers;
+extern std::array<Enemy, kMaxEnemy> enemies;
+extern std::array<Enemy*, kMaxEnemy> enemy_ptrs;
+extern std::vector<int> blank_enemies;
+extern std::array<playerShot, kMaxPlayerShot> player_shots;
+extern std::array<playerShot*, kMaxPlayerShot> player_shot_ptrs;
+extern std::vector<int> blank_player_shots;
+extern std::array<Particle, kMaxParticle> particles;
+extern std::array<Particle*, kMaxParticle> particle_ptrs;
+extern std::vector<int> blank_particles;
 
 extern std::random_device rng;
 
-extern int numThreads;
+extern int num_threads;
 
 extern long long t;
 extern long long fps;
-extern int currentBlendMode;
-extern int currentBlendPal;
-extern std::array<double, FPS_HISTORY_LENGTH> fpsHistory;
-extern std::array<int, GRAPHIC_HANDLER_NUM> defaultBulletBlend;
-extern std::array<int, GRAPHIC_HANDLER_NUM> defaultEnemyBlend;
-extern std::array<int, GRAPHIC_HANDLER_NUM> defaultPlayerShotBlend;
-extern std::array<int, GRAPHIC_HANDLER_NUM> defaultParticleBlend;
-extern std::array<double, GRAPHIC_HANDLER_NUM> drawRatioBulletGraphs;
-extern std::array<double, GRAPHIC_HANDLER_NUM> drawRatioEnemyGraphs;
-extern std::array<double, GRAPHIC_HANDLER_NUM> drawRatioPlayerShotGraphs;
-extern std::array<double, GRAPHIC_HANDLER_NUM> drawRatioParticleGraphs;
-extern int fpsHistoryIndex;
+extern int current_blend_mode;
+extern int current_blend_pal;
+extern std::array<double, kFpsHistoryLength> fps_history;
+extern std::array<int, kGraphicHandlerNum> default_bullet_blend;
+extern std::array<int, kGraphicHandlerNum> default_enemy_blend;
+extern std::array<int, kGraphicHandlerNum> default_player_shot_blend;
+extern std::array<int, kGraphicHandlerNum> default_particle_blend;
+extern std::array<double, kGraphicHandlerNum> draw_ratio_bullet_graphs;
+extern std::array<double, kGraphicHandlerNum> draw_ratio_enemy_graphs;
+extern std::array<double, kGraphicHandlerNum> draw_ratio_player_shot_graphs;
+extern std::array<double, kGraphicHandlerNum> draw_ratio_particle_graphs;
+extern int fps_history_index;
 
-extern double RandTMP;
+extern double rand_tmp;
 
 extern std::atomic<long long> score;
 extern std::atomic<long long> graze;
 
-extern double screenSizeRate;
-extern double screenRotaX;
-extern double screenRotaY;
-extern double screenRotaZ;
+extern double screen_size_rate;
+extern double screen_rota_x;
+extern double screen_rota_y;
+extern double screen_rota_z;
 
 #endif

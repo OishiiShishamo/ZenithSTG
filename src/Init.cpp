@@ -11,64 +11,64 @@
 #include "Particle.h"
 
 resLoad res;
-imageRes imgRes;
-Property Properties;
+imageRes img_res;
+Property properties_;
 
-std::array<int, fontTypeNum> fontTypes;
+std::array<int, kFontTypeNum> font_types;
 
-int numThreads = std::thread::hardware_concurrency();
+int num_threads = std::thread::hardware_concurrency();
 
 void
 Init() {
 	boost::property_tree::ptree pt;
 	boost::property_tree::read_xml("ZenithSTG_property.xml", pt);
 	if (boost::optional<std::string> title = pt.get_optional<std::string>("root.title")) {
-		Properties.title = title.get();
+		properties_.title = title.get();
 	}
 	else {
-		Properties.title = "ZenithSTG";
+		properties_.title = "ZenithSTG";
 	}
-	if (boost::optional<int> windowSize = pt.get_optional<int>("root.windowSize")) {
-		Properties.windowSize = windowSize.get();
-		if (Properties.windowSize < 0 || Properties.windowSize > 2) Properties.windowSize = 0;
-	}
-	else {
-		Properties.windowSize = 0;
-	}
-	if (boost::optional<int> isWindow = pt.get_optional<int>("root.isWindow")) {
-		Properties.isWindow = isWindow.get();
-		if (Properties.isWindow < 0 || Properties.isWindow > 1) Properties.isWindow = 1;
+	if (boost::optional<int> window_size = pt.get_optional<int>("root.windowSize")) {
+		properties_.window_size = window_size.get();
+		if (properties_.window_size < 0 || properties_.window_size > 2) properties_.window_size = 0;
 	}
 	else {
-		Properties.isWindow = 1;
+		properties_.window_size = 0;
 	}
-	if (boost::optional<long long> hiScore = pt.get_optional<long long>("root.hiScore")) {
-		Properties.hiScore = hiScore.get();
-		if (Properties.hiScore < 0) Properties.hiScore = 0;
-	}
-	else {
-		Properties.hiScore = 0;
-	}
-	if (boost::optional<int> BGMVolume = pt.get_optional<int>("root.BGMVolume")) {
-		Properties.BGMVolume = BGMVolume.get();
-		if (Properties.BGMVolume < 0) Properties.BGMVolume = 0;
-		if (Properties.BGMVolume > 100) Properties.BGMVolume = 100;
+	if (boost::optional<int> is_window = pt.get_optional<int>("root.isWindow")) {
+		properties_.is_window = is_window.get();
+		if (properties_.is_window < 0 || properties_.is_window > 1) properties_.is_window = 1;
 	}
 	else {
-		Properties.BGMVolume = Properties.BGMVolume;
+		properties_.is_window = 1;
 	}
-	if (boost::optional<int> SEVolume = pt.get_optional<int>("root.SEVolume")) {
-		Properties.SEVolume = SEVolume.get();
-		if (Properties.SEVolume < 0) Properties.SEVolume = 0;
-		if (Properties.SEVolume > 100) Properties.SEVolume = 100;
+	if (boost::optional<long long> hi_score = pt.get_optional<long long>("root.hiScore")) {
+		properties_.hi_score = hi_score.get();
+		if (properties_.hi_score < 0) properties_.hi_score = 0;
 	}
 	else {
-		Properties.SEVolume = Properties.SEVolume;
+		properties_.hi_score = 0;
+	}
+	if (boost::optional<int> bgm_volume = pt.get_optional<int>("root.BGMVolume")) {
+		properties_.bgm_volume = bgm_volume.get();
+		if (properties_.bgm_volume < 0) properties_.bgm_volume = 0;
+		if (properties_.bgm_volume > 100) properties_.bgm_volume = 100;
+	}
+	else {
+		properties_.bgm_volume = properties_.bgm_volume;
+	}
+	if (boost::optional<int> se_volume = pt.get_optional<int>("root.SEVolume")) {
+		properties_.se_volume = se_volume.get();
+		if (properties_.se_volume < 0) properties_.se_volume = 0;
+		if (properties_.se_volume > 100) properties_.se_volume = 100;
+	}
+	else {
+		properties_.se_volume = properties_.se_volume;
 	}
 
 	SetOutApplicationLogValidFlag(FALSE);
-	ChangeWindowMode(Properties.isWindow);
-	SetWindowText(Properties.title.c_str());
+	ChangeWindowMode(properties_.is_window);
+	SetWindowText(properties_.title.c_str());
 	SetChangeScreenModeGraphicsSystemResetFlag(FALSE);
 	SetGraphMode(GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN), 32);
 	SetDoubleStartValidFlag(TRUE);
@@ -82,89 +82,89 @@ Init() {
 
 	std::srand(42);
 
-	Plyr.pos = P_DEFAULT_POS;
-	Plyr.Slow = 5;
-	Plyr.Fast = 7;
-	Plyr.Life = Plyr.defaultLife;
-	Plyr.Bomb = Plyr.defaultBomb;
-	Plyr.colSize = PLAYER_COL;
-	Plyr.Protect = PLAYER_PROTECT;
-	Plyr.protectTime = 0;
-	Plyr.isMouse = 0;
+	Plyr.pos = kPlayerDefaultPos;
+	Plyr.slow = 5;
+	Plyr.fast = 7;
+	Plyr.life = Plyr.default_life;
+	Plyr.bomb = Plyr.default_bomb;
+	Plyr.col_size = kPlayerCol;
+	Plyr.rrotect = kPlayerProtect;
+	Plyr.protect_time = 0;
+	Plyr.is_mouse = 0;
 
-	fpsHistory.fill(fps);
+	fps_history.fill(fps);
 
-	defaultBulletBlend.fill(BLEND_NOBLEND);
-	SAFE_ACCESS(defaultBulletBlend, B_LIGHT) = BLEND_ADD;
-	SAFE_ACCESS(defaultBulletBlend, B_BIG) = BLEND_ADD;
+	default_bullet_blend.fill(kBlendNoblend);
+	SafeAccess(default_bullet_blend, kBulletLight) = kBlendAdd;
+	SafeAccess(default_bullet_blend, kBulletBig) = kBlendAdd;
 
-	defaultParticleBlend.fill(BLEND_NOBLEND);
-	SAFE_ACCESS(defaultParticleBlend, P_LIGHT) = BLEND_ADD;
-	SAFE_ACCESS(defaultParticleBlend, P_STAR) = BLEND_ADD;
+	default_particle_blend.fill(kBlendNoblend);
+	SafeAccess(default_particle_blend, kParticleLight) = kBlendAdd;
+	SafeAccess(default_particle_blend, kParticleStar) = kBlendAdd;
 
-	defaultEnemyBlend.fill(BLEND_NOBLEND);
+	default_enemy_blend.fill(kBlendNoblend);
 
-	defaultPlayerShotBlend.fill(BLEND_NOBLEND);
+	default_player_shot_blend.fill(kBlendNoblend);
 
-	drawRatioBulletGraphs.fill(1.0f);
-	SAFE_ACCESS(drawRatioBulletGraphs, B_NORMAL) = 0.15625f;
-	SAFE_ACCESS(drawRatioBulletGraphs, B_MIDIAM) = 0.3125f;
-	SAFE_ACCESS(drawRatioBulletGraphs, B_UROKO) = 0.15625f;
-	SAFE_ACCESS(drawRatioBulletGraphs, B_LASER) = 0.0625f;
-	SAFE_ACCESS(drawRatioBulletGraphs, B_LIGHT) = 0.25f;
-	SAFE_ACCESS(drawRatioBulletGraphs, B_BIG) = 0.75f;
+	draw_ratio_bullet_graphs.fill(1.0f);
+	SafeAccess(draw_ratio_bullet_graphs, kBulletNormal) = 0.15625f;
+	SafeAccess(draw_ratio_bullet_graphs, kBulletMedium) = 0.3125f;
+	SafeAccess(draw_ratio_bullet_graphs, kBulletScale) = 0.15625f;
+	SafeAccess(draw_ratio_bullet_graphs, kBulletLaser) = 0.0625f;
+	SafeAccess(draw_ratio_bullet_graphs, kBulletLight) = 0.25f;
+	SafeAccess(draw_ratio_bullet_graphs, kBulletBig) = 0.75f;
 
-	drawRatioParticleGraphs.fill(1.0f);
-	SAFE_ACCESS(drawRatioParticleGraphs, P_LIGHT) = 0.25f;
-	SAFE_ACCESS(drawRatioParticleGraphs, P_STAR) = 0.125f;
+	draw_ratio_particle_graphs.fill(1.0f);
+	SafeAccess(draw_ratio_particle_graphs, kParticleLight) = 0.25f;
+	SafeAccess(draw_ratio_particle_graphs, kParticleStar) = 0.125f;
 
-	drawRatioEnemyGraphs.fill(1.0f);
-	SAFE_ACCESS(drawRatioEnemyGraphs, EN_NORMAL) = 0.5f;
+	draw_ratio_enemy_graphs.fill(1.0f);
+	SafeAccess(draw_ratio_enemy_graphs, kEnemyNormal) = 0.5f;
 
-	drawRatioPlayerShotGraphs.fill(1.0f);
-	SAFE_ACCESS(drawRatioPlayerShotGraphs, PS_NORMAL) = 0.5f;
+	draw_ratio_player_shot_graphs.fill(1.0f);
+	SafeAccess(draw_ratio_player_shot_graphs, kPlayerShotNormal) = 0.5f;
 
-	for (int i = 0; i < MAX_BULLET; i++) {
-		SAFE_ACCESS(BulletPtrs, i) = &SAFE_ACCESS(Bullets, i);
-		BlankBullets.emplace_back(i);
+	for (int i = 0; i < kMaxBullet; i++) {
+		SafeAccess(bullet_ptrs, i) = &SafeAccess(bullets, i);
+		blank_bullets.emplace_back(i);
 	}
-	for (int i = 0; i < MAX_LASER; i++) {
-		SAFE_ACCESS(LaserPtrs, i) = &SAFE_ACCESS(Lasers, i);
-		BlankLasers.emplace_back(i);
+	for (int i = 0; i < kMaxLaser; i++) {
+		SafeAccess(laser_ptrs, i) = &SafeAccess(lasers, i);
+		blank_lasers.emplace_back(i);
 	}
-	for (int i = 0; i < MAX_ENEMY; i++) {
-		SAFE_ACCESS(EnemyPtrs, i) = &SAFE_ACCESS(Enemies, i);
-		BlankEnemies.emplace_back(i);
+	for (int i = 0; i < kMaxEnemy; i++) {
+		SafeAccess(enemy_ptrs, i) = &SafeAccess(enemies, i);
+		blank_enemies.emplace_back(i);
 	}
-	for (int i = 0; i < MAX_PLAYER_SHOT; i++) {
-		SAFE_ACCESS(PlayerShotPtrs, i) = &SAFE_ACCESS(plyrShots, i);
-		BlankPlayerShots.emplace_back(i);
+	for (int i = 0; i < kMaxPlayerShot; i++) {
+		SafeAccess(player_shot_ptrs, i) = &SafeAccess(player_shots, i);
+		blank_player_shots.emplace_back(i);
 	}
-	for (int i = 0; i < MAX_PARTICLE; i++) {
-		SAFE_ACCESS(ParticlePtrs, i) = &SAFE_ACCESS(Particles, i);
-		BlankParticles.emplace_back(i);
+	for (int i = 0; i < kMaxParticle; i++) {
+		SafeAccess(particle_ptrs, i) = &SafeAccess(particles, i);
+		blank_particles.emplace_back(i);
 	}
 }
 
 void
 ResInit() {
-	res.UIGHLoad();
-	res.BulletGHLoad();
-	res.ParticleGHLoad();
-	res.EnemyGHLoad();
-	res.FaceGHLoad();
-	res.PlayerGHLoad();
-	res.ShotGHLoad();
+	res.UiGhLoad();
+	res.BulletGhLoad();
+	res.ParticleGhLoad();
+	res.EnemyGhLoad();
+	res.FaceGhLoad();
+	res.PlayerGhLoad();
+	res.ShotGhLoad();
 	res.FontLoad();
 
-	soundMng.SoundLoad();
+	sound_mng_.SoundLoad();
 
-	backgroundCanvas = MakeScreen(1920, 1080, 1);
-	bulletCanvas = MakeScreen(1920, 1080, 1);
-	playerCanvas = MakeScreen(1920, 1080, 1);
-	playerShotCanvas = MakeScreen(1920, 1080, 1);
-	bombCanvas = MakeScreen(1920, 1080, 1);
-	particleCanvas = MakeScreen(1920, 1080, 1);
-	screenCanvas = MakeScreen(1920, 1080, 1);
-	UICanvas = MakeScreen(1920, 1080, 1);
+	background_canvas = MakeScreen(1920, 1080, 1);
+	bullet_canvas = MakeScreen(1920, 1080, 1);
+	player_canvas = MakeScreen(1920, 1080, 1);
+	player_shot_canvas = MakeScreen(1920, 1080, 1);
+	bomb_canvas = MakeScreen(1920, 1080, 1);
+	particle_canvas = MakeScreen(1920, 1080, 1);
+	screen_canvas = MakeScreen(1920, 1080, 1);
+	ui_canvas = MakeScreen(1920, 1080, 1);
 }

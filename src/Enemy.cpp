@@ -11,21 +11,21 @@
 
 //TODO: 引数減らしたラッパー関数作る
 
-std::array<Enemy, MAX_ENEMY> Enemies;
-std::array<Enemy*, MAX_ENEMY> EnemyPtrs;
-std::vector<int> BlankEnemies;
-std::mutex BlankEnemyMutex;
-std::array<int, GRAPHIC_HANDLER_NUM> defaultEnemyBlend;
-std::array<double, GRAPHIC_HANDLER_NUM> drawRatioEnemyGraphs;
+std::array<Enemy, kMaxEnemy> enemies;
+std::array<Enemy*, kMaxEnemy> enemy_ptrs;
+std::vector<int> blank_enemies;
+std::mutex blank_enemy_mutex;
+std::array<int, kGraphicHandlerNum> default_enemy_blend;
+std::array<double, kGraphicHandlerNum> draw_ratio_enemy_graphs;
 
 void
 Enemy::ShowEnemy() {
-	if (!(flags & IS_ALIVE)) return;
+	if (!(flags & kIsAlive)) return;
 	if (blend == -1) {
-		SmartSetDrawBlendMode(SAFE_ACCESS(defaultEnemyBlend, style), pal);
+		SmartSetDrawBlendMode(SafeAccess(default_enemy_blend, style), pal);
 		SetDrawBright(color.r, color.g, color.b);
 		SetDrawMode(DX_DRAWMODE_BILINEAR);
-		DrawRotaGraph(pos.GetX(), pos.GetY(), size, -showAngle, SAFE_ACCESS(imgRes.EnemyGH, style), TRUE);
+		DrawRotaGraph(pos.GetX(), pos.GetY(), size, -show_angle, SafeAccess(img_res.enemy_gh, style), TRUE);
 		SetDrawBright(255, 255, 255);
 		SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 		SetDrawMode(DX_DRAWMODE_NEAREST);
@@ -34,23 +34,23 @@ Enemy::ShowEnemy() {
 		SmartSetDrawBlendMode(blend, pal);
 		SetDrawBright(color.r, color.g, color.b);
 		SetDrawMode(DX_DRAWMODE_BILINEAR);
-		DrawRotaGraph(pos.GetX(), pos.GetY(), size, -showAngle, SAFE_ACCESS(imgRes.EnemyGH, style), TRUE);
+		DrawRotaGraph(pos.GetX(), pos.GetY(), size, -show_angle, SafeAccess(img_res.enemy_gh, style), TRUE);
 		SetDrawBright(255, 255, 255);
 		SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 		SetDrawMode(DX_DRAWMODE_NEAREST);
 	}
-	if (isColShow == 1) {
-		if (flags & IS_COL) {
+	if (kIsColShow == 1) {
+		if (flags & kIsCol) {
 			SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-			DrawCircle(pos.GetX(), pos.GetY(), colSize, GetColor(255, 255, 255), 1);
-			DrawFormatString(pos.GetX(), pos.GetY(), GetColor(GetColorHSV(std::fmod(t, 360), 1, 1).r, GetColorHSV(std::fmod(t, 360), 1, 1).g, GetColorHSV(std::fmod(t, 360), 1, 1).b), "%f", colSize);
+			DrawCircle(pos.GetX(), pos.GetY(), col_size, GetColor(255, 255, 255), 1);
+			DrawFormatString(pos.GetX(), pos.GetY(), GetColor(GetColorHsv(std::fmod(t, 360), 1, 1).r, GetColorHsv(std::fmod(t, 360), 1, 1).g, GetColorHsv(std::fmod(t, 360), 1, 1).b), "%f", col_size);
 		}
 	}
 }
 
 int
 Enemy::ColliCheckObject() {
-	if (colCircleAndCircle(pos, Plyr.pos, colSize + Plyr.colSize)) {
+	if (ColCircleAndCircle(pos, Plyr.pos, col_size + Plyr.col_size)) {
 		Plyr.HitPlayer();
 		return 1;
 	}
@@ -59,27 +59,27 @@ Enemy::ColliCheckObject() {
 
 int
 Enemy::CheckPosBounds() {
-	double limit = size * 128 * 2 * SAFE_ACCESS(drawRatioEnemyGraphs, style);
-	if (pos.GetX() < BORDER_LEFT - limit) return 1;
-	if (pos.GetX() > BORDER_RIGHT + limit) return 1;
-	if (pos.GetY() < BORDER_UP - limit) return 1;
-	if (pos.GetY() > BORDER_DOWN + limit) return 1;
+	double limit = size * 128 * 2 * SafeAccess(draw_ratio_enemy_graphs, style);
+	if (pos.GetX() < kBorderLeft - limit) return 1;
+	if (pos.GetX() > kBorderRight + limit) return 1;
+	if (pos.GetY() < kBorderUp - limit) return 1;
+	if (pos.GetY() > kBorderDown + limit) return 1;
 
 	return 0;
 }
 
 int
 Enemy::CheckCollisionAndBounds() {
-	if (flags & IS_COL) {
+	if (flags & kIsCol) {
 		if (ColliCheckObject()) {
 			PushBlankEnemies(index);
-			flags &= ~IS_ALIVE;
+			flags &= ~kIsAlive;
 			return 1;
 		}
 	}
 	if (CheckPosBounds()) {
 		PushBlankEnemies(index);
-		flags &= ~IS_ALIVE;
+		flags &= ~kIsAlive;
 		return 1;
 	}
 	return 0;
@@ -87,10 +87,10 @@ Enemy::CheckCollisionAndBounds() {
 
 void
 Enemy::MoveFunc() {
-	switch (ID) {
+	switch (id) {
 	case 0:
 	default: {
-		int needsMultiStep = speed >= colSize + Plyr.colSize && flags & IS_COL;
+		int needsMultiStep = speed >= col_size + Plyr.col_size && flags & kIsCol;
 		if (needsMultiStep) {
 			int step = static_cast<int>(std::ceil(speed / 1.0f));
 			for (int i = 0; i < step; i++) {
@@ -109,139 +109,139 @@ Enemy::MoveFunc() {
 
 void
 PushBlankEnemies(int idx) {
-	std::lock_guard<std::mutex> lock(BlankEnemyMutex);
-	BlankEnemies.emplace_back(idx);
+	std::lock_guard<std::mutex> lock(blank_enemy_mutex);
+	blank_enemies.emplace_back(idx);
 }
 
 int
-CreateEnemy(const Vec2D& pos, const Color& color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int SE, int ID, const std::vector<std::any>& params) {
-	soundMng.ReserveSE(SE);
-	if (BlankEnemies.empty()) return 1;
-	int idx = BlankEnemies.back();
-	BlankEnemies.pop_back();
-	SAFE_ACCESS(Enemies, idx).flags = IS_ALIVE | isCol * IS_COL;
-	SAFE_ACCESS(Enemies, idx).objType = OBJECT_ENEMY;
-	SAFE_ACCESS(Enemies, idx).pos = pos;
-	SAFE_ACCESS(Enemies, idx).color = color;
-	SAFE_ACCESS(Enemies, idx).style = style;
-	SAFE_ACCESS(Enemies, idx).blend = blend;
-	SAFE_ACCESS(Enemies, idx).pal = pal;
-	SAFE_ACCESS(Enemies, idx).startColSize = startColSize;
-	SAFE_ACCESS(Enemies, idx).endColSize = endColSize;
-	SAFE_ACCESS(Enemies, idx).colSizeEaseType = colSizeEaseType;
-	SAFE_ACCESS(Enemies, idx).colSizeEaseTime = colSizeEaseTime;
-	SAFE_ACCESS(Enemies, idx).startSize = startSize;
-	SAFE_ACCESS(Enemies, idx).endSize = endSize;
-	SAFE_ACCESS(Enemies, idx).sizeEaseType = sizeEaseType;
-	SAFE_ACCESS(Enemies, idx).sizeEaseTime = sizeEaseTime;
-	if (aim == AIM_TRUE) {
-		SAFE_ACCESS(Enemies, idx).startAngle = Plyr.AimPlayer(pos) + startAngle;
-		SAFE_ACCESS(Enemies, idx).endAngle = Plyr.AimPlayer(pos) + endAngle;
+CreateEnemy(const Vec2D& pos, const Color& color, int style, int blend, int pal, int is_col, double start_col_size, double end_col_size, int col_size_ease_type, int col_size_ease_time, double start_size, double end_size, int size_ease_type, int size_ease_time, int aim, double start_angle, double end_angle, int angle_ease_type, int angle_ease_time, double start_speed, double end_speed, int speed_ease_type, int speed_ease_time, int se, int id, const std::vector<std::any>& params) {
+	sound_mng_.ReserveSe(se);
+	if (blank_enemies.empty()) return 1;
+	int idx = blank_enemies.back();
+	blank_enemies.pop_back();
+	SafeAccess(enemies, idx).flags = kIsAlive | is_col * kIsCol;
+	SafeAccess(enemies, idx).obj_type = kObjectEnemy;
+	SafeAccess(enemies, idx).pos = pos;
+	SafeAccess(enemies, idx).color = color;
+	SafeAccess(enemies, idx).style = style;
+	SafeAccess(enemies, idx).blend = blend;
+	SafeAccess(enemies, idx).pal = pal;
+	SafeAccess(enemies, idx).start_col_size = start_col_size;
+	SafeAccess(enemies, idx).end_col_size = end_col_size;
+	SafeAccess(enemies, idx).col_size_ease_type = col_size_ease_type;
+	SafeAccess(enemies, idx).col_size_ease_time = col_size_ease_time;
+	SafeAccess(enemies, idx).start_size = start_size;
+	SafeAccess(enemies, idx).end_size = end_size;
+	SafeAccess(enemies, idx).size_ease_type = size_ease_type;
+	SafeAccess(enemies, idx).size_ease_time = size_ease_time;
+	if (aim == kAimTrue) {
+		SafeAccess(enemies, idx).start_angle = Plyr.AimPlayer(pos) + start_angle;
+		SafeAccess(enemies, idx).end_angle = Plyr.AimPlayer(pos) + end_angle;
 	}
 	else {
-		SAFE_ACCESS(Enemies, idx).startAngle = startAngle;
-		SAFE_ACCESS(Enemies, idx).endAngle = endAngle;
+		SafeAccess(enemies, idx).start_angle = start_angle;
+		SafeAccess(enemies, idx).end_angle = end_angle;
 	}
-	SAFE_ACCESS(Enemies, idx).angleEaseType = angleEaseType;
-	SAFE_ACCESS(Enemies, idx).angleEaseTime = angleEaseTime;
-	SAFE_ACCESS(Enemies, idx).startSpeed = startSpeed;
-	SAFE_ACCESS(Enemies, idx).endSpeed = endSpeed;
-	SAFE_ACCESS(Enemies, idx).speedEaseType = speedEaseType;
-	SAFE_ACCESS(Enemies, idx).speedEaseTime = speedEaseTime;
-	SAFE_ACCESS(Enemies, idx).popT = t;
-	SAFE_ACCESS(Enemies, idx).length = 0;
-	SAFE_ACCESS(Enemies, idx).width = 0;
-	SAFE_ACCESS(Enemies, idx).frontNode = 0;
-	SAFE_ACCESS(Enemies, idx).currentNodeNum = 0;
-	SAFE_ACCESS(Enemies, idx).index = idx;
-	SAFE_ACCESS(Enemies, idx).ID = ID;
-	SAFE_ACCESS(Enemies, idx).params = params;
+	SafeAccess(enemies, idx).angle_ease_type = angle_ease_type;
+	SafeAccess(enemies, idx).angle_ease_time = angle_ease_time;
+	SafeAccess(enemies, idx).start_speed = start_speed;
+	SafeAccess(enemies, idx).end_speed = end_speed;
+	SafeAccess(enemies, idx).speed_ease_type = speed_ease_type;
+	SafeAccess(enemies, idx).speed_ease_time = speed_ease_time;
+	SafeAccess(enemies, idx).pop_t = t;
+	SafeAccess(enemies, idx).length = 0;
+	SafeAccess(enemies, idx).width = 0;
+	SafeAccess(enemies, idx).front_node = 0;
+	SafeAccess(enemies, idx).current_node_num = 0;
+	SafeAccess(enemies, idx).index = idx;
+	SafeAccess(enemies, idx).id = id;
+	SafeAccess(enemies, idx).params = params;
 	return 0;
 }
 
 void
-CreateEnemyGroup(const Vec2D& pos, const Color& color, int style, int blend, int pal, int isCol, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, int way, double spread, int aim, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int SE, int ID, const std::vector<std::any>& params) {
-	soundMng.ReserveSE(SE);
+CreateEnemyGroup(const Vec2D& pos, const Color& color, int style, int blend, int pal, int is_col, double start_col_size, double end_col_size, int col_size_ease_type, int col_size_ease_time, double start_size, double end_size, int size_ease_type, int size_ease_time, int way, double spread, int aim, double start_angle, double end_angle, int angle_ease_type, int angle_ease_time, double start_speed, double end_speed, int speed_ease_type, int speed_ease_time, int se, int id, const std::vector<std::any>& params) {
+	sound_mng_.ReserveSe(se);
 	switch (aim) {
-	case AIM_FALSE:
+	case kAimFalse:
 		for (int i = 0; i < way; i++) {
-			if (CreateEnemy(pos, color, style, blend, pal, isCol, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, 0, spread / way * i + startAngle - spread / 2, spread / way * i + endAngle - spread / 2, angleEaseType, angleEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime, SE_NONE, ID, params)) return;
+			if (CreateEnemy(pos, color, style, blend, pal, is_col, start_col_size, end_col_size, col_size_ease_type, col_size_ease_time, start_size, end_size, size_ease_type, size_ease_time, 0, spread / way * i + start_angle - spread / 2, spread / way * i + end_angle - spread / 2, angle_ease_type, angle_ease_time, start_speed, end_speed, speed_ease_type, speed_ease_time, kSoundEffectNone, id, params)) return;
 		}
 		break;
-	case AIM_TRUE:
+	case kAimTrue:
 		for (int i = 0; i < way; i++) {
-			if (CreateEnemy(pos, color, style, blend, pal, isCol, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, 1, spread / way * i + startAngle - spread / 2, spread / way * i + endAngle - spread / 2, angleEaseType, angleEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime, SE_NONE, ID, params)) return;
+			if (CreateEnemy(pos, color, style, blend, pal, is_col, start_col_size, end_col_size, col_size_ease_type, col_size_ease_time, start_size, end_size, size_ease_type, size_ease_time, 1, spread / way * i + start_angle - spread / 2, spread / way * i + end_angle - spread / 2, angle_ease_type, angle_ease_time, start_speed, end_speed, speed_ease_type, speed_ease_time, kSoundEffectNone, id, params)) return;
 		}
 		break;
-	case AIM_TRUE_OFFSET:
+	case kAimOffset:
 		for (int i = 0; i < way; i++) {
-			if (CreateEnemy(pos, color, style, blend, pal, isCol, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, 1, spread / way * i + startAngle + spread / (way * 2) - spread / 2, spread / way * i + endAngle + spread / (way * 2) - spread / 2, angleEaseType, angleEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime, SE_NONE, ID, params)) return;
+			if (CreateEnemy(pos, color, style, blend, pal, is_col, start_col_size, end_col_size, col_size_ease_type, col_size_ease_time, start_size, end_size, size_ease_type, size_ease_time, 1, spread / way * i + start_angle + spread / (way * 2) - spread / 2, spread / way * i + end_angle + spread / (way * 2) - spread / 2, angle_ease_type, angle_ease_time, start_speed, end_speed, speed_ease_type, speed_ease_time, kSoundEffectNone, id, params)) return;
 		}
 		break;
 	default:
 		for (int i = 0; i < way; i++) {
-			if (CreateEnemy(pos, color, style, blend, pal, isCol, startColSize, endColSize, colSizeEaseType, colSizeEaseTime, startSize, endSize, sizeEaseType, sizeEaseTime, 0, spread / way * i + startAngle - spread / 2, spread / way * i + endAngle - spread / 2, angleEaseType, angleEaseTime, startSpeed, endSpeed, speedEaseType, speedEaseTime, SE_NONE, ID, params)) return;
+			if (CreateEnemy(pos, color, style, blend, pal, is_col, start_col_size, end_col_size, col_size_ease_type, col_size_ease_time, start_size, end_size, size_ease_type, size_ease_time, 0, spread / way * i + start_angle - spread / 2, spread / way * i + end_angle - spread / 2, angle_ease_type, angle_ease_time, start_speed, end_speed, speed_ease_type, speed_ease_time, kSoundEffectNone, id, params)) return;
 		}
 		break;
 	}
 }
 
 void
-CreateSimpleEnemyGroup(const Vec2D& pos, const Color& color, int style, int blend, int pal, double colSize, double size, int way, double spread, int aim, double angle, double speed, int SE, int ID, const std::vector<std::any>& params) {
-	soundMng.ReserveSE(SE);
+CreateSimpleEnemyGroup(const Vec2D& pos, const Color& color, int style, int blend, int pal, double col_size, double size, int way, double spread, int aim, double angle, double speed, int se, int id, const std::vector<std::any>& params) {
+	sound_mng_.ReserveSe(se);
 	switch (aim) {
-	case AIM_FALSE:
+	case kAimFalse:
 		for (int i = 0; i < way; i++) {
-			if (CreateEnemy(pos, color, style, blend, pal, 1, colSize, colSize, 0, 0, size, size, 0, 0, 0, spread / way * i + angle - spread / 2, spread / way * i + angle - spread / 2, 0, 0, speed, speed, 0, 0, SE_NONE, ID, params)) return;
+			if (CreateEnemy(pos, color, style, blend, pal, 1, col_size, col_size, 0, 0, size, size, 0, 0, 0, spread / way * i + angle - spread / 2, spread / way * i + angle - spread / 2, 0, 0, speed, speed, 0, 0, kSoundEffectNone, id, params)) return;
 		}
 		break;
-	case AIM_TRUE:
+	case kAimTrue:
 		for (int i = 0; i < way; i++) {
-			if (CreateEnemy(pos, color, style, blend, pal, 0, colSize, colSize, 0, 0, size, size, 0, 0, 1, spread / way * i + angle - spread / 2, spread / way * i + angle - spread / 2, 0, 0, speed, speed, 0, 0, SE_NONE, ID, params)) return;
+			if (CreateEnemy(pos, color, style, blend, pal, 0, col_size, col_size, 0, 0, size, size, 0, 0, 1, spread / way * i + angle - spread / 2, spread / way * i + angle - spread / 2, 0, 0, speed, speed, 0, 0, kSoundEffectNone, id, params)) return;
 		}
 		break;
-	case AIM_TRUE_OFFSET:
+	case kAimOffset:
 		for (int i = 0; i < way; i++) {
-			if (CreateEnemy(pos, color, style, blend, pal, 1, colSize, colSize, 0, 0, size, size, 0, 0, 1, spread / way * i + angle + spread / (way * 2) - spread / 2, spread / way * i + angle + spread / (way * 2) - spread / 2, 0, 0, speed, speed, 0, 0, SE_NONE, ID, params)) return;
+			if (CreateEnemy(pos, color, style, blend, pal, 1, col_size, col_size, 0, 0, size, size, 0, 0, 1, spread / way * i + angle + spread / (way * 2) - spread / 2, spread / way * i + angle + spread / (way * 2) - spread / 2, 0, 0, speed, speed, 0, 0, kSoundEffectNone, id, params)) return;
 		}
 		break;
 	default:
 		for (int i = 0; i < way; i++) {
-			if (CreateEnemy(pos, color, style, blend, pal, 1, colSize, colSize, 0, 0, size, size, 0, 0, 0, spread / way * i + angle - spread / 2, spread / way * i + angle - spread / 2, 0, 0, speed, speed, 0, 0, SE_NONE, ID, params)) return;
+			if (CreateEnemy(pos, color, style, blend, pal, 1, col_size, col_size, 0, 0, size, size, 0, 0, 0, spread / way * i + angle - spread / 2, spread / way * i + angle - spread / 2, 0, 0, speed, speed, 0, 0, kSoundEffectNone, id, params)) return;
 		}
 		break;
 	}
 }
 
 void
-CreateSmartEnemyGroup(objectParams param) {
-	soundMng.ReserveSE(param.SE);
+CreateSmartEnemyGroup(ObjectParams param) {
+	sound_mng_.ReserveSe(param.se);
 	switch (param.aim) {
-	case AIM_FALSE:
+	case kAimFalse:
 		for (int i = 0; i < param.way; i++) {
-			if (CreateEnemy(param.pos, param.color, param.style, param.blend, param.pal, param.isCol, param.startColSize, param.endColSize, param.colSizeEaseType, param.colSizeEaseTime, param.startSize, param.endSize, param.sizeEaseType, param.sizeEaseTime, 0, param.spread / param.way * i + param.startAngle - param.spread / 2, param.spread / param.way * i + param.endAngle - param.spread / 2, param.angleEaseType, param.angleEaseTime, param.startSpeed, param.endSpeed, param.speedEaseType, param.speedEaseTime, SE_NONE, param.ID, param.params)) return;
+			if (CreateEnemy(param.pos, param.color, param.style, param.blend, param.pal, param.is_col, param.start_col_size, param.end_col_size, param.col_size_ease_type, param.col_size_ease_time, param.start_size, param.end_size, param.size_ease_type, param.size_ease_time, 0, param.spread / param.way * i + param.start_angle - param.spread / 2, param.spread / param.way * i + param.end_angle - param.spread / 2, param.angle_ease_type, param.angle_ease_time, param.start_speed, param.end_speed, param.speed_ease_type, param.speed_ease_time, kSoundEffectNone, param.id, param.params)) return;
 		}
 		break;
-	case AIM_TRUE:
+	case kAimTrue:
 		for (int i = 0; i < param.way; i++) {
-			if (CreateEnemy(param.pos, param.color, param.style, param.blend, param.pal, param.isCol, param.startColSize, param.endColSize, param.colSizeEaseType, param.colSizeEaseTime, param.startSize, param.endSize, param.sizeEaseType, param.sizeEaseTime, 1, param.spread / param.way * i + param.startAngle - param.spread / 2, param.spread / param.way * i + param.endAngle - param.spread / 2, param.angleEaseType, param.angleEaseTime, param.startSpeed, param.endSpeed, param.speedEaseType, param.speedEaseTime, SE_NONE, param.ID, param.params)) return;
+			if (CreateEnemy(param.pos, param.color, param.style, param.blend, param.pal, param.is_col, param.start_col_size, param.end_col_size, param.col_size_ease_type, param.col_size_ease_time, param.start_size, param.end_size, param.size_ease_type, param.size_ease_time, 1, param.spread / param.way * i + param.start_angle - param.spread / 2, param.spread / param.way * i + param.end_angle - param.spread / 2, param.angle_ease_type, param.angle_ease_time, param.start_speed, param.end_speed, param.speed_ease_type, param.speed_ease_time, kSoundEffectNone, param.id, param.params)) return;
 		}
 		break;
-	case AIM_TRUE_OFFSET:
+	case kAimOffset:
 		for (int i = 0; i < param.way; i++) {
-			if (CreateEnemy(param.pos, param.color, param.style, param.blend, param.pal, param.isCol, param.startColSize, param.endColSize, param.colSizeEaseType, param.colSizeEaseTime, param.startSize, param.endSize, param.sizeEaseType, param.sizeEaseTime, 1, param.spread / param.way * i + param.startAngle + param.spread / (param.way * 2) - param.spread / 2, param.spread / param.way * i + param.endAngle + param.spread / (param.way * 2) - param.spread / 2, param.angleEaseType, param.angleEaseTime, param.startSpeed, param.endSpeed, param.speedEaseType, param.speedEaseTime, SE_NONE, param.ID, param.params)) return;
+			if (CreateEnemy(param.pos, param.color, param.style, param.blend, param.pal, param.is_col, param.start_col_size, param.end_col_size, param.col_size_ease_type, param.col_size_ease_time, param.start_size, param.end_size, param.size_ease_type, param.size_ease_time, 1, param.spread / param.way * i + param.start_angle + param.spread / (param.way * 2) - param.spread / 2, param.spread / param.way * i + param.end_angle + param.spread / (param.way * 2) - param.spread / 2, param.angle_ease_type, param.angle_ease_time, param.start_speed, param.end_speed, param.speed_ease_type, param.speed_ease_time, kSoundEffectNone, param.id, param.params)) return;
 		}
 		break;
 	default:
 		for (int i = 0; i < param.way; i++) {
-			if (CreateEnemy(param.pos, param.color, param.style, param.blend, param.pal, param.isCol, param.startColSize, param.endColSize, param.colSizeEaseType, param.colSizeEaseTime, param.startSize, param.endSize, param.sizeEaseType, param.sizeEaseTime, 0, param.spread / param.way * i + param.startAngle - param.spread / 2, param.spread / param.way * i + param.endAngle - param.spread / 2, param.angleEaseType, param.angleEaseTime, param.startSpeed, param.endSpeed, param.speedEaseType, param.speedEaseTime, SE_NONE, param.ID, param.params)) return;
+			if (CreateEnemy(param.pos, param.color, param.style, param.blend, param.pal, param.is_col, param.start_col_size, param.end_col_size, param.col_size_ease_type, param.col_size_ease_time, param.start_size, param.end_size, param.size_ease_type, param.size_ease_time, 0, param.spread / param.way * i + param.start_angle - param.spread / 2, param.spread / param.way * i + param.end_angle - param.spread / 2, param.angle_ease_type, param.angle_ease_time, param.start_speed, param.end_speed, param.speed_ease_type, param.speed_ease_time, kSoundEffectNone, param.id, param.params)) return;
 		}
 		break;
 	}
 }
 
 void
-ParallelUpdateEnemies(std::array<Enemy, MAX_ENEMY>& enemies) {
+ParallelUpdateEnemies(std::array<Enemy, kMaxEnemy>& enemies) {
 	std::for_each(std::execution::par_unseq, enemies.begin(), enemies.end(),
 		[](Enemy& E) {
 			E.UpdateObject();
@@ -250,13 +250,13 @@ ParallelUpdateEnemies(std::array<Enemy, MAX_ENEMY>& enemies) {
 
 void
 MoveEnemies() {
-	ParallelUpdateEnemies(Enemies);
-	for (auto* E : EnemyPtrs) {
+	ParallelUpdateEnemies(enemies);
+	for (auto* E : enemy_ptrs) {
 		E->ShowEnemy();
 	}
 	if (t % 10 == 0) {
-		std::sort(EnemyPtrs.begin(), EnemyPtrs.end(), [](const Enemy* a, const Enemy* b) {
-			return a->popT < b->popT;
+		std::sort(enemy_ptrs.begin(), enemy_ptrs.end(), [](const Enemy* a, const Enemy* b) {
+			return a->pop_t < b->pop_t;
 			});
 	}
 }

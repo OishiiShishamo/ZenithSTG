@@ -4,9 +4,9 @@
 
 void
 Background::DrawBackground() {
-	switch (ID) {
+	switch (id) {
 	default:
-		DrawBox(0, 0, 1920, 1080, GetColor(C_GRAY), 1);
+		DrawBox(0, 0, 1920, 1080, GetColor(kColorGray), 1);
 		break;
 	}
 }

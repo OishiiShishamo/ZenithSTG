@@ -1,66 +1,66 @@
 #include "Sound.h"
 
-Sound soundMng;
+Sound sound_mng_;
 
 void
-Sound::PlayBGM(int ID) {
-	if (isRangeValid(ID, SOUND_BGM_HANDLER_NUM)) {
+Sound::PlayBgm(int id) {
+	if (isRangeValid(id, kSoundBgmHandlerNum)) {
 		return;
 	}
-	PlaySoundMem(SAFE_ACCESS(BGMHandler, ID), DX_PLAYTYPE_LOOP);
+	PlaySoundMem(SafeAccess(bgm_handler_, id), DX_PLAYTYPE_LOOP);
 }
 
 void
-Sound::PlaySE(int ID) {
-	if (isRangeValid(ID, SOUND_EFFECT_HANDLER_NUM)) {
+Sound::PlaySe(int id) {
+	if (isRangeValid(id, kSoundEffectHandlerNum)) {
 		return;
 	}
 
 	//SEハンドラをリングバッファとして使い、同時再生に対応している。 / Uses a ring buffer per SE to allow concurrent playback.
-	PlaySoundMem(SAFE_ACCESS(
-		SAFE_ACCESS(SEHandler, ID),
-		SAFE_ACCESS(SEVoiceIndex, ID)),
+	PlaySoundMem(SafeAccess(
+		SafeAccess(se_handler_, id),
+		SafeAccess(se_voice_index_, id)),
 		DX_PLAYTYPE_BACK);
 
-	SAFE_ACCESS(SEVoiceIndex, ID)++;
-	if (SAFE_ACCESS(SEVoiceIndex, ID) > SOUND_VOICES)
-		SAFE_ACCESS(SEVoiceIndex, ID) = 0;
+	SafeAccess(se_voice_index_, id)++;
+	if (SafeAccess(se_voice_index_, id) > kSoundVoices)
+		SafeAccess(se_voice_index_, id) = 0;
 }
 
 void
-Sound::ReservePlaySE() {
+Sound::ReservePlaySe() {
 	int i = 0;
-	for (auto& R : SEReservation) {
+	for (auto& R : se_reservation_) {
 		if (R == 1) {
 			R = 0;
-			PlaySE(i);
+			PlaySe(i);
 		}
 		i++;
 	}
 }
 
 void
-Sound::ReserveSE(int ID) {
-	if (isRangeValid(ID, SOUND_EFFECT_HANDLER_NUM)) {
+Sound::ReserveSe(int id) {
+	if (isRangeValid(id, kSoundEffectHandlerNum)) {
 		return;
 	}
-	SAFE_ACCESS(SEReservation, ID) = 1;
+	SafeAccess(se_reservation_, id) = 1;
 }
 
 void
 Sound::SoundLoad() {
-	SEAdd(SE_GRAZE, "res/snd/SE/SE_Graze.wav");
-	SEAdd(SE_PLAYER_HIT, "res/snd/SE/SE_PlayerHit.wav");
-	SEAdd(SE_ENEMY_SHOT, "res/snd/SE/SE_EnemyShot.wav");
+	SeAdd(kSoundEffectGraze, "res/snd/SE/SE_Graze.wav");
+	SeAdd(kSoundEffectPlayerHit, "res/snd/SE/SE_PlayerHit.wav");
+	SeAdd(kSoundEffectEnemyShot, "res/snd/SE/SE_EnemyShot.wav");
 }
 
 void
-Sound::SEAdd(int ID, std::string path) {
-	if (isRangeValid(ID, SOUND_EFFECT_HANDLER_NUM)) {
+Sound::SeAdd(int id, std::string path) {
+	if (isRangeValid(id, kSoundEffectHandlerNum)) {
 		return;
 	}
-	for (auto& S : SAFE_ACCESS(SEHandler, ID)) {
+	for (auto& S : SafeAccess(se_handler_, id)) {
 		S = LoadSoundMem(path.c_str());
-		ChangeVolumeSoundMem(static_cast<int>(255.0 * Properties.SEVolume / 100.0), S);
+		ChangeVolumeSoundMem(static_cast<int>(255.0 * properties_.se_volume / 100.0), S);
 	}
 }

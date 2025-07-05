@@ -4,55 +4,50 @@
 
 bool debuging = true;
 
-void apply_window_size() {
+void ApplyWindowSize() {
 	int width = GetSystemMetrics(SM_CXSCREEN);
 	int height = GetSystemMetrics(SM_CYSCREEN);
 	if (width - height < 560 - 1) {
-		Properties.windowSize = 0;
+		properties_.window_size = 0;
 	}
 	else if (width - height < 700 - 1) {
-		Properties.windowSize = 1;
+		properties_.window_size = 1;
 	}
 	else if (width - height < 840 - 1) {
-		Properties.windowSize = 2;
+		properties_.window_size = 2;
 	}
 	else {
-		Properties.windowSize = 1;
+		properties_.window_size = 1;
 	}
 
-	if (debuging) Properties.windowSize = 1;
+	if (debuging) properties_.window_size = 1;
 
 	return;
 }
 
-int rnd() {
-	int rnd = std::rand() % 65535;    // 0〜65536の乱数
-	return rnd;
-}
-
 void
-DrawRotaGraph4(int x, int y, double rate, double anglex, double angley, double anglez, int handle, int tranflag, int x_turn_flag, int y_turn_flag) {
+DrawRotaGraph4(int x, int y, double rate, double angle_x, double angle_y, double angle_z, int handle, int tran_flag, int x_turn_flag, int y_turn_flag) {
 	int sx = 0, sy = 0;
 	if (handle < 0) return;
 	GetGraphSize(handle, &sx, &sy);
 	if (sx <= 0 || sy <= 0) return;
 
-	DirectX::XMMATRIX rotX = DirectX::XMMatrixRotationX(static_cast<double>(anglex));
-	DirectX::XMMATRIX rotY = DirectX::XMMatrixRotationY(static_cast<double>(angley));
-	DirectX::XMMATRIX rotZ = DirectX::XMMatrixRotationZ(static_cast<double>(anglez));
+	DirectX::XMMATRIX rot_x = DirectX::XMMatrixRotationX(static_cast<double>(angle_x));
+	DirectX::XMMATRIX rot_y = DirectX::XMMatrixRotationY(static_cast<double>(angle_y));
+	DirectX::XMMATRIX rot_z = DirectX::XMMatrixRotationZ(static_cast<double>(angle_z));
 	DirectX::XMMATRIX scale = DirectX::XMMatrixScaling(static_cast<double>(rate), static_cast<double>(rate), static_cast<double>(rate));
-	DirectX::XMMATRIX m = scale * rotZ * rotY * rotX;
+	DirectX::XMMATRIX m = scale * rot_z * rot_y * rot_x;
 
 	double hw = sx * 0.5f;
 	double hh = sy * 0.5f;
 
-	double signX = x_turn_flag ? -1.0f : 1.0f;
-	double signY = y_turn_flag ? -1.0f : 1.0f;
+	double sign_x = x_turn_flag ? -1.0f : 1.0f;
+	double sign_y = y_turn_flag ? -1.0f : 1.0f;
 
-	DirectX::XMVECTOR p1 = DirectX::XMVectorSet(-hw * signX, -hh * signY, 0.0f, 1.0f); // 左上
-	DirectX::XMVECTOR p2 = DirectX::XMVectorSet(hw * signX, -hh * signY, 0.0f, 1.0f);  // 右上
-	DirectX::XMVECTOR p3 = DirectX::XMVectorSet(hw * signX, hh * signY, 0.0f, 1.0f);   // 右下
-	DirectX::XMVECTOR p4 = DirectX::XMVectorSet(-hw * signX, hh * signY, 0.0f, 1.0f);  // 左下
+	DirectX::XMVECTOR p1 = DirectX::XMVectorSet(-hw * sign_x, -hh * sign_y, 0.0f, 1.0f); // 左上
+	DirectX::XMVECTOR p2 = DirectX::XMVectorSet(hw * sign_x, -hh * sign_y, 0.0f, 1.0f);  // 右上
+	DirectX::XMVECTOR p3 = DirectX::XMVectorSet(hw * sign_x, hh * sign_y, 0.0f, 1.0f);   // 右下
+	DirectX::XMVECTOR p4 = DirectX::XMVectorSet(-hw * sign_x, hh * sign_y, 0.0f, 1.0f);  // 左下
 
 	p1 = DirectX::XMVector3TransformCoord(p1, m);
 	p2 = DirectX::XMVector3TransformCoord(p2, m);
@@ -68,10 +63,10 @@ DrawRotaGraph4(int x, int y, double rate, double anglex, double angley, double a
 	int ldx = x + static_cast<int>(DirectX::XMVectorGetX(p4));
 	int ldy = y + static_cast<int>(DirectX::XMVectorGetY(p4));
 
-	DrawModiGraph(lux, luy, rux, ruy, rdx, rdy, ldx, ldy, handle, tranflag);
+	DrawModiGraph(lux, luy, rux, ruy, rdx, rdy, ldx, ldy, handle, tran_flag);
 }
 
-Color GetColorHSV(double H, double S, double V) {
+Color GetColorHsv(double H, double S, double V) {
 	int hi = static_cast<int>(H / 60.0);
 	hi = (hi == 6) ? 5 : hi % 6;
 	double f = (H / 60.0) - hi;
@@ -99,18 +94,18 @@ Color GetColorHSV(double H, double S, double V) {
 
 Color
 GamingColor(int offset, double mul) {
-	return GetColorHSV(std::fmod((t + offset) * mul, 360), 1, 1);
+	return GetColorHsv(std::fmod((t + offset) * mul, 360), 1, 1);
 }
 
 void
-SmartSetDrawBlendMode(int BlendMode, int Pal) {
-	GetDrawBlendMode(&currentBlendMode, &currentBlendPal);
-	if (!(currentBlendMode == BlendMode && currentBlendPal == Pal)) {
-		SetDrawBlendMode(BlendMode, Pal);
+SmartSetDrawBlendMode(int blend_mode, int pal) {
+	GetDrawBlendMode(&current_blend_mode, &current_blend_pal);
+	if (!(current_blend_mode == blend_mode && current_blend_pal == pal)) {
+		SetDrawBlendMode(blend_mode, pal);
 	}
 }
 
 double
 Rad(double angle) {
-	return (pi / 180) * angle;
+	return (kPi / 180) * angle;
 }

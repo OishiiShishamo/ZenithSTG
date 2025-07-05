@@ -125,7 +125,7 @@ TEST(Vec2DTest, CrossProductBasicTest) {
     Vec2D v3(0.0, 1.0);
 
     // クロス積の結果は1
-    EXPECT_NEAR(crossProduct(v1, v2, v3), 1.0, EPSILON);
+    EXPECT_NEAR(CrossProduct(v1, v2, v3), 1.0, EPSILON);
 }
 
 TEST(Vec2DTest, CrossProductColinear) {
@@ -134,7 +134,7 @@ TEST(Vec2DTest, CrossProductColinear) {
     Vec2D v3(3.0, 3.0);
 
     // 直線上の3点 → クロス積は0
-    EXPECT_NEAR(crossProduct(v1, v2, v3), 0.0, EPSILON);
+    EXPECT_NEAR(CrossProduct(v1, v2, v3), 0.0, EPSILON);
 }
 
 TEST(Vec2DTest, RangeTest) {
@@ -145,7 +145,7 @@ TEST(Vec2DTest, RangeTest) {
 }
 
 TEST(Vec2DTest, AngleToVec2DTest) {
-    double angle = pi / 2; // 90度
+    double angle = kPi / 2; // 90度
     Vec2D result = AngleToVec2D(angle);
 
     EXPECT_NEAR(result.GetX(), std::cos(angle), EPSILON);
@@ -154,7 +154,7 @@ TEST(Vec2DTest, AngleToVec2DTest) {
 
 TEST(Vec2DTest, RotatePointTest90Degrees) {
     Vec2D original(1.0, 0.0);
-    double angle = pi / 2;
+    double angle = kPi / 2;
 
     Vec2D rotated = RotatePoint(original, angle);
 
@@ -164,7 +164,7 @@ TEST(Vec2DTest, RotatePointTest90Degrees) {
 
 TEST(Vec2DTest, RotatePointTest180Degrees) {
     Vec2D original(1.0, 0.0);
-    double angle = pi;
+    double angle = kPi;
 
     Vec2D rotated = RotatePoint(original, angle);
 
@@ -217,7 +217,7 @@ TEST(EasingTest, EaseInOutCubic) {
 }
 
 TEST(EasingTest, EasingWrapperLinear) {
-    EXPECT_TRUE(almostEqual(Easing(LINEAR, 0.5, 0, 10), 5));
+    EXPECT_TRUE(almostEqual(Easing(kLinear, 0.5, 0, 10), 5));
 }
 
 TEST(EasingTest, EasingWrapperInvalidType) {

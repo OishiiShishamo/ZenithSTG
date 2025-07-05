@@ -19,11 +19,11 @@
 
 std::random_device rng;
 
-int elapsedFrame = 0;
-int currentBlendMode = BLEND_NOBLEND;
-int currentBlendPal = 255;
+int elapsed_frame = 0;
+int current_blend_mode = kBlendNoblend;
+int current_blend_pal = 255;
 
-double RandTMP = 0;
+double rand_tmp = 0;
 
 std::atomic<long long> score = 0;
 std::atomic<long long> graze = 0;
@@ -32,8 +32,8 @@ int
 WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 	Init();
 	if (DxLib_Init() == -1)	return -1;
-	apply_window_size();
-	switch (Properties.windowSize) {
+	ApplyWindowSize();
+	switch (properties_.window_size) {
 	case 0:
 		SetWindowSize(1280, 720);
 		ResInit();
@@ -55,26 +55,26 @@ WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, in
 	timeMng.StartTimer();
 	while (1) {
 		timeMng.ElapsedTime();
-		elapsedFrame = timeMng.targetFrame - t;
-		while (t < timeMng.targetFrame) {
+		elapsed_frame = timeMng.target_frame - t;
+		while (t < timeMng.target_frame) {
 			t++;
-			Loop.Loop();
+			loop_.Update();
 		}
-		if (elapsedFrame == 0) {
-			elapsedFrame = 1;
+		if (elapsed_frame == 0) {
+			elapsed_frame = 1;
 		}
-		ShowFPS(Vec2D(0, 0), elapsedFrame, Color(C_WHITE));
+		ShowFPS(Vec2D(0, 0), elapsed_frame, Color(kColorWhite));
 
 		ScreenFlip();
 
 		timeMng.FrameWait();
 
 		if (ProcessMessage() < 0) {
-			writeLog();
+			WriteLog();
 			break;
 		}
 		if (CheckHitKey(KEY_INPUT_ESCAPE)) {
-			writeLog();
+			WriteLog();
 			break;
 		}
 	}

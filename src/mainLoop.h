@@ -8,9 +8,9 @@
 
 class mainLoop {
 public:
-	long long frontChangeWindowSizeFrame = 0;
-	long long frontChangeWindowFrame = 0;
-	void Loop();
+	long long front_change_window_size_frame = 0;
+	long long front_change_window_frame = 0;
+	void Update();
 };
 
 #endif

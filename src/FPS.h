@@ -14,9 +14,9 @@
 * @brief 実FPSの計算と表示 / Calculation and display of real FPS.
 * 
 * @param pos 表示する座標 / Display Position
-* @param elapsedFrame 前回の描画から経過したフレーム数 / Number of frames elapsed since the last drawing
+* @param elapsed_frame 前回の描画から経過したフレーム数 / Number of frames elapsed since the last drawing
 * @param color フォントカラー / Font Color
 */
-void ShowFPS(Vec2D pos, int elapsedFrame, Color color);
+void ShowFPS(Vec2D pos, int elapsed_frame, Color color);
 
 #endif

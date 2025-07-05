@@ -1,35 +1,35 @@
 std::string debugging = "";
 
 void
-addLog(std::string log) {
+AddLogQue(std::string log) {
 	debugging += log + "\n";
 }
 
 void
-writeLog() {
-	std::ofstream logfile;
-	logfile.open("log.txt");
-	logfile << debugging;
-	logfile.close();
+WriteLog() {
+	std::ofstream log_file;
+	log_file.open("log.txt");
+	log_file << debugging;
+	log_file.close();
 }
 
 void
-Logger(std::string logString, logType logType) {
-	switch (logType) {
-	case logType::LOG_INFO:
-		addLog("[INFO]: " + logString);
+Logger(std::string log_string, LogType log_type) {
+	switch (log_type) {
+	case LogType::kLogInfo:
+		AddLogQue("[INFO]: " + log_string);
 		break;
-	case logType::LOG_WARNING:
-		addLog("[WARN]: " + logString);
+	case LogType::kLogWarning:
+		AddLogQue("[WARN]: " + log_string);
 		break;
-	case logType::LOG_ERROR:
-		addLog("[ERR]: " + logString);
+	case LogType::kLogError:
+		AddLogQue("[ERR]: " + log_string);
 		break;
-	case logType::LOG_DEBUG:
-		addLog("[DEBUG]: " + logString);
+	case LogType::kLogDebug:
+		AddLogQue("[DEBUG]: " + log_string);
 		break;
 	default:
-		addLog("[INFO]: " + logString);
+		AddLogQue("[INFO]: " + log_string);
 		break;
 	}
 }

@@ -4,7 +4,7 @@
 
 class Background {
 public:
-	int ID = 0;
+	int id = 0;
 	void DrawBackground();
 };
 

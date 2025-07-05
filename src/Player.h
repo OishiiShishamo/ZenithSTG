@@ -2,19 +2,19 @@
 #ifndef ZENITHSTG_SRC_PLAYER_H_
 #define ZENITHSTG_SRC_PLAYER_H_
 
-#define P_DEFAULT_X CENTER_X
-#define P_DEFAULT_Y 900
-#define P_DEFAULT_POS Vec2D(P_DEFAULT_X, P_DEFAULT_Y)
-#define DEFAULT_LIFE 2
-#define DEFAULT_BOMB 3
-#define PLAYER_COL 0.0f
-#define PLAYER_PROTECT 60
+#define kPlayerDefaultX kCenterX
+#define kPlayerDefaultY 900
+#define kPlayerDefaultPos Vec2D(kPlayerDefaultX, kPlayerDefaultY)
+#define kDefaultLife 2
+#define kDefaultBomb 3
+#define kPlayerCol 0.0f
+#define kPlayerProtect 60
 
-#define PLAYER_SIDE_BORDER_OFFSET 16
-#define PLAYER_TOP_BORDER_OFFSET 24
-#define PLAYER_BOTTOM_BORDER_OFFSET 32
+#define kPlayerSideBorderOffset 16
+#define kPlayerTopBorderOffset 24
+#define kPlayerBottomBorderOffset 32
 
-#define PLAYER_NUM 1
+#define kPlayerNum 1
 
 #include "Main.h"
 
@@ -22,18 +22,18 @@ class Player {
 public:
 	Vec2D pos = Vec2D(0, 0);
 	Vec2D vec = Vec2D(0, 0);
-	int defaultLife = DEFAULT_LIFE;
-	std::atomic<int> Life = 0;
-	int defaultBomb = DEFAULT_BOMB;
-	std::atomic<int> Bomb = 0;
-	double colSize = 0.0f;
-	double Slow = 0;
-	double Fast = 0;
-	int isFocus = 0;
-	int isShowCol = 0;
-	int Protect = 0;
-	std::atomic<int> protectTime = 0;
-	int isMouse = 0;
+	int default_life = kDefaultLife;
+	std::atomic<int> life = 0;
+	int default_bomb = kDefaultBomb;
+	std::atomic<int> bomb = 0;
+	double col_size = 0.0f;
+	double slow = 0;
+	double fast = 0;
+	int is_focus = 0;
+	int is_show_col = 0;
+	int rrotect = 0;
+	std::atomic<int> protect_time = 0;
+	int is_mouse = 0;
 	double AimPlayer(const Vec2D& v);
 	double RangePlayer(const Vec2D& v);
 	void MovePlayer();

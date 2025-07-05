@@ -16,31 +16,31 @@
 * @param style 見た目 / Style
 * @param blend ブレンドモード / Blend Mode
 * @param pal ブレンドのパラメータ / Blend Param
-* @param isCol 判定の有無 / Collision availability
-* @param startColSize 判定サイズの始点 / Start Collision Size
-* @param endColSize 判定サイズの終点 / End Collision Size
-* @param colSizeEaseType 判定サイズのイージング方法 / Easing method for Collision Size
-* @param colSizeEaseTime 判定サイズのイージングにかかる時間 / Time required for Collision Size easing
-* @param startSize 表示サイズの始点 / Start Display Size
-* @param endSize 表示サイズの終点 / End Display Size
-* @param sizeEaseType 表示サイズのイージング方法 / Easing method for Display Size
-* @param sizeEaseTime 表示サイズのイージングにかかる時間 / Time required for Display Size easing
+* @param is_col 判定の有無 / Collision availability
+* @param start_col_size 判定サイズの始点 / Start Collision Size
+* @param end_col_size 判定サイズの終点 / End Collision Size
+* @param col_size_ease_type 判定サイズのイージング方法 / Easing method for Collision Size
+* @param col_size_ease_time 判定サイズのイージングにかかる時間 / Time required for Collision Size easing
+* @param start_size 表示サイズの始点 / Start Display Size
+* @param end_size 表示サイズの終点 / End Display Size
+* @param size_ease_type 表示サイズのイージング方法 / Easing method for Display Size
+* @param size_ease_time 表示サイズのイージングにかかる時間 / Time required for Display Size easing
 * @param way way数 / way num
 * @param spread 拡散 / spread
 * @param aim 自機に角度を合わせるか(1 = 自機狙い, 2 = 自機外し) / Aim Player(1 = targeting, 2 = offset targeting)
-* @param startAngle 角度の始点 / Start Angle
-* @param endAngle 角度の終点 / End Angle
-* @param angleEaseType 角度のイージング方法 / Easing method for Angle
-* @param angleEaseTime 角度のイージングにかかる時間 / Time required for Angle easing
-* @param startSpeed 速度の始点 / Start Speed
-* @param endSpeed 速度の終点 / End Speed
-* @param speedEaseType 速度のイージング方法 / Easing method for Speed
-* @param speedEaseTime 速度のイージングにかかる時間 / Time required for Speed easing
-* @param SE SE番号 / SE Number
-* @param ID 特殊な動作を行うためのID / ID for special operation
+* @param start_angle 角度の始点 / Start Angle
+* @param end_angle 角度の終点 / End Angle
+* @param angle_ease_type 角度のイージング方法 / Easing method for Angle
+* @param angle_ease_time 角度のイージングにかかる時間 / Time required for Angle easing
+* @param start_speed 速度の始点 / Start Speed
+* @param end_speed 速度の終点 / End Speed
+* @param speed_ease_type 速度のイージング方法 / Easing method for Speed
+* @param speed_ease_time 速度のイージングにかかる時間 / Time required for Speed easing
+* @param se SE番号 / se Number
+* @param id 特殊な動作を行うためのid / id for special operation
 * @param params 特殊な動作を行うためのパラメータ / Parameter for special operation
 */
-struct objectParams {
+struct ObjectParams {
 	Vec2D pos = Vec2D(0, 0);
 	double length = 0;
 	double width = 0;
@@ -48,46 +48,46 @@ struct objectParams {
 	int style = 0;
 	int blend = 0;
 	int pal = 255;
-	int isCol = 1;
-	int isAlignedAngle = 1;
-	int isGraze = 1;
-	double startColSize = 0;
-	double endColSize = 0;
-	int colSizeEaseType = 0;
-	int colSizeEaseTime = 0;
-	double startSize = 1;
-	double endSize = 1;
-	int sizeEaseType = 0;
-	int sizeEaseTime = 0;
+	int is_col = 1;
+	int is_aligned_angle = 1;
+	int is_graze = 1;
+	double start_col_size = 0;
+	double end_col_size = 0;
+	int col_size_ease_type = 0;
+	int col_size_ease_time = 0;
+	double start_size = 1;
+	double end_size = 1;
+	int size_ease_type = 0;
+	int size_ease_time = 0;
 	int way = 1;
-	double spread = tau;
-	int aim = AIM_FALSE;
-	double startAngle = 0;
-	double endAngle = 0;
-	int angleEaseType = 0;
-	int angleEaseTime = 0;
-	double startShowAngle = 0;
-	double endShowAngle = 0;
-	int showAngleEaseType = 0;
-	int showAngleEaseTime = 0;
-	double startSpeed = 0;
-	double endSpeed = 0;
-	int speedEaseType = 0;
-	int speedEaseTime = 0;
-	int SE = SE_NONE;
-	int ID = 0;
+	double spread = kTau;
+	int aim = kAimFalse;
+	double start_angle = 0;
+	double end_angle = 0;
+	int angle_ease_type = 0;
+	int angle_ease_time = 0;
+	double start_show_angle = 0;
+	double end_show_angle = 0;
+	int show_angle_ease_type = 0;
+	int show_angle_ease_time = 0;
+	double start_speed = 0;
+	double end_speed = 0;
+	int speed_ease_type = 0;
+	int speed_ease_time = 0;
+	int se = kSoundEffectNone;
+	int id = 0;
 	std::vector<std::any> params;
 };
 
 /**
-* @enum objectFlags
+* @enum ObjectFlags
 * @brief オブジェクトの状態をまとめたもの / A summary of the object's state.
 */
-enum objectFlags {
-	IS_ALIVE = 1 << 0,
-	IS_COL = 1 << 1,
-	IS_HEAD = 1 << 2,
-	IS_GRAZE = 1 << 3,
+enum ObjectFlags {
+	kIsAlive = 1 << 0,
+	kIsCol = 1 << 1,
+	kIsHead = 1 << 2,
+	kIsGraze = 1 << 3,
 };
 
 /**
@@ -97,62 +97,60 @@ enum objectFlags {
 class Object {
 public:
 	std::uint8_t flags = 0b00001010;
-	int objType = 0;
+	int obj_type = kObjectBase;
 	Vec2D pos = Vec2D(0, 0);
 	Vec2D vec = Vec2D(0, 0);
-	double startAngle = 0;
-	double endAngle = 0;
-	int angleEaseType = 0;
-	int angleEaseTime = 0;
+	double start_angle = 0;
+	double end_angle = 0;
+	int angle_ease_type = 0;
+	int angle_ease_time = 0;
 	double angle = 0;
-	double startShowAngle = 0;
-	double endShowAngle = 0;
-	int showAngleEaseType = 0;
-	int showAngleEaseTime = 0;
-	double showAngle = 0;
-	int isAlignedAngle = 1;
+	double start_show_angle = 0;
+	double end_show_angle = 0;
+	int show_angle_ease_type = 0;
+	int show_angle_ease_time = 0;
+	double show_angle = 0;
+	int is_aligned_angle = 1;
 	Color color = Color(0, 0, 0);
 	int style = 0;
 	int blend = 0;
 	double pal = 255;
-	double startColSize = 0;
-	double endColSize = 0;
-	int colSizeEaseType = 0;
-	int colSizeEaseTime = 0;
-	double colSize = 0;
-	double startSize = 0;
-	double endSize = 0;
-	int sizeEaseType = 0;
-	int sizeEaseTime = 0;
+	double start_col_size = 0;
+	double end_col_size = 0;
+	int col_size_ease_type = 0;
+	int col_size_ease_time = 0;
+	double col_size = 0;
+	double start_size = 0;
+	double end_size = 0;
+	int size_ease_type = 0;
+	int size_ease_time = 0;
 	double size = 1.0f;
-	double startSpeed = 0;
-	double endSpeed = 0;
-	int speedEaseType = 0;
-	int speedEaseTime = 0;
+	double start_speed = 0;
+	double end_speed = 0;
+	int speed_ease_type = 0;
+	int speed_ease_time = 0;
 	double speed = 0.0f;
-	long long popT = 0;
-	double angleT = 0, speedT = 0, colSizeT = 0, sizeT = 0;
+	long long pop_t = 0;
+	double angle_t = 0, speed_t = 0, col_tize_t = 0, size_t = 0;
 	double length = 0;
 	double width = 0;
-	long long frontNode = 0;
-	long long nextNode = -1;
-	int currentNodeNum = 0;
-	int ID = 0;
+	long long front_node = 0;
+	long long next_node = -1;
+	int current_node_num = 0;
+	int id = 0;
 	long long order = 0;
 	long long index = 0;
 	std::vector<std::any> params;
 	Object() = default;
-	Object(std::uint8_t alive, std::uint8_t isCol, int objType, const Vec2D& pos, double startAngle, double endAngle, int angleEaseType, int angleEaseTime, double startShowAngle, double endShowAngle, int showAngleEaseType, int showAngleEaseTime, const Color& color, int style, int blend, int pal, double startColSize, double endColSize, int colSizeEaseType, int colSizeEaseTime, double startSize, double endSize, int sizeEaseType, int sizeEaseTime, double startSpeed, double endSpeed, int speedEaseType, int speedEaseTime, int popT = 0, double length = 0, double width = 0, long long frontNode = 0, long long nextNode = 0, int currentNodeNum = 0, int isHead = 0, long long index = 0, int ID = 0, const std::vector<std::any>& params = {}, int isGraze = 1)
-		: objType(objType), pos(pos), startAngle(startAngle), endAngle(endAngle), angleEaseType(angleEaseType), angleEaseTime(angleEaseTime), startShowAngle(startShowAngle), endShowAngle(endShowAngle), showAngleEaseType(showAngleEaseType), showAngleEaseTime(showAngleEaseTime), color(color), style(style), blend(blend), pal(pal), startColSize(startColSize), endColSize(endColSize), colSizeEaseType(colSizeEaseType), colSizeEaseTime(colSizeEaseTime), colSize(startColSize), startSize(startSize), endSize(endSize), sizeEaseType(sizeEaseType), sizeEaseTime(sizeEaseTime), size(1.0f), startSpeed(startSpeed), endSpeed(endSpeed), speedEaseType(speedEaseType), speedEaseTime(speedEaseTime), popT(popT), length(length), width(width), frontNode(frontNode), nextNode(nextNode), currentNodeNum(currentNodeNum), index(index), ID(ID), params(params) {
-		flags |= IS_ALIVE * alive | IS_COL * isCol | IS_HEAD * isHead | IS_GRAZE * isGraze;
+	Object(std::uint8_t alive, std::uint8_t is_col, int obj_type, const Vec2D& pos, double start_angle, double end_angle, int angle_ease_type, int angle_ease_time, double start_show_angle, double end_show_angle, int show_angle_ease_type, int show_angle_ease_time, const Color& color, int style, int blend, int pal, double start_col_size, double end_col_size, int col_size_ease_type, int col_size_ease_time, double start_size, double end_size, int size_ease_type, int size_ease_time, double start_speed, double end_speed, int speed_ease_type, int speed_ease_time, int pop_t = 0, double length = 0, double width = 0, long long front_node = 0, long long next_node = 0, int current_node_num = 0, int isHead = 0, long long index = 0, int id = 0, const std::vector<std::any>& params = {}, int is_graze = 1)
+		: obj_type(obj_type), pos(pos), start_angle(start_angle), end_angle(end_angle), angle_ease_type(angle_ease_type), angle_ease_time(angle_ease_time), start_show_angle(start_show_angle), end_show_angle(end_show_angle), show_angle_ease_type(show_angle_ease_type), show_angle_ease_time(show_angle_ease_time), color(color), style(style), blend(blend), pal(pal), start_col_size(start_col_size), end_col_size(end_col_size), col_size_ease_type(col_size_ease_type), col_size_ease_time(col_size_ease_time), col_size(start_col_size), start_size(start_size), end_size(end_size), size_ease_type(size_ease_type), size_ease_time(size_ease_time), size(1.0f), start_speed(start_speed), end_speed(end_speed), speed_ease_type(speed_ease_type), speed_ease_time(speed_ease_time), pop_t(pop_t), length(length), width(width), front_node(front_node), next_node(next_node), current_node_num(current_node_num), index(index), id(id), params(params) {
+		flags |= kIsAlive * alive | kIsCol * is_col | kIsHead * isHead | kIsGraze * is_graze;
 	}
 
 	/**
 	* @brief オブジェクトの動作など。 / Object behavior, etc.
-	*
-	* @param Index 現状用途なし / No current use
 	*/
-	virtual void UpdateObject(long long Index = 0);
+	virtual void UpdateObject();
 
 	/**
 	* @brief イージングによるパラメータの更新。 / Updating parameters by easing.
@@ -187,7 +185,7 @@ public:
 	virtual int CheckCollisionAndBounds();
 
 	/**
-	* @brief 移動及びID毎の分岐処理 / Branch processing for each move and ID.
+	* @brief 移動及びid毎の分岐処理 / Branch processing for each move and id.
 	*/
 	virtual void MoveFunc();
 };
