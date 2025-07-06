@@ -33,12 +33,13 @@ build it with [here](https://www.boost.org/doc/libs/1_87_0/more/getting_started/
 5. If the folder structure looks like the following, you can open and build the solution to start it.
 ```
 ZenithSTG
-├─3rdParties
 ├─boost
 │  ├─include
 │  │  └─boost-1_84
 │  └─lib
 ├─DxLib
-├─res
+├─Src
+│  ├─res
+│  └─Other files
 └─Other files
 ```
