@@ -20,20 +20,20 @@
 
 class Player {
 public:
-	Vec2D pos = Vec2D(0, 0);
-	Vec2D vec = Vec2D(0, 0);
-	int default_life = kDefaultLife;
-	std::atomic<int> life = 0;
-	int default_bomb = kDefaultBomb;
-	std::atomic<int> bomb = 0;
-	double col_size = 0.0f;
-	double slow = 0;
-	double fast = 0;
-	int is_focus = 0;
-	int is_show_col = 0;
-	int rrotect = 0;
-	std::atomic<int> protect_time = 0;
-	int is_mouse = 0;
+	Vec2D pos_ = Vec2D(0, 0);
+	Vec2D vec_ = Vec2D(0, 0);
+	int default_life_ = kDefaultLife;
+	std::atomic<int> life_ = 0;
+	int default_bomb_ = kDefaultBomb;
+	std::atomic<int> bomb_ = 0;
+	double col_size_ = 0.0f;
+	double slow_ = 0;
+	double fast_ = 0;
+	int is_focus_ = 0;
+	int is_show_col_ = 0;
+	int protect_ = 0;
+	std::atomic<int> protect_time_ = 0;
+	int is_mouse_ = 0;
 	double AimPlayer(const Vec2D& v);
 	double RangePlayer(const Vec2D& v);
 	void MovePlayer();
@@ -43,6 +43,6 @@ public:
 	void RoutinePlayer();
 };
 
-extern Player Plyr;
+extern Player player;
 
 #endif

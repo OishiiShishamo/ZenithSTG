@@ -20,18 +20,18 @@ double screen_rota_y = 0;
 double screen_rota_z = 0;
 
 void
-mainLoop::Update() {
+MainLoop::Update() {
 	SafeAccess(scripts, 0).RunScript();
 	sound_mng_.ReservePlaySe();
 	SetDrawScreen(background_canvas);
 	ClearDrawScreen();
-	//BG.DrawBackground();
+	//bg_.DrawBackground();
 	SetDrawScreen(player_shot_canvas);
 	ClearDrawScreen();
 	MovePlayerShots();
 	SetDrawScreen(player_canvas);
 	ClearDrawScreen();
-	Plyr.RoutinePlayer();
+	player.RoutinePlayer();
 	SetDrawScreen(bullet_canvas);
 	ClearDrawScreen();
 	MoveEnemies();
@@ -50,9 +50,9 @@ mainLoop::Update() {
 	if (GetAsyncKeyState(VK_F4) & 1) {
 		if (t > front_change_window_size_frame + 15) {
 			front_change_window_size_frame = t;
-			properties_.window_size++;
-			if (properties_.window_size > 2) properties_.window_size = 0;
-			switch (properties_.window_size) {
+			properties_.window_size_++;
+			if (properties_.window_size_ > 2) properties_.window_size_ = 0;
+			switch (properties_.window_size_) {
 			case 0:
 				SetWindowSize(1280, 720);
 				ResInit();
@@ -75,19 +75,19 @@ mainLoop::Update() {
 	if (GetAsyncKeyState(VK_F11) & 1) {
 		if (t > front_change_window_frame + 15) {
 			front_change_window_frame = t;
-			properties_.is_window++;
-			if (properties_.is_window > 1) properties_.is_window = 0;
-			ChangeWindowMode(properties_.is_window);
+			properties_.is_window_++;
+			if (properties_.is_window_ > 1) properties_.is_window_ = 0;
+			ChangeWindowMode(properties_.is_window_);
 		}
 	}
 	if (GetAsyncKeyState(VK_RETURN) && GetAsyncKeyState(VK_MENU)) {
 		if (t > front_change_window_frame + 15) {
 			front_change_window_frame = t;
-			properties_.is_window++;
-			if (properties_.is_window > 1) properties_.is_window = 0;
-			ChangeWindowMode(properties_.is_window);
+			properties_.is_window_++;
+			if (properties_.is_window_ > 1) properties_.is_window_ = 0;
+			ChangeWindowMode(properties_.is_window_);
 		}
 	}
 }
 
-mainLoop loop_;
+MainLoop loop_;

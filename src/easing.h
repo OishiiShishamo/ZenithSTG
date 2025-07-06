@@ -2,8 +2,6 @@
 #ifndef ZENITHSTG_SRC_EASING_H_
 #define ZENITHSTG_SRC_EASING_H_
 
-#include "main.h"
-
 //ラッパ関数
 double Easing(int ease_type, double t, double start, double end);
 

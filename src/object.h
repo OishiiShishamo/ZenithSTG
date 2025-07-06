@@ -8,6 +8,20 @@
 #ifndef ZENITHSTG_SRC_OBJECT_H_
 #define ZENITHSTG_SRC_OBJECT_H_
 
+#include <algorithm>
+#include <any>
+#include <array>
+#include <cmath>
+#include <vector>
+
+#include "DxLib.h"
+
+#include "collision.h"
+#include "color.h"
+#include "sound.h"
+#include "utility.h"
+#include "vec2d.h"
+
 /**
 * @brief オブジェクトの生成に関するもの / Relates to the creation of objects
 *
@@ -44,7 +58,7 @@ struct ObjectParams {
 	Vec2D pos = Vec2D(0, 0);
 	double length = 0;
 	double width = 0;
-	Color color = Color(0, 0, 0);
+	zenithstg::Color color = zenithstg::Color(0, 0, 0);
 	int style = 0;
 	int blend = 0;
 	int pal = 255;
@@ -96,55 +110,55 @@ enum ObjectFlags {
 */
 class Object {
 public:
-	std::uint8_t flags = 0b00001010;
-	int obj_type = kObjectBase;
-	Vec2D pos = Vec2D(0, 0);
-	Vec2D vec = Vec2D(0, 0);
-	double start_angle = 0;
-	double end_angle = 0;
-	int angle_ease_type = 0;
-	int angle_ease_time = 0;
-	double angle = 0;
-	double start_show_angle = 0;
-	double end_show_angle = 0;
-	int show_angle_ease_type = 0;
-	int show_angle_ease_time = 0;
-	double show_angle = 0;
-	int is_aligned_angle = 1;
-	Color color = Color(0, 0, 0);
-	int style = 0;
-	int blend = 0;
-	double pal = 255;
-	double start_col_size = 0;
-	double end_col_size = 0;
-	int col_size_ease_type = 0;
-	int col_size_ease_time = 0;
-	double col_size = 0;
-	double start_size = 0;
-	double end_size = 0;
-	int size_ease_type = 0;
-	int size_ease_time = 0;
-	double size = 1.0f;
-	double start_speed = 0;
-	double end_speed = 0;
-	int speed_ease_type = 0;
-	int speed_ease_time = 0;
-	double speed = 0.0f;
-	long long pop_t = 0;
-	double angle_t = 0, speed_t = 0, col_tize_t = 0, size_t = 0;
-	double length = 0;
-	double width = 0;
-	long long front_node = 0;
-	long long next_node = -1;
-	int current_node_num = 0;
-	int id = 0;
-	long long order = 0;
-	long long index = 0;
-	std::vector<std::any> params;
+	std::uint8_t flags_ = 0b00001010;
+	int obj_type_ = kObjectBase;
+	Vec2D pos_ = Vec2D(0, 0);
+	Vec2D vec_ = Vec2D(0, 0);
+	double start_angle_ = 0;
+	double end_angle_ = 0;
+	int angle_ease_type_ = 0;
+	int angle_ease_time_ = 0;
+	double angle_ = 0;
+	double start_show_angle_ = 0;
+	double end_show_angle_ = 0;
+	int show_angle_ease_type_ = 0;
+	int show_angle_ease_time_ = 0;
+	double show_angle_ = 0;
+	int is_aligned_angle_ = 1;
+	zenithstg::Color color_ = zenithstg::Color(0, 0, 0);
+	int style_ = 0;
+	int blend_ = 0;
+	double pal_ = 255;
+	double start_col_size_ = 0;
+	double end_col_size_ = 0;
+	int col_size_ease_type_ = 0;
+	int col_size_ease_time_ = 0;
+	double col_size_ = 0;
+	double start_size_ = 0;
+	double end_size_ = 0;
+	int size_ease_type_ = 0;
+	int size_ease_time_ = 0;
+	double size_ = 1.0f;
+	double start_speed_ = 0;
+	double end_speed_ = 0;
+	int speed_ease_type_ = 0;
+	int speed_ease_time_ = 0;
+	double speed_ = 0.0f;
+	long long pop_t_ = 0;
+	double angle_t_ = 0, speed_t_ = 0, col_tize_t_ = 0, size_t_ = 0;
+	double length_ = 0;
+	double width_ = 0;
+	long long front_node_ = 0;
+	long long next_node_ = -1;
+	int current_node_num_ = 0;
+	int id_ = 0;
+	long long order_ = 0;
+	long long index_ = 0;
+	std::vector<std::any> params_;
 	Object() = default;
-	Object(std::uint8_t alive, std::uint8_t is_col, int obj_type, const Vec2D& pos, double start_angle, double end_angle, int angle_ease_type, int angle_ease_time, double start_show_angle, double end_show_angle, int show_angle_ease_type, int show_angle_ease_time, const Color& color, int style, int blend, int pal, double start_col_size, double end_col_size, int col_size_ease_type, int col_size_ease_time, double start_size, double end_size, int size_ease_type, int size_ease_time, double start_speed, double end_speed, int speed_ease_type, int speed_ease_time, int pop_t = 0, double length = 0, double width = 0, long long front_node = 0, long long next_node = 0, int current_node_num = 0, int isHead = 0, long long index = 0, int id = 0, const std::vector<std::any>& params = {}, int is_graze = 1)
-		: obj_type(obj_type), pos(pos), start_angle(start_angle), end_angle(end_angle), angle_ease_type(angle_ease_type), angle_ease_time(angle_ease_time), start_show_angle(start_show_angle), end_show_angle(end_show_angle), show_angle_ease_type(show_angle_ease_type), show_angle_ease_time(show_angle_ease_time), color(color), style(style), blend(blend), pal(pal), start_col_size(start_col_size), end_col_size(end_col_size), col_size_ease_type(col_size_ease_type), col_size_ease_time(col_size_ease_time), col_size(start_col_size), start_size(start_size), end_size(end_size), size_ease_type(size_ease_type), size_ease_time(size_ease_time), size(1.0f), start_speed(start_speed), end_speed(end_speed), speed_ease_type(speed_ease_type), speed_ease_time(speed_ease_time), pop_t(pop_t), length(length), width(width), front_node(front_node), next_node(next_node), current_node_num(current_node_num), index(index), id(id), params(params) {
-		flags |= kIsAlive * alive | kIsCol * is_col | kIsHead * isHead | kIsGraze * is_graze;
+	Object(std::uint8_t alive, std::uint8_t is_col, int obj_type_, const Vec2D& pos, double start_angle, double end_angle, int angle_ease_type, int angle_ease_time, double start_show_angle, double end_show_angle, int show_angle_ease_type, int show_angle_ease_time, const zenithstg::Color& color, int style, int blend, int pal, double start_col_size, double end_col_size, int col_size_ease_type, int col_size_ease_time, double start_size, double end_size, int size_ease_type, int size_ease_time, double start_speed, double end_speed, int speed_ease_type, int speed_ease_time, int pop_t = 0, double length = 0, double width = 0, long long front_node = 0, long long next_node = 0, int current_node_num = 0, int isHead = 0, long long index = 0, int id = 0, const std::vector<std::any>& params = {}, int is_graze = 1)
+		: obj_type_(obj_type_), pos_(pos), start_angle_(start_angle), end_angle_(end_angle), angle_ease_type_(angle_ease_type), angle_ease_time_(angle_ease_time), start_show_angle_(start_show_angle), end_show_angle_(end_show_angle), show_angle_ease_type_(show_angle_ease_type), show_angle_ease_time_(show_angle_ease_time), color_(color), style_(style), blend_(blend), pal_(pal), start_col_size_(start_col_size), end_col_size_(end_col_size), col_size_ease_type_(col_size_ease_type), col_size_ease_time_(col_size_ease_time), col_size_(start_col_size), start_size_(start_size), end_size_(end_size), size_ease_type_(size_ease_type), size_ease_time_(size_ease_time), size_(1.0f), start_speed_(start_speed), end_speed_(end_speed), speed_ease_type_(speed_ease_type), speed_ease_time_(speed_ease_time), pop_t_(pop_t), length_(length), width_(width), front_node_(front_node), next_node_(next_node), current_node_num_(current_node_num), index_(index), id_(id), params_(params) {
+		flags_ |= kIsAlive * alive | kIsCol * is_col | kIsHead * isHead | kIsGraze * is_graze;
 	}
 
 	/**
@@ -159,7 +173,7 @@ public:
 
 	/**
 	* @brief オブジェクトの移動。 / Moving objects.
-	* 
+	*
 	* @param speed 移動スピード / Move Speed
 	*/
 	void MoveObject(double speed);

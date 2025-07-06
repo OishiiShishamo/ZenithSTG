@@ -2,7 +2,9 @@
 #ifndef ZENITHSTG_SRC_COLLISION_H_
 #define ZENITHSTG_SRC_COLLISION_H_
 
-#include "main.h"
+#include <cmath>
+
+#include "vec2d.h"
 
 /**
 * @brief 円形と円形の当たり判定 / Circular and circular hit detection.

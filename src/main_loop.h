@@ -6,7 +6,7 @@
 
 //TODO: 変数名いい感じにする
 
-class mainLoop {
+class MainLoop {
 public:
 	long long front_change_window_size_frame = 0;
 	long long front_change_window_frame = 0;

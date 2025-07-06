@@ -2,19 +2,18 @@
 #ifndef ZENITHSTG_SRC_MAIN_H_
 #define ZENITHSTG_SRC_MAIN_H_
 
-struct imageRes;
+struct ImageRes;
 
-class timeUtl;
+class TimeUtl;
 class Property;
-class Color;
 class Object;
 class Bullet;
 class Laser;
 class Enemy;
 class Player;
-class playerShot;
+class PlayerShot;
 class Particle;
-class mainLoop;
+class MainLoop;
 class Vec2D;
 class Script;
 class Sound;
@@ -45,7 +44,7 @@ class Background;
 
 #define kGraphicHandlerNum 256
 
-struct imageRes {
+struct ImageRes {
 	std::array<int, kGraphicHandlerNum> ui_gh;
 	std::array<int, kGraphicHandlerNum> bullet_back_gh;
 	std::array<int, kGraphicHandlerNum> bullet_front_gh;
@@ -58,12 +57,12 @@ struct imageRes {
 	std::array<int, kGraphicHandlerNum> etc_gh;
 };
 
-extern imageRes img_res;
+extern ImageRes img_res;
 extern Sound sound_mng_;
 
 extern Property properties_;
 
-extern mainLoop loop_;
+extern MainLoop loop_;
 
 extern std::array<Script, kStageNum> scripts;
 
@@ -76,8 +75,8 @@ extern std::vector<int> blank_lasers;
 extern std::array<Enemy, kMaxEnemy> enemies;
 extern std::array<Enemy*, kMaxEnemy> enemy_ptrs;
 extern std::vector<int> blank_enemies;
-extern std::array<playerShot, kMaxPlayerShot> player_shots;
-extern std::array<playerShot*, kMaxPlayerShot> player_shot_ptrs;
+extern std::array<PlayerShot, kMaxPlayerShot> player_shots;
+extern std::array<PlayerShot*, kMaxPlayerShot> player_shot_ptrs;
 extern std::vector<int> blank_player_shots;
 extern std::array<Particle, kMaxParticle> particles;
 extern std::array<Particle*, kMaxParticle> particle_ptrs;

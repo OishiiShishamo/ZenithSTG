@@ -2,6 +2,10 @@
 #ifndef ZENITHSTG_SRC_BACKGROUND_H_
 #define ZENITHSTG_SRC_BACKGROUND_H_
 
+#include "DxLib.h"
+
+#include "color.h"
+
 class Background {
 public:
 	int id = 0;

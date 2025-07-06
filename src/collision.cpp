@@ -1,4 +1,10 @@
-﻿int
+﻿#include "collision.h"
+
+#include <cmath>
+
+#include "vec2d.h"
+
+int
 ColCircleAndCircle(const Vec2D& v1, const Vec2D& v2, double r) {
 	Vec2D d = v1 - v2;
 	if (d.GetX() * d.GetX() + d.GetY() * d.GetY() <= r * r) {

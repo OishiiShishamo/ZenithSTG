@@ -1,7 +1,9 @@
 #include "math_tool.h"
 
+#include <cmath>
+
 double
-FastSqrt(double x, double epsilon = 1e-3) {
+FastSqrt(double x, double epsilon) {
 	if (x < 0) return -1;
 	if (x == 0) return 0;
 

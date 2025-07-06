@@ -1,6 +1,8 @@
-#include "main.h"
-
 #include "background.h"
+
+#include "DxLib.h"
+
+#include "color.h"
 
 void
 Background::DrawBackground() {
@@ -11,4 +13,4 @@ Background::DrawBackground() {
 	}
 }
 
-Background BG;
+Background bg_;

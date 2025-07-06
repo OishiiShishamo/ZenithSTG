@@ -44,6 +44,7 @@
       <WarningLevel>Level3</WarningLevel>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>../DxLib;../boost/include/boost-1_84</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -53,7 +54,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>X64;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -62,6 +63,7 @@
       <WarningLevel>Level3</WarningLevel>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>../DxLib;../boost/include/boost-1_84;$(SolutionDir)Src</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -79,6 +81,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>../DxLib;../boost/include/boost-1_84</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -90,7 +93,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PreprocessorDefinitions>X64;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -98,6 +101,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>../DxLib;../boost/include/boost-1_84;$(SolutionDir)Src</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -108,35 +112,68 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\background.h" />
+    <ClInclude Include="..\src\bullet.h" />
+    <ClInclude Include="..\src\collision.h" />
+    <ClInclude Include="..\src\color.h" />
+    <ClInclude Include="..\src\debug.h" />
+    <ClInclude Include="..\src\easing.h" />
+    <ClInclude Include="..\src\enemy.h" />
+    <ClInclude Include="..\src\fps.h" />
+    <ClInclude Include="..\src\global.h" />
+    <ClInclude Include="..\src\graze.h" />
+    <ClInclude Include="..\src\init.h" />
+    <ClInclude Include="..\src\laser.h" />
+    <ClInclude Include="..\src\logging.h" />
+    <ClInclude Include="..\src\main.h" />
+    <ClInclude Include="..\src\main_loop.h" />
+    <ClInclude Include="..\src\math_tool.h" />
+    <ClInclude Include="..\src\object.h" />
+    <ClInclude Include="..\src\params.h" />
+    <ClInclude Include="..\src\particle.h" />
+    <ClInclude Include="..\src\player.h" />
+    <ClInclude Include="..\src\player_shot.h" />
+    <ClInclude Include="..\src\property.h" />
+    <ClInclude Include="..\src\res_load.h" />
+    <ClInclude Include="..\src\score.h" />
+    <ClInclude Include="..\src\screen_draw.h" />
+    <ClInclude Include="..\src\script.h" />
+    <ClInclude Include="..\src\sound.h" />
+    <ClInclude Include="..\src\time_utl.h" />
+    <ClInclude Include="..\src\ui.h" />
+    <ClInclude Include="..\src\utility.h" />
+    <ClInclude Include="..\src\vec2d.h" />
+    <ClInclude Include="..\src\vec3d.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\Background.cpp" />
-    <ClCompile Include="..\src\Bullet.cpp" />
-    <ClCompile Include="..\src\Collision.cpp" />
-    <ClCompile Include="..\src\Easing.cpp" />
-    <ClCompile Include="..\src\Effect.cpp" />
-    <ClCompile Include="..\src\Enemy.cpp" />
-    <ClCompile Include="..\src\FPS.cpp" />
-    <ClCompile Include="..\src\Init.cpp" />
-    <ClCompile Include="..\src\Laser.cpp" />
-    <ClCompile Include="..\src\Logging.cpp" />
-    <ClCompile Include="..\src\Main.cpp" />
-    <ClCompile Include="..\src\mainLoop.cpp" />
-    <ClCompile Include="..\src\mathTool.cpp" />
-    <ClCompile Include="..\src\Object.cpp" />
-    <ClCompile Include="..\src\Player.cpp" />
-    <ClCompile Include="..\src\playerShot.cpp" />
-    <ClCompile Include="..\src\resLoad.cpp" />
-    <ClCompile Include="..\src\Score.cpp" />
-    <ClCompile Include="..\src\screenDraw.cpp" />
-    <ClCompile Include="..\src\Script.cpp" />
-    <ClCompile Include="..\src\Sound.cpp" />
-    <ClCompile Include="..\src\timeUtl.cpp" />
-    <ClCompile Include="..\src\UI.cpp" />
-    <ClCompile Include="..\src\Utility.cpp" />
-    <ClCompile Include="..\src\Vec2D.cpp" />
-    <ClCompile Include="..\src\Vec3D.cpp" />
+    <ClCompile Include="..\src\background.cpp" />
+    <ClCompile Include="..\src\bullet.cpp" />
+    <ClCompile Include="..\src\collision.cpp" />
+    <ClCompile Include="..\src\easing.cpp" />
+    <ClCompile Include="..\src\enemy.cpp" />
+    <ClCompile Include="..\src\fps.cpp" />
+    <ClCompile Include="..\src\graze.cpp" />
+    <ClCompile Include="..\src\init.cpp" />
+    <ClCompile Include="..\src\laser.cpp" />
+    <ClCompile Include="..\src\logging.cpp" />
+    <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\main_loop.cpp" />
+    <ClCompile Include="..\src\math_tool.cpp" />
+    <ClCompile Include="..\src\object.cpp" />
+    <ClCompile Include="..\src\particle.cpp" />
+    <ClCompile Include="..\src\player.cpp" />
+    <ClCompile Include="..\src\player_shot.cpp" />
+    <ClCompile Include="..\src\res_load.cpp" />
+    <ClCompile Include="..\src\score.cpp" />
+    <ClCompile Include="..\src\screen_draw.cpp" />
+    <ClCompile Include="..\src\script.cpp" />
+    <ClCompile Include="..\src\sound.cpp" />
+    <ClCompile Include="..\src\time_utl.cpp" />
+    <ClCompile Include="..\src\ui.cpp" />
+    <ClCompile Include="..\src\utility.cpp" />
+    <ClCompile Include="..\src\vec2d.cpp" />
+    <ClCompile Include="..\src\vec3d.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

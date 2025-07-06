@@ -61,6 +61,6 @@ Sound::SeAdd(int id, std::string path) {
 	}
 	for (auto& S : SafeAccess(se_handler_, id)) {
 		S = LoadSoundMem(path.c_str());
-		ChangeVolumeSoundMem(static_cast<int>(255.0 * properties_.se_volume / 100.0), S);
+		ChangeVolumeSoundMem(static_cast<int>(255.0 * properties_.se_volume_ / 100.0), S);
 	}
 }

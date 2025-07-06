@@ -5,9 +5,9 @@
 
 double
 CrossProduct(const Vec2D& v1, const Vec2D& v2, const Vec2D& v3) {
-	__m128d v1_xy = v1.xy;
-	__m128d v2_xy = v2.xy;
-	__m128d v3_xy = v3.xy;
+	__m128d v1_xy = v1.GetXY();
+	__m128d v2_xy = v2.GetXY();
+	__m128d v3_xy = v3.GetXY();
 
 	__m128d diff1 = _mm_sub_pd(v2_xy, v1_xy);
 	__m128d diff2 = _mm_sub_pd(v3_xy, v1_xy);
@@ -22,8 +22,8 @@ CrossProduct(const Vec2D& v1, const Vec2D& v2, const Vec2D& v3) {
 
 double
 Range(const Vec2D& v1, const Vec2D& v2) {
-	__m128d v1_xy = v1.xy;
-	__m128d v2_xy = v2.xy;
+	__m128d v1_xy = v1.GetXY();
+	__m128d v2_xy = v2.GetXY();
 
 	__m128d diff = _mm_sub_pd(v1_xy, v2_xy);
 
@@ -51,7 +51,7 @@ RotatePoint(const Vec2D& pt, double angle) {
 	double cos_a = std::cos(angle);
 	double sin_a = -std::sin(angle);
 
-	__m128d vec = pt.xy;
+	__m128d vec = pt.GetXY();
 	__m128d rot = _mm_set_pd(cos_a, cos_a);
 
 	__m128d xy_cos = _mm_mul_pd(vec, rot);

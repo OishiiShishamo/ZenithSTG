@@ -10,10 +10,10 @@
 
 class Vec3D {
 public:
-	double x = 0;
-	double y = 0;
-	double z = 0;
-	Vec3D(double x = 0, double y = 0, double z = 0) : x(x), y(y), z(z) {
+	double x_ = 0;
+	double y_ = 0;
+	double z_ = 0;
+	Vec3D(double x_ = 0, double y_ = 0, double z_ = 0) : x_(x_), y_(y_), z_(z_) {
 	}
 };
 

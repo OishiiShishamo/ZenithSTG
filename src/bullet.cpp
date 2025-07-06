@@ -1,14 +1,21 @@
-﻿#include "main.h"
+﻿#include "bullet.h"
 
-#include "bullet.h"
+#include <algorithm>
+#include <array>
+#include <cmath>
+#include <execution>
+#include <mutex>
+#include <vector>
+
+#include "DxLib.h"
+
+#include "collision.h"
 #include "color.h"
-#include "particle.h"
-#include "enemy.h"
-#include "laser.h"
+#include "graze.h"
 #include "object.h"
 #include "player.h"
-#include "player_shot.h"
-#include "graze.h"
+#include "sound.h"
+#include "utility.h"
 #include "vec2d.h"
 
 std::array<Bullet, kMaxBullet> bullets;
@@ -21,11 +28,11 @@ long long bullet_index = 0;
 
 void
 Bullet::ShowBullet() {
-	if (!(flags & kIsAlive)) return;
+	if (!(flags_ & kIsAlive)) return;
 	std::array<Vec2D, 4> world;
-	const bool is_scaled = size > 1.0f;
+	const bool is_scaled = size_ > 1.0f;
 	if (is_scaled) {
-		double half = size / 2 * 128 * SafeAccess(draw_ratio_bullet_graphs, style);
+		double half = size_ / 2 * 128 * SafeAccess(draw_ratio_bullet_graphs, style_);
 		std::array<Vec2D, 4> local = {
 			Vec2D(-half, -half),
 			Vec2D(-half, half),
@@ -33,13 +40,13 @@ Bullet::ShowBullet() {
 			Vec2D(half, -half)
 		};
 		for (int i = 0; i < 4; ++i) {
-			Vec2D rot = RotatePoint(SafeAccess(local, i), show_angle + kPi / 2);
-			SafeAccess(world, i) = pos + rot;
+			Vec2D rot = RotatePoint(SafeAccess(local, i), show_angle_ + kPi / 2);
+			SafeAccess(world, i) = pos_ + rot;
 		}
 	}
-	if (blend == -1) {
-		SmartSetDrawBlendMode(SafeAccess(default_bullet_blend, style), pal);
-		SetDrawBright(color.r, color.g, color.b);
+	if (blend_ == -1) {
+		SmartSetDrawBlendMode(SafeAccess(default_bullet_blend, style_), pal_);
+		SetDrawBright(color_.GetR(), color_.GetG(), color_.GetB());
 		SetDrawMode(DX_DRAWMODE_BILINEAR);
 		if (is_scaled) {
 			DrawRectModiGraph(
@@ -47,14 +54,14 @@ Bullet::ShowBullet() {
 				SafeAccess(world, 1).GetX(), SafeAccess(world, 1).GetY(),
 				SafeAccess(world, 2).GetX(), SafeAccess(world, 2).GetY(),
 				SafeAccess(world, 3).GetX(), SafeAccess(world, 3).GetY(),
-				64 - 128 * SafeAccess(draw_ratio_bullet_graphs, style) / 2,
-				64 - 128 * SafeAccess(draw_ratio_bullet_graphs, style) / 2,
-				128 * SafeAccess(draw_ratio_bullet_graphs, style),
-				128 * SafeAccess(draw_ratio_bullet_graphs, style),
-				SafeAccess(img_res.bullet_back_gh, style),
+				64 - 128 * SafeAccess(draw_ratio_bullet_graphs, style_) / 2,
+				64 - 128 * SafeAccess(draw_ratio_bullet_graphs, style_) / 2,
+				128 * SafeAccess(draw_ratio_bullet_graphs, style_),
+				128 * SafeAccess(draw_ratio_bullet_graphs, style_),
+				SafeAccess(img_res.bullet_back_gh, style_),
 				TRUE);
 		}
-		else DrawRotaGraph(pos.GetX(), pos.GetY(), size, -show_angle, SafeAccess(img_res.bullet_back_gh, style), TRUE);
+		else DrawRotaGraph(pos_.GetX(), pos_.GetY(), size_, -show_angle_, SafeAccess(img_res.bullet_back_gh, style_), TRUE);
 		SetDrawBright(255, 255, 255);
 		if (is_scaled) {
 			DrawRectModiGraph(
@@ -62,20 +69,20 @@ Bullet::ShowBullet() {
 				SafeAccess(world, 1).GetX(), SafeAccess(world, 1).GetY(),
 				SafeAccess(world, 2).GetX(), SafeAccess(world, 2).GetY(),
 				SafeAccess(world, 3).GetX(), SafeAccess(world, 3).GetY(),
-				64 - 128 * SafeAccess(draw_ratio_bullet_graphs, style) / 2,
-				64 - 128 * SafeAccess(draw_ratio_bullet_graphs, style) / 2,
-				128 * SafeAccess(draw_ratio_bullet_graphs, style),
-				128 * SafeAccess(draw_ratio_bullet_graphs, style),
-				SafeAccess(img_res.bullet_front_gh, style),
+				64 - 128 * SafeAccess(draw_ratio_bullet_graphs, style_) / 2,
+				64 - 128 * SafeAccess(draw_ratio_bullet_graphs, style_) / 2,
+				128 * SafeAccess(draw_ratio_bullet_graphs, style_),
+				128 * SafeAccess(draw_ratio_bullet_graphs, style_),
+				SafeAccess(img_res.bullet_front_gh, style_),
 				TRUE);
 		}
-		else DrawRotaGraph(pos.GetX(), pos.GetY(), size, -show_angle, SafeAccess(img_res.bullet_front_gh, style), TRUE);
+		else DrawRotaGraph(pos_.GetX(), pos_.GetY(), size_, -show_angle_, SafeAccess(img_res.bullet_front_gh, style_), TRUE);
 		SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 		SetDrawMode(DX_DRAWMODE_NEAREST);
 	}
 	else {
-		SmartSetDrawBlendMode(blend, pal);
-		SetDrawBright(color.r, color.g, color.b);
+		SmartSetDrawBlendMode(blend_, pal_);
+		SetDrawBright(color_.GetR(), color_.GetG(), color_.GetB());
 		SetDrawMode(DX_DRAWMODE_BILINEAR);
 		if (is_scaled) {
 			DrawRectModiGraph(
@@ -83,14 +90,14 @@ Bullet::ShowBullet() {
 				SafeAccess(world, 1).GetX(), SafeAccess(world, 1).GetY(),
 				SafeAccess(world, 2).GetX(), SafeAccess(world, 2).GetY(),
 				SafeAccess(world, 3).GetX(), SafeAccess(world, 3).GetY(),
-				64 - 128 * SafeAccess(draw_ratio_bullet_graphs, style) / 2,
-				64 - 128 * SafeAccess(draw_ratio_bullet_graphs, style) / 2,
-				128 * SafeAccess(draw_ratio_bullet_graphs, style),
-				128 * SafeAccess(draw_ratio_bullet_graphs, style),
-				SafeAccess(img_res.bullet_back_gh, style),
+				64 - 128 * SafeAccess(draw_ratio_bullet_graphs, style_) / 2,
+				64 - 128 * SafeAccess(draw_ratio_bullet_graphs, style_) / 2,
+				128 * SafeAccess(draw_ratio_bullet_graphs, style_),
+				128 * SafeAccess(draw_ratio_bullet_graphs, style_),
+				SafeAccess(img_res.bullet_back_gh, style_),
 				TRUE);
 		}
-		else DrawRotaGraph(pos.GetX(), pos.GetY(), size, -show_angle, SafeAccess(img_res.bullet_back_gh, style), TRUE);
+		else DrawRotaGraph(pos_.GetX(), pos_.GetY(), size_, -show_angle_, SafeAccess(img_res.bullet_back_gh, style_), TRUE);
 		SetDrawBright(255, 255, 255);
 		if (is_scaled) {
 			DrawRectModiGraph(
@@ -98,30 +105,30 @@ Bullet::ShowBullet() {
 				SafeAccess(world, 1).GetX(), SafeAccess(world, 1).GetY(),
 				SafeAccess(world, 2).GetX(), SafeAccess(world, 2).GetY(),
 				SafeAccess(world, 3).GetX(), SafeAccess(world, 3).GetY(),
-				64 - 128 * SafeAccess(draw_ratio_bullet_graphs, style) / 2,
-				64 - 128 * SafeAccess(draw_ratio_bullet_graphs, style) / 2,
-				128 * SafeAccess(draw_ratio_bullet_graphs, style),
-				128 * SafeAccess(draw_ratio_bullet_graphs, style),
-				SafeAccess(img_res.bullet_front_gh, style),
+				64 - 128 * SafeAccess(draw_ratio_bullet_graphs, style_) / 2,
+				64 - 128 * SafeAccess(draw_ratio_bullet_graphs, style_) / 2,
+				128 * SafeAccess(draw_ratio_bullet_graphs, style_),
+				128 * SafeAccess(draw_ratio_bullet_graphs, style_),
+				SafeAccess(img_res.bullet_front_gh, style_),
 				TRUE);
 		}
-		else DrawRotaGraph(pos.GetX(), pos.GetY(), size, -show_angle, SafeAccess(img_res.bullet_front_gh, style), TRUE);
+		else DrawRotaGraph(pos_.GetX(), pos_.GetY(), size_, -show_angle_, SafeAccess(img_res.bullet_front_gh, style_), TRUE);
 		SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 		SetDrawMode(DX_DRAWMODE_NEAREST);
 	}
 	if (kIsColShow == 1) {
-		if (flags & kIsCol) {
+		if (flags_ & kIsCol) {
 			SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-			DrawCircle(pos.GetX(), pos.GetY(), col_size, GetColor(255, 255, 255), 1);
-			DrawFormatString(pos.GetX(), pos.GetY(), GetColor(GetColorHsv(std::fmod(t, 360), 1, 1).r, GetColorHsv(std::fmod(t, 360), 1, 1).g, GetColorHsv(std::fmod(t, 360), 1, 1).b), "%f", col_size);
+			DrawCircle(pos_.GetX(), pos_.GetY(), col_size_, GetColor(255, 255, 255), 1);
+			DrawFormatString(pos_.GetX(), pos_.GetY(), GetColor(GamingColor().GetR(), GamingColor().GetG(), GamingColor().GetB()), "%f", col_size_);
 		}
 	}
 }
 
 int
 Bullet::ColliCheckObject() {
-	if (ColCircleAndCircle(pos, Plyr.pos, col_size + Plyr.col_size)) {
-		Plyr.HitPlayer();
+	if (ColCircleAndCircle(pos_, player.pos_, col_size_ + player.col_size_)) {
+		player.HitPlayer();
 		return 1;
 	}
 	return 0;
@@ -130,11 +137,11 @@ Bullet::ColliCheckObject() {
 #if kGrazeEnabled == 1
 void
 Bullet::GrazeObject() {
-	if ((flags & kIsGraze) == 0) return;
-	if (ColCircleAndCircle(pos, Plyr.pos, col_size + Plyr.col_size + kGrazeRange)) {
+	if ((flags_ & kIsGraze) == 0) return;
+	if (ColCircleAndCircle(pos_, player.pos_, col_size_ + player.col_size_ + kGrazeRange)) {
 		Graze();
 #if kBulletGrazeEveryFrame == 0
-		flags &= ~kIsGraze;
+		flags_ &= ~kIsGraze;
 #endif
 	}
 }
@@ -142,27 +149,27 @@ Bullet::GrazeObject() {
 
 int
 Bullet::CheckPosBounds() {
-	double limit = size * 128 * 2 * SafeAccess(draw_ratio_bullet_graphs, style);
-	if (pos.GetX() < kBorderLeft - limit) return 1;
-	if (pos.GetX() > kBorderRight + limit) return 1;
-	if (pos.GetY() < kBorderUp - limit) return 1;
-	if (pos.GetY() > kBorderDown + limit) return 1;
+	double limit = size_ * 128 * 2 * SafeAccess(draw_ratio_bullet_graphs, style_);
+	if (pos_.GetX() < kBorderLeft - limit) return 1;
+	if (pos_.GetX() > kBorderRight + limit) return 1;
+	if (pos_.GetY() < kBorderUp - limit) return 1;
+	if (pos_.GetY() > kBorderDown + limit) return 1;
 
 	return 0;
 }
 
 int
 Bullet::CheckCollisionAndBounds() {
-	if (flags & kIsCol) {
+	if (flags_ & kIsCol) {
 		if (ColliCheckObject()) {
-			PushBlankBullets(index);
-			flags &= ~kIsAlive;
+			PushBlankBullets(index_);
+			flags_ &= ~kIsAlive;
 			return 1;
 		}
 	}
 	if (CheckPosBounds()) {
-		PushBlankBullets(index);
-		flags &= ~kIsAlive;
+		PushBlankBullets(index_);
+		flags_ &= ~kIsAlive;
 		return 1;
 	}
 	return 0;
@@ -170,19 +177,19 @@ Bullet::CheckCollisionAndBounds() {
 
 void
 Bullet::MoveFunc() {
-	switch (id) {
+	switch (id_) {
 	case 0:
 	default: {
-		int needsMultiStep = speed >= col_size + Plyr.col_size && flags & kIsCol;
+		int needsMultiStep = speed_ >= col_size_ + player.col_size_ && flags_ & kIsCol;
 		if (needsMultiStep) {
-			int step = static_cast<int>(std::ceil(speed / 1.0f));
+			int step = static_cast<int>(std::ceil(speed_ / 1.0f));
 			for (int i = 0; i < step; i++) {
-				MoveObject(speed / step);
+				MoveObject(speed_ / step);
 				if (CheckCollisionAndBounds()) return;
 			}
 		}
 		else {
-			MoveObject(speed);
+			MoveObject(speed_);
 			if (CheckCollisionAndBounds()) return;
 		}
 		break;
@@ -197,55 +204,55 @@ PushBlankBullets(int idx) {
 }
 
 int
-CreateBullet(const Vec2D& pos, const Color& color, int style, int blend, int pal, int is_col, double start_col_size, double end_col_size, int col_size_ease_type, int col_size_ease_time, double start_size, double end_size, int size_ease_type, int size_ease_time, int aim, double start_angle, double end_angle, int angle_ease_type, int angle_ease_time, double start_speed, double end_speed, int speed_ease_type, int speed_ease_time, int se, int id, const std::vector<std::any>& params) {
+CreateBullet(const Vec2D& pos, const zenithstg::Color& color, int style, int blend, int pal, int is_col, double start_col_size, double end_col_size, int col_size_ease_type, int col_size_ease_time, double start_size, double end_size, int size_ease_type, int size_ease_time, int aim, double start_angle, double end_angle, int angle_ease_type, int angle_ease_time, double start_speed, double end_speed, int speed_ease_type, int speed_ease_time, int se, int id, const std::vector<std::any>& params) {
 	sound_mng_.ReserveSe(se);
 	if (blank_bullets.empty()) return 1;
 	int idx = blank_bullets.back();
 	blank_bullets.pop_back();
-	SafeAccess(bullets, idx).flags = kIsAlive | is_col * kIsCol | kIsGraze;
-	SafeAccess(bullets, idx).obj_type = kObjectBullet;
-	SafeAccess(bullets, idx).pos = pos;
-	SafeAccess(bullets, idx).color = color;
-	SafeAccess(bullets, idx).style = style;
-	SafeAccess(bullets, idx).blend = blend;
-	SafeAccess(bullets, idx).pal = pal;
-	SafeAccess(bullets, idx).start_col_size = start_col_size;
-	SafeAccess(bullets, idx).end_col_size = end_col_size;
-	SafeAccess(bullets, idx).col_size_ease_type = col_size_ease_type;
-	SafeAccess(bullets, idx).col_size_ease_time = col_size_ease_time;
-	SafeAccess(bullets, idx).start_size = start_size;
-	SafeAccess(bullets, idx).end_size = end_size;
-	SafeAccess(bullets, idx).size_ease_type = size_ease_type;
-	SafeAccess(bullets, idx).size_ease_time = size_ease_time;
+	SafeAccess(bullets, idx).flags_ = kIsAlive | is_col * kIsCol | kIsGraze;
+	SafeAccess(bullets, idx).obj_type_ = kObjectBullet;
+	SafeAccess(bullets, idx).pos_ = pos;
+	SafeAccess(bullets, idx).color_ = color;
+	SafeAccess(bullets, idx).style_ = style;
+	SafeAccess(bullets, idx).blend_ = blend;
+	SafeAccess(bullets, idx).pal_ = pal;
+	SafeAccess(bullets, idx).start_col_size_ = start_col_size;
+	SafeAccess(bullets, idx).end_col_size_ = end_col_size;
+	SafeAccess(bullets, idx).col_size_ease_type_ = col_size_ease_type;
+	SafeAccess(bullets, idx).col_size_ease_time_ = col_size_ease_time;
+	SafeAccess(bullets, idx).start_size_ = start_size;
+	SafeAccess(bullets, idx).end_size_ = end_size;
+	SafeAccess(bullets, idx).size_ease_type_ = size_ease_type;
+	SafeAccess(bullets, idx).size_ease_time_ = size_ease_time;
 	if (aim == kAimTrue) {
-		SafeAccess(bullets, idx).start_angle = Plyr.AimPlayer(pos) + start_angle;
-		SafeAccess(bullets, idx).end_angle = Plyr.AimPlayer(pos) + end_angle;
+		SafeAccess(bullets, idx).start_angle_ = player.AimPlayer(pos) + start_angle;
+		SafeAccess(bullets, idx).end_angle_ = player.AimPlayer(pos) + end_angle;
 	}
 	else {
-		SafeAccess(bullets, idx).start_angle = start_angle;
-		SafeAccess(bullets, idx).end_angle = end_angle;
+		SafeAccess(bullets, idx).start_angle_ = start_angle;
+		SafeAccess(bullets, idx).end_angle_ = end_angle;
 	}
-	SafeAccess(bullets, idx).angle_ease_type = angle_ease_type;
-	SafeAccess(bullets, idx).angle_ease_time = angle_ease_time;
-	SafeAccess(bullets, idx).start_speed = start_speed;
-	SafeAccess(bullets, idx).end_speed = end_speed;
-	SafeAccess(bullets, idx).speed_ease_type = speed_ease_type;
-	SafeAccess(bullets, idx).speed_ease_time = speed_ease_time;
-	SafeAccess(bullets, idx).pop_t = t;
-	SafeAccess(bullets, idx).length = 0;
-	SafeAccess(bullets, idx).width = 0;
-	SafeAccess(bullets, idx).front_node = 0;
-	SafeAccess(bullets, idx).current_node_num = 0;
-	SafeAccess(bullets, idx).order = bullet_index;
-	SafeAccess(bullets, idx).index = idx;
-	SafeAccess(bullets, idx).id = id;
-	SafeAccess(bullets, idx).params = params;
+	SafeAccess(bullets, idx).angle_ease_type_ = angle_ease_type;
+	SafeAccess(bullets, idx).angle_ease_time_ = angle_ease_time;
+	SafeAccess(bullets, idx).start_speed_ = start_speed;
+	SafeAccess(bullets, idx).end_speed_ = end_speed;
+	SafeAccess(bullets, idx).speed_ease_type_ = speed_ease_type;
+	SafeAccess(bullets, idx).speed_ease_time_ = speed_ease_time;
+	SafeAccess(bullets, idx).pop_t_ = t;
+	SafeAccess(bullets, idx).length_ = 0;
+	SafeAccess(bullets, idx).width_ = 0;
+	SafeAccess(bullets, idx).front_node_ = 0;
+	SafeAccess(bullets, idx).current_node_num_ = 0;
+	SafeAccess(bullets, idx).order_ = bullet_index;
+	SafeAccess(bullets, idx).index_ = idx;
+	SafeAccess(bullets, idx).id_ = id;
+	SafeAccess(bullets, idx).params_ = params;
 	bullet_index++;
 	return 0;
 }
 
 void
-CreateBulletGroup(const Vec2D& pos, const Color& color, int style, int blend, int pal, int is_col, double start_col_size, double end_col_size, int col_size_ease_type, int col_size_ease_time, double start_size, double end_size, int size_ease_type, int size_ease_time, int way, double spread, int aim, double start_angle, double end_angle, int angle_ease_type, int angle_ease_time, double start_speed, double end_speed, int speed_ease_type, int speed_ease_time, int se, int id, const std::vector<std::any>& params) {
+CreateBulletGroup(const Vec2D& pos, const zenithstg::Color& color, int style, int blend, int pal, int is_col, double start_col_size, double end_col_size, int col_size_ease_type, int col_size_ease_time, double start_size, double end_size, int size_ease_type, int size_ease_time, int way, double spread, int aim, double start_angle, double end_angle, int angle_ease_type, int angle_ease_time, double start_speed, double end_speed, int speed_ease_type, int speed_ease_time, int se, int id, const std::vector<std::any>& params) {
 	sound_mng_.ReserveSe(se);
 	switch (aim) {
 	case kAimFalse:
@@ -272,7 +279,7 @@ CreateBulletGroup(const Vec2D& pos, const Color& color, int style, int blend, in
 }
 
 void
-CreateSimpleBulletGroup(const Vec2D& pos, const Color& color, int style, int blend, int pal, double col_size, double size, int way, double spread, int aim, double angle, double speed, int se, int id, const std::vector<std::any>& params) {
+CreateSimpleBulletGroup(const Vec2D& pos, const zenithstg::Color& color, int style, int blend, int pal, double col_size, double size, int way, double spread, int aim, double angle, double speed, int se, int id, const std::vector<std::any>& params) {
 	sound_mng_.ReserveSe(se);
 	switch (aim) {
 	case kAimFalse:
@@ -337,7 +344,7 @@ void
 MoveBullets() {
 	if (t % 1 == 0) {
 		std::sort(bullet_ptrs.begin(), bullet_ptrs.end(), [](const Bullet* a, const Bullet* b) {
-			return a->order < b->order;
+			return a->order_ < b->order_;
 			});
 	}
 	ParallelUpdateBullets(bullets);

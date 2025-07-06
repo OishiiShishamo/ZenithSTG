@@ -8,6 +8,13 @@
 #ifndef ZENITHSTG_SRC_INIT_H_
 #define ZENITHSTG_SRC_INIT_H_
 
+#include "DxLib.h"
+
+#include "property.h"
+#include "player.h"
+#include "res_load.h"
+#include "sound.h"
+
 /**
 * @brief DxLib_Init()実行前に行う初期化処理 / Initialization process performed before DxLib_Init() execution.
 */

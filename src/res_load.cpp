@@ -5,34 +5,34 @@
 
 
 void
-resLoad::UiGhLoad() {
+ResLoad::UiGhLoad() {
 	SafeAccess(img_res.ui_gh, 0) = (LoadGraph("res/img/ui/UI_Frame.png"));
 	SafeAccess(img_res.ui_gh, 1) = (LoadGraph("res/img/ui/Weak_Point.png"));
 }
 
 void
-resLoad::BulletGhLoad() {
+ResLoad::BulletGhLoad() {
 	LoadDivGraph("res/img/bullet/Bullet_Back.png", 256, 16, 16, 128, 128, img_res.bullet_back_gh.data());
 	LoadDivGraph("res/img/bullet/Bullet_Front.png", 256, 16, 16, 128, 128, img_res.bullet_front_gh.data());
 }
 
 void
-resLoad::ParticleGhLoad() {
+ResLoad::ParticleGhLoad() {
 	LoadDivGraph("res/img/particle/Particle_Back.png", 256, 16, 16, 128, 128, img_res.particle_back_gh.data());
 	LoadDivGraph("res/img/particle/Particle_Front.png", 256, 16, 16, 128, 128, img_res.particle_front_gh.data());
 }
 
 void
-resLoad::EnemyGhLoad() {
+ResLoad::EnemyGhLoad() {
 	LoadDivGraph("res/img/enemy/Enemy.png", 256, 16, 16, 128, 128, img_res.enemy_gh.data());
 }
 
 void
-resLoad::FaceGhLoad() {
+ResLoad::FaceGhLoad() {
 }
 
 void
-resLoad::PlayerGhLoad() {
+ResLoad::PlayerGhLoad() {
 	for (int i = 0; i < kPlayerNum; i++) {
 		std::string tmp = "res/img/player/" + std::to_string(i) + ".png";
 		SafeAccess(img_res.player_gh, i) = (LoadGraph(tmp.c_str()));
@@ -40,12 +40,12 @@ resLoad::PlayerGhLoad() {
 }
 
 void
-resLoad::ShotGhLoad() {
+ResLoad::ShotGhLoad() {
 	SafeAccess(img_res.shot_gh, 0) = (LoadGraph("res/img/shot/0.png"));
 }
 
 void
-resLoad::FontLoad() {
+ResLoad::FontLoad() {
 	SafeAccess(font_types, kFontUi0) = CreateFontToHandle("Meiryo UI", 20, 3, DX_FONTTYPE_ANTIALIASING_4X4);
 	SafeAccess(font_types, kFontUi1) = CreateFontToHandle("Meiryo UI", 40, 3, DX_FONTTYPE_ANTIALIASING_4X4);
 	int i = 0;

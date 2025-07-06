@@ -2,30 +2,30 @@
 
 Vec3D
 sumVec3D(Vec3D v1, Vec3D v2) {
-	return Vec3D(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
+	return Vec3D(v1.x_ + v2.x_, v1.y_ + v2.y_, v1.z_ + v2.z_);
 }
 
 Vec3D
 subVec3D(Vec3D v1, Vec3D v2) {
-	return Vec3D(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
+	return Vec3D(v1.x_ - v2.x_, v1.y_ - v2.y_, v1.z_ - v2.z_);
 }
 
 Vec3D
 mulVec3D(Vec3D v1, double num) {
-	return Vec3D(v1.x * num, v1.y * num, v1.z * num);
+	return Vec3D(v1.x_ * num, v1.y_ * num, v1.z_ * num);
 }
 
 double
 Range(Vec3D v1, Vec3D v2) {
-	return std::sqrt((v1.x - v2.x) * (v1.x - v2.x) + (v1.y - v2.y) * (v1.y - v2.y) + (v1.z - v2.z) * (v1.z - v2.z));
+	return std::sqrt((v1.x_ - v2.x_) * (v1.x_ - v2.x_) + (v1.y_ - v2.y_) * (v1.y_ - v2.y_) + (v1.z_ - v2.z_) * (v1.z_ - v2.z_));
 }
 
 Vec3D
 VecNorm(Vec3D v) {
-	if (v.x + v.y + v.z == 0) return v;
-	v.x *= 1 / std::sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
-	v.y *= 1 / std::sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
-	v.z *= 1 / std::sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
+	if (v.x_ + v.y_ + v.z_ == 0) return v;
+	v.x_ *= 1 / std::sqrt(v.x_ * v.x_ + v.y_ * v.y_ + v.z_ * v.z_);
+	v.y_ *= 1 / std::sqrt(v.x_ * v.x_ + v.y_ * v.y_ + v.z_ * v.z_);
+	v.z_ *= 1 / std::sqrt(v.x_ * v.x_ + v.y_ * v.y_ + v.z_ * v.z_);
 	return v;
 }
 
@@ -39,8 +39,8 @@ RotatePoint(const Vec3D& pt, double angle) {
 	double cosA = std::cos(angle);
 	double sinA = std::sin(angle);
 	return {
-		pt.x * cosA + pt.y * sinA,
-		pt.y * cosA - pt.x * sinA
+		pt.x_ * cosA + pt.y_ * sinA,
+		pt.y_ * cosA - pt.x_ * sinA
 	};
 }
 

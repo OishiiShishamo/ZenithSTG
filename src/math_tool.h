@@ -8,9 +8,11 @@
 #ifndef ZENITHSTG_SRC_MATHTOOL_H_
 #define ZENITHSTG_SRC_MATHTOOL_H_
 
+#include <cmath>
+
 /**
 * @brief ニュートン法を用いた高速な平方根の計算 / fast square root calculations using Newton's method.
 */
-double FastSqrt(double x, double epsilon = 1e-10);
+double FastSqrt(double x, double epsilon = 1e-3);
 
 #endif

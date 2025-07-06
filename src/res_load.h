@@ -2,7 +2,7 @@
 #ifndef ZENITHSTG_SRC_RESLOAD_H_
 #define ZENITHSTG_SRC_RESLOAD_H_
 
-class resLoad {
+class ResLoad {
 public:
 	void UiGhLoad();
 	void BulletGhLoad();

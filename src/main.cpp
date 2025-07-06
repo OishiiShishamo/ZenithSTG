@@ -33,7 +33,7 @@ WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, in
 	Init();
 	if (DxLib_Init() == -1)	return -1;
 	ApplyWindowSize();
-	switch (properties_.window_size) {
+	switch (properties_.window_size_) {
 	case 0:
 		SetWindowSize(1280, 720);
 		ResInit();
@@ -55,15 +55,15 @@ WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, in
 	timeMng.StartTimer();
 	while (1) {
 		timeMng.ElapsedTime();
-		elapsed_frame = timeMng.target_frame - t;
-		while (t < timeMng.target_frame) {
+		elapsed_frame = timeMng.target_frame_ - t;
+		while (t < timeMng.target_frame_) {
 			t++;
 			loop_.Update();
 		}
 		if (elapsed_frame == 0) {
 			elapsed_frame = 1;
 		}
-		ShowFPS(Vec2D(0, 0), elapsed_frame, Color(kColorWhite));
+		ShowFPS(Vec2D(0, 0), elapsed_frame, zenithstg::Color(kColorWhite));
 
 		ScreenFlip();
 

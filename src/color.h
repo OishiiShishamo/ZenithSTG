@@ -2,8 +2,6 @@
 #ifndef ZENITHSTG_SRC_COLOR_H_
 #define ZENITHSTG_SRC_COLOR_H_
 
-#include "main.h"
-
 //SIMPLE
 
 #define kColorRed 255, 0, 0
@@ -31,12 +29,20 @@
 #define kColorBrown 165, 42, 42
 #define kColorBurlyWood 222, 184, 135
 
-class Color {
-public:
-	int r = 0;
-	int g = 0;
-	int b = 0;
-	Color(int r, int g, int b) : r(r), g(g), b(b) {}
-};
+namespace zenithstg {
+	class Color {
+	public:
+		Color() = default;
+		Color(int r, int g, int b) : r_(r), g_(g), b_(b) {}
+
+		int GetR() { return r_; }
+		int GetG() { return g_; }
+		int GetB() { return b_; }
+	private:
+		int r_ = 0;
+		int g_ = 0;
+		int b_ = 0;
+	};
+} // namespace zenithstg
 
 #endif

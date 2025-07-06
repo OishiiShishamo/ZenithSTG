@@ -155,78 +155,78 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Background.cpp" />
-    <ClCompile Include="Bullet.cpp" />
-    <ClCompile Include="Collision.cpp" />
-    <ClCompile Include="Easing.cpp" />
-    <ClCompile Include="Particle.cpp" />
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="FPS.cpp" />
-    <ClCompile Include="Graze.cpp" />
-    <ClCompile Include="Init.cpp" />
-    <ClCompile Include="Laser.cpp" />
-    <ClCompile Include="Logging.cpp" />
-    <ClCompile Include="Main.cpp" />
+    <None Include="LICENSE" />
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="background.h" />
+    <ClInclude Include="bullet.h" />
+    <ClInclude Include="collision.h" />
+    <ClInclude Include="color.h" />
+    <ClInclude Include="debug.h" />
+    <ClInclude Include="easing.h" />
+    <ClInclude Include="enemy.h" />
+    <ClInclude Include="fps.h" />
+    <ClInclude Include="global.h" />
+    <ClInclude Include="graze.h" />
+    <ClInclude Include="init.h" />
+    <ClInclude Include="laser.h" />
+    <ClInclude Include="logging.h" />
+    <ClInclude Include="main.h" />
+    <ClInclude Include="main_loop.h" />
+    <ClInclude Include="math_tool.h" />
+    <ClInclude Include="object.h" />
+    <ClInclude Include="params.h" />
+    <ClInclude Include="particle.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="player.h" />
+    <ClInclude Include="player_shot.h" />
+    <ClInclude Include="property.h" />
+    <ClInclude Include="res_load.h" />
+    <ClInclude Include="score.h" />
+    <ClInclude Include="screen_draw.h" />
+    <ClInclude Include="script.h" />
+    <ClInclude Include="sound.h" />
+    <ClInclude Include="time_utl.h" />
+    <ClInclude Include="ui.h" />
+    <ClInclude Include="utility.h" />
+    <ClInclude Include="vec2d.h" />
+    <ClInclude Include="vec3d.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="background.cpp" />
+    <ClCompile Include="bullet.cpp" />
+    <ClCompile Include="collision.cpp" />
+    <ClCompile Include="easing.cpp" />
+    <ClCompile Include="enemy.cpp" />
+    <ClCompile Include="fps.cpp" />
+    <ClCompile Include="graze.cpp" />
+    <ClCompile Include="init.cpp" />
+    <ClCompile Include="laser.cpp" />
+    <ClCompile Include="logging.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="main_loop.cpp" />
     <ClCompile Include="math_tool.cpp" />
-    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="object.cpp" />
+    <ClCompile Include="particle.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="player.cpp" />
     <ClCompile Include="player_shot.cpp" />
     <ClCompile Include="res_load.cpp" />
-    <ClCompile Include="Score.cpp" />
+    <ClCompile Include="score.cpp" />
     <ClCompile Include="screen_draw.cpp" />
-    <ClCompile Include="Script.cpp" />
-    <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="script.cpp" />
+    <ClCompile Include="sound.cpp" />
     <ClCompile Include="time_utl.cpp" />
-    <ClCompile Include="UI.cpp" />
-    <ClCompile Include="Utility.cpp" />
-    <ClCompile Include="Vec2D.cpp" />
-    <ClCompile Include="Vec3D.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Background.h" />
-    <ClInclude Include="Bullet.h" />
-    <ClInclude Include="Collision.h" />
-    <ClInclude Include="Color.h" />
-    <ClInclude Include="Debug.h" />
-    <ClInclude Include="Easing.h" />
-    <ClInclude Include="Particle.h" />
-    <ClInclude Include="Enemy.h" />
-    <ClInclude Include="FPS.h" />
-    <ClInclude Include="Graze.h" />
-    <ClInclude Include="Global.h" />
-    <ClInclude Include="Init.h" />
-    <ClInclude Include="Laser.h" />
-    <ClInclude Include="Logging.h" />
-    <ClInclude Include="Main.h" />
-    <ClInclude Include="main_loop.h" />
-    <ClInclude Include="math_tool.h" />
-    <ClInclude Include="Object.h" />
-    <ClInclude Include="Params.h" />
-    <ClInclude Include="pch.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="player_shot.h" />
-    <ClInclude Include="Property.h" />
-    <ClInclude Include="res_load.h" />
-    <ClInclude Include="Score.h" />
-    <ClInclude Include="screen_draw.h" />
-    <ClInclude Include="Script.h" />
-    <ClInclude Include="Sound.h" />
-    <ClInclude Include="time_utl.h" />
-    <ClInclude Include="UI.h" />
-    <ClInclude Include="Utility.h" />
-    <ClInclude Include="Vec2D.h" />
-    <ClInclude Include="Vec3D.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="LICENSE" />
-    <None Include="README.md" />
+    <ClCompile Include="ui.cpp" />
+    <ClCompile Include="utility.cpp" />
+    <ClCompile Include="vec2d.cpp" />
+    <ClCompile Include="vec3d.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

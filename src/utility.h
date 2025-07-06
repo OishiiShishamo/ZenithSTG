@@ -8,6 +8,14 @@
 #ifndef ZENITHSTG_SRC_UTILITY_H_
 #define ZENITHSTG_SRC_UTILITY_H_
 
+#include <cmath>
+
+#include <DirectXMath.h>
+
+#include "DxLib.h"
+
+#include "color.h"
+
 /**
 * @brief 画像を3D回転させて描画する。 / Draws an image with 3D rotation.
 *
@@ -31,14 +39,14 @@ void DrawRotaGraph4(int x, int y, double rate, double angle_x, double angle_y, d
 * @param s 彩度 / Saturation
 * @param v 明度 / value
 */
-Color GetColorHsv(double h, double s, double v);
+zenithstg::Color GetColorHsv(double h, double s, double v);
 
 /**
 * @brief HSVを使用したゲーミングカラーの生成 / hSV used Gaming Color Generation.
 *
 * @param mul 色の変化速度の倍率 / Color change speed multiplier
 */
-Color GamingColor(int offset = 0, double mul = 1);
+zenithstg::Color GamingColor(int offset = 0, double mul = 1);
 
 /**
 * @brief 余計なブレンドモードの切り替えを防いだブレンドモードの切り替え / Switching blend modes preventing unnecessary blend mode switching
@@ -62,7 +70,7 @@ SafeAccess(std::array<T, N>& array, size_t index) {
 #ifdef NDEBUG
 	return array[index];
 #else
-	return array.at(index);
+	return array.at(index_);
 #endif
 }
 
@@ -72,7 +80,7 @@ SafeAccess(std::vector<T>& array, size_t index) {
 #ifdef NDEBUG
 	return array[index];
 #else
-	return array.at(index);
+	return array.at(index_);
 #endif
 }
 
@@ -82,7 +90,7 @@ SafePtrAccess(std::array<T, N>* array, size_t index) {
 #ifdef NDEBUG
 	return (*array)[index];
 #else
-	return array->at(index);
+	return array->at(index_);
 #endif
 }
 
@@ -92,7 +100,7 @@ SafePtrAccess(std::vector<T>* array, size_t index) {
 #ifdef NDEBUG
 	return (*array)[index];
 #else
-	return array->at(index);
+	return array->at(index_);
 #endif
 }
 

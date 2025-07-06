@@ -10,7 +10,7 @@ std::array<Script, kStageNum> scripts;
 
 void
 Script::RunScript() {
-	switch (id) {
+	switch (id_) {
 	case 0: {
 		//TESTDANMAKUKUKUKUKUKUKUKUKUKUKU
 		if (t % 1 == 0) {

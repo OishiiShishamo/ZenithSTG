@@ -8,19 +8,19 @@ void ApplyWindowSize() {
 	int width = GetSystemMetrics(SM_CXSCREEN);
 	int height = GetSystemMetrics(SM_CYSCREEN);
 	if (width - height < 560 - 1) {
-		properties_.window_size = 0;
+		properties_.window_size_ = 0;
 	}
 	else if (width - height < 700 - 1) {
-		properties_.window_size = 1;
+		properties_.window_size_ = 1;
 	}
 	else if (width - height < 840 - 1) {
-		properties_.window_size = 2;
+		properties_.window_size_ = 2;
 	}
 	else {
-		properties_.window_size = 1;
+		properties_.window_size_ = 1;
 	}
 
-	if (debuging) properties_.window_size = 1;
+	if (debuging) properties_.window_size_ = 1;
 
 	return;
 }
@@ -66,7 +66,8 @@ DrawRotaGraph4(int x, int y, double rate, double angle_x, double angle_y, double
 	DrawModiGraph(lux, luy, rux, ruy, rdx, rdy, ldx, ldy, handle, tran_flag);
 }
 
-Color GetColorHsv(double H, double S, double V) {
+zenithstg::Color
+GetColorHsv(double H, double S, double V) {
 	int hi = static_cast<int>(H / 60.0);
 	hi = (hi == 6) ? 5 : hi % 6;
 	double f = (H / 60.0) - hi;
@@ -89,10 +90,10 @@ Color GetColorHsv(double H, double S, double V) {
 	uint8_t ig = static_cast<uint8_t>(std::clamp(g * 255.0, 0.0, 255.0));
 	uint8_t ib = static_cast<uint8_t>(std::clamp(b * 255.0, 0.0, 255.0));
 
-	return Color(ir, ig, ib);
+	return zenithstg::Color(ir, ig, ib);
 }
 
-Color
+zenithstg::Color
 GamingColor(int offset, double mul) {
 	return GetColorHsv(std::fmod((t + offset) * mul, 360), 1, 1);
 }
