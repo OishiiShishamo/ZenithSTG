@@ -17,6 +17,7 @@
 #include "sound.h"
 #include "utility.h"
 #include "vec2d.h"
+#include "params.h"
 
 std::array<Bullet, kMaxBullet> bullets;
 std::array<Bullet*, kMaxBullet> bullet_ptrs;
