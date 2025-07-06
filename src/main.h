@@ -26,6 +26,12 @@ class Background;
 
 #include "utility.h"
 #include "vec2d.h"
+#include "object.h"
+#include "bullet.h"
+#include "laser.h"
+#include "enemy.h"
+#include "particle.h"
+#include "player_shot.h"
 
 #define PRINT(...) printf(__VA_ARGS__)	
 

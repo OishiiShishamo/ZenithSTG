@@ -1,6 +1,7 @@
-#include "global.h"
-#include "main.h"
+#include "ui.h"
+
 #include "player.h"
+#include "property.h"
 #include "ui.h"
 #include "vec2d.h"
 

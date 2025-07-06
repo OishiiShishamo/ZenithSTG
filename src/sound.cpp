@@ -1,5 +1,10 @@
 #include "sound.h"
 
+#include "DxLib.h"
+
+#include "property.h"
+#include "utility.h"
+
 Sound sound_mng_;
 
 void

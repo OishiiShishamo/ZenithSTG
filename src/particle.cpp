@@ -1,4 +1,5 @@
 #include "main.h"
+#include "debug.h"
 #include "particle.h"
 #include "player.h"
 

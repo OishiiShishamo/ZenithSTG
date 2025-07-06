@@ -2,8 +2,14 @@
 
 #include "DxLib.h"
 
-#include "property.h"
+#include "bullet.h"
+#include "enemy.h"
+#include "laser.h"
+#include "object.h"
+#include "particle.h"
 #include "player.h"
+#include "player_shot.h"
+#include "property.h"
 #include "res_load.h"
 #include "sound.h"
 

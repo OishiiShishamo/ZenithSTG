@@ -1,5 +1,8 @@
-#include "main.h"
 #include "score.h"
+
+#include <atomic>
+
+#include "property.h"
 
 void
 AddScore(long long num) {

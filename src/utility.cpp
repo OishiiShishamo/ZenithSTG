@@ -1,6 +1,13 @@
-﻿#include "main.h"
+﻿#include "utility.h"
 
-#include "utility.h"
+#include <cmath>
+#include <cstdint>
+#include <DirectXMath.h>
+
+#include "DxLib.h"
+
+#include "color.h"
+#include "property.h"
 
 bool debuging = true;
 

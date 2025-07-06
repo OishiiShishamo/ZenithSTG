@@ -18,6 +18,7 @@
 
 #include "collision.h"
 #include "color.h"
+#include "player.h"
 #include "sound.h"
 #include "utility.h"
 #include "vec2d.h"
