@@ -10,9 +10,16 @@
 
 #include <cmath>
 
-#include "vec2d.h"
+#include "debug.h"
+#include "enemy.h"
+#include "graze.h"
 #include "object.h"
-#include "color.h"
+#include "particle.h"
+#include "player.h"
+#include "player_shot.h"
+#include "sound.h"
+#include "time_utl.h"
+#include "vec2d.h"
 
 class Laser : public Object {
 public:

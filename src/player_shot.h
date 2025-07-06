@@ -8,7 +8,13 @@
 #ifndef ZENITHSTG_SRC_PLAYERSHOT_H_
 #define ZENITHSTG_SRC_PLAYERSHOT_H_
 
+#include <cmath>
+
+#include "debug.h"
+#include "enemy.h"
 #include "object.h"
+#include "player.h"
+#include "vec2d.h"
 
 class PlayerShot : public Object {
 public:

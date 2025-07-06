@@ -11,6 +11,7 @@
 
 #include "collision.h"
 #include "color.h"
+#include "debug.h"
 #include "graze.h"
 #include "object.h"
 #include "player.h"

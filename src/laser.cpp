@@ -1,11 +1,12 @@
-﻿#include "main.h"
+﻿#include "laser.h"
 
-#include "bullet.h"
-#include "particle.h"
+#include <cmath>
+
+#include "debug.h"
 #include "enemy.h"
 #include "graze.h"
-#include "laser.h"
 #include "object.h"
+#include "particle.h"
 #include "player.h"
 #include "player_shot.h"
 #include "sound.h"

@@ -1,12 +1,11 @@
-﻿#include "main.h"
+﻿#include "player_shot.h"
 
-#include "bullet.h"
-#include "particle.h"
+#include <cmath>
+
+#include "debug.h"
 #include "enemy.h"
-#include "laser.h"
 #include "object.h"
 #include "player.h"
-#include "player_shot.h"
 #include "vec2d.h"
 
 std::array<PlayerShot, kMaxPlayerShot> player_shots;
