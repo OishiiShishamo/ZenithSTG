@@ -43,6 +43,6 @@ namespace zenithstg {
 		int g_ = 0;
 		int b_ = 0;
 	};
-} // namespace zenithstg
+}
 
 #endif

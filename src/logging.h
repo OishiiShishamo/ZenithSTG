@@ -4,15 +4,17 @@
 
 #include "main.h"
 
-enum class LogType {
-	kLogInfo,
-	kLogWarning,
-	kLogError,
-	kLogDebug,
-};
+namespace zenithstg {
+	enum class LogType {
+		kLogInfo,
+		kLogWarning,
+		kLogError,
+		kLogDebug,
+	};
 
-void AddLogQue(std::string log);
-void WriteLog();
-void Logger(std::string log_string, LogType log_type = LogType::kLogInfo);
+	void AddLogQue(std::string log);
+	void WriteLog();
+	void Logger(std::string log_string, LogType log_type = LogType::kLogInfo);
+}
 
 #endif

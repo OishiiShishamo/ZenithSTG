@@ -14,13 +14,15 @@
 #include "color.h"
 #include "vec2d.h"
 
-/**
-* @brief 実FPSの計算と表示 / Calculation and display of real FPS.
-* 
-* @param pos 表示する座標 / Display Position
-* @param elapsed_frame 前回の描画から経過したフレーム数 / Number of frames elapsed since the last drawing
-* @param color フォントカラー / Font Color
-*/
-void ShowFPS(Vec2D pos, int elapsed_frame, zenithstg::Color color);
+namespace zenithstg {
+	/**
+	* @brief 実FPSの計算と表示 / Calculation and display of real FPS.
+	*
+	* @param pos 表示する座標 / Display Position
+	* @param elapsed_frame 前回の描画から経過したフレーム数 / Number of frames elapsed since the last drawing
+	* @param color フォントカラー / Font Color
+	*/
+	void ShowFPS(Vec2D pos, int elapsed_frame, Color color);
+}
 
 #endif

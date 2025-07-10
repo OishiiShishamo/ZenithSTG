@@ -1,35 +1,38 @@
-std::string debugging = "";
+#include "logging.h"
 
-void
-AddLogQue(std::string log) {
-	debugging += log + "\n";
-}
+#include <fstream>
 
-void
-WriteLog() {
-	std::ofstream log_file;
-	log_file.open("log.txt");
-	log_file << debugging;
-	log_file.close();
-}
+namespace zenithstg {
+	std::string debugging = "";
 
-void
-Logger(std::string log_string, LogType log_type) {
-	switch (log_type) {
-	case LogType::kLogInfo:
-		AddLogQue("[INFO]: " + log_string);
-		break;
-	case LogType::kLogWarning:
-		AddLogQue("[WARN]: " + log_string);
-		break;
-	case LogType::kLogError:
-		AddLogQue("[ERR]: " + log_string);
-		break;
-	case LogType::kLogDebug:
-		AddLogQue("[DEBUG]: " + log_string);
-		break;
-	default:
-		AddLogQue("[INFO]: " + log_string);
-		break;
+	void AddLogQue(std::string log) {
+		debugging += log + "\n";
+	}
+
+	void WriteLog() {
+		std::ofstream log_file;
+		log_file.open("log.txt");
+		log_file << debugging;
+		log_file.close();
+	}
+
+	void Logger(std::string log_string, LogType log_type) {
+		switch (log_type) {
+		case LogType::kLogInfo:
+			AddLogQue("[INFO]: " + log_string);
+			break;
+		case LogType::kLogWarning:
+			AddLogQue("[WARN]: " + log_string);
+			break;
+		case LogType::kLogError:
+			AddLogQue("[ERR]: " + log_string);
+			break;
+		case LogType::kLogDebug:
+			AddLogQue("[DEBUG]: " + log_string);
+			break;
+		default:
+			AddLogQue("[INFO]: " + log_string);
+			break;
+		}
 	}
 }

@@ -10,9 +10,11 @@
 
 #include <cmath>
 
-/**
-* @brief ニュートン法を用いた高速な平方根の計算 / fast square root calculations using Newton's method.
-*/
-double FastSqrt(double x, double epsilon = 1e-3);
+namespace zenithstg {
+	/**
+	* @brief ニュートン法を用いた高速な平方根の計算 / fast square root calculations using Newton's method.
+	*/
+	double FastSqrt(double x, double epsilon = 1e-3);
+}
 
 #endif

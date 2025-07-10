@@ -6,12 +6,14 @@
 
 #include "color.h"
 
-class Background {
-public:
-	int id = 0;
-	void DrawBackground();
-};
+namespace zenithstg {
+	class Background {
+	public:
+		int id = 0;
+		void DrawBackground();
+	};
 
-extern Background bg_;
+	extern Background bg_;
+}
 
 #endif

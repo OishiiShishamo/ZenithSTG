@@ -14,8 +14,10 @@
 #define kBulletGrazeEveryFrame 0
 #define kLaserGrazeEveryFrame 1
 
-inline constexpr long long kGrazeScore = 1;
+namespace zenithstg {
+	inline constexpr long long kGrazeScore = 1;
 
-inline constexpr int kGrazeRange = 16;
+	inline constexpr int kGrazeRange = 16;
+}
 
 #endif

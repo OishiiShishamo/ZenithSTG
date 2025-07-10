@@ -7,6 +7,8 @@
 #include "score.h"
 #include "sound.h"
 
-void Graze();
+namespace zenithstg {
+	void Graze();
+}
 
 #endif

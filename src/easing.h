@@ -2,21 +2,23 @@
 #ifndef ZENITHSTG_SRC_EASING_H_
 #define ZENITHSTG_SRC_EASING_H_
 
-//ラッパ関数
-double Easing(int ease_type, double t, double start, double end);
+namespace zenithstg {
+	//ラッパ関数
+	double Easing(int ease_type, double t, double start, double end);
 
-double Linear(double t, double start, double end);
+	double Linear(double t, double start, double end);
 
-double EaseInQuad(double t, double start, double end);
+	double EaseInQuad(double t, double start, double end);
 
-double EaseOutQuad(double t, double start, double end);
+	double EaseOutQuad(double t, double start, double end);
 
-double EaseInOutQuad(double t, double start, double end);
+	double EaseInOutQuad(double t, double start, double end);
 
-double EaseInCubic(double t, double start, double end);
+	double EaseInCubic(double t, double start, double end);
 
-double EaseOutCubic(double t, double start, double end);
+	double EaseOutCubic(double t, double start, double end);
 
-double EaseInOutCubic(double t, double start, double end);
+	double EaseInOutCubic(double t, double start, double end);
+}
 
 #endif

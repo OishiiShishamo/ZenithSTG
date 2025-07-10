@@ -2,6 +2,8 @@
 #ifndef ZENITHSTG_SRC_UI_H_
 #define ZENITHSTG_SRC_UI_H_
 
-void DrawUi(zenithstg::Color font_color = zenithstg::Color(kColorWhite));
+namespace zenithstg {
+	void DrawUi(Color font_color = Color(kColorWhite));
+}
 
 #endif
