@@ -35,12 +35,26 @@ namespace zenithstg {
 	class Color {
 	public:
 		Color() = default;
-		Color(int r, int g, int b) : r_(r), g_(g), b_(b) {}
+		Color(int r, int g, int b) : r_(r), g_(g), b_(b) {
+			if (r_ > 255) r_ = 255;
+			if (g_ > 255) g_ = 255;
+			if (b_ > 255) b_ = 255;
+			if (r_ < 0) r_ = 0;
+			if (g_ < 0) g_ = 0;
+			if (b_ < 0) b_ = 0;
+		}
 
 		int GetR() const { return r_; }
 		int GetG() const { return g_; }
 		int GetB() const { return b_; }
 		int GetDxColor() const { return GetColor(r_, g_, b_); }
+
+		Color operator+(const Color& rhs) const { return Color(GetR() + rhs.GetR(), GetG() + rhs.GetG(), GetB() + rhs.GetB()); }
+		Color operator-(const Color& rhs) const { return Color(GetR() - rhs.GetR(), GetG() - rhs.GetG(), GetB() - rhs.GetB()); }
+		Color operator*(const Color& rhs) const { return Color(GetR() * rhs.GetR(), GetG() * rhs.GetG(), GetB() * rhs.GetB()); }
+		Color operator*(double scalar) const { return Color(GetR() * scalar, GetG() * scalar, GetB() * scalar); }
+		Color operator/(const Color& rhs) const { return Color(GetR() / rhs.GetR(), GetG() / rhs.GetG(), GetB() / rhs.GetB()); }
+		Color operator/(double scalar) const { return Color(GetR() / scalar, GetG() / scalar, GetB() / scalar); }
 	private:
 		int r_ = 0;
 		int g_ = 0;
