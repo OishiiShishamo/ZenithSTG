@@ -29,15 +29,18 @@
 #define kColorBrown 165, 42, 42
 #define kColorBurlyWood 222, 184, 135
 
+#include "DxLib.h"
+
 namespace zenithstg {
 	class Color {
 	public:
 		Color() = default;
 		Color(int r, int g, int b) : r_(r), g_(g), b_(b) {}
 
-		int GetR() { return r_; }
-		int GetG() { return g_; }
-		int GetB() { return b_; }
+		int GetR() const { return r_; }
+		int GetG() const { return g_; }
+		int GetB() const { return b_; }
+		int GetDxColor() const { return GetColor(r_, g_, b_); }
 	private:
 		int r_ = 0;
 		int g_ = 0;
