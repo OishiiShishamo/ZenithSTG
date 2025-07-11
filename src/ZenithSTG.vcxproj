@@ -225,6 +225,7 @@
     <ClCompile Include="script.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="time_utl.cpp" />
+    <ClCompile Include="title_scene.cpp" />
     <ClCompile Include="ui.cpp" />
     <ClCompile Include="utility.cpp" />
     <ClCompile Include="vec2d.cpp" />

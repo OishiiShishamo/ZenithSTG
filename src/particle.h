@@ -57,6 +57,7 @@ namespace zenithstg {
 		*/
 		void ShowParticle();
 		void MoveFunc() override;
+		void KillObject() override;
 	};
 
 	/**

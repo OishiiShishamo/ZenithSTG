@@ -97,91 +97,97 @@ namespace zenithstg {
 		if (!(flags_ & kIsAlive)) return;
 		std::array<Vec2D, 4> world;
 		const bool isScaled = size_ > 1.0f;
-		if (isScaled) {
-			double half = size_ / 2 * 128 * SafeAccess(draw_ratio_particle_graphs, style_);
-			std::array<Vec2D, 4> local = {
-				Vec2D(-half, -half),
-				Vec2D(-half, half),
-				Vec2D(half, half),
-				Vec2D(half, -half)
-			};
-			for (int i = 0; i < 4; ++i) {
-				Vec2D rot = RotatePoint(SafeAccess(local, i), show_angle_ + kPi / 2);
-				SafeAccess(world, i) = pos_ + rot;
-			}
+		switch (id_) {
+			case 0:
+			default:
+				if (isScaled) {
+					double half = size_ / 2 * 128 * SafeAccess(draw_ratio_particle_graphs, style_);
+					std::array<Vec2D, 4> local = {
+						Vec2D(-half, -half),
+						Vec2D(-half, half),
+						Vec2D(half, half),
+						Vec2D(half, -half)
+					};
+					for (int i = 0; i < 4; ++i) {
+						Vec2D rot = RotatePoint(SafeAccess(local, i), show_angle_ + kPi / 2);
+						SafeAccess(world, i) = pos_ + rot;
+					}
+				}
+				if (blend_ == -1) {
+					SmartSetDrawBlendMode(SafeAccess(default_particle_blend, style_), pal_);
+					SetDrawBright(color_.GetR(), color_.GetG(), color_.GetB());
+					SetDrawMode(DX_DRAWMODE_BILINEAR);
+					if (isScaled) {
+						DrawRectModiGraph(
+							SafeAccess(world, 0).GetX(), SafeAccess(world, 0).GetY(),
+							SafeAccess(world, 1).GetX(), SafeAccess(world, 1).GetY(),
+							SafeAccess(world, 2).GetX(), SafeAccess(world, 2).GetY(),
+							SafeAccess(world, 3).GetX(), SafeAccess(world, 3).GetY(),
+							64 - 128 * SafeAccess(draw_ratio_particle_graphs, style_) / 2,
+							64 - 128 * SafeAccess(draw_ratio_particle_graphs, style_) / 2,
+							128 * SafeAccess(draw_ratio_particle_graphs, style_),
+							128 * SafeAccess(draw_ratio_particle_graphs, style_),
+							SafeAccess(img_res.particle_back_gh, style_),
+							TRUE);
+					}
+					else DrawRotaGraph(pos_.GetX(), pos_.GetY(), size_, -show_angle_, SafeAccess(img_res.particle_back_gh, style_), TRUE);
+					SetDrawBright(255, 255, 255);
+					if (isScaled) {
+						DrawRectModiGraph(
+							SafeAccess(world, 0).GetX(), SafeAccess(world, 0).GetY(),
+							SafeAccess(world, 1).GetX(), SafeAccess(world, 1).GetY(),
+							SafeAccess(world, 2).GetX(), SafeAccess(world, 2).GetY(),
+							SafeAccess(world, 3).GetX(), SafeAccess(world, 3).GetY(),
+							64 - 128 * SafeAccess(draw_ratio_particle_graphs, style_) / 2,
+							64 - 128 * SafeAccess(draw_ratio_particle_graphs, style_) / 2,
+							128 * SafeAccess(draw_ratio_particle_graphs, style_),
+							128 * SafeAccess(draw_ratio_particle_graphs, style_),
+							SafeAccess(img_res.particle_front_gh, style_),
+							TRUE);
+					}
+					else DrawRotaGraph(pos_.GetX(), pos_.GetY(), size_, -show_angle_, SafeAccess(img_res.particle_front_gh, style_), TRUE);
+					SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+					SetDrawMode(DX_DRAWMODE_NEAREST);
+				}
+				else {
+					SmartSetDrawBlendMode(blend_, pal_);
+					SetDrawBright(color_.GetR(), color_.GetG(), color_.GetB());
+					SetDrawMode(DX_DRAWMODE_BILINEAR);
+					if (isScaled) {
+						DrawRectModiGraph(
+							SafeAccess(world, 0).GetX(), SafeAccess(world, 0).GetY(),
+							SafeAccess(world, 1).GetX(), SafeAccess(world, 1).GetY(),
+							SafeAccess(world, 2).GetX(), SafeAccess(world, 2).GetY(),
+							SafeAccess(world, 3).GetX(), SafeAccess(world, 3).GetY(),
+							64 - 128 * SafeAccess(draw_ratio_particle_graphs, style_) / 2,
+							64 - 128 * SafeAccess(draw_ratio_particle_graphs, style_) / 2,
+							128 * SafeAccess(draw_ratio_particle_graphs, style_),
+							128 * SafeAccess(draw_ratio_particle_graphs, style_),
+							SafeAccess(img_res.particle_back_gh, style_),
+							TRUE);
+					}
+					else DrawRotaGraph(pos_.GetX(), pos_.GetY(), size_, -show_angle_, SafeAccess(img_res.particle_back_gh, style_), TRUE);
+					SetDrawBright(255, 255, 255);
+					if (isScaled) {
+						DrawRectModiGraph(
+							SafeAccess(world, 0).GetX(), SafeAccess(world, 0).GetY(),
+							SafeAccess(world, 1).GetX(), SafeAccess(world, 1).GetY(),
+							SafeAccess(world, 2).GetX(), SafeAccess(world, 2).GetY(),
+							SafeAccess(world, 3).GetX(), SafeAccess(world, 3).GetY(),
+							64 - 128 * SafeAccess(draw_ratio_particle_graphs, style_) / 2,
+							64 - 128 * SafeAccess(draw_ratio_particle_graphs, style_) / 2,
+							128 * SafeAccess(draw_ratio_particle_graphs, style_),
+							128 * SafeAccess(draw_ratio_particle_graphs, style_),
+							SafeAccess(img_res.particle_front_gh, style_),
+							TRUE);
+					}
+					else DrawRotaGraph(pos_.GetX(), pos_.GetY(), size_, -show_angle_, SafeAccess(img_res.particle_front_gh, style_), TRUE);
+					SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+					SetDrawMode(DX_DRAWMODE_NEAREST);
+				}
+				break;
 		}
-		if (blend_ == -1) {
-			SmartSetDrawBlendMode(SafeAccess(default_particle_blend, style_), pal_);
-			SetDrawBright(color_.GetR(), color_.GetG(), color_.GetB());
-			SetDrawMode(DX_DRAWMODE_BILINEAR);
-			if (isScaled) {
-				DrawRectModiGraph(
-					SafeAccess(world, 0).GetX(), SafeAccess(world, 0).GetY(),
-					SafeAccess(world, 1).GetX(), SafeAccess(world, 1).GetY(),
-					SafeAccess(world, 2).GetX(), SafeAccess(world, 2).GetY(),
-					SafeAccess(world, 3).GetX(), SafeAccess(world, 3).GetY(),
-					64 - 128 * SafeAccess(draw_ratio_particle_graphs, style_) / 2,
-					64 - 128 * SafeAccess(draw_ratio_particle_graphs, style_) / 2,
-					128 * SafeAccess(draw_ratio_particle_graphs, style_),
-					128 * SafeAccess(draw_ratio_particle_graphs, style_),
-					SafeAccess(img_res.particle_back_gh, style_),
-					TRUE);
-			}
-			else DrawRotaGraph(pos_.GetX(), pos_.GetY(), size_, -show_angle_, SafeAccess(img_res.particle_back_gh, style_), TRUE);
-			SetDrawBright(255, 255, 255);
-			if (isScaled) {
-				DrawRectModiGraph(
-					SafeAccess(world, 0).GetX(), SafeAccess(world, 0).GetY(),
-					SafeAccess(world, 1).GetX(), SafeAccess(world, 1).GetY(),
-					SafeAccess(world, 2).GetX(), SafeAccess(world, 2).GetY(),
-					SafeAccess(world, 3).GetX(), SafeAccess(world, 3).GetY(),
-					64 - 128 * SafeAccess(draw_ratio_particle_graphs, style_) / 2,
-					64 - 128 * SafeAccess(draw_ratio_particle_graphs, style_) / 2,
-					128 * SafeAccess(draw_ratio_particle_graphs, style_),
-					128 * SafeAccess(draw_ratio_particle_graphs, style_),
-					SafeAccess(img_res.particle_front_gh, style_),
-					TRUE);
-			}
-			else DrawRotaGraph(pos_.GetX(), pos_.GetY(), size_, -show_angle_, SafeAccess(img_res.particle_front_gh, style_), TRUE);
-			SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-			SetDrawMode(DX_DRAWMODE_NEAREST);
-		}
-		else {
-			SmartSetDrawBlendMode(blend_, pal_);
-			SetDrawBright(color_.GetR(), color_.GetG(), color_.GetB());
-			SetDrawMode(DX_DRAWMODE_BILINEAR);
-			if (isScaled) {
-				DrawRectModiGraph(
-					SafeAccess(world, 0).GetX(), SafeAccess(world, 0).GetY(),
-					SafeAccess(world, 1).GetX(), SafeAccess(world, 1).GetY(),
-					SafeAccess(world, 2).GetX(), SafeAccess(world, 2).GetY(),
-					SafeAccess(world, 3).GetX(), SafeAccess(world, 3).GetY(),
-					64 - 128 * SafeAccess(draw_ratio_particle_graphs, style_) / 2,
-					64 - 128 * SafeAccess(draw_ratio_particle_graphs, style_) / 2,
-					128 * SafeAccess(draw_ratio_particle_graphs, style_),
-					128 * SafeAccess(draw_ratio_particle_graphs, style_),
-					SafeAccess(img_res.particle_back_gh, style_),
-					TRUE);
-			}
-			else DrawRotaGraph(pos_.GetX(), pos_.GetY(), size_, -show_angle_, SafeAccess(img_res.particle_back_gh, style_), TRUE);
-			SetDrawBright(255, 255, 255);
-			if (isScaled) {
-				DrawRectModiGraph(
-					SafeAccess(world, 0).GetX(), SafeAccess(world, 0).GetY(),
-					SafeAccess(world, 1).GetX(), SafeAccess(world, 1).GetY(),
-					SafeAccess(world, 2).GetX(), SafeAccess(world, 2).GetY(),
-					SafeAccess(world, 3).GetX(), SafeAccess(world, 3).GetY(),
-					64 - 128 * SafeAccess(draw_ratio_particle_graphs, style_) / 2,
-					64 - 128 * SafeAccess(draw_ratio_particle_graphs, style_) / 2,
-					128 * SafeAccess(draw_ratio_particle_graphs, style_),
-					128 * SafeAccess(draw_ratio_particle_graphs, style_),
-					SafeAccess(img_res.particle_front_gh, style_),
-					TRUE);
-			}
-			else DrawRotaGraph(pos_.GetX(), pos_.GetY(), size_, -show_angle_, SafeAccess(img_res.particle_front_gh, style_), TRUE);
-			SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-			SetDrawMode(DX_DRAWMODE_NEAREST);
-		}
+		
 		if (kIsColShow == 1) {
 			if (flags_ & kIsCol) {
 				SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
@@ -198,6 +204,11 @@ namespace zenithstg {
 			MoveObject(speed_);
 		}
 		}
+	}
+
+	void Particle::KillObject() {
+		PushBlankParticles(index_);
+		flags_ &= ~kIsAlive;
 	}
 
 	void PushBlankParticles(int idx) {

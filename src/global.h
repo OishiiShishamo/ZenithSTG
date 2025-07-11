@@ -45,6 +45,7 @@ namespace zenithstg {
 	enum ParticleType {
 		kParticleLight = 0,
 		kParticleStar = 1,
+		kParticleRect = 2,
 	};
 
 	enum EnemyType {

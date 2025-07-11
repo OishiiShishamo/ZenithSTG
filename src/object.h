@@ -204,6 +204,9 @@ namespace zenithstg {
 		* @brief 移動及びid毎の分岐処理 / Branch processing for each move and id.
 		*/
 		virtual void MoveFunc();
+
+		//TODO: KillObjectを全オブジェクトで実装する.
+		virtual void KillObject();
 	};
 }
 

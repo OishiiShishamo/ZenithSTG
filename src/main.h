@@ -77,6 +77,8 @@ namespace zenithstg {
 	extern std::array<Particle*, kMaxParticle> particle_ptrs;
 	extern std::vector<int> blank_particles;
 
+	extern SceneManager scene_manager_;
+
 	extern std::random_device rng;
 
 	extern int num_threads;

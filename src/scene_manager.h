@@ -8,15 +8,32 @@
 #include "title_scene.h"
 
 namespace zenithstg {
+	enum SceneTypes {
+		kTitleScene = 0,
+		kGameScene = 1,
+	};
+
 	class SceneManager {
 	private:
 		std::unique_ptr<BaseScene> now_scene_;
 	public:
 		SceneManager() {
-			now_scene_ = std::make_unique<GameScene>();
+			now_scene_ = std::make_unique<TitleScene>();
 		}
+
 		void Run() {
 			now_scene_->Update();
+		}
+
+		void ChangeScene(SceneTypes scene) {
+			switch (scene) {
+			case kTitleScene:
+				now_scene_.reset(new TitleScene());
+				break;
+			case kGameScene:
+				now_scene_.reset(new GameScene());
+				break;
+			}
 		}
 	};
 }

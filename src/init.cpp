@@ -120,6 +120,7 @@ namespace zenithstg {
 		draw_ratio_particle_graphs.fill(1.0f);
 		SafeAccess(draw_ratio_particle_graphs, kParticleLight) = 0.25f;
 		SafeAccess(draw_ratio_particle_graphs, kParticleStar) = 0.125f;
+		SafeAccess(draw_ratio_particle_graphs, kParticleRect) = 0.25f;
 
 		draw_ratio_enemy_graphs.fill(1.0f);
 		SafeAccess(draw_ratio_enemy_graphs, kEnemyNormal) = 0.5f;

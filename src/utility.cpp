@@ -113,4 +113,8 @@ namespace zenithstg {
 	double Rad(double angle) {
 		return (kPi / 180) * angle;
 	}
+
+	int	Beat2Frame(double bpm, double beat, double bar) {
+		return 3600.0f * bar * beat / bpm;
+	}
 }

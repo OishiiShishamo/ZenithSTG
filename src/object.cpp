@@ -125,4 +125,8 @@ namespace zenithstg {
 		}
 		}
 	}
+
+	void Object::KillObject() {
+		flags_ &= ~kIsAlive;
+	}
 }
