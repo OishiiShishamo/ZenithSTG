@@ -27,14 +27,14 @@ namespace zenithstg {
 		SetDrawScreen(DX_SCREEN_BACK);
 		ClearDrawScreen();
 		if (is_window_split) {
-			int slice_tmp = 0;
+			int slice_count = 0;
 			for (int x = 0; x < GetSystemMetrics(SM_CXSCREEN); x += screen_size_rate * GetSystemMetrics(SM_CXSCREEN)) {
 				for (int y = 0; y < GetSystemMetrics(SM_CYSCREEN); y += screen_size_rate * GetSystemMetrics(SM_CYSCREEN)) {
 					DrawRotaGraph4(x + screen_size_rate * GetSystemMetrics(SM_CXSCREEN) / 2, y + screen_size_rate * GetSystemMetrics(SM_CYSCREEN) / 2, screen_size_rate, 0, 0, 0, screen_canvas, 1, 0, 0);
-					slice_tmp++;
-					if (slice_tmp > 2048) break;
+					slice_count++;
+					if (slice_count > 2048) break;
 				}
-				if (slice_tmp > 2048) break;
+				if (slice_count > 2048) break;
 			}
 		}
 		else {

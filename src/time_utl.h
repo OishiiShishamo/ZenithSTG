@@ -6,7 +6,7 @@ namespace zenithstg {
 	class TimeUtl {
 	public:
 		long long target_frame_ = 0;
-		std::chrono::nanoseconds front_frame_time_;
+		std::chrono::nanoseconds last_frame_time_;
 		std::chrono::nanoseconds elapsedus_ = std::chrono::nanoseconds(0);
 		std::chrono::high_resolution_clock::time_point start_time_;
 		void StartTimer();

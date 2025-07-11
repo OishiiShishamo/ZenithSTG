@@ -28,8 +28,8 @@ namespace zenithstg {
 
 	void ResLoad::PlayerGhLoad() {
 		for (int i = 0; i < kPlayerNum; i++) {
-			std::string tmp = "res/img/player/" + std::to_string(i) + ".png";
-			SafeAccess(img_res.player_gh, i) = (LoadGraph(tmp.c_str()));
+			std::string player_path = "res/img/player/" + std::to_string(i) + ".png";
+			SafeAccess(img_res.player_gh, i) = (LoadGraph(player_path.c_str()));
 		}
 	}
 

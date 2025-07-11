@@ -274,9 +274,10 @@ namespace zenithstg {
 	}
 
 	void GrazeParticle(const Vec2D& pos) {
+		double rand_buffer = 0;
 		for (int i = 0; i < 1; i++) {
-			rand_tmp = std::fmod(rng() / 100.0f, 360);
-			CreateParticle(pos, Color(kColorWhite), kParticleStar, kBlendAdd, 255, kEaseInQuad, 15, 0, 0, 0, 0, 0, std::fmod(rng() / 100.0f, 1.5f), 0, kEaseInQuad, 120, 0, rand_tmp, rand_tmp, 0, 0, std::fmod(rng() / 100.0f, 32), 0, kEaseInQuad, 120);
+			rand_buffer = std::fmod(rng() / 100.0f, 360);
+			CreateParticle(pos, Color(kColorWhite), kParticleStar, kBlendAdd, 255, kEaseInQuad, 15, 0, 0, 0, 0, 0, std::fmod(rng() / 100.0f, 1.5f), 0, kEaseInQuad, 120, 0, rand_buffer, rand_buffer, 0, 0, std::fmod(rng() / 100.0f, 32), 0, kEaseInQuad, 120);
 		}
 	}
 }

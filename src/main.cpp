@@ -26,8 +26,6 @@ namespace zenithstg {
 	int current_blend_mode = kBlendNoblend;
 	int current_blend_pal = 255;
 
-	double rand_tmp = 0;
-
 	std::atomic<long long> score = 0;
 	std::atomic<long long> graze = 0;
 

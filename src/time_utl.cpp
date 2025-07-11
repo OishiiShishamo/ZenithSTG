@@ -8,7 +8,7 @@ namespace zenithstg {
 
 	void TimeUtl::StartTimer() {
 		start_time_ = std::chrono::high_resolution_clock::now();
-		front_frame_time_ = std::chrono::nanoseconds(0);
+		last_frame_time_ = std::chrono::nanoseconds(0);
 	}
 
 	void TimeUtl::StopTimer() {
@@ -33,15 +33,15 @@ namespace zenithstg {
 	}
 
 	std::chrono::nanoseconds TimeUtl::ElapsedTime() {
-		std::chrono::nanoseconds tmp = front_frame_time_;
-		front_frame_time_ = Timer();
+		std::chrono::nanoseconds tmp = last_frame_time_;
+		last_frame_time_ = Timer();
 		target_frame_ = static_cast<double>(Timer().count()) / std::chrono::nanoseconds(1000000000 / fps).count();
 		return Timer() - tmp;
 	}
 
 	void TimeUtl::FrameWait() {
 		std::chrono::nanoseconds frame_duration(1000000000 / fps);
-		std::chrono::nanoseconds frame_elapsed = Timer() - front_frame_time_ + (std::chrono::nanoseconds)((rng() % 65535) / 32768);
+		std::chrono::nanoseconds frame_elapsed = Timer() - last_frame_time_ + (std::chrono::nanoseconds)((rng() % 65535) / 32768);
 
 		if (frame_elapsed < frame_duration - std::chrono::milliseconds(2)) {
 			std::this_thread::sleep_for((frame_duration - frame_elapsed) - std::chrono::milliseconds(2));

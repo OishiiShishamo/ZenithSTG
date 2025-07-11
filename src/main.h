@@ -96,8 +96,6 @@ namespace zenithstg {
 	extern std::array<double, kGraphicHandlerNum> draw_ratio_particle_graphs;
 	extern int fps_history_index;
 
-	extern double rand_tmp;
-
 	extern std::atomic<long long> score;
 	extern std::atomic<long long> graze;
 
