@@ -29,8 +29,8 @@ namespace zenithstg {
 	std::atomic<long long> score = 0;
 	std::atomic<long long> graze = 0;
 
-	int fromt_frame_window_change_flag = 0;
-	int fromt_frame_window_size_change_flag = 0;
+	int last_change_window_time = 0;
+	int last_change_window_size_time = 0;
 
 	SceneManager scene_manager_;
 }
@@ -71,7 +71,8 @@ WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, in
 			zenithstg::elapsed_frame = 1;
 		}
 		if (GetAsyncKeyState(VK_F4) & (1 << 15)) {
-			if (zenithstg::fromt_frame_window_size_change_flag) {
+			if (zenithstg::t > zenithstg::last_change_window_size_time + 15) {
+				zenithstg::last_change_window_size_time = zenithstg::t;
 				zenithstg::properties_.window_size_++;
 				if (zenithstg::properties_.window_size_ > 2) zenithstg::properties_.window_size_ = 0;
 				switch (zenithstg::properties_.window_size_) {
@@ -93,21 +94,14 @@ WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, in
 					break;
 				}
 			}
-			zenithstg::fromt_frame_window_size_change_flag = 1;
-		}
-		else {
-			zenithstg::fromt_frame_window_size_change_flag = 0;
 		}
 		if (GetAsyncKeyState(VK_F11) & (1 << 15) || (GetAsyncKeyState(VK_RETURN) & (1 << 15) && GetAsyncKeyState(VK_MENU) & (1 << 15))) {
-			if (zenithstg::fromt_frame_window_change_flag) {
+			if (zenithstg::t > zenithstg::last_change_window_time + 15) {
+				zenithstg::last_change_window_time = zenithstg::t;
 				zenithstg::properties_.is_window_++;
 				if (zenithstg::properties_.is_window_ > 1) zenithstg::properties_.is_window_ = 0;
 				ChangeWindowMode(zenithstg::properties_.is_window_);
 			}
-			zenithstg::fromt_frame_window_change_flag = 1;
-		}
-		else {
-			zenithstg::fromt_frame_window_change_flag = 0;
 		}
 
 		zenithstg::ShowFPS(zenithstg::Vec2D(0, 0), zenithstg::elapsed_frame, zenithstg::Color(kColorWhite));
