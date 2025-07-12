@@ -6,6 +6,9 @@ namespace zenithstg {
 	//ラッパ関数
 	double Easing(int ease_type, double t, double start, double end);
 
+	// イージング時間計算関数
+	double EasingTimeCalc(double now_time, double start_time, double end_time);
+
 	double Linear(double t, double start, double end);
 
 	double EaseInQuad(double t, double start, double end);

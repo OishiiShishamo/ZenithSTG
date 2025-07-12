@@ -32,6 +32,13 @@ namespace zenithstg {
 		}
 	}
 
+	// イージング時間計算関数
+	double EasingTimeCalc(double now_time, double start_time, double end_time) {
+		double result = (static_cast<double>(now_time) - static_cast<double>(start_time)) / (static_cast<double>(end_time) - static_cast<double>(start_time));
+		if (result > 1) result = 1;
+		return result;
+	}
+
 	// 線形補間
 	double Linear(double t, double start, double end) {
 		return start + (end - start) * t;

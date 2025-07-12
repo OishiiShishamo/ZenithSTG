@@ -43,13 +43,12 @@ namespace zenithstg {
 	}
 
 	void Particle::UpdateEase() {
-		double elapsed_frame = (static_cast<double>(t - pop_t_));
+		double elapsed_frame = t - pop_t_;
 		if (angle_ease_time_ == 0) {
 			angle_ = end_angle_;
 		}
 		else {
-			angle_t_ = elapsed_frame / angle_ease_time_;
-			if (angle_t_ > 1)angle_t_ = 1;
+			angle_t_ = EasingTimeCalc(elapsed_frame, 0, angle_ease_time_);
 			angle_ = Easing(angle_ease_type_, angle_t_, start_angle_, end_angle_);
 		}
 		if (is_aligned_angle_ == 1) {
@@ -60,8 +59,7 @@ namespace zenithstg {
 			speed_ = end_speed_;
 		}
 		else {
-			speed_t_ = elapsed_frame / speed_ease_time_;
-			if (speed_t_ > 1) speed_t_ = 1;
+			speed_t_ = EasingTimeCalc(elapsed_frame, 0, speed_ease_time_);
 			speed_ = Easing(speed_ease_type_, speed_t_, start_speed_, end_speed_);
 		}
 
@@ -69,8 +67,7 @@ namespace zenithstg {
 			col_size_ = end_col_size_;
 		}
 		else {
-			col_tize_t_ = elapsed_frame / col_size_ease_time_;
-			if (col_tize_t_ > 1)col_tize_t_ = 1;
+			col_tize_t_ = EasingTimeCalc(elapsed_frame, 0, col_size_ease_time_);
 			col_size_ = Easing(col_size_ease_type_, col_tize_t_, start_col_size_, end_col_size_);
 		}
 
@@ -78,8 +75,7 @@ namespace zenithstg {
 			size_ = end_size_;
 		}
 		else {
-			size_t_ = elapsed_frame / size_ease_time_;
-			if (size_t_ > 1) size_t_ = 1;
+			size_t_ = EasingTimeCalc(elapsed_frame, 0, size_ease_time_);
 			size_ = Easing(size_ease_type_, size_t_, start_size_, end_size_);
 		}
 
@@ -87,8 +83,7 @@ namespace zenithstg {
 			pal_ = 0;
 		}
 		else {
-			pal_t_ = elapsed_frame / pal_ease_time_;
-			if (pal_t_ > 1) pal_t_ = 1;
+			pal_t_ = EasingTimeCalc(elapsed_frame, 0, pal_ease_time_);
 			pal_ = Easing(pal_ease_type_, pal_t_, start_pal_, 0);
 		}
 	}
