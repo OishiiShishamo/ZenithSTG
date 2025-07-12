@@ -6,6 +6,7 @@
 
 #include "base_scene.h"
 #include "title_scene.h"
+#include "game_scene.h"
 
 namespace zenithstg {
 	enum SceneTypes {
