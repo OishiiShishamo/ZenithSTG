@@ -268,14 +268,14 @@ namespace zenithstg {
 	}
 
 	void MoveParticles() {
-		if (t % 1 == 0) {
+		ParallelUpdateParticles(particles);
+		if (t == time_mng_.target_t_) {
 			std::sort(particle_ptrs.begin(), particle_ptrs.end(), [](const Particle* a, const Particle* b) {
 				return a->order_ < b->order_;
 				});
-		}
-		ParallelUpdateParticles(particles);
-		for (auto* E : particle_ptrs) {
-			E->ShowParticle();
+			for (auto* E : particle_ptrs) {
+				E->ShowParticle();
+			}
 		}
 	}
 

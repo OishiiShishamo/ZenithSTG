@@ -150,13 +150,13 @@ namespace zenithstg {
 
 	void MovePlayerShots() {
 		ParallelUpdatePlayerShots(player_shots);
-		for (auto* PS : player_shot_ptrs) {
-			PS->ShowPlayerShot();
-		}
-		if (t % 10 == 0) {
+		if (t == time_mng_.target_t_) {
 			std::sort(player_shot_ptrs.begin(), player_shot_ptrs.end(), [](const PlayerShot* a, const PlayerShot* b) {
 				return a->pop_t_ < b->pop_t_;
 				});
+			for (auto* PS : player_shot_ptrs) {
+				PS->ShowPlayerShot();
+			}
 		}
 	}
 }

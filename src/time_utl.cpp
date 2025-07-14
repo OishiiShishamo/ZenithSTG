@@ -35,7 +35,7 @@ namespace zenithstg {
 	std::chrono::nanoseconds TimeUtl::ElapsedTime() {
 		std::chrono::nanoseconds tmp = last_frame_time_;
 		last_frame_time_ = Timer();
-		target_frame_ = static_cast<double>(Timer().count()) / std::chrono::nanoseconds(1000000000 / fps).count();
+		target_t_ = static_cast<double>(Timer().count()) / std::chrono::nanoseconds(1000000000 / fps).count();
 		return Timer() - tmp;
 	}
 

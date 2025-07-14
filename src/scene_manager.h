@@ -27,6 +27,7 @@ namespace zenithstg {
 		}
 
 		void ChangeScene(SceneTypes scene) {
+			zenithstg::time_mng_.StartTimer();
 			switch (scene) {
 			case kTitleScene:
 				now_scene_.reset(new TitleScene());

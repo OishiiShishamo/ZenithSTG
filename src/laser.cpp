@@ -348,14 +348,14 @@ namespace zenithstg {
 	}
 
 	void MoveLasers() {
-		if (t % 10 == 0) {
+		ParallelUpdateLasers(lasers);
+		if (t == time_mng_.target_t_) {
 			std::sort(laser_ptrs.begin(), laser_ptrs.end(), [](const Laser* a, const Laser* b) {
 				return a->pop_t_ < b->pop_t_;
 				});
-		}
-		ParallelUpdateLasers(lasers);
-		for (auto* L : laser_ptrs) {
-			L->ShowLaser();
+			for (auto* L : laser_ptrs) {
+				L->ShowLaser();
+			}
 		}
 	}
 }

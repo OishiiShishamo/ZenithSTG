@@ -333,14 +333,14 @@ namespace zenithstg {
 	}
 
 	void MoveBullets() {
-		if (t % 1 == 0) {
+		ParallelUpdateBullets(bullets);
+		if (t == time_mng_.target_t_) {
 			std::sort(bullet_ptrs.begin(), bullet_ptrs.end(), [](const Bullet* a, const Bullet* b) {
 				return a->order_ < b->order_;
 				});
-		}
-		ParallelUpdateBullets(bullets);
-		for (auto* B : bullet_ptrs) {
-			B->ShowBullet();
+			for (auto* B : bullet_ptrs) {
+				B->ShowBullet();
+			}
 		}
 	}
 }

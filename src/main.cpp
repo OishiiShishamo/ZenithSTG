@@ -62,8 +62,8 @@ WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, in
 	zenithstg::time_mng_.StartTimer();
 	while (1) {
 		zenithstg::time_mng_.ElapsedTime();
-		zenithstg::elapsed_frame = zenithstg::time_mng_.target_frame_ - zenithstg::t;
-		while (zenithstg::t < zenithstg::time_mng_.target_frame_) {
+		zenithstg::elapsed_frame = zenithstg::time_mng_.target_t_ - zenithstg::t;
+		while (zenithstg::t < zenithstg::time_mng_.target_t_) {
 			zenithstg::t++;
 			zenithstg::scene_manager_.Run();
 		}
