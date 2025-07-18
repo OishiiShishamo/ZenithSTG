@@ -9,6 +9,8 @@ namespace zenithstg {
 	void TimeUtl::StartTimer() {
 		start_time_ = std::chrono::high_resolution_clock::now();
 		last_frame_time_ = std::chrono::nanoseconds(0);
+		target_t_ = 0;
+		t = 0;
 	}
 
 	void TimeUtl::StopTimer() {
