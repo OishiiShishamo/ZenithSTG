@@ -13,6 +13,7 @@
 #include "bullet.h"
 #include "enemy.h"
 #include "laser.h"
+#include "math_tool.h"
 #include "object.h"
 #include "particle.h"
 #include "player.h"

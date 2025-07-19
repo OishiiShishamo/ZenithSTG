@@ -5,6 +5,7 @@
 #include "bullet.h"
 #include "enemy.h"
 #include "laser.h"
+#include "math_tool.h"
 #include "object.h"
 #include "particle.h"
 #include "player.h"
@@ -84,6 +85,8 @@ namespace zenithstg {
 		SetFontSize(20);
 
 		std::srand(42);
+
+		MathInit();
 
 		player.pos_ = kPlayerDefaultPos;
 		player.slow_ = 5;

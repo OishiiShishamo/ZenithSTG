@@ -3,6 +3,7 @@
 #include "background.h"
 #include "bullet.h"
 #include "enemy.h"
+#include "math_tool.h"
 #include "laser.h"
 #include "utility.h"
 
@@ -76,7 +77,7 @@ namespace zenithstg {
 					.end_size = 1,
 					.way = 48,
 					.spread = Rad(180),
-					.start_angle = Rad(std::sin(Rad(t)) * 360),
+					.start_angle = Rad(FastSin(t) * 360),
 					.end_angle = 0,
 					.angle_ease_type = kEaseInCubic,
 					.angle_ease_time = 60,

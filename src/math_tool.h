@@ -11,6 +11,9 @@
 #include <cmath>
 
 namespace zenithstg {
+	void MathInit();
+	double FastSin(int x);
+	double FastCos(int x);
 	/**
 	* @brief ニュートン法を用いた高速な平方根の計算 / fast square root calculations using Newton's method.
 	*/

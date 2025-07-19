@@ -13,7 +13,6 @@
 #include "utility.h"
 
 namespace zenithstg {
-	int is_entered = 0;
 	void TitleScene::Update() {
 		ClearDrawScreen();
 		for (int i = 0; i < 256 + std::sin(Rad(t)) * 128; i++) {
@@ -23,7 +22,7 @@ namespace zenithstg {
 		MoveParticles();
 		DrawFormatStringToHandle(kCenterX - GetDrawFormatStringWidthToHandle(SafeAccess(font_types, kFontUi1), "Press Enter Key.") / 2, kCenterY, Color(kColorWhite).GetDxColor(), SafeAccess(font_types, kFontUi1), "Press Enter Key.");
 		
-		if (GetAsyncKeyState(VK_RETURN) & (1 << 15) && is_entered == 0) {
+		if (GetAsyncKeyState(VK_RETURN) & (1 << 15)) {
 			is_entered = 1;
 			for (auto& x : particles) {
 				x.KillObject();
