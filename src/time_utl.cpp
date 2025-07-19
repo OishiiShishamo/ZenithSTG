@@ -43,10 +43,15 @@ namespace zenithstg {
 
 	void TimeUtl::FrameWait() {
 		std::chrono::nanoseconds frame_duration(1000000000 / fps);
-		std::chrono::nanoseconds frame_elapsed = Timer() - last_frame_time_ + (std::chrono::nanoseconds)((rng() % 65535) / 32768);
+		std::chrono::nanoseconds frame_elapsed = Timer() - last_frame_time_;// + (std::chrono::nanoseconds)((rng() % 65535) / 32768);
 
 		if (frame_elapsed < frame_duration - std::chrono::milliseconds(2)) {
 			std::this_thread::sleep_for((frame_duration - frame_elapsed) - std::chrono::milliseconds(2));
+		}
+		
+		// 微調整 / fine tuning.
+		while (Timer() - last_frame_time_ < frame_duration) {
+			std::this_thread::yield();
 		}
 	}
 
