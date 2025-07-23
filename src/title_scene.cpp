@@ -23,7 +23,6 @@ namespace zenithstg {
 		DrawFormatStringToHandle(kCenterX - GetDrawFormatStringWidthToHandle(SafeAccess(font_types, kFontUi1), "Press Enter Key.") / 2, kCenterY, Color(kColorWhite).GetDxColor(), SafeAccess(font_types, kFontUi1), "Press Enter Key.");
 		
 		if (GetAsyncKeyState(VK_RETURN) & (1 << 15)) {
-			is_entered = 1;
 			for (auto& x : particles) {
 				x.KillObject();
 			}

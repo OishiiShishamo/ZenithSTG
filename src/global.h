@@ -7,6 +7,8 @@ namespace zenithstg {
 	inline constexpr double kTau = kPi * 2;
 	inline constexpr double kOneDeg = (kPi / 180);
 
+	inline constexpr double kE = 2.7182818284590452353602874713527;
+
 	inline constexpr int kFontTypeNum = 128;
 
 	enum BlendType {
