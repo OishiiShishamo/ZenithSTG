@@ -242,7 +242,7 @@ namespace zenithstg {
 	}
 
 	void ParallelUpdateEnemies(std::array<Enemy, kMaxEnemy>& enemies) {
-		std::for_each(std::execution::par_unseq, enemies.begin(), enemies.end(),
+		std::for_each(std::execution::par, enemies.begin(), enemies.end(),
 			[](Enemy& E) {
 				E.UpdateObject();
 			});

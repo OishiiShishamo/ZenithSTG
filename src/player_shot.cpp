@@ -142,7 +142,7 @@ namespace zenithstg {
 	}
 
 	void ParallelUpdatePlayerShots(std::array<PlayerShot, kMaxPlayerShot>& playerShots) {
-		std::for_each(std::execution::par_unseq, playerShots.begin(), playerShots.end(),
+		std::for_each(std::execution::par, playerShots.begin(), playerShots.end(),
 			[](PlayerShot& PS) {
 				PS.UpdateObject();
 			});

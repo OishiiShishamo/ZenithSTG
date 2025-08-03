@@ -261,7 +261,7 @@ namespace zenithstg {
 	}
 
 	void ParallelUpdateParticles(std::array<Particle, kMaxParticle>& particles) {
-		std::for_each(std::execution::par_unseq, particles.begin(), particles.end(),
+		std::for_each(std::execution::par, particles.begin(), particles.end(),
 			[](Particle& E) {
 				E.UpdateObject();
 			});

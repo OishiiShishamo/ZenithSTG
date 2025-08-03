@@ -326,7 +326,7 @@ namespace zenithstg {
 	}
 
 	void ParallelUpdateBullets(std::array<Bullet, kMaxBullet>& bullets) {
-		std::for_each(std::execution::par_unseq, bullets.begin(), bullets.end(),
+		std::for_each(std::execution::par, bullets.begin(), bullets.end(),
 			[](Bullet& B) {
 				B.UpdateObject();
 			});

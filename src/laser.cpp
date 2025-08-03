@@ -341,7 +341,7 @@ namespace zenithstg {
 	}
 
 	void ParallelUpdateLasers(std::array<Laser, kMaxLaser>& lasers) {
-		std::for_each(std::execution::par_unseq, lasers.begin(), lasers.end(),
+		std::for_each(std::execution::par, lasers.begin(), lasers.end(),
 			[](Laser& L) {
 				L.UpdateObject();
 			});
