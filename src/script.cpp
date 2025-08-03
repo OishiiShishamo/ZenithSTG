@@ -16,10 +16,11 @@ namespace zenithstg {
 			//TESTDANMAKUKUKUKUKUKUKUKUKUKUKU
 			if (t % 1 == 0) {
 				if (t < 1200) {
+					double e_pow_t = std::powf(kE, FastCos(t)), t_pow_5 = std::powf(FastSin(t / 12), 5);
 					CreateSmartBulletGroup(ObjectParams{
 						.pos = kCenter + Vec2D(
-							FastSin(t) * (std::powf(kE, FastCos(t)) - 2 * FastCos(t * 4) - std::powf(FastSin(t / 12), 5)),
-							FastCos(t) * (std::powf(kE, FastCos(t)) - 2 * FastCos(t * 4) - std::powf(FastSin(t / 12), 5))
+							FastSin(t) * (e_pow_t - 2 * FastCos(t * 4) - t_pow_5),
+							FastCos(t) * (e_pow_t - 2 * FastCos(t * 4) - t_pow_5)
 						) * 100,
 						.color = GamingColor(),
 						.style = kBulletScale,

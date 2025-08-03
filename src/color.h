@@ -29,25 +29,26 @@
 #define kColorBrown 165, 42, 42
 #define kColorBurlyWood 222, 184, 135
 
+#include <algorithm>
+
 #include "DxLib.h"
 
 namespace zenithstg {
 	class Color {
 	public:
-		Color() = default;
-		Color(int r, int g, int b) : r_(r), g_(g), b_(b) {
-			if (r_ > 255) r_ = 255;
-			if (g_ > 255) g_ = 255;
-			if (b_ > 255) b_ = 255;
-			if (r_ < 0) r_ = 0;
-			if (g_ < 0) g_ = 0;
-			if (b_ < 0) b_ = 0;
-		}
-
 		int GetR() const { return r_; }
 		int GetG() const { return g_; }
 		int GetB() const { return b_; }
+		void SetR(int r) { r_ = r; }
+		void SetG(int g) { g_ = g; }
+		void SetB(int b) { b_ = b; }
 		int GetDxColor() const { return GetColor(r_, g_, b_); }
+
+		void Saturate() {
+			SetR(std::clamp(GetR(), 0, 255));
+			SetG(std::clamp(GetG(), 0, 255));
+			SetB(std::clamp(GetB(), 0, 255));
+		}
 
 		Color operator+(const Color& rhs) const { return Color(GetR() + rhs.GetR(), GetG() + rhs.GetG(), GetB() + rhs.GetB()); }
 		Color operator+(double scalar) const { return Color(GetR() + scalar, GetG() + scalar, GetB() + scalar); }
@@ -57,6 +58,11 @@ namespace zenithstg {
 		Color operator*(double scalar) const { return Color(GetR() * scalar, GetG() * scalar, GetB() * scalar); }
 		Color operator/(const Color& rhs) const { return Color(GetR() / rhs.GetR(), GetG() / rhs.GetG(), GetB() / rhs.GetB()); }
 		Color operator/(double scalar) const { return Color(GetR() / scalar, GetG() / scalar, GetB() / scalar); }
+
+		Color() = default;
+		Color(int r, int g, int b) : r_(r), g_(g), b_(b) {
+			Saturate();
+		}
 	private:
 		int r_ = 0;
 		int g_ = 0;
