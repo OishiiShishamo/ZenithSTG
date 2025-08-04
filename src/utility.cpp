@@ -118,7 +118,7 @@ namespace zenithstg {
 	long long Beat2Frame(double bpm, double beat) {
 		double secondsPerBeat = 60.0 / bpm;
 		double timeInSeconds = beat * secondsPerBeat;
-		int frame = static_cast<int>(std::round(timeInSeconds * fps));
+		long long frame = static_cast<int>(std::round(timeInSeconds * fps));
 		return frame;
 	}
 }
