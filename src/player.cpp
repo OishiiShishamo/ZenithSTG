@@ -1,5 +1,7 @@
 ﻿#include "player.h"
+
 #include "player_shot.h"
+#include "particle.h"
 #include "sound.h"
 
 //TODO: もっと真面目に作る
@@ -61,6 +63,11 @@ namespace zenithstg {
 	void Player::HitPlayer() {
 		if (protect_time_ > 0) {
 			return;
+		}
+		for (int i = 0; i < 64; i++) {
+			double angle = Rad(static_cast<double>(rng() % 36000) / 100.0);
+			double speed = static_cast<double>(rng() % 160) / 10.0f;
+			CreateParticle(pos_, Color(kColorRed), ParticleType::kParticleRect, BlendType::kBlendAdd, 255, EaseType::kEaseInQuad, 60, 0, 0, 0, 0, 0, 0.5f, 0.0f, EaseType::kEaseInQuad, 60, 0, angle, angle, 0, 0, speed, 0.0f, EaseType::kEaseInQuad, 60);
 		}
 		protect_time_ = protect_;
 		pos_ = kPlayerDefaultPos;
