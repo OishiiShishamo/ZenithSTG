@@ -66,7 +66,7 @@ namespace zenithstg {
 	*/
 	double Rad(double angle);
 	void ApplyWindowSize();
-	long long BeatToFrame(double bpm, double beat);
+	long long Beat2Frame(double bpm, double beat);
 
 	template <typename T, size_t N>
 	T&
