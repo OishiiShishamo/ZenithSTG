@@ -26,64 +26,69 @@ namespace zenithstg {
 	};
 
 	enum ObjectType {
-		kObjectBase = 0,
-		kObjectBullet = 1,
-		kObjectLaser = 2,
-		kObjectBentLaser = 3,
-		kObjectEnemy = 4,
-		kObjectPlayerShot = 5,
-		kObjectParticle = 6,
+		kObjectBase,
+		kObjectBullet,
+		kObjectLaser,
+		kObjectBentLaser,
+		kObjectEnemy,
+		kObjectPlayerShot,
+		kObjectParticle,
 	};
 
 	enum BulletType {
-		kBulletNormal = 0,
-		kBulletMedium = 1,
-		kBulletScale = 2,
-		kBulletLaser = 3,
-		kBulletLight = 4,
-		kBulletBig = 5,
+		kBulletNormal,
+		kBulletMedium,
+		kBulletScale,
+		kBulletLaser,
+		kBulletLight,
+		kBulletBig,
 	};
 
 	enum ParticleType {
-		kParticleLight = 0,
-		kParticleStar = 1,
-		kParticleRect = 2,
+		kParticleLight,
+		kParticleStar,
+		kParticleRect,
 	};
 
 	enum EnemyType {
-		kEnemyNormal = 0,
+		kEnemyNormal,
 	};
 
 	enum PlayerShotType {
-		kPlayerShotNormal = 0,
+		kPlayerShotNormal,
 	};
 
 	enum EaseType {
-		kLinear = 0,
-		kEaseInQuad = 1,
-		kEaseOutQuad = 2,
-		kEaseInOutQuad = 3,
-		kEaseInCubic = 4,
-		kEaseOutCubic = 5,
-		kEaseInOutCubic = 6,
+		kLinear,
+
+		kEaseInSine, kEaseOutSine, kEaseInOutSine,
+		kEaseInQuad, kEaseOutQuad, kEaseInOutQuad,
+		kEaseInCubic, kEaseOutCubic, kEaseInOutCubic,
+		kEaseInQuart, kEaseOutQuart, kEaseInOutQuart,
+		kEaseInQuint, kEaseOutQuint, kEaseInOutQuint,
+		kEaseInExpo, kEaseOutExpo, kEaseInOutExpo,
+		kEaseInCirc, kEaseOutCirc, kEaseInOutCirc,
+		kEaseInBack, kEaseOutBack, kEaseInOutBack,
+		kEaseInElastic, kEaseOutElastic, kEaseInOutElastic,
+		kEaseInBounce, kEaseOutBounce, kEaseInOutBounce,
 	};
 
 	enum FontType {
-		kFontUi0 = 0,
-		kFontUi1 = 1,
+		kFontUi0,
+		kFontUi1,
 	};
 
 	enum SoundEffectType {
 		kSoundEffectNone = -1,
-		kSoundEffectGraze = 0,
-		kSoundEffectPlayerHit = 1,
-		kSoundEffectEnemyShot = 2,
+		kSoundEffectGraze,
+		kSoundEffectPlayerHit,
+		kSoundEffectEnemyShot,
 	};
 
 	enum AimType {
-		kAimFalse = 0,
-		kAimTrue = 1,
-		kAimOffset = 2,
+		kAimFalse,
+		kAimTrue,
+		kAimOffset,
 	};
 
 	extern std::array<int, kFontTypeNum> font_types;
