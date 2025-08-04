@@ -16,6 +16,7 @@
 
 #include "color.h"
 #include "property.h"
+#include "time_utl.h"
 
 namespace zenithstg {
 	/**
@@ -65,7 +66,7 @@ namespace zenithstg {
 	*/
 	double Rad(double angle);
 	void ApplyWindowSize();
-	int	Beat2Frame(double bpm, double beat, double bar);
+	long long BeatToFrame(double bpm, double beat);
 
 	template <typename T, size_t N>
 	T&

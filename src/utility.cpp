@@ -8,6 +8,7 @@
 
 #include "color.h"
 #include "property.h"
+#include "time_utl.h"
 
 namespace zenithstg {
 	bool debuging = true;
@@ -114,7 +115,10 @@ namespace zenithstg {
 		return (kPi / 180) * angle;
 	}
 
-	int	Beat2Frame(double bpm, double beat, double bar) {
-		return 3600.0f * bar * beat / bpm;
+	long long Beat2Frame(double bpm, double beat) {
+		double secondsPerBeat = 60.0 / bpm;
+		double timeInSeconds = beat * secondsPerBeat;
+		int frame = static_cast<int>(std::round(timeInSeconds * fps));
+		return frame;
 	}
 }
