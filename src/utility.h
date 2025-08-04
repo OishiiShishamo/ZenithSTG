@@ -66,6 +66,13 @@ namespace zenithstg {
 	*/
 	double Rad(double angle);
 	void ApplyWindowSize();
+
+	/**
+	* @brief ビートをフレームに変換 / Convert Beat to Frame.
+	* 
+	* @param bpm BPM.
+	* @param beat 4分音符の数 / Number of quarter notes.
+	*/
 	long long Beat2Frame(double bpm, double beat);
 
 	template <typename T, size_t N>
