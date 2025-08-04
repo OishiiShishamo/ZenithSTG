@@ -251,7 +251,7 @@ namespace zenithstg {
 	void MoveEnemies() {
 		ParallelUpdateEnemies(enemies);
 		if (t == time_mng_.target_t_) {
-			std::sort(enemy_ptrs.begin(), enemy_ptrs.end(), [](const Enemy* a, const Enemy* b) {
+			std::sort(std::execution::par, enemy_ptrs.begin(), enemy_ptrs.end(), [](const Enemy* a, const Enemy* b) {
 				return a->pop_t_ < b->pop_t_;
 				});
 			for (auto* E : enemy_ptrs) {

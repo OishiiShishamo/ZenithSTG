@@ -270,7 +270,7 @@ namespace zenithstg {
 	void MoveParticles() {
 		ParallelUpdateParticles(particles);
 		if (t == time_mng_.target_t_) {
-			std::sort(particle_ptrs.begin(), particle_ptrs.end(), [](const Particle* a, const Particle* b) {
+			std::sort(std::execution::par, particle_ptrs.begin(), particle_ptrs.end(), [](const Particle* a, const Particle* b) {
 				return a->order_ < b->order_;
 				});
 			for (auto* E : particle_ptrs) {

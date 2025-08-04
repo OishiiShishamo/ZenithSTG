@@ -335,7 +335,7 @@ namespace zenithstg {
 	void MoveBullets() {
 		ParallelUpdateBullets(bullets);
 		if (t == time_mng_.target_t_) {
-			std::sort(bullet_ptrs.begin(), bullet_ptrs.end(), [](const Bullet* a, const Bullet* b) {
+			std::sort(std::execution::par, bullet_ptrs.begin(), bullet_ptrs.end(), [](const Bullet* a, const Bullet* b) {
 				return a->order_ < b->order_;
 				});
 			for (auto* B : bullet_ptrs) {
