@@ -115,10 +115,10 @@ namespace zenithstg {
 		return (kPi / 180) * angle;
 	}
 
-	long long Beat2Frame(double bpm, double beat) {
+	long long Beat2Frame(double bpm, double beat, int offset_frame) {
 		double secondsPerBeat = 60.0 / bpm;
 		double timeInSeconds = beat * secondsPerBeat;
 		long long frame = static_cast<int>(std::round(timeInSeconds * fps));
-		return frame;
+		return frame + offset_frame;
 	}
 }

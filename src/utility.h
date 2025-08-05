@@ -72,8 +72,9 @@ namespace zenithstg {
 	* 
 	* @param bpm BPM.
 	* @param beat 4分音符の数 / Number of quarter notes.
+	* @param offset_frame オフセットフレーム / Offset frame
 	*/
-	long long Beat2Frame(double bpm, double beat);
+	long long Beat2Frame(double bpm, double beat, int offset_frame = 0);
 
 	template <typename T, size_t N>
 	T&
