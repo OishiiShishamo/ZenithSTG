@@ -9,12 +9,34 @@
 
 namespace zenithstg {
 	std::array<Script, kStageNum> scripts;
+	int num = 4;
 
 	void Script::RunScript() {
 		switch (id_) {
 		case 0: {
+			if (t == 1) {
+				sound_mng_.PlayBgm(kBgm1, DX_PLAYTYPE_BACK);
+			}
 			//TESTDANMAKUKUKUKUKUKUKUKUKUKUKU
-			if (t % Beat2Frame(140, 1) == 0) {
+			if (t >= Beat2Frame(160, 4)) screen_size_rate = Easing(EaseType::kEaseInQuad, EasingTimeCalc(t, Beat2Frame(160, num - 1), Beat2Frame(160, num)), 1.01, 1.0);
+			if (t >= Beat2Frame(160, 64) && t < Beat2Frame(160, 65)) {
+				screen_rota_z = Easing(EaseType::kEaseInQuad, EasingTimeCalc(t, Beat2Frame(160, 64), Beat2Frame(160, 65)), 0, Rad(45));
+			}
+			if (t >= Beat2Frame(160, 65) && t < Beat2Frame(160, 66)) {
+				screen_rota_z = Easing(EaseType::kEaseInQuad, EasingTimeCalc(t, Beat2Frame(160, 65), Beat2Frame(160, 66)), Rad(45), Rad(-90));
+			}
+			if (t >= Beat2Frame(160, 66) && t < Beat2Frame(160, 67)) {
+				screen_rota_z = Easing(EaseType::kEaseInQuad, EasingTimeCalc(t, Beat2Frame(160, 66), Beat2Frame(160, 67)), Rad(-90), Rad(360));
+			}
+			if (t >= Beat2Frame(160, 67) && t < Beat2Frame(160, 68)) {
+				screen_rota_z = 0;
+				screen_size_rate = Easing(EaseType::kEaseInQuad, EasingTimeCalc(t, Beat2Frame(160, 67), Beat2Frame(160, 68)), 5.0, 1.0);
+			}
+			if (t == Beat2Frame(160, 68)) {
+				screen_size_rate = 1.0;
+			}
+			if (t == Beat2Frame(160, num)) {
+				num++;
 				double angle = Rad(static_cast<double>(rng() % 36000) / 100.0f);
 				CreateSmartBulletGroup(ObjectParams{
 					.pos = Vec2D(kCenterX, 180),

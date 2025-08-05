@@ -78,6 +78,11 @@ namespace zenithstg {
 		kFontUi1,
 	};
 
+	enum BgmType {
+		kBgmNone = -1,
+		kBgm1,
+	};
+
 	enum SoundEffectType {
 		kSoundEffectNone = -1,
 		kSoundEffectGraze,
