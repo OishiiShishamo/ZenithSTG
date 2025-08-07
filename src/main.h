@@ -29,10 +29,10 @@ struct ImageRes;
 #define kCenterY 540
 #define kCenter Vec2D(kCenterX, kCenterY)
 
-#define kBorderLeft 528
-#define kBorderRight 1392
-#define kBorderUp 35
-#define kBorderDown 1045
+#define kBorderLeft 0//528
+#define kBorderRight 1920//1392
+#define kBorderUp 0//35
+#define kBorderDown 1080//1045
 
 #define kStageNum 1
 
@@ -83,8 +83,6 @@ namespace zenithstg {
 
 	extern int num_threads;
 
-	extern long long t;
-	extern long long fps;
 	extern int current_blend_mode;
 	extern int current_blend_pal;
 	extern std::array<double, kFpsHistoryLength> fps_history;
@@ -105,6 +103,7 @@ namespace zenithstg {
 	extern double screen_rota_x;
 	extern double screen_rota_y;
 	extern double screen_rota_z;
+	extern Vec2D screen_pos_offset;
 }
 
 #endif

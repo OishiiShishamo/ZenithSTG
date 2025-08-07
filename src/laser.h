@@ -80,6 +80,8 @@ namespace zenithstg {
 	* @brief レーザーの動作と描画 / Laser Movement and Drawing.
 	*/
 	void MoveLasers();
+
+	void RenderLasers();
 }
 
 #endif

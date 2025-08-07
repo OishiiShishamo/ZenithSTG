@@ -24,14 +24,14 @@ namespace zenithstg {
 			pos_.SetXY(x, y);
 		}
 		else {
-			if (GetAsyncKeyState(VK_RIGHT)) vec_ += Vec2D(1, 0);
-			if (GetAsyncKeyState(VK_LEFT)) vec_ -= Vec2D(1, 0);
-			if (GetAsyncKeyState(VK_UP)) vec_ -= Vec2D(0, 1);
-			if (GetAsyncKeyState(VK_DOWN)) vec_ += Vec2D(0, 1);
+			if (GetAsyncKeyState(VK_RIGHT) & (1 << 15)) vec_ += Vec2D(1, 0);
+			if (GetAsyncKeyState(VK_LEFT) & (1 << 15)) vec_ -= Vec2D(1, 0);
+			if (GetAsyncKeyState(VK_UP) & (1 << 15)) vec_ -= Vec2D(0, 1);
+			if (GetAsyncKeyState(VK_DOWN) & (1 << 15)) vec_ += Vec2D(0, 1);
 
 			vec_.VecNorm();
 
-			if (GetAsyncKeyState(VK_SHIFT)) {
+			if (GetAsyncKeyState(VK_SHIFT) & (1 << 15)) {
 				pos_ += vec_ * slow_;
 			}
 			else {
@@ -55,7 +55,7 @@ namespace zenithstg {
 	}
 
 	void Player::Shot() {
-		if (GetAsyncKeyState(0x5A)) {
+		if (GetAsyncKeyState(0x5A) & (1 << 15)) {
 			CreatePlayerShot(pos_, Color(255, 255, 255), 0, kBlendAdd, 255, 1, 24, 24, 0, 0, 1.0f, 1.0f, 0, 0, Rad(90), Rad(90), 0, 0, 0, 50, kEaseInCubic, 60, -1, 0);
 		}
 	}
@@ -66,8 +66,7 @@ namespace zenithstg {
 		}
 		for (int i = 0; i < 64; i++) {
 			double angle = Rad(static_cast<double>(rng() % 36000) / 100.0);
-			double speed = static_cast<double>(rng() % 160) / 10.0f;
-			CreateParticle(pos_, Color(kColorRed), ParticleType::kParticleRect, BlendType::kBlendAdd, 255, EaseType::kEaseInQuad, 60, 0, 0, 0, 0, 0, 0.5f, 0.0f, EaseType::kEaseInQuad, 60, 0, angle, angle, 0, 0, speed, 0.0f, EaseType::kEaseInQuad, 60);
+			CreateParticle(pos_, Color(kColorRed), ParticleType::kParticleRect, BlendType::kBlendAdd, 255, EaseType::kEaseInQuad, 60, 0, 0, 0, 0, 0, 0.5f, 0.0f, EaseType::kEaseInQuad, 60, 0, angle, angle, 0, 0, static_cast<double>(rng() % 160) / 10.0f + 3, 0.0f, EaseType::kEaseInQuad, 60);
 		}
 		protect_time_ = protect_;
 		pos_ = kPlayerDefaultPos;
@@ -83,5 +82,5 @@ namespace zenithstg {
 		protect_time_--;
 	}
 
-	Player player;
+	Player player_;
 }

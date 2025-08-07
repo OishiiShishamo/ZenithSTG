@@ -88,15 +88,15 @@ namespace zenithstg {
 
 		MathInit();
 
-		player.pos_ = kPlayerDefaultPos;
-		player.slow_ = 5;
-		player.fast_ = 7;
-		player.life_ = player.default_life_;
-		player.bomb_ = player.default_bomb_;
-		player.col_size_ = kPlayerCol;
-		player.protect_ = kPlayerProtect;
-		player.protect_time_ = 0;
-		player.is_mouse_ = 0;
+		player_.pos_ = kPlayerDefaultPos;
+		player_.slow_ = 5;
+		player_.fast_ = 7;
+		player_.life_ = player_.default_life_;
+		player_.bomb_ = player_.default_bomb_;
+		player_.col_size_ = kPlayerCol;
+		player_.protect_ = kPlayerProtect;
+		player_.protect_time_ = 0;
+		player_.is_mouse_ = 0;
 
 		fps_history.fill(fps);
 

@@ -30,7 +30,7 @@ namespace zenithstg {
 			int slice_count = 0;
 			for (int x = 0; x < GetSystemMetrics(SM_CXSCREEN); x += screen_size_rate * GetSystemMetrics(SM_CXSCREEN)) {
 				for (int y = 0; y < GetSystemMetrics(SM_CYSCREEN); y += screen_size_rate * GetSystemMetrics(SM_CYSCREEN)) {
-					DrawRotaGraph4(x + screen_size_rate * GetSystemMetrics(SM_CXSCREEN) / 2, y + screen_size_rate * GetSystemMetrics(SM_CYSCREEN) / 2, screen_size_rate, 0, 0, 0, screen_canvas, 1, 0, 0);
+					DrawRotaGraph4(x + screen_size_rate * GetSystemMetrics(SM_CXSCREEN) / 2 + screen_pos_offset.GetX(), y + screen_size_rate * GetSystemMetrics(SM_CYSCREEN) / 2 + screen_pos_offset.GetY(), screen_size_rate, 0, 0, 0, screen_canvas, 1, 0, 0);
 					slice_count++;
 					if (slice_count > 2048) break;
 				}
@@ -38,7 +38,7 @@ namespace zenithstg {
 			}
 		}
 		else {
-			DrawRotaGraph4(GetSystemMetrics(SM_CXSCREEN) / 2, GetSystemMetrics(SM_CYSCREEN) / 2, screen_size_rate, screen_rota_x, screen_rota_y, screen_rota_z, screen_canvas, 1, 0, 0);
+			DrawRotaGraph4(GetSystemMetrics(SM_CXSCREEN) / 2 + screen_pos_offset.GetX(), GetSystemMetrics(SM_CYSCREEN) / 2 + screen_pos_offset.GetY(), screen_size_rate, screen_rota_x, screen_rota_y, screen_rota_z, screen_canvas, 1, 0, 0);
 		}
 		SmartSetDrawBlendMode(kBlendNoblend, 255);
 	}

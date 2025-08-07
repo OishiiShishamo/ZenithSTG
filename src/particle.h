@@ -75,16 +75,18 @@ namespace zenithstg {
 	int CreateParticle(const Vec2D& pos, const Color& color, int style, int blend, double pal, int palEaseType, int palEaseTime, int is_col, double start_col_size, double end_col_size, int col_size_ease_type, int col_size_ease_time, double start_size, double end_size, int size_ease_type, int size_ease_time, int aim, double start_angle, double end_angle, int angle_ease_type, int angle_ease_time, double start_speed, double end_speed, int speed_ease_type, int speed_ease_time, int id = 0, const std::vector<std::any>& params = {});
 
 	/**
-	* @brief パーティクルの動作と描画 / Particle Movement and Drawing.
-	*/
-	void MoveParticles();
-
-	/**
 	* @brief パーティクルの並列更新 / Parallel update of particles.
 	*
 	* @param particles パーティクル配列 / Array of particles
 	*/
 	void ParallelUpdateParticles(std::array<Particle, kMaxParticle>& particles);
+
+	/**
+	* @brief パーティクルの動作と描画 / Particle Movement and Drawing.
+	*/
+	void MoveParticles();
+
+	void RenderParticles();
 
 	void GrazeParticle(const Vec2D& pos);
 }

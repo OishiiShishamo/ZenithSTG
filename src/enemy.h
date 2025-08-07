@@ -84,6 +84,8 @@ namespace zenithstg {
 	* @brief 敵の動作と描画 / Enemy Movement and Drawing.
 	*/
 	void MoveEnemies();
+
+	void RenderEnemies();
 }
 
 #endif

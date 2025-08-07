@@ -93,6 +93,8 @@ namespace zenithstg {
 	* @brief 弾の動作と描画 / Bullet Movement and Drawing.
 	*/
 	void MoveBullets();
+
+	void RenderBullets();
 }
 
 #endif

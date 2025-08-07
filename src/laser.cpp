@@ -104,7 +104,7 @@ namespace zenithstg {
 
 	int Laser::ColliCheckObject() {
 		double r = (length_ * length_ + col_size_ * col_size_) / 4;
-		Vec2D d = pos_ - player.pos_;
+		Vec2D d = pos_ - player_.pos_;
 		if (d.GetX() * d.GetX() + d.GetY() * d.GetY() <= r) {
 			return 0;
 		}
@@ -121,12 +121,12 @@ namespace zenithstg {
 			SafeAccess(world, i) = pos_ + rot;
 		}
 		if (
-			ColPointAndRect(player.pos_,
+			ColPointAndRect(player_.pos_,
 				SafeAccess(world, 0),
 				SafeAccess(world, 1),
 				SafeAccess(world, 2),
 				SafeAccess(world, 3))) {
-			player.HitPlayer();
+			player_.HitPlayer();
 			return 1;
 		}
 		return 0;
@@ -135,7 +135,7 @@ namespace zenithstg {
 #if kGrazeEnabled == 1
 	void Laser::GrazeObject() {
 		double r = (length_ * length_ + col_size_ * col_size_ + kGrazeRange * kGrazeRange) / 4;
-		Vec2D d = pos_ - player.pos_;
+		Vec2D d = pos_ - player_.pos_;
 		if (d.GetX() * d.GetX() + d.GetY() * d.GetY() <= r || (flags_ & kIsGraze) == 0) {
 			return;
 		}
@@ -152,7 +152,7 @@ namespace zenithstg {
 			SafeAccess(world, i) = pos_ + rot;
 		}
 		if (
-			ColPointAndRect(player.pos_,
+			ColPointAndRect(player_.pos_,
 				SafeAccess(world, 0),
 				SafeAccess(world, 1),
 				SafeAccess(world, 2),
@@ -195,7 +195,7 @@ namespace zenithstg {
 		switch (id_) {
 		case 0:
 		default: {
-			int needsMultiStep = speed_ >= col_size_ + player.col_size_ && flags_ & kIsCol;
+			int needsMultiStep = speed_ >= col_size_ + player_.col_size_ && flags_ & kIsCol;
 			if (needsMultiStep) {
 				int step = static_cast<int>(std::ceil(speed_ / 1.0f));
 				for (int i = 0; i < step; i++) {
@@ -238,8 +238,8 @@ namespace zenithstg {
 		SafeAccess(lasers, idx).size_ease_type_ = size_ease_type;
 		SafeAccess(lasers, idx).size_ease_time_ = size_ease_time;
 		if (aim == kAimTrue) {
-			SafeAccess(lasers, idx).start_angle_ = player.AimPlayer(pos) + start_angle;
-			SafeAccess(lasers, idx).end_angle_ = player.AimPlayer(pos) + end_angle;
+			SafeAccess(lasers, idx).start_angle_ = player_.AimPlayer(pos) + start_angle;
+			SafeAccess(lasers, idx).end_angle_ = player_.AimPlayer(pos) + end_angle;
 		}
 		else {
 			SafeAccess(lasers, idx).start_angle_ = start_angle;
@@ -350,12 +350,16 @@ namespace zenithstg {
 	void MoveLasers() {
 		ParallelUpdateLasers(lasers);
 		if (t == time_mng_.target_t_) {
-			std::sort(std::execution::par, laser_ptrs.begin(), laser_ptrs.end(), [](const Laser* a, const Laser* b) {
-				return a->pop_t_ < b->pop_t_;
-				});
-			for (auto* L : laser_ptrs) {
-				L->ShowLaser();
-			}
+			RenderLasers();
+		}
+	}
+
+	void RenderLasers() {
+		std::sort(std::execution::par, laser_ptrs.begin(), laser_ptrs.end(), [](const Laser* a, const Laser* b) {
+			return a->pop_t_ < b->pop_t_;
+			});
+		for (auto* L : laser_ptrs) {
+			L->ShowLaser();
 		}
 	}
 }

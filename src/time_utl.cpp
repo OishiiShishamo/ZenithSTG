@@ -1,5 +1,11 @@
 ﻿#include "time_utl.h"
 
+#include <chrono>
+#include <thread>
+#include <windows.h>
+
+#include "main.h"
+
 namespace zenithstg {
 	long long t = 0;
 	long long fps = 60;
@@ -12,7 +18,7 @@ namespace zenithstg {
 	}
 
 	void TimeUtl::StopTimer() {
-		elapsedus_ += Timer();
+		elapsedus_ = Timer();
 	}
 
 	void TimeUtl::ResetTimer() {
@@ -32,23 +38,24 @@ namespace zenithstg {
 		return elapsedus_ + std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() - start_time_);
 	}
 
-	std::chrono::nanoseconds TimeUtl::ElapsedTime() {
+	void TimeUtl::ElapsedTime() {
 		std::chrono::nanoseconds tmp = last_frame_time_;
 		last_frame_time_ = Timer();
-		target_t_ = static_cast<double>(Timer().count()) / std::chrono::nanoseconds(1000000000 / fps).count();
-		return Timer() - tmp;
+		target_t_ = static_cast<double>(Timer().count()) / static_cast<double>(frame_duration_.count());
 	}
 
 	void TimeUtl::FrameWait() {
-		std::chrono::nanoseconds frame_duration = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::duration<double>(1.0 / fps));
-		std::chrono::nanoseconds frame_elapsed = Timer() - last_frame_time_;
+		auto now = Timer();
+		auto frame_elapsed = now - last_frame_time_;
 
-		if (frame_elapsed < frame_duration - std::chrono::milliseconds(4)) {
-			std::this_thread::sleep_for((frame_duration - frame_elapsed) - std::chrono::milliseconds(4));
+		auto sleep_margin = std::chrono::milliseconds(4);
+
+		if (frame_elapsed < frame_duration_ - sleep_margin) {
+			std::this_thread::sleep_for((frame_duration_ - frame_elapsed) - sleep_margin);
 		}
 
 		// 微調整 / fine tuning.
-		while (Timer() - last_frame_time_ < frame_duration) {
+		while (Timer() - last_frame_time_ < frame_duration_) {
 			std::this_thread::yield();
 		}
 	}

@@ -43,10 +43,10 @@ namespace zenithstg {
 		int i = 0;
 		for (auto& F : font_types) {
 			if (F == -1) {
-				Logger("Fontid: " + std::to_string(i) + " FontLoading Fail.", LogType::kLogWarning);
+				//Logger("Fontid: " + std::to_string(i) + " FontLoading Fail.", LogType::kLogWarning);
 			}
 			else {
-				Logger("Fontid: " + std::to_string(i) + " FontLoading Success.", LogType::kLogInfo);
+				//Logger("Fontid: " + std::to_string(i) + " FontLoading Success.", LogType::kLogInfo);
 			}
 			i++;
 		}

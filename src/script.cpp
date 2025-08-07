@@ -18,21 +18,26 @@ namespace zenithstg {
 				sound_mng_.PlayBgm(kBgm1, DX_PLAYTYPE_BACK);
 			}
 			//TESTDANMAKUKUKUKUKUKUKUKUKUKUKU
-			if (t >= Beat2Frame(160, 4)) screen_size_rate = Easing(EaseType::kEaseInQuad, EasingTimeCalc(t, Beat2Frame(160, num - 1), Beat2Frame(160, num)), 1.01, 1.0);
+			if (t >= Beat2Frame(160, 4) && t < Beat2Frame(160, 68)) screen_size_rate = Easing(EaseType::kEaseInQuad, EasingTimeCalc(t, Beat2Frame(160, num - 1), Beat2Frame(160, num)), 1.01, 1.0);
+			if (t >= Beat2Frame(160, 68)) screen_size_rate = Easing(EaseType::kEaseInQuad, EasingTimeCalc(t, Beat2Frame(160, num - 1), Beat2Frame(160, num)), 1.05, 1.0);
 			if (t >= Beat2Frame(160, 64) && t < Beat2Frame(160, 65)) {
-				screen_rota_z = Easing(EaseType::kEaseInQuad, EasingTimeCalc(t, Beat2Frame(160, 64), Beat2Frame(160, 65)), 0, Rad(45));
+				screen_size_rate = 1.5;
+				CameraMove(player_.pos_);
 			}
 			if (t >= Beat2Frame(160, 65) && t < Beat2Frame(160, 66)) {
-				screen_rota_z = Easing(EaseType::kEaseInQuad, EasingTimeCalc(t, Beat2Frame(160, 65), Beat2Frame(160, 66)), Rad(45), Rad(-90));
+				screen_size_rate = 2.0;
+				CameraMove(player_.pos_);
 			}
 			if (t >= Beat2Frame(160, 66) && t < Beat2Frame(160, 67)) {
-				screen_rota_z = Easing(EaseType::kEaseInQuad, EasingTimeCalc(t, Beat2Frame(160, 66), Beat2Frame(160, 67)), Rad(-90), Rad(360));
+				screen_size_rate = 2.5;
+				CameraMove(player_.pos_);
 			}
 			if (t >= Beat2Frame(160, 67) && t < Beat2Frame(160, 68)) {
-				screen_rota_z = 0;
 				screen_size_rate = Easing(EaseType::kEaseInQuad, EasingTimeCalc(t, Beat2Frame(160, 67), Beat2Frame(160, 68)), 5.0, 1.0);
+				CameraMove(player_.pos_);
 			}
 			if (t == Beat2Frame(160, 68)) {
+				screen_pos_offset = Vec2D(0, 0);
 				screen_size_rate = 1.0;
 			}
 			if (t == Beat2Frame(160, num)) {
@@ -48,12 +53,12 @@ namespace zenithstg {
 					.end_col_size = 16,
 					.start_size = 1,
 					.end_size = 1,
-					.way = 16,
+					.way = 32,
 					.spread = kTau,
 					.start_angle = angle,
 					.end_angle = angle,
 					.start_speed = 0,
-					.end_speed = 32,
+					.end_speed = 16,
 					.speed_ease_type = EaseType::kLinear,
 					.speed_ease_time = 60,
 					.se = SoundEffectType::kSoundEffectEnemyShot

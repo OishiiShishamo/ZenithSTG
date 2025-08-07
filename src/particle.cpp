@@ -234,8 +234,8 @@ namespace zenithstg {
 		SafeAccess(particles, idx).size_ease_type_ = size_ease_type;
 		SafeAccess(particles, idx).size_ease_time_ = size_ease_time;
 		if (aim == 1) {
-			SafeAccess(particles, idx).start_angle_ = player.AimPlayer(pos) + start_angle;
-			SafeAccess(particles, idx).end_angle_ = player.AimPlayer(pos) + end_angle;
+			SafeAccess(particles, idx).start_angle_ = player_.AimPlayer(pos) + start_angle;
+			SafeAccess(particles, idx).end_angle_ = player_.AimPlayer(pos) + end_angle;
 		}
 		else {
 			SafeAccess(particles, idx).start_angle_ = start_angle;
@@ -270,12 +270,16 @@ namespace zenithstg {
 	void MoveParticles() {
 		ParallelUpdateParticles(particles);
 		if (t == time_mng_.target_t_) {
-			std::sort(std::execution::par, particle_ptrs.begin(), particle_ptrs.end(), [](const Particle* a, const Particle* b) {
-				return a->order_ < b->order_;
-				});
-			for (auto* E : particle_ptrs) {
-				E->ShowParticle();
-			}
+			RenderParticles();
+		}
+	}
+
+	void RenderParticles() {
+		std::sort(std::execution::par, particle_ptrs.begin(), particle_ptrs.end(), [](const Particle* a, const Particle* b) {
+			return a->order_ < b->order_;
+			});
+		for (auto* E : particle_ptrs) {
+			E->ShowParticle();
 		}
 	}
 

@@ -16,7 +16,7 @@ namespace zenithstg {
 		fps_history_index++;
 		if (fps_history_index >= kFpsHistoryLength) fps_history_index = 0;
 		if (std::accumulate(fps_history.begin(), fps_history.end(), 0.0f) / fps_history.size() != fps) {
-			Logger(std::to_string(std::accumulate(fps_history.begin(), fps_history.end(), 0.0f) / fps_history.size()), LogType::kLogDebug);
+			Logger(std::to_string(std::accumulate(fps_history.begin(), fps_history.end(), 0.0f) / fps_history.size()) + " :" + std::to_string(t), LogType::kLogDebug);
 		}
 		DrawFormatStringToHandle(pos.GetX(), pos.GetY(), GetColor(color.GetR(), color.GetG(), color.GetB()), SafeAccess(font_types, kFontUi0), "%.2fFPS", std::accumulate(fps_history.begin(), fps_history.end(), 0.0f) / fps_history.size());
 	}

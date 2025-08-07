@@ -50,6 +50,8 @@ namespace zenithstg {
 	* @brief プレイヤーショットの動作と描画 / Player Shot Movement and Drawing.
 	*/
 	void MovePlayerShots();
+
+	void RenderPlayerShots();
 }
 
 #endif

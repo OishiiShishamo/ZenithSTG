@@ -19,6 +19,7 @@ namespace zenithstg {
 	double screen_rota_x = 0;
 	double screen_rota_y = 0;
 	double screen_rota_z = 0;
+	Vec2D screen_pos_offset = Vec2D(0, 0);
 
 	void GameScene::Update() {
 		SafeAccess(scripts, 0).RunScript();
@@ -31,7 +32,7 @@ namespace zenithstg {
 		MovePlayerShots();
 		SetDrawScreen(player_canvas);
 		ClearDrawScreen();
-		player.RoutinePlayer();
+		player_.RoutinePlayer();
 		SetDrawScreen(bullet_canvas);
 		ClearDrawScreen();
 		MoveEnemies();

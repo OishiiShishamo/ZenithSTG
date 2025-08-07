@@ -1,5 +1,10 @@
 ﻿#include "easing.h"
 
+#include <cmath>
+
+#include "logging.h"
+#include "math_tool.h"
+
 namespace zenithstg {
 	//ラッパ関数
 	double Easing(int ease_type, double t, double start, double end) {
@@ -54,9 +59,10 @@ namespace zenithstg {
 
 	// イージング時間計算関数
 	double EasingTimeCalc(double now_time, double start_time, double end_time) {
-		double result = (static_cast<double>(now_time) - static_cast<double>(start_time)) / (static_cast<double>(end_time) - static_cast<double>(start_time));
-		if (result > 1) result = 1;
-		return result;
+		double duration = end_time - start_time;
+		if (duration <= 0) return 1.0;
+		double result = (now_time - start_time) / duration;
+		return std::clamp(result, 0.0, 1.0);
 	}
 
 	double Linear(double t, double start, double end) {
@@ -65,13 +71,13 @@ namespace zenithstg {
 
 	// Sine
 	double EaseInSine(double t, double start, double end) {
-		return start + (end - start) * (1 - std::cos((t * kPi) / 2));
+		return start + (end - start) * (1 - FastCos((t * 180) / 2));
 	}
 	double EaseOutSine(double t, double start, double end) {
-		return start + (end - start) * std::sin((t * kPi) / 2);
+		return start + (end - start) * FastSin((t * 180) / 2);
 	}
 	double EaseInOutSine(double t, double start, double end) {
-		return start + (end - start) * (-0.5 * (std::cos(kPi * t) - 1));
+		return start + (end - start) * (-0.5 * (FastCos(t * 180) - 1));
 	}
 
 	// Quad
@@ -185,7 +191,7 @@ namespace zenithstg {
 		const double p = 0.3;
 		const double s = p / 4;
 		t -= 1;
-		return start - c * std::pow(2, 10 * t) * std::sin((t - s) * (2 * kPi) / p);
+		return start - c * std::pow(2, 10 * t) * FastSin((t - s) * 360 / p);
 	}
 	double EaseOutElastic(double t, double start, double end) {
 		if (t == 0) return start;
@@ -193,7 +199,7 @@ namespace zenithstg {
 		double c = (end - start);
 		const double p = 0.3;
 		const double s = p / 4;
-		return start + c * std::pow(2, -10 * t) * std::sin((t - s) * (2 * kPi) / p) + c;
+		return start + c * std::pow(2, -10 * t) * FastSin((t - s) * 360 / p) + c;
 	}
 	double EaseInOutElastic(double t, double start, double end) {
 		if (t == 0) return start;
@@ -203,10 +209,10 @@ namespace zenithstg {
 		const double s = p / 4;
 		if (t < 0.5) {
 			t = t * 2 - 1;
-			return start - 0.5 * c * std::pow(2, 10 * t) * std::sin((t - s) * (2 * kPi) / p);
+			return start - 0.5 * c * std::pow(2, 10 * t) * FastSin((t - s) * 360 / p);
 		}
 		t = t * 2 - 1;
-		return start + 0.5 * c * std::pow(2, -10 * t) * std::sin((t - s) * (2 * kPi) / p) + c * 0.5;
+		return start + 0.5 * c * std::pow(2, -10 * t) * FastSin((t - s) * 360 / p) + c * 0.5;
 	}
 
 	// Bounce

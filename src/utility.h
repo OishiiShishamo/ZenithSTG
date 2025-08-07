@@ -76,13 +76,28 @@ namespace zenithstg {
 	*/
 	long long Beat2Frame(double bpm, double beat, int offset_frame = 0);
 
+	/**
+	* @brief カメラを指定位置に移動 / Move camera to specified position.
+	* 
+	* @param pos 移動先の位置 / Position to move to
+	*/
+	void CameraMove(Vec2D pos);
+
+	/**
+	* @brief カメラを指定位置に移動 / Move camera to specified position.
+	*
+	* @param x 移動先のX座標 / X coordinate to move to.
+	* @param y 移動先のY座標 / Y coordinate to move to.
+	*/
+	void CameraMove(int x, int y);
+
 	template <typename T, size_t N>
 	T&
 		SafeAccess(std::array<T, N>& array, size_t index) {
 #ifdef NDEBUG
 		return array[index];
 #else
-		return array.at(index_);
+		return array.at(index);
 #endif
 	}
 
@@ -92,7 +107,7 @@ namespace zenithstg {
 #ifdef NDEBUG
 		return array[index];
 #else
-		return array.at(index_);
+		return array.at(index);
 #endif
 	}
 
@@ -102,7 +117,7 @@ namespace zenithstg {
 #ifdef NDEBUG
 		return (*array)[index];
 #else
-		return array->at(index_);
+		return array->at(index);
 #endif
 	}
 
@@ -112,7 +127,7 @@ namespace zenithstg {
 #ifdef NDEBUG
 		return (*array)[index];
 #else
-		return array->at(index_);
+		return array->at(index);
 #endif
 	}
 

@@ -129,8 +129,8 @@ namespace zenithstg {
 	}
 
 	int	Bullet::ColliCheckObject() {
-		if (ColCircleAndCircle(pos_, player.pos_, col_size_ + player.col_size_)) {
-			player.HitPlayer();
+		if (ColCircleAndCircle(pos_, player_.pos_, col_size_ + player_.col_size_)) {
+			player_.HitPlayer();
 			return 1;
 		}
 		return 0;
@@ -139,7 +139,7 @@ namespace zenithstg {
 #if kGrazeEnabled == 1
 	void Bullet::GrazeObject() {
 		if ((flags_ & kIsGraze) == 0) return;
-		if (ColCircleAndCircle(pos_, player.pos_, col_size_ + player.col_size_ + kGrazeRange)) {
+		if (ColCircleAndCircle(pos_, player_.pos_, col_size_ + player_.col_size_ + kGrazeRange)) {
 			Graze();
 #if kBulletGrazeEveryFrame == 0
 			flags_ &= ~kIsGraze;
@@ -178,7 +178,7 @@ namespace zenithstg {
 		switch (id_) {
 		case 0:
 		default: {
-			int needsMultiStep = speed_ >= col_size_ + player.col_size_ && flags_ & kIsCol;
+			int needsMultiStep = speed_ >= col_size_ + player_.col_size_ && flags_ & kIsCol;
 			if (needsMultiStep) {
 				int step = static_cast<int>(std::ceil(speed_ / 1.0f));
 				for (int i = 0; i < step; i++) {
@@ -221,8 +221,8 @@ namespace zenithstg {
 		SafeAccess(bullets, idx).size_ease_type_ = size_ease_type;
 		SafeAccess(bullets, idx).size_ease_time_ = size_ease_time;
 		if (aim == kAimTrue) {
-			SafeAccess(bullets, idx).start_angle_ = player.AimPlayer(pos) + start_angle;
-			SafeAccess(bullets, idx).end_angle_ = player.AimPlayer(pos) + end_angle;
+			SafeAccess(bullets, idx).start_angle_ = player_.AimPlayer(pos) + start_angle;
+			SafeAccess(bullets, idx).end_angle_ = player_.AimPlayer(pos) + end_angle;
 		}
 		else {
 			SafeAccess(bullets, idx).start_angle_ = start_angle;
@@ -335,12 +335,16 @@ namespace zenithstg {
 	void MoveBullets() {
 		ParallelUpdateBullets(bullets);
 		if (t == time_mng_.target_t_) {
-			std::sort(std::execution::par, bullet_ptrs.begin(), bullet_ptrs.end(), [](const Bullet* a, const Bullet* b) {
-				return a->order_ < b->order_;
-				});
-			for (auto* B : bullet_ptrs) {
-				B->ShowBullet();
-			}
+			RenderBullets();
+		}
+	}
+
+	void RenderBullets() {
+		std::sort(std::execution::par, bullet_ptrs.begin(), bullet_ptrs.end(), [](const Bullet* a, const Bullet* b) {
+			return a->order_ < b->order_;
+			});
+		for (auto* B : bullet_ptrs) {
+			B->ShowBullet();
 		}
 	}
 }

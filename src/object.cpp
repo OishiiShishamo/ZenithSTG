@@ -97,7 +97,7 @@ namespace zenithstg {
 		switch (id_) {
 		case 0:
 		default: {
-			int needsMultiStep = speed_ >= col_size_ + player.col_size_ && flags_ & kIsCol;
+			int needsMultiStep = speed_ >= col_size_ + player_.col_size_ && flags_ & kIsCol;
 			if (needsMultiStep) {
 				int step = static_cast<int>(std::ceil(speed_ / 1.0f));
 				for (int i = 0; i < step; i++) {

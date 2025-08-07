@@ -10,6 +10,6 @@ namespace zenithstg {
 		AddScore(kGrazeScore);
 		graze++;
 		sound_mng_.ReserveSe(kSoundEffectGraze);
-		GrazeParticle(player.pos_);
+		GrazeParticle(player_.pos_);
 	}
 }

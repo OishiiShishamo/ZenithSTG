@@ -59,8 +59,8 @@ namespace zenithstg {
 	}
 
 	int Enemy::ColliCheckObject() {
-		if (ColCircleAndCircle(pos_, player.pos_, col_size_ + player.col_size_)) {
-			player.HitPlayer();
+		if (ColCircleAndCircle(pos_, player_.pos_, col_size_ + player_.col_size_)) {
+			player_.HitPlayer();
 			return 1;
 		}
 		return 0;
@@ -96,7 +96,7 @@ namespace zenithstg {
 		switch (id_) {
 		case 0:
 		default: {
-			int needsMultiStep = speed_ >= col_size_ + player.col_size_ && flags_ & kIsCol;
+			int needsMultiStep = speed_ >= col_size_ + player_.col_size_ && flags_ & kIsCol;
 			if (needsMultiStep) {
 				int step = static_cast<int>(std::ceil(speed_ / 1.0f));
 				for (int i = 0; i < step; i++) {
@@ -139,8 +139,8 @@ namespace zenithstg {
 		SafeAccess(enemies, idx).size_ease_type_ = size_ease_type;
 		SafeAccess(enemies, idx).size_ease_time_ = size_ease_time;
 		if (aim == kAimTrue) {
-			SafeAccess(enemies, idx).start_angle_ = player.AimPlayer(pos) + start_angle;
-			SafeAccess(enemies, idx).end_angle_ = player.AimPlayer(pos) + end_angle;
+			SafeAccess(enemies, idx).start_angle_ = player_.AimPlayer(pos) + start_angle;
+			SafeAccess(enemies, idx).end_angle_ = player_.AimPlayer(pos) + end_angle;
 		}
 		else {
 			SafeAccess(enemies, idx).start_angle_ = start_angle;
@@ -251,12 +251,16 @@ namespace zenithstg {
 	void MoveEnemies() {
 		ParallelUpdateEnemies(enemies);
 		if (t == time_mng_.target_t_) {
-			std::sort(std::execution::par, enemy_ptrs.begin(), enemy_ptrs.end(), [](const Enemy* a, const Enemy* b) {
-				return a->pop_t_ < b->pop_t_;
-				});
-			for (auto* E : enemy_ptrs) {
-				E->ShowEnemy();
-			}
+			RenderEnemies();
+		}
+	}
+
+	void RenderEnemies() {
+		std::sort(std::execution::par, enemy_ptrs.begin(), enemy_ptrs.end(), [](const Enemy* a, const Enemy* b) {
+			return a->pop_t_ < b->pop_t_;
+			});
+		for (auto* E : enemy_ptrs) {
+			E->ShowEnemy();
 		}
 	}
 }

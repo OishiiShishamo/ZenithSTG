@@ -80,7 +80,7 @@ namespace zenithstg {
 		switch (id_) {
 		case 0:
 		default: {
-			int needsMultiStep = speed_ >= col_size_ + player.col_size_ && flags_ & kIsCol;
+			int needsMultiStep = speed_ >= col_size_ + player_.col_size_ && flags_ & kIsCol;
 			if (needsMultiStep) {
 				int step = static_cast<int>(std::ceil(speed_ / 1.0f));
 				for (int i = 0; i < step; i++) {
@@ -151,12 +151,16 @@ namespace zenithstg {
 	void MovePlayerShots() {
 		ParallelUpdatePlayerShots(player_shots);
 		if (t == time_mng_.target_t_) {
-			std::sort(std::execution::par, player_shot_ptrs.begin(), player_shot_ptrs.end(), [](const PlayerShot* a, const PlayerShot* b) {
-				return a->pop_t_ < b->pop_t_;
-				});
-			for (auto* PS : player_shot_ptrs) {
-				PS->ShowPlayerShot();
-			}
+			RenderPlayerShots();
+		}
+	}
+
+	void RenderPlayerShots() {
+		std::sort(std::execution::par, player_shot_ptrs.begin(), player_shot_ptrs.end(), [](const PlayerShot* a, const PlayerShot* b) {
+			return a->pop_t_ < b->pop_t_;
+			});
+		for (auto* PS : player_shot_ptrs) {
+			PS->ShowPlayerShot();
 		}
 	}
 }

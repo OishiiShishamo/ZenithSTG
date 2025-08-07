@@ -4,6 +4,7 @@
 
 #include <cmath>
 
+#include "logging.h"
 #include "math_tool.h"
 
 namespace zenithstg {

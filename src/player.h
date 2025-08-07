@@ -44,7 +44,7 @@ namespace zenithstg {
 		void RoutinePlayer();
 	};
 
-	extern Player player;
+	extern Player player_;
 }
 
 #endif

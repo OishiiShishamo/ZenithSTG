@@ -121,4 +121,11 @@ namespace zenithstg {
 		long long frame = static_cast<int>(std::round(timeInSeconds * fps));
 		return frame + offset_frame;
 	}
+
+	void CameraMove(Vec2D pos) {
+		screen_pos_offset = kCenter * screen_size_rate - pos * screen_size_rate;
+	}
+	void CameraMove(int x, int y) {
+		screen_pos_offset = kCenter * screen_size_rate - Vec2D(x, y) * screen_size_rate;
+	}
 }
