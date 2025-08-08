@@ -112,11 +112,12 @@ WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, in
 			zenithstg::WriteLog();
 			break;
 		}
-		if (CheckHitKey(KEY_INPUT_ESCAPE)) {
+		if (CheckHitKey(KEY_INPUT_ESCAPE) & (1 << 15)) {
 			zenithstg::WriteLog();
 			break;
 		}
 	}
+	timeEndPeriod(1);
 	DxLib_End();
 	return 0;
 }

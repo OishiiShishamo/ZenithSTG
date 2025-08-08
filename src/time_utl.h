@@ -17,13 +17,6 @@ namespace zenithstg {
 
 	class TimeUtl {
 	public:
-		TimeUtl() {
-			timeBeginPeriod(1);
-		}
-		~TimeUtl() {
-			timeEndPeriod(1);
-		}
-
 		long long target_t_ = 0;
 
 		void StartTimer();

@@ -84,6 +84,8 @@ namespace zenithstg {
 		SetEnableWASAPIFlag(TRUE, FALSE, 0);
 		SetFontSize(20);
 
+		timeBeginPeriod(1);
+
 		std::srand(42);
 
 		MathInit();
