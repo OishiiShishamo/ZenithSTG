@@ -63,14 +63,12 @@ namespace zenithstg {
 	int PlayerShot::CheckCollisionAndBounds() {
 		if (flags_ & kIsCol) {
 			if (ColliCheckObject()) {
-				PushBlankPlayerShots(index_);
-				flags_ &= ~kIsAlive;
+				KillObject();
 				return 1;
 			}
 		}
 		if (CheckPosBounds()) {
-			PushBlankPlayerShots(index_);
-			flags_ &= ~kIsAlive;
+			KillObject();
 			return 1;
 		}
 		return 0;
@@ -95,6 +93,11 @@ namespace zenithstg {
 			break;
 		}
 		}
+	}
+
+	void PlayerShot::KillObject() {
+		PushBlankPlayerShots(index_);
+		flags_ &= ~kIsAlive;
 	}
 
 	void PushBlankPlayerShots(int idx) {

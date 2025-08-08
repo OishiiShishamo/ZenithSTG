@@ -35,6 +35,7 @@ namespace zenithstg {
 		void ShowLaser();
 	private:
 		void MoveFunc() override;
+		void KillObject() override;
 		int ColliCheckObject() override;
 #if kGrazeEnabled == 1
 		void GrazeObject() override;

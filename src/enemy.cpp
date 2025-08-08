@@ -59,7 +59,7 @@ namespace zenithstg {
 	}
 
 	int Enemy::ColliCheckObject() {
-		if (ColCircleAndCircle(pos_, player_.pos_, col_size_ + player_.col_size_)) {
+		if (ColPointAndCircle(pos_, player_.pos_, col_size_ + player_.col_size_)) {
 			player_.HitPlayer();
 			return 1;
 		}
@@ -79,14 +79,12 @@ namespace zenithstg {
 	int Enemy::CheckCollisionAndBounds() {
 		if (flags_ & kIsCol) {
 			if (ColliCheckObject()) {
-				PushBlankEnemies(index_);
-				flags_ &= ~kIsAlive;
+				KillObject();
 				return 1;
 			}
 		}
 		if (CheckPosBounds()) {
-			PushBlankEnemies(index_);
-			flags_ &= ~kIsAlive;
+			KillObject();
 			return 1;
 		}
 		return 0;
@@ -111,6 +109,11 @@ namespace zenithstg {
 			break;
 		}
 		}
+	}
+
+	void Enemy::KillObject() {
+		PushBlankEnemies(index_);
+		flags_ &= ~kIsAlive;
 	}
 
 	void PushBlankEnemies(int idx) {

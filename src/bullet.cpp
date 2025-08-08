@@ -129,7 +129,7 @@ namespace zenithstg {
 	}
 
 	int	Bullet::ColliCheckObject() {
-		if (ColCircleAndCircle(pos_, player_.pos_, col_size_ + player_.col_size_)) {
+		if (ColPointAndCircle(pos_, player_.pos_, col_size_ + player_.col_size_)) {
 			player_.HitPlayer();
 			return 1;
 		}
@@ -139,7 +139,7 @@ namespace zenithstg {
 #if kGrazeEnabled == 1
 	void Bullet::GrazeObject() {
 		if ((flags_ & kIsGraze) == 0) return;
-		if (ColCircleAndCircle(pos_, player_.pos_, col_size_ + player_.col_size_ + kGrazeRange)) {
+		if (ColPointAndCircle(pos_, player_.pos_, col_size_ + player_.col_size_ + kGrazeRange)) {
 			Graze();
 #if kBulletGrazeEveryFrame == 0
 			flags_ &= ~kIsGraze;
@@ -161,14 +161,12 @@ namespace zenithstg {
 	int	Bullet::CheckCollisionAndBounds() {
 		if (flags_ & kIsCol) {
 			if (ColliCheckObject()) {
-				PushBlankBullets(index_);
-				flags_ &= ~kIsAlive;
+				KillObject();
 				return 1;
 			}
 		}
 		if (CheckPosBounds()) {
-			PushBlankBullets(index_);
-			flags_ &= ~kIsAlive;
+			KillObject();
 			return 1;
 		}
 		return 0;
@@ -178,12 +176,17 @@ namespace zenithstg {
 		switch (id_) {
 		case 0:
 		default: {
-			int needsMultiStep = speed_ >= col_size_ + player_.col_size_ && flags_ & kIsCol;
-			if (needsMultiStep) {
-				int step = static_cast<int>(std::ceil(speed_ / 1.0f));
-				for (int i = 0; i < step; i++) {
-					MoveObject(speed_ / step);
-					if (CheckCollisionAndBounds()) return;
+			if (speed_ >= col_size_ + player_.col_size_ && flags_ & kIsCol) {
+				Vec2D old_pos = pos_;
+				MoveObject(speed_);
+				if (ColPointAndCircleAdv(player_.pos_, old_pos, pos_, col_size_)) {
+					player_.HitPlayer();
+					KillObject();
+					return;
+				}
+				if (CheckPosBounds()) {
+					KillObject();
+					return;
 				}
 			}
 			else {
@@ -193,6 +196,11 @@ namespace zenithstg {
 			break;
 		}
 		}
+	}
+
+	void Bullet::KillObject() {
+		PushBlankBullets(index_);
+		flags_ &= ~kIsAlive;
 	}
 
 	void PushBlankBullets(int idx) {

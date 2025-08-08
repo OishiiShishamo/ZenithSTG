@@ -178,14 +178,12 @@ namespace zenithstg {
 	int Laser::CheckCollisionAndBounds() {
 		if (flags_ & kIsCol) {
 			if (ColliCheckObject()) {
-				PushBlankLasers(index_);
-				flags_ &= ~kIsAlive;
+				KillObject();
 				return 1;
 			}
 		}
 		if (CheckPosBounds()) {
-			PushBlankLasers(index_);
-			flags_ &= ~kIsAlive;
+			KillObject();
 			return 1;
 		}
 		return 0;
@@ -210,6 +208,11 @@ namespace zenithstg {
 			break;
 		}
 		}
+	}
+
+	void Laser::KillObject() {
+		PushBlankLasers(index_);
+		flags_ &= ~kIsAlive;
 	}
 
 	void PushBlankLasers(int idx) {
