@@ -9,7 +9,7 @@
 
 namespace zenithstg {
 	double Player::AimPlayer(const Vec2D& v) {
-		return atan2(-double(pos_.GetY() - v.GetY()), double(pos_.GetX() - v.GetX()));
+		return Vec2DToAngle(pos_, v);
 	}
 
 	double Player::RangePlayer(const Vec2D& v) {

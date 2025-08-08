@@ -61,6 +61,7 @@ namespace zenithstg {
 
 	double CrossProduct(const Vec2D& v1, const Vec2D& v2, const Vec2D& v3);
 	double Range(const Vec2D& v1, const Vec2D& v2);
+	double Vec2DToAngle(const Vec2D& v1, const Vec2D& v2);
 	Vec2D AngleToVec2D(double angle);
 	Vec2D RotatePoint(const Vec2D& pt, double angle);
 }

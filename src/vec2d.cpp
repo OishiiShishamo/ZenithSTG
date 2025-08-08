@@ -37,6 +37,10 @@ namespace zenithstg {
 		return SafeAccess(len, 0);
 	}
 
+	double Vec2DToAngle(const Vec2D& v1, const Vec2D& v2) {
+		return std::atan2(-v1.GetY() - v2.GetY(), v1.GetX() - v2.GetX());
+	}
+
 	Vec2D AngleToVec2D(double angle) {
 		return {
 			std::cos(angle),
