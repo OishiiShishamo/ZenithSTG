@@ -31,9 +31,7 @@
 
 #include "DxLib.h"
 
-#include <boost/lexical_cast.hpp>
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/xml_parser.hpp>
+#include <json.hpp>
 
 #include "collision.h"
 #include "color.h"

@@ -1,6 +1,11 @@
 ﻿#include "init.h"
 
+#include <algorithm>
+#include <fstream>
+
 #include "DxLib.h"
+
+#include <json.hpp>
 
 #include "bullet.h"
 #include "enemy.h"
@@ -24,50 +29,30 @@ namespace zenithstg {
 	int num_threads = std::thread::hardware_concurrency();
 
 	void Init() {
-		boost::property_tree::ptree pt;
-		boost::property_tree::read_xml("ZenithSTG_property.xml", pt);
-		if (boost::optional<std::string> title = pt.get_optional<std::string>("root.title")) {
-			properties_.title_ = title.get();
-		}
-		else {
-			properties_.title_ = "ZenithSTG";
-		}
-		if (boost::optional<int> window_size = pt.get_optional<int>("root.windowSize")) {
-			properties_.window_size_ = window_size.get();
-			if (properties_.window_size_ < 0 || properties_.window_size_ > 2) properties_.window_size_ = 0;
-		}
-		else {
-			properties_.window_size_ = 0;
-		}
-		if (boost::optional<int> is_window = pt.get_optional<int>("root.isWindow")) {
-			properties_.is_window_ = is_window.get();
-			if (properties_.is_window_ < 0 || properties_.is_window_ > 1) properties_.is_window_ = 1;
-		}
-		else {
-			properties_.is_window_ = 1;
-		}
-		if (boost::optional<long long> hi_score = pt.get_optional<long long>("root.hiScore")) {
-			properties_.hi_score_ = hi_score.get();
-			if (properties_.hi_score_ < 0) properties_.hi_score_ = 0;
-		}
-		else {
-			properties_.hi_score_ = 0;
-		}
-		if (boost::optional<int> bgm_volume = pt.get_optional<int>("root.BGMVolume")) {
-			properties_.bgm_volume_ = bgm_volume.get();
-			if (properties_.bgm_volume_ < 0) properties_.bgm_volume_ = 0;
-			if (properties_.bgm_volume_ > 100) properties_.bgm_volume_ = 100;
-		}
-		else {
-			properties_.bgm_volume_ = properties_.bgm_volume_;
-		}
-		if (boost::optional<int> se_volume = pt.get_optional<int>("root.SEVolume")) {
-			properties_.se_volume_ = se_volume.get();
-			if (properties_.se_volume_ < 0) properties_.se_volume_ = 0;
-			if (properties_.se_volume_ > 100) properties_.se_volume_ = 100;
-		}
-		else {
-			properties_.se_volume_ = properties_.se_volume_;
+		std::ifstream f("ZenithSTG_property.json");
+		if (f.is_open()) {
+			nlohmann::json prop_json = nlohmann::json::parse(f, nullptr, true, true);
+			f.close();
+			if (prop_json.contains("title")) {
+				properties_.title_ = prop_json["title"].get<std::string>();
+			}
+			if (prop_json.contains("window_size")) {
+				properties_.window_size_ = prop_json["window_size"].get<int>();
+			}
+			if (prop_json.contains("is_window")) {
+				properties_.is_window_ = prop_json["is_window"].get<int>();
+			}
+			if (prop_json.contains("hi_score")) {
+				properties_.hi_score_ = prop_json["hi_score"].get<long long>();
+			}
+			if (prop_json.contains("bgm_volume")) {
+				properties_.bgm_volume_ = prop_json["bgm_volume"].get<int>();
+				properties_.bgm_volume_ = std::clamp(properties_.bgm_volume_, 0, 100);
+			}
+			if (prop_json.contains("se_volume")) {
+				properties_.se_volume_ = prop_json["se_volume"].get<int>();
+				properties_.se_volume_ = std::clamp(properties_.se_volume_, 0, 100);
+			}
 		}
 
 		SetOutApplicationLogValidFlag(FALSE);

@@ -1,5 +1,11 @@
 ﻿#include "main.h"
 
+#include <fstream>
+
+#include "DxLib.h"
+
+#include <json.hpp>
+
 #include "base_scene.h"
 #include "fps.h"
 #include "game_scene.h"
@@ -13,6 +19,7 @@
 #include "enemy.h"
 #include "player.h"
 #include "player_shot.h"
+#include "property.h"
 #include "script.h"
 #include "sound.h"
 #include "utility.h"
@@ -118,6 +125,18 @@ WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, in
 		}
 	}
 	timeEndPeriod(1);
+
+	nlohmann::json save_prop_json = {
+		{"title", zenithstg::properties_.title_},
+		{"window_size", zenithstg::properties_.window_size_},
+		{"is_window", zenithstg::properties_.is_window_},
+		{"hi_score", zenithstg::properties_.hi_score_.load()},
+		{"bgm_volume", zenithstg::properties_.bgm_volume_},
+		{"se_volume", zenithstg::properties_.se_volume_}
+	};
+	std::ofstream ofs("ZenithSTG_property.json");
+	ofs << std::setw(4) << save_prop_json << std::endl;
+
 	DxLib_End();
 	return 0;
 }
