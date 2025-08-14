@@ -11,26 +11,15 @@
 #include "time_utl.h"
 
 namespace zenithstg {
-	bool debuging = true;
-
 	void ApplyWindowSize() {
 		int width = GetSystemMetrics(SM_CXSCREEN);
 		int height = GetSystemMetrics(SM_CYSCREEN);
-		if (width - height < 560 - 1) {
+		if (properties_.window_size_ == 2 && width - height <= 839) {
+			properties_.window_size_ = 1;
+		}
+		if (properties_.window_size_ == 1 && width - height <= 699) {
 			properties_.window_size_ = 0;
 		}
-		else if (width - height < 700 - 1) {
-			properties_.window_size_ = 1;
-		}
-		else if (width - height < 840 - 1) {
-			properties_.window_size_ = 2;
-		}
-		else {
-			properties_.window_size_ = 1;
-		}
-
-		if (debuging) properties_.window_size_ = 1;
-
 		return;
 	}
 
