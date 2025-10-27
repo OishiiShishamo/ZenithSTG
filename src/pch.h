@@ -2,6 +2,8 @@
 #ifndef ZENITHSTG_SRC_PCH_H_
 #define ZENITHSTG_SRC_PCH_H_
 
+#define NOMINMAX
+
 #include <algorithm>
 #include <any>
 #include <array>

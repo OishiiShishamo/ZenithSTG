@@ -23,23 +23,23 @@ namespace zenithstg {
 		return;
 	}
 
-	void DrawRotaGraph4(int x, int y, double rate, double angle_x, double angle_y, double angle_z, int handle, int tran_flag, int x_turn_flag, int y_turn_flag) {
+	void DrawRotaGraph4(int x, int y, float rate, float angle_x, float angle_y, float angle_z, int handle, int tran_flag, int x_turn_flag, int y_turn_flag) {
 		int sx = 0, sy = 0;
 		if (handle < 0) return;
 		GetGraphSize(handle, &sx, &sy);
 		if (sx <= 0 || sy <= 0) return;
 
-		DirectX::XMMATRIX rot_x = DirectX::XMMatrixRotationX(static_cast<double>(angle_x));
-		DirectX::XMMATRIX rot_y = DirectX::XMMatrixRotationY(static_cast<double>(angle_y));
-		DirectX::XMMATRIX rot_z = DirectX::XMMatrixRotationZ(static_cast<double>(angle_z));
-		DirectX::XMMATRIX scale = DirectX::XMMatrixScaling(static_cast<double>(rate), static_cast<double>(rate), static_cast<double>(rate));
+		DirectX::XMMATRIX rot_x = DirectX::XMMatrixRotationX(static_cast<float>(angle_x));
+		DirectX::XMMATRIX rot_y = DirectX::XMMatrixRotationY(static_cast<float>(angle_y));
+		DirectX::XMMATRIX rot_z = DirectX::XMMatrixRotationZ(static_cast<float>(angle_z));
+		DirectX::XMMATRIX scale = DirectX::XMMatrixScaling(static_cast<float>(rate), static_cast<float>(rate), static_cast<float>(rate));
 		DirectX::XMMATRIX m = scale * rot_z * rot_y * rot_x;
 
-		double hw = sx * 0.5f;
-		double hh = sy * 0.5f;
+		float hw = sx * 0.5f;
+		float hh = sy * 0.5f;
 
-		double sign_x = x_turn_flag ? -1.0f : 1.0f;
-		double sign_y = y_turn_flag ? -1.0f : 1.0f;
+		float sign_x = x_turn_flag ? -1.0f : 1.0f;
+		float sign_y = y_turn_flag ? -1.0f : 1.0f;
 
 		DirectX::XMVECTOR p1 = DirectX::XMVectorSet(-hw * sign_x, -hh * sign_y, 0.0f, 1.0f); // 左上
 		DirectX::XMVECTOR p2 = DirectX::XMVectorSet(hw * sign_x, -hh * sign_y, 0.0f, 1.0f);  // 右上
@@ -63,15 +63,15 @@ namespace zenithstg {
 		DrawModiGraph(lux, luy, rux, ruy, rdx, rdy, ldx, ldy, handle, tran_flag);
 	}
 
-	Color GetColorHsv(double H, double S, double V) {
+	Color GetColorHsv(float H, float S, float V) {
 		int hi = static_cast<int>(H / 60.0);
 		hi = (hi == 6) ? 5 : hi % 6;
-		double f = (H / 60.0) - hi;
-		double p = V * (1.0 - S);
-		double q = V * (1.0 - f * S);
-		double t = V * (1.0 - (1.0 - f) * S);
+		float f = (H / 60.0) - hi;
+		float p = V * (1.0 - S);
+		float q = V * (1.0 - f * S);
+		float t = V * (1.0 - (1.0 - f) * S);
 
-		double r = 0, g = 0, b = 0;
+		float r = 0, g = 0, b = 0;
 
 		switch (hi) {
 		case 0: r = V; g = t; b = p; break;
@@ -86,10 +86,10 @@ namespace zenithstg {
 		uint8_t ig = static_cast<uint8_t>(std::clamp(g * 255.0, 0.0, 255.0));
 		uint8_t ib = static_cast<uint8_t>(std::clamp(b * 255.0, 0.0, 255.0));
 
-		return Color(ir, ig, ib);
+		return Color(static_cast<int>(ir), static_cast<int>(ig), static_cast<int>(ib));
 	}
 
-	Color GamingColor(int offset, double mul) {
+	Color GamingColor(int offset, float mul) {
 		return GetColorHsv(std::fmod((t + offset) * mul, 360), 1, 1);
 	}
 

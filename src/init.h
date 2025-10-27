@@ -8,6 +8,8 @@
 #ifndef ZENITHSTG_SRC_INIT_H_
 #define ZENITHSTG_SRC_INIT_H_
 
+#pragma comment(lib, "winmm.lib")
+
 #include "DxLib.h"
 
 #include "bullet.h"

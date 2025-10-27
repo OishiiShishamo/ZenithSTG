@@ -67,6 +67,7 @@ namespace zenithstg {
 		SetWaitVSyncFlag(FALSE);
 		SetUseASyncLoadFlag(FALSE);
 		SetEnableWASAPIFlag(TRUE, FALSE, 0);
+		SetWindowSizeExtendRate(1.0);
 		SetFontSize(20);
 
 		timeBeginPeriod(1);

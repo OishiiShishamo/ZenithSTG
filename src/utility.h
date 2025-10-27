@@ -33,7 +33,7 @@ namespace zenithstg {
 	* @param x_turn_flag X軸で反転するかどうか / Whether inverted on X-axis
 	* @param y_turn_flag Y軸で反転するかどうか / Whether inverted on Y-axis
 	*/
-	void DrawRotaGraph4(int x, int y, double rate, double angle_x, double angle_y, double angle_z, int handle, int tran_flag = 1, int x_turn_flag = 0, int y_turn_flag = 0);
+	void DrawRotaGraph4(int x, int y, float rate, float angle_x, float angle_y, float angle_z, int handle, int tran_flag = 1, int x_turn_flag = 0, int y_turn_flag = 0);
 
 	/**
 	* @brief HSVで色を生成 / HSV Color Generation.
@@ -42,14 +42,14 @@ namespace zenithstg {
 	* @param s 彩度 / Saturation
 	* @param v 明度 / value
 	*/
-	Color GetColorHsv(double h, double s, double v);
+	Color GetColorHsv(float h, float s, float v);
 
 	/**
 	* @brief HSVを使用したゲーミングカラーの生成 / hSV used Gaming Color Generation.
 	*
 	* @param mul 色の変化速度の倍率 / Color change speed multiplier
 	*/
-	Color GamingColor(int offset = 0, double mul = 1);
+	Color GamingColor(int offset = 0, float mul = 1);
 
 	/**
 	* @brief 余計なブレンドモードの切り替えを防いだブレンドモードの切り替え / Switching blend modes preventing unnecessary blend mode switching

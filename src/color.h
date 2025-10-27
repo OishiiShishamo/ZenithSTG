@@ -31,43 +31,76 @@
 
 #include <algorithm>
 
+#include <emmintrin.h>
+#include <immintrin.h>
+#include <pmmintrin.h>
+
 #include "DxLib.h"
 
-namespace zenithstg {
-	class Color {
-	public:
-		int GetR() const { return r_; }
-		int GetG() const { return g_; }
-		int GetB() const { return b_; }
-		void SetR(int r) { r_ = r; }
-		void SetG(int g) { g_ = g; }
-		void SetB(int b) { b_ = b; }
-		int GetDxColor() const { return GetColor(r_, g_, b_); }
+#include "global.h"
 
-		void Saturate() {
-			SetR(std::clamp(GetR(), 0, 255));
-			SetG(std::clamp(GetG(), 0, 255));
-			SetB(std::clamp(GetB(), 0, 255));
-		}
+namespace  zenithstg {
+    class alignas(16) Color {
+    public:
+        Color() noexcept : rgba_(_mm_set1_ps(1.0f)) {}
 
-		Color operator+(const Color& rhs) const { return Color(GetR() + rhs.GetR(), GetG() + rhs.GetG(), GetB() + rhs.GetB()); }
-		Color operator+(double scalar) const { return Color(GetR() + scalar, GetG() + scalar, GetB() + scalar); }
-		Color operator-(const Color& rhs) const { return Color(GetR() - rhs.GetR(), GetG() - rhs.GetG(), GetB() - rhs.GetB()); }
-		Color operator-(double scalar) const { return Color(GetR() - scalar, GetG() - scalar, GetB() - scalar); }
-		Color operator*(const Color& rhs) const { return Color(GetR() * rhs.GetR(), GetG() * rhs.GetG(), GetB() * rhs.GetB()); }
-		Color operator*(double scalar) const { return Color(GetR() * scalar, GetG() * scalar, GetB() * scalar); }
-		Color operator/(const Color& rhs) const { return Color(GetR() / rhs.GetR(), GetG() / rhs.GetG(), GetB() / rhs.GetB()); }
-		Color operator/(double scalar) const { return Color(GetR() / scalar, GetG() / scalar, GetB() / scalar); }
+        Color(float r, float g, float b, float a = 255.0f) noexcept {
+            rgba_ = _mm_setr_ps(r, g, b, a);
+            rgba_ = _mm_div_ps(_mm_max_ps(_mm_min_ps(rgba_, _mm_set1_ps(255.0f)), _mm_set1_ps(0.0f)), _mm_set1_ps(255.0f));
+        }
 
-		Color() = default;
-		Color(int r, int g, int b) : r_(r), g_(g), b_(b) {
-			Saturate();
-		}
-	private:
-		int r_ = 0;
-		int g_ = 0;
-		int b_ = 0;
-	};
+        explicit Color(__m128 rgba) noexcept : rgba_(rgba) {
+            Saturate();
+        }
+
+        float GetR() const noexcept { return rgba_array()[0] * 255.0f; }
+        float GetG() const noexcept { return rgba_array()[1] * 255.0f; }
+        float GetB() const noexcept { return rgba_array()[2] * 255.0f; }
+        float GetA() const noexcept { return rgba_array()[3] * 255.0f; }
+        float GetNR() const noexcept { return rgba_array()[0]; }
+        float GetNG() const noexcept { return rgba_array()[1]; }
+        float GetNB() const noexcept { return rgba_array()[2]; }
+        float GetNA() const noexcept { return rgba_array()[3]; }
+
+        __m128 Get() const noexcept { return rgba_; }
+
+        void Set(float r, float g, float b, float a = 255.0f) noexcept {
+            rgba_ = _mm_setr_ps(r, g, b, a);
+            rgba_ = _mm_div_ps(rgba_, _mm_set1_ps(255.0f));
+            Saturate();
+        }
+
+        unsigned int GetDxColor() const noexcept {
+            alignas(16) float arr[4];
+            _mm_storeu_ps(arr, _mm_mul_ps(rgba_, _mm_set1_ps(255.0f)));
+            return GetColor(arr[0], arr[1], arr[2]);
+        }
+
+        Color operator+(const Color& rhs) const noexcept { return Color(_mm_add_ps(rgba_, rhs.rgba_)); }
+        Color operator-(const Color& rhs) const noexcept { return Color(_mm_sub_ps(rgba_, rhs.rgba_)); }
+        Color operator*(const Color& rhs) const noexcept { return Color(_mm_mul_ps(rgba_, rhs.rgba_)); }
+        Color operator/(const Color& rhs) const noexcept { return Color(_mm_div_ps(rgba_, rhs.rgba_)); }
+
+        Color operator*(float s) const noexcept { return Color(_mm_mul_ps(rgba_, _mm_set1_ps(s))); }
+        Color operator/(float s) const noexcept { return Color(_mm_div_ps(rgba_, _mm_set1_ps(s))); }
+
+        Color& operator+=(const Color& rhs) noexcept { rgba_ = _mm_add_ps(rgba_, rhs.rgba_); Saturate(); return *this; }
+        Color& operator-=(const Color& rhs) noexcept { rgba_ = _mm_sub_ps(rgba_, rhs.rgba_); Saturate(); return *this; }
+        Color& operator*=(float s) noexcept { rgba_ = _mm_mul_ps(rgba_, _mm_set1_ps(s)); Saturate(); return *this; }
+
+    private:
+        __m128 rgba_;
+
+        void Saturate() noexcept {
+            rgba_ = _mm_max_ps(_mm_min_ps(rgba_, _mm_set1_ps(1.0f)), _mm_set1_ps(0.0f));
+        }
+
+        inline std::array<float, 4> rgba_array() const noexcept {
+            alignas(16) float tmp[4];
+            _mm_storeu_ps(tmp, rgba_);
+            return { tmp[0], tmp[1], tmp[2], tmp[3] };
+        }
+    };
 }
 
 #endif

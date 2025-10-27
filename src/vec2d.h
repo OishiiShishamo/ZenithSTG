@@ -8,6 +8,8 @@
 #ifndef ZENITHSTG_SRC_VEC2D_H_
 #define ZENITHSTG_SRC_VEC2D_H_
 
+#include <emmintrin.h>
+
 namespace zenithstg {
 	class alignas(16) Vec2D {
 	public:
