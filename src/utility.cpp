@@ -63,34 +63,44 @@ namespace zenithstg {
 		DrawModiGraph(lux, luy, rux, ruy, rdx, rdy, ldx, ldy, handle, tran_flag);
 	}
 
-	Color GetColorHsv(float H, float S, float V) {
-		int hi = static_cast<int>(H / 60.0);
-		hi = (hi == 6) ? 5 : hi % 6;
-		float f = (H / 60.0) - hi;
-		float p = V * (1.0 - S);
-		float q = V * (1.0 - f * S);
-		float t = V * (1.0 - (1.0 - f) * S);
+	Color GetColorHsv(float h, float s, float v) {
+		h = std::fmod(h, 360.0f);
+		if (h < 0.0f) h += 360.0f;
 
-		float r = 0, g = 0, b = 0;
+		float c = v * s;
+		float x = c * (1.0f - std::fabs(std::fmod(h / 60.0f, 2.0f) - 1.0f));
+		float m = v - c;
 
-		switch (hi) {
-		case 0: r = V; g = t; b = p; break;
-		case 1: r = q; g = V; b = p; break;
-		case 2: r = p; g = V; b = t; break;
-		case 3: r = p; g = q; b = V; break;
-		case 4: r = t; g = p; b = V; break;
-		case 5: r = V; g = p; b = q; break;
+		float r, g, b;
+
+		if (h < 60.0f) {
+			r = c; g = x; b = 0.0f;
+		}
+		else if (h < 120.0f) {
+			r = x; g = c; b = 0.0f;
+		}
+		else if (h < 180.0f) {
+			r = 0.0f; g = c; b = x;
+		}
+		else if (h < 240.0f) {
+			r = 0.0f; g = x; b = c;
+		}
+		else if (h < 300.0f) {
+			r = x; g = 0.0f; b = c;
+		}
+		else {
+			r = c; g = 0.0f; b = x;
 		}
 
-		uint8_t ir = static_cast<uint8_t>(std::clamp(r * 255.0, 0.0, 255.0));
-		uint8_t ig = static_cast<uint8_t>(std::clamp(g * 255.0, 0.0, 255.0));
-		uint8_t ib = static_cast<uint8_t>(std::clamp(b * 255.0, 0.0, 255.0));
-
-		return Color(static_cast<int>(ir), static_cast<int>(ig), static_cast<int>(ib));
+		return Color(r + m, g + m, b + m);
 	}
 
 	Color GamingColor(int offset, float mul) {
 		return GetColorHsv(std::fmod((t + offset) * mul, 360), 1, 1);
+	}
+
+	Color GamingColorTest(long long gaming_t, int offset, float mul) {
+		return GetColorHsv(std::fmod((gaming_t + offset) * mul, 360), 1, 1);
 	}
 
 	void SmartSetDrawBlendMode(int blend_mode, int pal) {

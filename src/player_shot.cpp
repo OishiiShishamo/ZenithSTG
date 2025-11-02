@@ -20,7 +20,7 @@ namespace zenithstg {
 		if (!(flags_ & kIsAlive)) return;
 		if (blend_ == -1) {
 			SmartSetDrawBlendMode(SafeAccess(default_player_shot_blend, style_), pal_);
-			SetDrawBright(color_.GetR(), color_.GetG(), color_.GetB());
+			SetDrawBright(color_.GetR255(), color_.GetG255(), color_.GetB255());
 			SetDrawMode(DX_DRAWMODE_BILINEAR);
 			DrawRotaGraph(pos_.GetX(), pos_.GetY(), size_, -show_angle_, SafeAccess(img_res.shot_gh, style_), TRUE);
 			SetDrawBright(255, 255, 255);
@@ -29,7 +29,7 @@ namespace zenithstg {
 		}
 		else {
 			SmartSetDrawBlendMode(blend_, pal_);
-			SetDrawBright(color_.GetR(), color_.GetG(), color_.GetB());
+			SetDrawBright(color_.GetR255(), color_.GetG255(), color_.GetB255());
 			SetDrawMode(DX_DRAWMODE_BILINEAR);
 			DrawRotaGraph(pos_.GetX(), pos_.GetY(), size_, -show_angle_, SafeAccess(img_res.shot_gh, style_), TRUE);
 			SetDrawBright(255, 255, 255);
@@ -40,7 +40,7 @@ namespace zenithstg {
 			if (flags_ & kIsCol) {
 				SmartSetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 				DrawCircle(pos_.GetX(), pos_.GetY(), col_size_, GetColor(255, 255, 255), 1);
-				DrawFormatString(pos_.GetX(), pos_.GetY(), GetColor(GamingColor().GetR(), GamingColor().GetG(), GamingColor().GetB()), "%f", col_size_);
+				DrawFormatString(pos_.GetX(), pos_.GetY(), GamingColor().GetDxColor(), "%f", col_size_);
 			}
 		}
 	}

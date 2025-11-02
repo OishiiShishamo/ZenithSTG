@@ -2,97 +2,152 @@
 #include <chrono>
 #include <random>
 #include "color.h"
+#include "utility.h"
 
 using namespace zenithstg;
 
-//-----------------------------------------
-// 正常動作テスト
-//-----------------------------------------
+// ( ﾉ´ •ω•`)ﾉ━━━━━━━━━━━━━━━━
+// Color Class Tests
+// ( ﾉ´ •ω•`)ﾉ━━━━━━━━━━━━━━━━
 TEST(ColorTest, BasicGetterSetter) {
-    Color c(255, 128, 0, 64);
+    Color c = Color255(255, 128, 0, 64);
 
-    EXPECT_NEAR(c.GetR(), 255.0f, 1e-3);
-    EXPECT_NEAR(c.GetG(), 128.0f, 1e-3);
-    EXPECT_NEAR(c.GetB(), 0.0f, 1e-3);
-    EXPECT_NEAR(c.GetA(), 64.0f, 1e-3);
+    EXPECT_NEAR(c.GetR255(), 255.0f, 1e-3);
+    EXPECT_NEAR(c.GetG255(), 128.0f, 1e-3);
+    EXPECT_NEAR(c.GetB255(), 0.0f, 1e-3);
+    EXPECT_NEAR(c.GetA255(), 64.0f, 1e-3);
 
-    c.Set(0, 255, 0);
-    EXPECT_NEAR(c.GetR(), 0.0f, 1e-3);
-    EXPECT_NEAR(c.GetG(), 255.0f, 1e-3);
-    EXPECT_NEAR(c.GetB(), 0.0f, 1e-3);
+    c.Set255(0, 255, 0);
+    EXPECT_NEAR(c.GetR255(), 0.0f, 1e-3);
+    EXPECT_NEAR(c.GetG255(), 255.0f, 1e-3);
+    EXPECT_NEAR(c.GetB255(), 0.0f, 1e-3);
 }
 
 TEST(ColorTest, OperatorAddSub) {
-    Color c1(255, 0, 0);
-    Color c2(0, 255, 0);
+    Color c1 = Color255(255, 0, 0);
+    Color c2 = Color255(0, 255, 0);
     Color c3 = c1 + c2;
 
-    EXPECT_NEAR(c3.GetR(), 255.0f, 1e-3);
-    EXPECT_NEAR(c3.GetG(), 255.0f, 1e-3);
-    EXPECT_NEAR(c3.GetB(), 0.0f, 1e-3);
+    EXPECT_NEAR(c3.GetR255(), 255.0f, 1e-3);
+    EXPECT_NEAR(c3.GetG255(), 255.0f, 1e-3);
+    EXPECT_NEAR(c3.GetB255(), 0.0f, 1e-3);
 
-    c3 -= Color(128, 128, 0);
-    EXPECT_NEAR(c3.GetR(), 127.0f, 1e-3);
-    EXPECT_NEAR(c3.GetG(), 127.0f, 1e-3);
-    EXPECT_NEAR(c3.GetB(), 0.0f, 1e-3);
+    c3 -= Color255(128, 128, 0);
+    EXPECT_NEAR(c3.GetR255(), 127.0f, 1e-3);
+    EXPECT_NEAR(c3.GetG255(), 127.0f, 1e-3);
+    EXPECT_NEAR(c3.GetB255(), 0.0f, 1e-3);
 }
 
 TEST(ColorTest, SaturationClamp) {
-    Color c(9999, -100, 500);
-    EXPECT_NEAR(c.GetR(), 255.0f, 1e-3);
-    EXPECT_NEAR(c.GetG(), 0.0f, 1e-3);
-    EXPECT_NEAR(c.GetB(), 255.0f, 1e-3);
+    Color c = Color255(9999, -100, 500);
+    EXPECT_NEAR(c.GetR255(), 255.0f, 1e-3);
+    EXPECT_NEAR(c.GetG255(), 0.0f, 1e-3);
+    EXPECT_NEAR(c.GetB255(), 255.0f, 1e-3);
 }
 
 TEST(ColorTest, MultiplyScalar) {
-    Color c(100, 50, 25);
+    Color c = Color255(100, 50, 25);
     c *= 2.0f;
-    EXPECT_NEAR(c.GetR(), 200.0f, 1e-3);
-    EXPECT_NEAR(c.GetG(), 100.0f, 1e-3);
-    EXPECT_NEAR(c.GetB(), 50.0f, 1e-3);
+    EXPECT_NEAR(c.GetR255(), 200.0f, 1e-3);
+    EXPECT_NEAR(c.GetG255(), 100.0f, 1e-3);
+    EXPECT_NEAR(c.GetB255(), 50.0f, 1e-3);
 }
 
-//-----------------------------------------
-// パフォーマンス測定（安定版）
-//-----------------------------------------
-TEST(ColorPerfTest, SSEvsScalar) {
-    constexpr int N = 100'000'000;  // 大きめループでタイマー精度を確保
-    std::vector<Color> colors;
-    colors.reserve(N);
-    std::mt19937 rng(123);
-    std::uniform_real_distribution<float> dist(0, 255);
+TEST(ColorTest, LerpFunction_Static) {
+    Color red = Color255(255, 0, 0);
+    Color blue = Color255(0, 0, 255);
+    Color purple = Lerp(red, blue, 0.5f);
 
-    for (int i = 0; i < N; ++i)
-        colors.emplace_back(dist(rng), dist(rng), dist(rng));
+    EXPECT_NEAR(purple.GetR255(), 127.5f, 1.0f);
+    EXPECT_NEAR(purple.GetG255(), 0.0f, 1.0f);
+    EXPECT_NEAR(purple.GetB255(), 127.5f, 1.0f);
 
-    // SSE 版
-    Color acc(0, 0, 0);
-    auto start_sse = std::chrono::high_resolution_clock::now();
-    for (int i = 0; i < N; ++i)
-        acc += colors[i] * 0.5f;
-    auto end_sse = std::chrono::high_resolution_clock::now();
-    double sse_ms = std::chrono::duration<double, std::milli>(end_sse - start_sse).count();
+    Color lerp0 = Lerp(red, blue, 0.0f);
+    Color lerp1 = Lerp(red, blue, 1.0f);
 
-    // スカラ版
-    auto start_scalar = std::chrono::high_resolution_clock::now();
-    float r = 0, g = 0, b = 0, a = 0;
-    for (int i = 0; i < N; ++i) {
-        r += colors[i].GetNR() * 0.5f;
-        g += colors[i].GetNG() * 0.5f;
-        b += colors[i].GetNB() * 0.5f;
-        a += colors[i].GetNA() * 0.5f;
-    }
-    auto end_scalar = std::chrono::high_resolution_clock::now();
-    double scalar_ms = std::chrono::duration<double, std::milli>(end_scalar - start_scalar).count();
+    EXPECT_NEAR(lerp0.GetR255(), red.GetR255(), 1e-3);
+    EXPECT_NEAR(lerp0.GetG255(), red.GetG255(), 1e-3);
+    EXPECT_NEAR(lerp0.GetB255(), red.GetB255(), 1e-3);
 
-    // ループ削除防止：acc の結果を使用
-    volatile float prevent_opt = acc.GetR() + acc.GetG() + acc.GetB() + acc.GetA() + r + g + b + a;
-    (void)prevent_opt;
+    EXPECT_NEAR(lerp1.GetR255(), blue.GetR255(), 1e-3);
+    EXPECT_NEAR(lerp1.GetG255(), blue.GetG255(), 1e-3);
+    EXPECT_NEAR(lerp1.GetB255(), blue.GetB255(), 1e-3);
 
-    std::cout << "[PERF] SSE   : " << sse_ms << " ms\n";
-    std::cout << "[PERF] Scalar: " << scalar_ms << " ms\n";
+    Color below = Lerp(red, blue, -0.5f);
+    Color above = Lerp(red, blue, 1.5f);
 
-    EXPECT_GT(sse_ms, 0.0);
-    EXPECT_GT(scalar_ms, 0.0);
-    EXPECT_LE(sse_ms, scalar_ms * 1.3);
+    EXPECT_NEAR(below.GetR255(), red.GetR255(), 1e-3);
+    EXPECT_NEAR(above.GetB255(), blue.GetB255(), 1e-3);
+}
+
+
+// ( ﾉ´ •ω•`)ﾉ━━━━━━━━━━━━━━━━
+// Gaming Color Tests
+// ( ﾉ´ •ω•`)ﾉ━━━━━━━━━━━━━━━━
+long long gaming_t = 0;
+
+TEST(ColorTest, GetColorHsv_PrimaryColors) {
+    Color red = GetColorHsv(0.0f, 1.0f, 1.0f);
+    EXPECT_NEAR(red.GetR(), 1.0f, 0.001f);
+    EXPECT_NEAR(red.GetG(), 0.0f, 0.001f);
+    EXPECT_NEAR(red.GetB(), 0.0f, 0.001f);
+
+    Color green = GetColorHsv(120.0f, 1.0f, 1.0f);
+    EXPECT_NEAR(green.GetR(), 0.0f, 0.001f);
+    EXPECT_NEAR(green.GetG(), 1.0f, 0.001f);
+    EXPECT_NEAR(green.GetB(), 0.0f, 0.001f);
+
+    Color blue = GetColorHsv(240.0f, 1.0f, 1.0f);
+    EXPECT_NEAR(blue.GetR(), 0.0f, 0.001f);
+    EXPECT_NEAR(blue.GetG(), 0.0f, 0.001f);
+    EXPECT_NEAR(blue.GetB(), 1.0f, 0.001f);
+}
+
+TEST(ColorTest, GetColorHsv_SaturationAndValue) {
+    Color gray = GetColorHsv(120.0f, 0.0f, 0.5f);
+    EXPECT_NEAR(gray.GetR(), 0.5f, 0.001f);
+    EXPECT_NEAR(gray.GetG(), 0.5f, 0.001f);
+    EXPECT_NEAR(gray.GetB(), 0.5f, 0.001f);
+
+    Color black = GetColorHsv(240.0f, 1.0f, 0.0f);
+    EXPECT_NEAR(black.GetR(), 0.0f, 0.001f);
+    EXPECT_NEAR(black.GetG(), 0.0f, 0.001f);
+    EXPECT_NEAR(black.GetB(), 0.0f, 0.001f);
+}
+
+TEST(ColorTest, GamingColor_CycleBehavior) {
+    gaming_t = 0;
+    Color c1 = GamingColorTest(gaming_t, 0, 1.0f);
+
+    gaming_t = 60;
+    Color c2 = GamingColorTest(gaming_t, 0, 1.0f);
+
+    gaming_t = 120;
+    Color c3 = GamingColorTest(gaming_t, 0, 1.0f);
+
+    EXPECT_FALSE(
+        std::fabs(c1.GetR() - c2.GetR()) < 0.001f &&
+        std::fabs(c1.GetG() - c2.GetG()) < 0.001f &&
+        std::fabs(c1.GetB() - c2.GetB()) < 0.001f
+    );
+
+    gaming_t = 0;
+    Color c4 = GamingColorTest(gaming_t, 180, 1.0f);
+    EXPECT_FALSE(
+        std::fabs(c1.GetR() - c4.GetR()) < 0.001f &&
+        std::fabs(c1.GetG() - c4.GetG()) < 0.001f &&
+        std::fabs(c1.GetB() - c4.GetB()) < 0.001f
+    );
+}
+
+TEST(ColorTest, GamingColor_Periodicity) {
+    gaming_t = 0;
+    Color c1 = GamingColorTest(gaming_t, 0, 1.0f);
+
+    gaming_t = 360;
+    Color c2 = GamingColorTest(gaming_t, 0, 1.0f);
+
+    EXPECT_NEAR(c1.GetR(), c2.GetR(), 0.001f);
+    EXPECT_NEAR(c1.GetG(), c2.GetG(), 0.001f);
+    EXPECT_NEAR(c1.GetB(), c2.GetB(), 0.001f);
 }

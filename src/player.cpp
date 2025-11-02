@@ -50,7 +50,7 @@ namespace zenithstg {
 		if (kIsColShow == 1) {
 			SmartSetDrawBlendMode(kBlendNoblend, 255);
 			DrawCircle(pos_.GetX(), pos_.GetY(), col_size_, GetColor(255, 255, 255), 1);
-			DrawFormatString(pos_.GetX(), pos_.GetY(), GetColor(GamingColor().GetR(), GamingColor().GetG(), GamingColor().GetB()), "%f", col_size_);
+			DrawFormatString(pos_.GetX(), pos_.GetY(), GamingColor().GetDxColor(), "%f", col_size_);
 		}
 	}
 
@@ -66,7 +66,7 @@ namespace zenithstg {
 		}
 		for (int i = 0; i < 64; i++) {
 			double angle = Rad(static_cast<double>(rng() % 36000) / 100.0);
-			CreateParticle(pos_, Color(kColorRed), ParticleType::kParticleRect, BlendType::kBlendAdd, 255, EaseType::kEaseInQuad, 60, 0, 0, 0, 0, 0, 0.5f, 0.0f, EaseType::kEaseInQuad, 60, 0, angle, angle, 0, 0, static_cast<double>(rng() % 160) / 10.0f + 3, 0.0f, EaseType::kEaseInQuad, 60);
+			CreateParticle(pos_, Color(1.0f, 0.0f, 0.0f), ParticleType::kParticleRect, BlendType::kBlendAdd, 255, EaseType::kEaseInQuad, 60, 0, 0, 0, 0, 0, 0.5f, 0.0f, EaseType::kEaseInQuad, 60, 0, angle, angle, 0, 0, static_cast<double>(rng() % 160) / 10.0f + 3, 0.0f, EaseType::kEaseInQuad, 60);
 		}
 		protect_time_ = protect_;
 		pos_ = kPlayerDefaultPos;

@@ -51,6 +51,8 @@ namespace zenithstg {
 	*/
 	Color GamingColor(int offset = 0, float mul = 1);
 
+	Color GamingColorTest(long long gaming_t, int offset = 0, float mul = 1);
+
 	/**
 	* @brief 余計なブレンドモードの切り替えを防いだブレンドモードの切り替え / Switching blend modes preventing unnecessary blend mode switching
 	*

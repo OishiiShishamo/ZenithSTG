@@ -97,7 +97,7 @@ namespace  zenithstg {
 			Saturate255();
 			rgba_ = _mm_div_ps(rgba_, _mm_set1_ps(255.0f));
 		}
-		int GetDxColor() const { return GetColor(GetR() * 255.0f, GetG() * 255.0f, GetB() * 255.0f); }
+		int GetDxColor() const { return GetColor(GetR255(), GetG255(), GetB255()); }
 
 		void Saturate() {
 			rgba_ = _mm_max_ps(_mm_min_ps(rgba_, _mm_set1_ps(1.0f)), _mm_set1_ps(0.0f));
