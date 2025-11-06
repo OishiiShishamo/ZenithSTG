@@ -24,29 +24,40 @@ namespace zenithstg {
 	void GameScene::Update() {
 		SafeAccess(scripts, 0).RunScript();
 		sound_mng_.ReservePlaySe();
-		SetDrawScreen(background_canvas);
-		ClearDrawScreen();
-		//bg_.DrawBackground();
-		SetDrawScreen(player_shot_canvas);
-		ClearDrawScreen();
 		MovePlayerShots();
-		SetDrawScreen(player_canvas);
-		ClearDrawScreen();
 		player_.RoutinePlayer();
-		SetDrawScreen(bullet_canvas);
-		ClearDrawScreen();
 		MoveEnemies();
 		MoveBullets();
 		MoveLasers();
 		MoveParticles();
+	}
+
+	void GameScene::Render() {
+		SetDrawScreen(background_canvas);
+		ClearDrawScreen();
+		bg_.DrawBackground();
+
+		SetDrawScreen(back_object_canvas);
+		ClearDrawScreen();
+		RenderPlayerShots();
+
+		SetDrawScreen(player_canvas);
+		ClearDrawScreen();
+		player_.RenderPlayer();
+
+		SetDrawScreen(front_object_canvas);
+		ClearDrawScreen();
+		RenderEnemies();
+		RenderBullets();
+		RenderLasers();
+		RenderParticles();
+
 		SetDrawScreen(ui_canvas);
 		ClearDrawScreen();
 		DrawUi();
+
 		SetDrawScreen(screen_canvas);
 		ClearDrawScreen();
 		ScreenDraw();
-		if (CheckHitKey(KEY_INPUT_P) == 1) {
-			SaveDrawScreen(0, 0, 1920, 1080, "ScreenShot.bmp");
-		}
 	}
 }

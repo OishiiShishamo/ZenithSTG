@@ -19,7 +19,7 @@ namespace zenithstg {
 	std::vector<int> blank_lasers;
 	std::mutex blank_laser_mutex;
 
-	void Laser::ShowLaser() {
+	void Laser::DrawObject() {
 		if (!(flags_ & kIsAlive)) return;
 		double half_w = width_ / 2;
 		std::array<Vec2D, 4> local = {
@@ -352,9 +352,6 @@ namespace zenithstg {
 
 	void MoveLasers() {
 		ParallelUpdateLasers(lasers);
-		if (t == time_mng_.target_t_) {
-			RenderLasers();
-		}
 	}
 
 	void RenderLasers() {
@@ -362,7 +359,7 @@ namespace zenithstg {
 			return a->pop_t_ < b->pop_t_;
 			});
 		for (auto* L : laser_ptrs) {
-			L->ShowLaser();
+			L->DrawObject();
 		}
 	}
 }

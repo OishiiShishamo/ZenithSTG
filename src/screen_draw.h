@@ -9,11 +9,10 @@
 
 namespace zenithstg {
 	extern int background_canvas;
-	extern int bullet_canvas;
+	extern int back_object_canvas;
+	extern int front_object_canvas;
 	extern int player_canvas;
-	extern int player_shot_canvas;
 	extern int bomb_canvas;
-	extern int particle_canvas;
 	extern int screen_canvas;
 	extern int ui_canvas;
 

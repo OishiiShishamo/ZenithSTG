@@ -38,7 +38,7 @@ namespace zenithstg {
 		double AimPlayer(const Vec2D& v);
 		double RangePlayer(const Vec2D& v);
 		void MovePlayer();
-		void ShowPlayer();
+		void RenderPlayer();
 		void Shot();
 		void HitPlayer();
 		void RoutinePlayer();

@@ -18,6 +18,7 @@ namespace zenithstg {
 	class TitleScene : public BaseScene {
 	public:
 		void Update() override;
+		void Render() override;
 	};
 }
 

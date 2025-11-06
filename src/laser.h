@@ -32,7 +32,7 @@ namespace zenithstg {
 		/**
 		* @brief レーザーの描画 / Laser Drawing.
 		*/
-		void ShowLaser();
+		void DrawObject();
 	private:
 		void MoveFunc() override;
 		void KillObject() override;

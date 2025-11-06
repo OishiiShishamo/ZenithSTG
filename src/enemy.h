@@ -40,7 +40,7 @@ namespace zenithstg {
 		/**
 		* @brief 敵の描画 / Enemy Drawing.
 		*/
-		void ShowEnemy();
+		void DrawObject();
 	private:
 		void MoveFunc() override;
 		void KillObject() override;

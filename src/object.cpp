@@ -26,6 +26,9 @@ namespace zenithstg {
 		MoveFunc();
 	}
 
+	void Object::DrawObject() {
+	}
+
 	void Object::UpdateEase() {
 		double elapsed_frame = t - pop_t_;
 		if (angle_ease_time_ == 0) {

@@ -45,7 +45,7 @@ namespace zenithstg {
 		/**
 		* @brief 弾の描画 / Bullet Drawing.
 		*/
-		void ShowBullet();
+		void DrawObject() override;
 	private:
 		void MoveFunc() override;
 		void KillObject() override;

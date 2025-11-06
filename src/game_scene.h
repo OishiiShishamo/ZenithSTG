@@ -8,6 +8,7 @@ namespace zenithstg {
 	class GameScene : public BaseScene {
 	public:
 		void Update() override;
+		void Render() override;
 	};
 }
 

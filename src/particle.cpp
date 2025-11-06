@@ -88,7 +88,7 @@ namespace zenithstg {
 		}
 	}
 
-	void Particle::ShowParticle() {
+	void Particle::DrawObject() {
 		if (!(flags_ & kIsAlive)) return;
 		std::array<Vec2D, 4> world;
 		const bool isScaled = size_ > 1.0f;
@@ -269,9 +269,6 @@ namespace zenithstg {
 
 	void MoveParticles() {
 		ParallelUpdateParticles(particles);
-		if (t == time_mng_.target_t_) {
-			RenderParticles();
-		}
 	}
 
 	void RenderParticles() {
@@ -279,7 +276,7 @@ namespace zenithstg {
 			return a->order_ < b->order_;
 			});
 		for (auto* E : particle_ptrs) {
-			E->ShowParticle();
+			E->DrawObject();
 		}
 	}
 

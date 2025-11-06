@@ -7,11 +7,10 @@
 
 namespace zenithstg {
 	int background_canvas;
-	int bullet_canvas;
+	int back_object_canvas;
+	int front_object_canvas;
 	int player_canvas;
-	int player_shot_canvas;
 	int bomb_canvas;
-	int particle_canvas;
 	int screen_canvas;
 	int ui_canvas;
 
@@ -20,9 +19,9 @@ namespace zenithstg {
 	void ScreenDraw() {
 		SmartSetDrawBlendMode(kBlendPmaAlpha, 255);
 		DrawRotaGraph4(kCenterX, kCenterY, 1.0f, 0, 0, 0, background_canvas, 1, 0, 0);
-		DrawRotaGraph4(kCenterX, kCenterY, 1.0f, 0, 0, 0, player_shot_canvas, 1, 0, 0);
+		DrawRotaGraph4(kCenterX, kCenterY, 1.0f, 0, 0, 0, back_object_canvas, 1, 0, 0);
 		DrawRotaGraph4(kCenterX, kCenterY, 1.0f, 0, 0, 0, player_canvas, 1, 0, 0);
-		DrawRotaGraph4(kCenterX, kCenterY, 1.0f, 0, 0, 0, bullet_canvas, 1, 0, 0);
+		DrawRotaGraph4(kCenterX, kCenterY, 1.0f, 0, 0, 0, front_object_canvas, 1, 0, 0);
 		DrawRotaGraph4(kCenterX, kCenterY, 1.0f, 0, 0, 0, ui_canvas, 1, 0, 0);
 		SetDrawScreen(DX_SCREEN_BACK);
 		ClearDrawScreen();

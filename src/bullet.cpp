@@ -30,7 +30,7 @@ namespace zenithstg {
 	std::array<double, kGraphicHandlerNum> draw_ratio_bullet_graphs;
 	long long bullet_index = 0;
 
-	void Bullet::ShowBullet() {
+	void Bullet::DrawObject() {
 		if (!(flags_ & kIsAlive)) return;
 		std::array<Vec2D, 4> world;
 		const bool is_scaled = size_ > 1.0f;
@@ -342,9 +342,6 @@ namespace zenithstg {
 
 	void MoveBullets() {
 		ParallelUpdateBullets(bullets);
-		if (t == time_mng_.target_t_) {
-			RenderBullets();
-		}
 	}
 
 	void RenderBullets() {
@@ -352,7 +349,7 @@ namespace zenithstg {
 			return a->order_ < b->order_;
 			});
 		for (auto* B : bullet_ptrs) {
-			B->ShowBullet();
+			B->DrawObject();
 		}
 	}
 }

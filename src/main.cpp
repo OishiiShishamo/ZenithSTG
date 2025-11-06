@@ -74,8 +74,12 @@ WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, in
 			zenithstg::t++;
 			zenithstg::scene_manager_.Run();
 		}
+		zenithstg::scene_manager_.Render();
 		if (zenithstg::elapsed_frame == 0) {
 			zenithstg::elapsed_frame = 1;
+		}
+		if (CheckHitKey(KEY_INPUT_P) == 1) {
+			SaveDrawScreen(0, 0, 1920, 1080, "ScreenShot.bmp");
 		}
 		if (GetAsyncKeyState(VK_F4) & (1 << 15)) {
 			if (zenithstg::t > zenithstg::last_change_window_size_time + 15) {

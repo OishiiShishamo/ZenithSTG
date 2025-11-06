@@ -55,7 +55,7 @@ namespace zenithstg {
 		/**
 		* @brief パーティクルの描画 / Particle Drawing.
 		*/
-		void ShowParticle();
+		void DrawObject();
 		void MoveFunc() override;
 		void KillObject() override;
 	};

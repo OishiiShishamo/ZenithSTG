@@ -16,7 +16,7 @@ namespace zenithstg {
 	std::array<int, kGraphicHandlerNum> default_player_shot_blend;
 	std::array<double, kGraphicHandlerNum> draw_ratio_player_shot_graphs;
 
-	void PlayerShot::ShowPlayerShot() {
+	void PlayerShot::DrawObject() {
 		if (!(flags_ & kIsAlive)) return;
 		if (blend_ == -1) {
 			SmartSetDrawBlendMode(SafeAccess(default_player_shot_blend, style_), pal_);
@@ -153,9 +153,6 @@ namespace zenithstg {
 
 	void MovePlayerShots() {
 		ParallelUpdatePlayerShots(player_shots);
-		if (t == time_mng_.target_t_) {
-			RenderPlayerShots();
-		}
 	}
 
 	void RenderPlayerShots() {
@@ -163,7 +160,7 @@ namespace zenithstg {
 			return a->pop_t_ < b->pop_t_;
 			});
 		for (auto* PS : player_shot_ptrs) {
-			PS->ShowPlayerShot();
+			PS->DrawObject();
 		}
 	}
 }

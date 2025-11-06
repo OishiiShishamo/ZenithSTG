@@ -27,7 +27,7 @@ namespace zenithstg {
 		/**
 		* @brief プレイヤーショットの描画 / Player Shot Drawing.
 		*/
-		void ShowPlayerShot();
+		void DrawObject();
 	private:
 		void MoveFunc() override;
 		void KillObject() override;

@@ -29,7 +29,7 @@ namespace zenithstg {
 	std::array<int, kGraphicHandlerNum> default_enemy_blend;
 	std::array<double, kGraphicHandlerNum> draw_ratio_enemy_graphs;
 
-	void Enemy::ShowEnemy() {
+	void Enemy::DrawObject() {
 		if (!(flags_ & kIsAlive)) return;
 		if (blend_ == -1) {
 			SmartSetDrawBlendMode(SafeAccess(default_enemy_blend, style_), pal_);
@@ -253,9 +253,6 @@ namespace zenithstg {
 
 	void MoveEnemies() {
 		ParallelUpdateEnemies(enemies);
-		if (t == time_mng_.target_t_) {
-			RenderEnemies();
-		}
 	}
 
 	void RenderEnemies() {
@@ -263,7 +260,7 @@ namespace zenithstg {
 			return a->pop_t_ < b->pop_t_;
 			});
 		for (auto* E : enemy_ptrs) {
-			E->ShowEnemy();
+			E->DrawObject();
 		}
 	}
 }

@@ -26,6 +26,10 @@ namespace zenithstg {
 			now_scene_->Update();
 		}
 
+		void Render() {
+			now_scene_->Render();
+		}
+
 		void ChangeScene(SceneTypes scene) {
 			time_mng_.StartTimer();
 			switch (scene) {

@@ -169,6 +169,11 @@ namespace zenithstg {
 		virtual void UpdateObject();
 
 		/**
+		* @brief オブジェクトの描画。 / Object drawing.
+		*/
+		virtual void DrawObject();
+
+		/**
 		* @brief イージングによるパラメータの更新。 / Updating parameters by easing.
 		*/
 		virtual void UpdateEase();

@@ -44,7 +44,7 @@ namespace zenithstg {
 		if (pos_.GetY() < kBorderUp + kPlayerTopBorderOffset) pos_.SetY(kBorderUp + kPlayerTopBorderOffset);
 	}
 
-	void Player::ShowPlayer() {
+	void Player::RenderPlayer() {
 		SmartSetDrawBlendMode(kBlendNoblend, 255);
 		DrawRotaGraph(pos_.GetX(), pos_.GetY(), 1.0f, 0, SafeAccess(img_res.player_gh, 0), 1);
 		if (kIsColShow == 1) {
@@ -77,7 +77,6 @@ namespace zenithstg {
 
 	void Player::RoutinePlayer() {
 		MovePlayer();
-		ShowPlayer();
 		Shot();
 		protect_time_--;
 	}

@@ -154,11 +154,10 @@ namespace zenithstg {
 		sound_mng_.SoundLoad();
 
 		background_canvas = MakeScreen(1920, 1080, 1);
-		bullet_canvas = MakeScreen(1920, 1080, 1);
+		back_object_canvas = MakeScreen(1920, 1080, 1);
+		front_object_canvas = MakeScreen(1920, 1080, 1);
 		player_canvas = MakeScreen(1920, 1080, 1);
-		player_shot_canvas = MakeScreen(1920, 1080, 1);
 		bomb_canvas = MakeScreen(1920, 1080, 1);
-		particle_canvas = MakeScreen(1920, 1080, 1);
 		screen_canvas = MakeScreen(1920, 1080, 1);
 		ui_canvas = MakeScreen(1920, 1080, 1);
 	}
