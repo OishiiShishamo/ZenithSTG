@@ -211,7 +211,7 @@ namespace zenithstg {
 		blank_particles.emplace_back(idx);
 	}
 
-	int CreateParticle(const Vec2D& pos, const Color& color, int style, int blend, double pal, int palEaseType, int palEaseTime, int is_col, double start_col_size, double end_col_size, int col_size_ease_type, int col_size_ease_time, double start_size, double end_size, int size_ease_type, int size_ease_time, int aim, double start_angle, double end_angle, int angle_ease_type, int angle_ease_time, double start_speed, double end_speed, int speed_ease_type, int speed_ease_time, int id, const std::vector<std::any>& params) {
+	int CreateParticle(const Vec2D& pos, const Color& color, int style, int blend, double pal, int palEaseType, int palEaseTime, int is_col, double start_col_size, double end_col_size, int col_size_ease_type, int col_size_ease_time, double start_size, double end_size, int size_ease_type, int size_ease_time, int aim, double start_angle, double end_angle, int angle_ease_type, int angle_ease_time, double start_speed, double end_speed, int speed_ease_type, int speed_ease_time, int id, int priority, const std::vector<std::any>& params) {
 		if (blank_particles.empty()) return 1;
 		int idx = blank_particles.back();
 		blank_particles.pop_back();
@@ -252,11 +252,11 @@ namespace zenithstg {
 		SafeAccess(particles, idx).width_ = 0;
 		SafeAccess(particles, idx).front_node_ = 0;
 		SafeAccess(particles, idx).current_node_num_ = 0;
-		SafeAccess(particles, idx).order_ = particle_index;
+		SafeAccess(particles, idx).order_ = particle_index++;
 		SafeAccess(particles, idx).index_ = idx;
 		SafeAccess(particles, idx).id_ = id;
+		SafeAccess(particles, idx).priority_ = priority;
 		SafeAccess(particles, idx).params_ = params;
-		particle_index++;
 		return 0;
 	}
 
@@ -273,7 +273,10 @@ namespace zenithstg {
 
 	void RenderParticles() {
 		std::sort(std::execution::par, particle_ptrs.begin(), particle_ptrs.end(), [](const Particle* a, const Particle* b) {
-			return a->order_ < b->order_;
+			if (a->priority_ == b->priority_) {
+				return a->order_ < b->order_;
+			}
+			return a->priority_ < b->priority_;
 			});
 		for (auto* E : particle_ptrs) {
 			E->DrawObject();

@@ -54,6 +54,7 @@ namespace zenithstg {
 	* @param speed_ease_time 速度のイージングにかかる時間 / Time required for Speed easing
 	* @param se SE番号 / se Number
 	* @param id 特殊な動作を行うためのid / id for special operation
+	* @param priority 描画優先度 / Drawing priority
 	* @param params 特殊な動作を行うためのパラメータ / Parameter for special operation
 	*/
 	struct ObjectParams {
@@ -92,6 +93,7 @@ namespace zenithstg {
 		int speed_ease_time = 0;
 		int se = kSoundEffectNone;
 		int id = 0;
+		int priority = 0;
 		std::vector<std::any> params;
 	};
 
@@ -156,10 +158,11 @@ namespace zenithstg {
 		int id_ = 0;
 		long long order_ = 0;
 		long long index_ = 0;
+		int priority_ = 0;
 		std::vector<std::any> params_;
 		Object() = default;
-		Object(std::uint8_t alive, std::uint8_t is_col, int obj_type_, const Vec2D& pos, double start_angle, double end_angle, int angle_ease_type, int angle_ease_time, double start_show_angle, double end_show_angle, int show_angle_ease_type, int show_angle_ease_time, const Color& color, int style, int blend, int pal, double start_col_size, double end_col_size, int col_size_ease_type, int col_size_ease_time, double start_size, double end_size, int size_ease_type, int size_ease_time, double start_speed, double end_speed, int speed_ease_type, int speed_ease_time, int pop_t = 0, double length = 0, double width = 0, long long front_node = 0, long long next_node = 0, int current_node_num = 0, int isHead = 0, long long index = 0, int id = 0, const std::vector<std::any>& params = {}, int is_graze = 1)
-			: obj_type_(obj_type_), pos_(pos), start_angle_(start_angle), end_angle_(end_angle), angle_ease_type_(angle_ease_type), angle_ease_time_(angle_ease_time), start_show_angle_(start_show_angle), end_show_angle_(end_show_angle), show_angle_ease_type_(show_angle_ease_type), show_angle_ease_time_(show_angle_ease_time), color_(color), style_(style), blend_(blend), pal_(pal), start_col_size_(start_col_size), end_col_size_(end_col_size), col_size_ease_type_(col_size_ease_type), col_size_ease_time_(col_size_ease_time), col_size_(start_col_size), start_size_(start_size), end_size_(end_size), size_ease_type_(size_ease_type), size_ease_time_(size_ease_time), size_(1.0f), start_speed_(start_speed), end_speed_(end_speed), speed_ease_type_(speed_ease_type), speed_ease_time_(speed_ease_time), pop_t_(pop_t), length_(length), width_(width), front_node_(front_node), next_node_(next_node), current_node_num_(current_node_num), index_(index), id_(id), params_(params) {
+		Object(std::uint8_t alive, std::uint8_t is_col, int obj_type_, const Vec2D& pos, double start_angle, double end_angle, int angle_ease_type, int angle_ease_time, double start_show_angle, double end_show_angle, int show_angle_ease_type, int show_angle_ease_time, const Color& color, int style, int blend, int pal, double start_col_size, double end_col_size, int col_size_ease_type, int col_size_ease_time, double start_size, double end_size, int size_ease_type, int size_ease_time, double start_speed, double end_speed, int speed_ease_type, int speed_ease_time, int pop_t = 0, double length = 0, double width = 0, long long front_node = 0, long long next_node = 0, int current_node_num = 0, int isHead = 0, long long index = 0, int id = 0, int priority = 0, const std::vector<std::any>& params = {}, int is_graze = 1)
+			: obj_type_(obj_type_), pos_(pos), start_angle_(start_angle), end_angle_(end_angle), angle_ease_type_(angle_ease_type), angle_ease_time_(angle_ease_time), start_show_angle_(start_show_angle), end_show_angle_(end_show_angle), show_angle_ease_type_(show_angle_ease_type), show_angle_ease_time_(show_angle_ease_time), color_(color), style_(style), blend_(blend), pal_(pal), start_col_size_(start_col_size), end_col_size_(end_col_size), col_size_ease_type_(col_size_ease_type), col_size_ease_time_(col_size_ease_time), col_size_(start_col_size), start_size_(start_size), end_size_(end_size), size_ease_type_(size_ease_type), size_ease_time_(size_ease_time), size_(1.0f), start_speed_(start_speed), end_speed_(end_speed), speed_ease_type_(speed_ease_type), speed_ease_time_(speed_ease_time), pop_t_(pop_t), length_(length), width_(width), front_node_(front_node), next_node_(next_node), current_node_num_(current_node_num), index_(index), id_(id), priority_(priority), params_(params) {
 			flags_ |= kIsAlive * alive | kIsCol * is_col | kIsHead * isHead | kIsGraze * is_graze;
 		}
 

@@ -33,9 +33,9 @@ namespace zenithstg {
 	}
 
 	void GameScene::Render() {
-		SetDrawScreen(background_canvas);
-		ClearDrawScreen();
-		bg_.DrawBackground();
+		//SetDrawScreen(background_canvas);
+		//ClearDrawScreen();
+		//bg_.DrawBackground();
 
 		SetDrawScreen(back_object_canvas);
 		ClearDrawScreen();

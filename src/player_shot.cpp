@@ -15,6 +15,7 @@ namespace zenithstg {
 	std::mutex blank_player_shot_mutex;
 	std::array<int, kGraphicHandlerNum> default_player_shot_blend;
 	std::array<double, kGraphicHandlerNum> draw_ratio_player_shot_graphs;
+	long long player_shot_index = 0;
 
 	void PlayerShot::DrawObject() {
 		if (!(flags_ & kIsAlive)) return;
@@ -105,7 +106,7 @@ namespace zenithstg {
 		blank_player_shots.emplace_back(idx);
 	}
 
-	int CreatePlayerShot(const Vec2D& pos, const Color& color, int style, int blend, int pal, int is_col, double start_col_size, double end_col_size, int col_size_ease_type, int col_size_ease_time, double start_size, double end_size, int size_ease_type, int size_ease_time, double start_angle, double end_angle, int angle_ease_type, int angle_ease_time, double start_speed, double end_speed, int speed_ease_type, int speed_ease_time, int se, int id, const std::vector<std::any>& params) {
+	int CreatePlayerShot(const Vec2D& pos, const Color& color, int style, int blend, int pal, int is_col, double start_col_size, double end_col_size, int col_size_ease_type, int col_size_ease_time, double start_size, double end_size, int size_ease_type, int size_ease_time, double start_angle, double end_angle, int angle_ease_type, int angle_ease_time, double start_speed, double end_speed, int speed_ease_type, int speed_ease_time, int se, int id, int priority, const std::vector<std::any>& params) {
 		sound_mng_.ReserveSe(se);
 		if (blank_player_shots.empty()) return 1;
 		int idx = blank_player_shots.back();
@@ -138,8 +139,10 @@ namespace zenithstg {
 		SafeAccess(player_shots, idx).width_ = 0;
 		SafeAccess(player_shots, idx).front_node_ = 0;
 		SafeAccess(player_shots, idx).current_node_num_ = 0;
+		SafeAccess(player_shots, idx).order_ = player_shot_index++;
 		SafeAccess(player_shots, idx).index_ = idx;
 		SafeAccess(player_shots, idx).id_ = 0;
+		SafeAccess(player_shots, idx).priority_ = priority;
 		SafeAccess(player_shots, idx).params_ = params;
 		return 0;
 	}
@@ -157,7 +160,10 @@ namespace zenithstg {
 
 	void RenderPlayerShots() {
 		std::sort(std::execution::par, player_shot_ptrs.begin(), player_shot_ptrs.end(), [](const PlayerShot* a, const PlayerShot* b) {
-			return a->pop_t_ < b->pop_t_;
+			if (a->priority_ == b->priority_) {
+				return a->order_ < b->order_;
+			}
+			return a->priority_ < b->priority_;
 			});
 		for (auto* PS : player_shot_ptrs) {
 			PS->DrawObject();
