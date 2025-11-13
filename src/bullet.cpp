@@ -136,17 +136,16 @@ namespace zenithstg {
 		return 0;
 	}
 
-#if kGrazeEnabled == 1
 	void Bullet::GrazeObject() {
+		if (kGrazeEnabled == 0) return;
 		if ((flags_ & kIsGraze) == 0) return;
 		if (ColPointAndCircle(pos_, player_.pos_, col_size_ + player_.col_size_ + kGrazeRange)) {
 			Graze();
-#if kBulletGrazeEveryFrame == 0
-			flags_ &= ~kIsGraze;
-#endif
+			if (kBulletGrazeEveryFrame == 0) {
+				flags_ &= ~kIsGraze;
+			}
 		}
 	}
-#endif
 
 	int	Bullet::CheckPosBounds() {
 		double limit = size_ * 128 * 2 * SafeAccess(draw_ratio_bullet_graphs, style_);

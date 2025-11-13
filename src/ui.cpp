@@ -26,12 +26,13 @@ namespace zenithstg {
 		else {
 			hi_score_str = std::to_string(properties_.hi_score_) + "0";
 		}
-#if kGrazeEnabled == 1
-		DrawFormatStringToHandle(kUiPosOffset.GetX(), kUiPosOffset.GetY(),font_color.GetDxColor(), SafeAccess(font_types, kFontUi1), "Score: \nHi-Score: \nPlayer: \nBomb: \nGraze: ");
-		DrawFormatStringToHandle(kUiPosOffset.GetX() + 200, kUiPosOffset.GetY(), font_color.GetDxColor(), SafeAccess(font_types, kFontUi1), "%s\n%s\n%d\n%d\n%" PRId64, score_str.c_str(), hi_score_str.c_str(), player_.life_.load(), player_.bomb_.load(), graze.load());
-#else
-		DrawFormatStringToHandle(kUiPosOffset.GetX(), kUiPosOffset.GetY(), font_color.GetDxColor(), SafeAccess(font_types, UI_1), "Score: \nHi-Score: \nPlayer: \nBomb: ");
-		DrawFormatStringToHandle(kUiPosOffset.GetX() + 200, kUiPosOffset.GetY(), font_color.GetDxColor(), SafeAccess(font_types, UI_1), "%s\n%s\n%d\n%d" PRId64, score_str.c_str(), hi_score_str.c_str(), player_.life_.load(), player_.bomb_.load());
-#endif
+		if (kGrazeEnabled == 1) {
+			DrawFormatStringToHandle(kUiPosOffset.GetX(), kUiPosOffset.GetY(), font_color.GetDxColor(), SafeAccess(font_types, kFontUi1), "Score: \nHi-Score: \nPlayer: \nBomb: \nGraze: ");
+			DrawFormatStringToHandle(kUiPosOffset.GetX() + 200, kUiPosOffset.GetY(), font_color.GetDxColor(), SafeAccess(font_types, kFontUi1), "%s\n%s\n%d\n%d\n%" PRId64, score_str.c_str(), hi_score_str.c_str(), player_.life_.load(), player_.bomb_.load(), graze.load());
+		}
+		else {
+			DrawFormatStringToHandle(kUiPosOffset.GetX(), kUiPosOffset.GetY(), font_color.GetDxColor(), SafeAccess(font_types, kFontUi1), "Score: \nHi-Score: \nPlayer: \nBomb: ");
+			DrawFormatStringToHandle(kUiPosOffset.GetX() + 200, kUiPosOffset.GetY(), font_color.GetDxColor(), SafeAccess(font_types, kFontUi1), "%s\n%s\n%d\n%d" PRId64, score_str.c_str(), hi_score_str.c_str(), player_.life_.load(), player_.bomb_.load());
+		}
 	}
 }

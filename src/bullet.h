@@ -50,9 +50,7 @@ namespace zenithstg {
 		void MoveFunc() override;
 		void KillObject() override;
 		int ColliCheckObject() override;
-#if kGrazeEnabled == 1
 		void GrazeObject() override;
-#endif
 		int CheckPosBounds() override;
 
 		int CheckCollisionAndBounds() override;

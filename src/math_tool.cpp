@@ -7,22 +7,40 @@ namespace zenithstg {
 	std::array<double, 360> cos_table;
 
 	void MathInit() {
-		sin_table.fill(10.0);
-		cos_table.fill(10.0);
+		if (kSinCosTabled == 1) {
+			for (int i = 0; i < 360; i++) {
+				SafeAccess(sin_table, i) = std::sin(Rad(i));
+				SafeAccess(cos_table, i) = std::cos(Rad(i));
+			}
+		}
+		else {
+			sin_table.fill(10.0);
+			cos_table.fill(10.0);
+		}
 	}
 
 	double FastSin(int x) {
-		if (SafeAccess(sin_table, x % 360) == 10.0) {
-			SafeAccess(sin_table, x % 360) = std::sin(Rad(x));
+		if (kSinCosTabled == 1) {
+			return SafeAccess(sin_table, x % 360);
 		}
-		return SafeAccess(sin_table, x % 360);
+		else {
+			if (SafeAccess(sin_table, x % 360) == 10.0) {
+				SafeAccess(sin_table, x % 360) = std::sin(Rad(x));
+			}
+			return SafeAccess(sin_table, x % 360);
+		}
 	}
 
 	double FastCos(int x) {
-		if (SafeAccess(cos_table, x % 360) == 10.0) {
-			SafeAccess(cos_table, x % 360) = std::cos(Rad(x));
+		if (kSinCosTabled == 1) {
+			return SafeAccess(cos_table, x % 360);
 		}
-		return SafeAccess(cos_table, x % 360);
+		else {
+			if (SafeAccess(cos_table, x % 360) == 10.0) {
+				SafeAccess(cos_table, x % 360) = std::cos(Rad(x));
+			}
+			return SafeAccess(cos_table, x % 360);
+		}
 	}
 
 	double FastSqrt(double x, double epsilon) {

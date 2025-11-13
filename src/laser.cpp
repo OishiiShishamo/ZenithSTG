@@ -133,8 +133,8 @@ namespace zenithstg {
 		return 0;
 	}
 
-#if kGrazeEnabled == 1
 	void Laser::GrazeObject() {
+		if (kGrazeEnabled == 1) return;
 		double r = (length_ * length_ + col_size_ * col_size_ + kGrazeRange * kGrazeRange) / 4;
 		Vec2D d = pos_ - player_.pos_;
 		if (d.GetX() * d.GetX() + d.GetY() * d.GetY() <= r || (flags_ & kIsGraze) == 0) {
@@ -159,12 +159,11 @@ namespace zenithstg {
 				SafeAccess(world, 2),
 				SafeAccess(world, 3))) {
 			Graze();
-#if kLaserGrazeEveryFrame == 0
-			flags_ &= ~kIsGraze;
-#endif
+			if (kLaserGrazeEveryFrame == 0) {
+				flags_ &= ~kIsGraze;
+			}
 		}
 	}
-#endif
 
 	int Laser::CheckPosBounds() {
 		double limit = size_ * 128 * 2 * SafeAccess(draw_ratio_bullet_graphs, style_);
