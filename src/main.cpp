@@ -3,8 +3,8 @@
 #include <fstream>
 
 #include "DxLib.h"
-
 #include <json.hpp>
+#include <sol.hpp>
 
 #include "base_scene.h"
 #include "fps.h"
@@ -16,6 +16,7 @@
 #include "title_scene.h"
 #include "bullet.h"
 #include "laser.h"
+#include "lua_mng.h"
 #include "enemy.h"
 #include "player.h"
 #include "player_shot.h"
@@ -40,6 +41,8 @@ namespace zenithstg {
 	int last_change_window_size_time = 0;
 
 	SceneManager scene_manager_;
+
+	sol::state lua;
 }
 
 int

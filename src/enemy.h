@@ -21,13 +21,14 @@
 #include "color.h"
 #include "debug.h"
 #include "graze.h"
+#include "lua_mng.h"
 #include "object.h"
+#include "params.h"
 #include "player.h"
 #include "player_shot.h"
 #include "sound.h"
 #include "utility.h"
 #include "vec2d.h"
-#include "params.h"
 
 namespace zenithstg {
 	class Enemy : public Object {
@@ -87,6 +88,8 @@ namespace zenithstg {
 	void MoveEnemies();
 
 	void RenderEnemies();
+
+	void LuaEnemyInit(sol::state& lua);
 }
 
 #endif

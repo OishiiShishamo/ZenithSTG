@@ -81,6 +81,8 @@ namespace zenithstg {
 	void MoveLasers();
 
 	void RenderLasers();
+
+	void LuaLaserInit(sol::state& lua);
 }
 
 #endif

@@ -3,6 +3,7 @@
 #include <cmath>
 
 #include "logging.h"
+#include "lua_mng.h"
 #include "math_tool.h"
 
 namespace zenithstg {
@@ -240,5 +241,10 @@ namespace zenithstg {
 	double EaseInOutBounce(double t, double start, double end) {
 		if (t < 0.5) return EaseInBounce(t * 2, 0, end - start) * 0.5 + start;
 		else return EaseOutBounce(t * 2 - 1, 0, end - start) * 0.5 + (end + start) * 0.5;
+	}
+
+	void LuaEasingInit(sol::state& lua) {
+		lua.set_function("easing", Easing);
+		lua.set_function("easing_time_calc", EasingTimeCalc);
 	}
 }

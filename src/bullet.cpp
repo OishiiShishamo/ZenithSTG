@@ -14,6 +14,7 @@
 #include "debug.h"
 #include "global.h"
 #include "graze.h"
+#include "lua_mng.h"
 #include "object.h"
 #include "params.h"
 #include "player.h"
@@ -353,5 +354,11 @@ namespace zenithstg {
 		for (auto* B : bullet_ptrs) {
 			B->DrawObject();
 		}
+	}
+
+	void LuaBulletInit(sol::state& lua) {
+		lua.set_function("create_bullet", CreateBullet);
+		lua.set_function("create_bullet_group", CreateBulletGroup);
+		lua.set_function("create_simple_bullet_group", CreateSimpleBulletGroup);
 	}
 }

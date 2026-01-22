@@ -11,10 +11,13 @@
 #pragma comment(lib, "winmm.lib")
 
 #include "DxLib.h"
+#include <json.hpp>
+#include <sol.hpp>
 
 #include "bullet.h"
 #include "enemy.h"
 #include "laser.h"
+#include "lua_mng.h"
 #include "math_tool.h"
 #include "object.h"
 #include "particle.h"

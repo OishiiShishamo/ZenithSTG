@@ -22,6 +22,7 @@
 #include "debug.h"
 #include "global.h"
 #include "graze.h"
+#include "lua_mng.h"
 #include "object.h"
 #include "params.h"
 #include "player.h"
@@ -94,6 +95,8 @@ namespace zenithstg {
 	void MoveBullets();
 
 	void RenderBullets();
+
+	void LuaBulletInit(sol::state& lua);
 }
 
 #endif

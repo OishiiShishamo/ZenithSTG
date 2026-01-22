@@ -1,10 +1,14 @@
 #include "script.h"
 
+#include <fstream>
+#include <functional>
+#include <string>
+
 #include "background.h"
 #include "bullet.h"
 #include "enemy.h"
-#include "math_tool.h"
 #include "laser.h"
+#include "math_tool.h"
 #include "utility.h"
 
 namespace zenithstg {
@@ -45,15 +49,17 @@ namespace zenithstg {
 				double angle = Rad(static_cast<double>(rng() % 36000) / 100.0f);
 				CreateSmartBulletGroup(ObjectParams{
 					.pos = Vec2D(kCenterX, 180),
+					.length = 120,
+					.width = 32,
 					.color = GamingColor(),
-					.style = BulletType::kBulletMedium,
+					.style = BulletType::kBulletScale,
 					.blend = BlendType::kBlendAdd,
 					.pal = 255,
 					.start_col_size = 16,
 					.end_col_size = 16,
 					.start_size = 1,
 					.end_size = 1,
-					.way = 32,
+					.way = 8192,
 					.spread = kTau,
 					.start_angle = angle,
 					.end_angle = angle,
@@ -67,5 +73,8 @@ namespace zenithstg {
 			break;
 		}
 		}
+	}
+	void Script::LoadScript(std::string path) {
+
 	}
 }

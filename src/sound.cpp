@@ -5,6 +5,7 @@
 #include "global.h"
 #include "property.h"
 #include "utility.h"
+#include "lua_mng.h"
 
 namespace zenithstg {
 	Sound sound_mng_;
@@ -73,5 +74,13 @@ namespace zenithstg {
 			S = LoadSoundMem(path.c_str());
 			ChangeVolumeSoundMem(static_cast<int>(255.0 * properties_.se_volume_ / 100.0), S);
 		}
+	}
+
+	void LuaSoundInit(sol::state& lua) {
+		lua.set_function("play_bgm",
+			[](int id, int play_type) { sound_mng_.PlayBgm(id, play_type); });
+
+		lua.set_function("play_se",
+			[](int id) { sound_mng_.ReserveSe(id); });
 	}
 }

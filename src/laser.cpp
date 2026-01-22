@@ -367,4 +367,10 @@ namespace zenithstg {
 			L->DrawObject();
 		}
 	}
+
+	void LuaLaserInit(sol::state& lua) {
+		lua.set_function("create_laser", CreateLaser);
+		lua.set_function("create_laser_group", CreateLaserGroup);
+		lua.set_function("create_simple_laser_group", CreateSimpleLaserGroup);
+	}
 }

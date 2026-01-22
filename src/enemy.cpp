@@ -13,6 +13,7 @@
 #include "color.h"
 #include "debug.h"
 #include "graze.h"
+#include "lua_mng.h"
 #include "object.h"
 #include "player.h"
 #include "player_shot.h"
@@ -268,5 +269,11 @@ namespace zenithstg {
 		for (auto* E : enemy_ptrs) {
 			E->DrawObject();
 		}
+	}
+
+	void LuaEnemyInit(sol::state& lua) {
+		lua.set_function("create_enemy", CreateEnemy);
+		lua.set_function("create_enemy_group", CreateEnemyGroup);
+		lua.set_function("create_simple_enemy_group", CreateSimpleEnemyGroup);
 	}
 }

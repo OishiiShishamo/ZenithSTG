@@ -15,6 +15,7 @@
 #include <emmintrin.h>
 #include <execution>
 #include <fstream> 
+#include <functional>
 #include <immintrin.h>
 #include <inttypes.h>
 #include <iomanip>
@@ -32,8 +33,8 @@
 #include <vector>
 
 #include "DxLib.h"
-
 #include <json.hpp>
+#include <sol.hpp>
 
 #include "collision.h"
 #include "color.h"

@@ -6,6 +6,12 @@ struct ImageRes;
 
 #define NOMINMAX
 
+#include <fstream>
+
+#include "DxLib.h"
+#include <json.hpp>
+#include <sol.hpp>
+
 #include "base_scene.h"
 #include "fps.h"
 #include "game_scene.h"
@@ -16,6 +22,7 @@ struct ImageRes;
 #include "title_scene.h"
 #include "bullet.h"
 #include "laser.h"
+#include "lua_mng.h"
 #include "enemy.h"
 #include "player.h"
 #include "player_shot.h"
@@ -104,6 +111,8 @@ namespace zenithstg {
 	extern double screen_rota_y;
 	extern double screen_rota_z;
 	extern Vec2D screen_pos_offset;
+
+	extern sol::state lua;
 }
 
 #endif

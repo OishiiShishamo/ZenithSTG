@@ -89,6 +89,8 @@ namespace zenithstg {
 	void RenderParticles();
 
 	void GrazeParticle(const Vec2D& pos);
+
+	void LuaParticleInit(sol::state& lua);
 }
 
 #endif

@@ -2,6 +2,8 @@
 
 #include <cmath>
 
+#include "lua_mng.h"
+
 namespace zenithstg {
 	std::array<double, 360> sin_table;
 	std::array<double, 360> cos_table;
@@ -52,5 +54,11 @@ namespace zenithstg {
 			guess = (guess + x / guess) / 2;
 		}
 		return guess;
+	}
+
+	void LuaMathInit(sol::state& lua) {
+		lua.set_function("FastSin", FastSin);
+		lua.set_function("FastCos", FastCos);
+		lua.set_function("FastSqrt", FastSqrt);
 	}
 }

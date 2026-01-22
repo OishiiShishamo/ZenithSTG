@@ -43,3 +43,9 @@ ZenithSTG
 │  └─Other files
 └─Other files
 ```
+
+6.
+[here](https://sourceforge.net/projects/luabinaries/files/5.4.2/Windows%20Libraries/Dynamic/lua-5.4.2_Win64_dll17_lib.zip/download)
+
+[here](https://github.com/ThePhD/sol2/releases/download/v3.3.0/sol.hpp)
+[here](https://github.com/ThePhD/sol2/releases/download/v3.3.0/config.hpp)

@@ -290,4 +290,8 @@ namespace zenithstg {
 			CreateParticle(pos, Color(kColorWhite), kParticleStar, kBlendAdd, 255, kEaseInQuad, 15, 0, 0, 0, 0, 0, std::fmod(rng() / 100.0f, 1.5f), 0, kEaseInQuad, 120, 0, rand_buffer, rand_buffer, 0, 0, std::fmod(rng() / 100.0f, 32), 0, kEaseInQuad, 120);
 		}
 	}
+
+	void LuaParticleInit(sol::state& lua) {
+		lua.set_function("create_particle", CreateParticle);
+	}
 }

@@ -4,12 +4,13 @@
 #include <fstream>
 
 #include "DxLib.h"
-
 #include <json.hpp>
+#include <sol.hpp>
 
 #include "bullet.h"
 #include "enemy.h"
 #include "laser.h"
+#include "lua_mng.h"
 #include "math_tool.h"
 #include "object.h"
 #include "particle.h"
@@ -139,6 +140,8 @@ namespace zenithstg {
 			SafeAccess(particle_ptrs, i) = &SafeAccess(particles, i);
 			blank_particles.emplace_back(i);
 		}
+
+		LuaInit(lua);
 	}
 
 	void ResInit() {

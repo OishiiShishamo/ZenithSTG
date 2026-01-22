@@ -15,6 +15,7 @@ bld/
 
 DxLib/
 boost/
+Lua/
 
 .vs/
 

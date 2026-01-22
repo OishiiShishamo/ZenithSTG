@@ -7,6 +7,7 @@
 #include "global.h"
 #include "property.h"
 #include "utility.h"
+#include "lua_mng.h"
 
 namespace zenithstg {
 	inline constexpr int kSoundBgmHandlerNum = 256;
@@ -28,6 +29,8 @@ namespace zenithstg {
 		void BgmAdd(int id, std::string path);
 		void SeAdd(int id, std::string path);
 	};
+
+	void LuaSoundInit(sol::state& lua);
 }
 
 #endif

@@ -43,13 +43,14 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>../DxLib;../boost/include/boost-1_84;../3rdParties;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../DxLib;../boost/include/boost-1_84;../3rdParties;../Lua/include;</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>../DxLib;../boost/lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../DxLib;../boost/lib;../Lua</AdditionalLibraryDirectories>
+      <AdditionalDependencies>lua54.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -62,13 +63,14 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>../DxLib;../boost/include/boost-1_84;../3rdParties;$(SolutionDir)Src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../DxLib;../boost/include/boost-1_84;../3rdParties;../Lua/include;$(SolutionDir)Src</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>../DxLib;../boost/lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../DxLib;../boost/lib;../Lua</AdditionalLibraryDirectories>
+      <AdditionalDependencies>lua54.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -80,7 +82,7 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>../DxLib;../boost/include/boost-1_84;../3rdParties;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../DxLib;../boost/include/boost-1_84;../3rdParties;../Lua/include;</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
@@ -88,7 +90,8 @@
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <AdditionalLibraryDirectories>../DxLib;../boost/lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../DxLib;../boost/lib;../Lua</AdditionalLibraryDirectories>
+      <AdditionalDependencies>lua54.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -100,7 +103,7 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>../DxLib;../boost/include/boost-1_84;../3rdParties;$(SolutionDir)Src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../DxLib;../boost/include/boost-1_84;../3rdParties;../Lua/include;$(SolutionDir)Src</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
@@ -108,7 +111,8 @@
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <AdditionalLibraryDirectories>../DxLib;../boost/lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../DxLib;../boost/lib;../Lua</AdditionalLibraryDirectories>
+      <AdditionalDependencies>lua54.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

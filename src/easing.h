@@ -5,6 +5,7 @@
 #include <cmath>
 
 #include "logging.h"
+#include "lua_mng.h"
 #include "math_tool.h"
 
 namespace zenithstg {
@@ -55,6 +56,8 @@ namespace zenithstg {
 	double EaseInBounce(double t, double start, double end);
 	double EaseOutBounce(double t, double start, double end);
 	double EaseInOutBounce(double t, double start, double end);
+
+	void LuaEasingInit(sol::state& lua);
 }
 
 #endif
