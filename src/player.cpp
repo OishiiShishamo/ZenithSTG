@@ -8,6 +8,60 @@
 //TODO: コントローラーに対応させる
 
 namespace zenithstg {
+	// ゲッターとセッター / Getters and Setters.
+	Vec2D Player::GetPos() {
+		return pos_;
+	}
+
+	void Player::SetPos(const Vec2D& v) {
+		pos_ = v;
+	}
+
+	bool Player::GetIsFocus(std::memory_order order) {
+		return flags_.load(order) & kIsFocus;
+	}
+
+	void Player::SetIsFocus(bool b, std::memory_order order) {
+		if (b) {
+			flags_.fetch_or(kIsFocus, order);
+		}
+		else {
+			flags_.fetch_and(~kIsFocus, order);
+		}
+	}
+
+	bool Player::GetIsShowCol(std::memory_order order) {
+		return flags_.load(order) & kIsShowCol;
+	}
+
+	bool Player::GetIsMouse(std::memory_order order) {
+		return flags_.load(order) & kIsMouse;
+	}
+
+	void Player::SetIsMouse(bool b, std::memory_order order) {
+		if (b) {
+			flags_.fetch_or(kIsMouse, order);
+		}
+		else {
+			flags_.fetch_and(~kIsMouse, order);
+		}
+	}
+
+	bool Player::GetIsProtect(std::memory_order order) {
+		return flags_.load(order) & kIsProtect;
+	}
+
+	void Player::SetIsProtect(bool b, std::memory_order order) {
+		if (b) {
+			flags_.fetch_or(kIsProtect, order);
+		}
+		else {
+			flags_.fetch_and(~kIsProtect, order);
+		}
+	}
+
+
+
 	double Player::AimPlayer(const Vec2D& v) {
 		return Vec2DToAngle(pos_, v);
 	}
@@ -18,7 +72,7 @@ namespace zenithstg {
 
 	void Player::MovePlayer() {
 		vec_ = Vec2D(_mm_set1_pd(0));
-		if (is_mouse_ == 1) {
+		if (GetIsMouse()) {
 			int x, y;
 			GetMousePoint(&x, &y);
 			pos_.SetXY(x, y);
@@ -60,15 +114,25 @@ namespace zenithstg {
 		}
 	}
 
-	void Player::HitPlayer() {
-		if (protect_time_ > 0) {
-			return;
+	bool Player::TryHit() {
+		uint8_t expected = flags_.load(std::memory_order_relaxed);
+		while (!(expected & kIsProtect)) {
+			uint8_t desired = expected | kIsProtect;
+			if (flags_.compare_exchange_weak(expected, desired,	std::memory_order_acq_rel, std::memory_order_relaxed)) {
+				return true;
+			}
 		}
+		return false;
+	}
+
+	void Player::HitPlayer() {
+		if (!TryHit()) return;
+		SetIsProtect(1);
 		for (int i = 0; i < 64; i++) {
 			double angle = Rad(static_cast<double>(rng() % 36000) / 100.0);
 			CreateParticle(pos_, Color(1.0f, 0.0f, 0.0f), ParticleType::kParticleRect, BlendType::kBlendAdd, 255, EaseType::kEaseInQuad, 60, 0, 0, 0, 0, 0, 0.5f, 0.0f, EaseType::kEaseInQuad, 60, 0, angle, angle, 0, 0, static_cast<double>(rng() % 160) / 10.0f + 3, 0.0f, EaseType::kEaseInQuad, 60);
 		}
-		protect_time_ = protect_;
+		protect_time_.store(protect_);
 		pos_ = kPlayerDefaultPos;
 		life_ -= 1;
 		bomb_ = default_bomb_;
@@ -78,7 +142,10 @@ namespace zenithstg {
 	void Player::RoutinePlayer() {
 		MovePlayer();
 		Shot();
-		protect_time_--;
+		protect_time_.fetch_sub(1, std::memory_order_relaxed);
+		if (protect_time_.load() <= 0) {
+			SetIsProtect(0);
+		}
 	}
 
 	Player player_;

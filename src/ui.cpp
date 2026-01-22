@@ -11,7 +11,7 @@ namespace zenithstg {
 
 	void DrawUi(Color font_color) {
 		if (GetAsyncKeyState(VK_SHIFT)) {
-			DrawRotaGraph(player_.pos_.GetX(), player_.pos_.GetY(), 1.0f, 0, SafeAccess(img_res.ui_gh, 1), TRUE);
+			DrawRotaGraph(player_.GetPos().GetX(), player_.GetPos().GetY(), 1.0f, 0, SafeAccess(img_res.ui_gh, 1), TRUE);
 		}
 		//DrawRotaGraph(kCenterX, kCenterY, 1.0f, 0, SafeAccess(img_res.ui_gh, 0), 1, 0, 0);
 		if (score.load() == 0) {

@@ -105,7 +105,7 @@ namespace zenithstg {
 
 	int Laser::ColliCheckObject() {
 		double r = (length_ * length_ + col_size_ * col_size_) / 4;
-		Vec2D d = pos_ - player_.pos_;
+		Vec2D d = pos_ - player_.GetPos();
 		if (d.GetX() * d.GetX() + d.GetY() * d.GetY() <= r) {
 			return 0;
 		}
@@ -122,7 +122,7 @@ namespace zenithstg {
 			SafeAccess(world, i) = pos_ + rot;
 		}
 		if (
-			ColPointAndRect(player_.pos_,
+			ColPointAndRect(player_.GetPos(),
 				SafeAccess(world, 0),
 				SafeAccess(world, 1),
 				SafeAccess(world, 2),
@@ -136,7 +136,7 @@ namespace zenithstg {
 	void Laser::GrazeObject() {
 		if (kGrazeEnabled == 1) return;
 		double r = (length_ * length_ + col_size_ * col_size_ + kGrazeRange * kGrazeRange) / 4;
-		Vec2D d = pos_ - player_.pos_;
+		Vec2D d = pos_ - player_.GetPos();
 		if (d.GetX() * d.GetX() + d.GetY() * d.GetY() <= r || (flags_ & kIsGraze) == 0) {
 			return;
 		}
@@ -153,7 +153,7 @@ namespace zenithstg {
 			SafeAccess(world, i) = pos_ + rot;
 		}
 		if (
-			ColPointAndRect(player_.pos_,
+			ColPointAndRect(player_.GetPos(),
 				SafeAccess(world, 0),
 				SafeAccess(world, 1),
 				SafeAccess(world, 2),

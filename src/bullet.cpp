@@ -130,7 +130,7 @@ namespace zenithstg {
 	}
 
 	int	Bullet::ColliCheckObject() {
-		if (ColPointAndCircle(pos_, player_.pos_, col_size_ + player_.col_size_)) {
+		if (ColPointAndCircle(pos_, player_.GetPos(), col_size_ + player_.col_size_)) {
 			player_.HitPlayer();
 			return 1;
 		}
@@ -140,7 +140,7 @@ namespace zenithstg {
 	void Bullet::GrazeObject() {
 		if (kGrazeEnabled == 0) return;
 		if ((flags_ & kIsGraze) == 0) return;
-		if (ColPointAndCircle(pos_, player_.pos_, col_size_ + player_.col_size_ + kGrazeRange)) {
+		if (ColPointAndCircle(pos_, player_.GetPos(), col_size_ + player_.col_size_ + kGrazeRange)) {
 			Graze();
 			if (kBulletGrazeEveryFrame == 0) {
 				flags_ &= ~kIsGraze;
@@ -179,7 +179,7 @@ namespace zenithstg {
 			if (speed_ >= col_size_ + player_.col_size_ && flags_ & kIsCol) {
 				Vec2D old_pos = pos_;
 				MoveObject(speed_);
-				if (ColPointAndCircleAdv(player_.pos_, old_pos, pos_, col_size_)) {
+				if (ColPointAndCircleAdv(player_.GetPos(), old_pos, pos_, col_size_)) {
 					player_.HitPlayer();
 					KillObject();
 					return;

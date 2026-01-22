@@ -77,7 +77,7 @@ namespace zenithstg {
 
 		MathInit();
 
-		player_.pos_ = kPlayerDefaultPos;
+		player_.SetPos(kPlayerDefaultPos);
 		player_.slow_ = 5;
 		player_.fast_ = 7;
 		player_.life_ = player_.default_life_;
@@ -85,7 +85,7 @@ namespace zenithstg {
 		player_.col_size_ = kPlayerCol;
 		player_.protect_ = kPlayerProtect;
 		player_.protect_time_ = 0;
-		player_.is_mouse_ = 0;
+		player_.SetIsMouse(0);
 
 		fps_history.fill(fps);
 

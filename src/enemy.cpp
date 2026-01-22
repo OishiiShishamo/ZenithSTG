@@ -61,7 +61,7 @@ namespace zenithstg {
 	}
 
 	int Enemy::ColliCheckObject() {
-		if (ColPointAndCircle(pos_, player_.pos_, col_size_ + player_.col_size_)) {
+		if (ColPointAndCircle(pos_, player_.GetPos(), col_size_ + player_.col_size_)) {
 			player_.HitPlayer();
 			return 1;
 		}

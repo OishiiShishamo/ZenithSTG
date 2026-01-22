@@ -26,19 +26,19 @@ namespace zenithstg {
 			if (t >= Beat2Frame(160, 68)) screen_size_rate = Easing(EaseType::kEaseInQuad, EasingTimeCalc(t, Beat2Frame(160, num - 1), Beat2Frame(160, num)), 1.05, 1.0);
 			if (t >= Beat2Frame(160, 64) && t < Beat2Frame(160, 65)) {
 				screen_size_rate = 1.5;
-				CameraMove(player_.pos_);
+				CameraMove(player_.GetPos());
 			}
 			if (t >= Beat2Frame(160, 65) && t < Beat2Frame(160, 66)) {
 				screen_size_rate = 2.0;
-				CameraMove(player_.pos_);
+				CameraMove(player_.GetPos());
 			}
 			if (t >= Beat2Frame(160, 66) && t < Beat2Frame(160, 67)) {
 				screen_size_rate = 2.5;
-				CameraMove(player_.pos_);
+				CameraMove(player_.GetPos());
 			}
 			if (t >= Beat2Frame(160, 67) && t < Beat2Frame(160, 68)) {
 				screen_size_rate = Easing(EaseType::kEaseInQuad, EasingTimeCalc(t, Beat2Frame(160, 67), Beat2Frame(160, 68)), 5.0, 1.0);
-				CameraMove(player_.pos_);
+				CameraMove(player_.GetPos());
 			}
 			if (t == Beat2Frame(160, 68)) {
 				screen_pos_offset = Vec2D(0, 0);
